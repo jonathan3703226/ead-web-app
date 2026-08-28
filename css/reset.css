@@ -1,0 +1,115 @@
+/* ==========================================================================
+   RESET / NORMALIZE CSS
+   ========================================================================== */
+/* Reset global - Garante que as margens, paddings e o cálculo de tamanho sejam consistentes */
+
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Configurações da raiz do documento */
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+/* Configurações base do body */
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+img,
+picture,
+video,
+canvas,
+svg,
+iframe {
+    max-width: 100%;
+    display: block;
+    height: auto;
+}
+
+/* Links - Herda a cor do texto do elemento pai para evitar o azul padrão */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Listas */
+ul,
+ol {
+    list-style: none;
+}
+
+/* Formulários */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    color: inherit;
+    border: none;
+    background: none;
+}
+
+/* MELHORIA DE ACESSIBILIDADE*/
+input:focus-visible,
+button:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--accent, #97f124);
+    outline-offset: 2px;
+}
+
+/* Mantém o visual limpo para quem clica com o mouse */
+input:focus:not(:focus-visible),
+button:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible),
+select:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Botões */
+button {
+    cursor: pointer;
+}
+
+/* Textareas - Limita o movimento apenas para vertical para não quebrar a largura do layout */
+textarea {
+    resize: vertical;
+}
+
+/* Tabelas */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* ==========================================================================
+   MELHORIA DE ACESSIBILIDADE DE MOVIMENTO
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
