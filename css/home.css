@@ -1,0 +1,100 @@
+/* Reset Básico */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Montserrat', system-ui, sans-serif; background-color: #ffffff; color: #111; overflow-x: hidden; }
+
+/* Navegação Global */
+.navbar { 
+    display: flex; justify-content: space-between; align-items: center; 
+    padding: 1.2rem 5%; background: rgba(255, 255, 255, 0.95); 
+    backdrop-filter: blur(10px); border-bottom: 1px solid #eaeaea; 
+    position: fixed; width: 100%; top: 0; z-index: 100; 
+}
+.logo { font-size: 1.5rem; font-weight: 900; color: #111; letter-spacing: -0.5px; }
+.nav-links { list-style: none; display: flex; gap: 2rem; align-items: center; }
+.nav-links a { text-decoration: none; color: #444; font-weight: 600; transition: color 0.2s; position: relative; }
+.nav-links a:hover { color: #8b5cf6; }
+.btn-login { background: #111; color: #fff !important; padding: 0.6rem 1.8rem; border-radius: 8px; transition: all 0.3s ease; }
+.btn-login:hover { background: #8b5cf6; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3); }
+
+/* ==========================================================
+   Seção Hero Parallax em U (Título Isolado)
+   ========================================================== */
+.hero-parallax-u { 
+    position: relative; width: 100%; 
+    min-height: 1550px; /* Altura gigante para evitar cortes na base */
+    overflow: hidden; 
+    background-color: #ffffff; display: flex; justify-content: center; 
+}
+
+/* Texto limpo e fixado no topo */
+.hero-conteudo { 
+    position: absolute; 
+    top: 140px; /* Bem no alto, livre das imagens */
+    left: 50%; transform: translateX(-50%); 
+    width: 100%; max-width: 850px; text-align: center; z-index: 20; 
+    background: transparent; /* Sem fundo */
+    backdrop-filter: none; 
+    box-shadow: none;
+}
+.hero-conteudo h1 { font-size: 4.2rem; font-weight: 900; line-height: 1.05; letter-spacing: -2px; margin-bottom: 1.5rem; color: #111; }
+.highlight { background: linear-gradient(135deg, #111 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero-conteudo p { font-size: 1.1rem; color: #555; line-height: 1.5; font-weight: 600; }
+
+
+.btn-roxo { 
+    margin-top: 2rem;
+    display: inline-block; background-color: #8b5cf6; color: #ffffff; 
+    font-size: 1.2rem; font-weight: 900; text-transform: uppercase; text-decoration: none; 
+    padding: 1.2rem 3.5rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4); 
+    transition: all 0.3s ease; 
+}
+.btn-roxo:hover { background-color: #7c3aed; transform: scale(1.05); }
+
+/* GRADE DE 8 COLUNAS */
+.grade-u { 
+    display: flex; justify-content: center; gap: 12px; 
+    width: 100%; padding: 0 2%; position: absolute; top: 0; z-index: 10;
+}
+
+.col-u { 
+    display: flex; flex-direction: column; gap: 12px; 
+    width: 11%; 
+    will-change: transform; 
+}
+
+.img-p { height: 90px; }
+.img-m { height: 130px; }
+.img-g { height: 180px; }
+.col-u img { width: 100%; border-radius: 8px; object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.3s; }
+.col-u img:hover { transform: scale(1.05); z-index: 30; position: relative; }
+
+/* Margens massivas para as imagens começarem abaixo do texto */
+.col-alta { margin-top: 200px; }          
+.col-media-alta { margin-top: 440px; }    
+.col-media-baixa { margin-top: 550px; }   
+.col-baixa { margin-top: 580px; } 
+
+/* ==========================================================
+   Seção 2: Justificativa
+   ========================================================== */
+.sobre-metodo { padding: 8rem 2rem; background-color: #fafafa; position: relative; z-index: 100; }
+.container { max-width: 1100px; margin: 0 auto; }
+.texto-central { text-align: center; max-width: 800px; margin: 0 auto 4rem; }
+.texto-central h2 { font-size: 2.8rem; font-weight: 900; color: #111; margin-bottom: 1.2rem; letter-spacing: -1px; }
+.texto-central p { font-size: 1.15rem; color: #666; line-height: 1.7; }
+.cards-beneficios { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
+.card { background: #ffffff; padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04); transition: all 0.4s ease; border-bottom: 4px solid transparent; }
+.card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(139, 92, 246, 0.1); border-bottom: 4px solid #8b5cf6; }
+.icone-card { font-size: 2.5rem; margin-bottom: 1.5rem; }
+.card h3 { font-size: 1.5rem; font-weight: 800; color: #111; margin-bottom: 1rem; }
+.card p { color: #555; line-height: 1.6; font-size: 1.05rem; }
+
+footer { text-align: center; padding: 2.5rem; background: #fff; border-top: 1px solid #eaeaea; font-size: 0.95rem; color: #666; position: relative; z-index: 100; }
+footer a { color: #8b5cf6; text-decoration: none; font-weight: 700; }
+
+@media (max-width: 1024px) {
+    .grade-u { display: none; }
+    .hero-parallax-u { min-height: auto; }
+    .hero-conteudo { position: relative; top: 0; left: 0; transform: none; padding: 140px 20px 4rem; background: transparent; backdrop-filter: none; box-shadow: none; }
+    .nav-links { display: none; }
+}
