@@ -1,0 +1,90 @@
+/* ================= MODAL AVANÇADO DE COOKIES (BASE DA TELA) ================= */
+.cookie-modal-avancado {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    background-color: #0a0a0a;
+    color: #ffffff;
+    padding: 1.5rem 5%;
+    border-top: 3px solid #f39c12; /* Linha laranja apenas no topo */
+    z-index: 9999;
+    flex-direction: column;
+    gap: 1.5rem;
+    box-sizing: border-box;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.8);
+    animation: slideUp 0.4s ease-out forwards;
+}
+
+@keyframes slideUp {
+    from {
+        bottom: -100%;
+        opacity: 0;
+    }
+    to {
+        bottom: 0;
+        opacity: 1;
+    }
+}
+
+/* ================= DETALHES E CHECKBOXES ================= */
+.cookie-detalhes {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-top: 1px solid #333;
+    padding-top: 15px;
+    margin-top: 10px;
+}
+
+.cookie-opcao {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.cookie-opcao input[type="checkbox"] {
+    margin-top: 5px;
+    width: 20px;
+    height: 20px;
+    accent-color: #f39c12; /* Pinta o checkbox de laranja */
+    cursor: pointer;
+}
+
+.cookie-opcao label {
+    font-size: 0.9rem;
+    color: #ccc;
+    line-height: 1.4;
+    cursor: pointer;
+}
+
+.cookie-opcao label strong {
+    color: #fff;
+    font-size: 1rem;
+}
+
+/* ================= BOTÃO FLUTUANTE ================= */
+.btn-flutuante {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #1a1a1a;
+    border: 2px solid #f39c12;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    color: #f39c12;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.btn-flutuante:hover {
+    transform: scale(1.1);
+}
