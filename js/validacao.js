@@ -1,40 +1,122 @@
-// 1. Inicializa um "Banco de Dados" em JSON no navegador
 function inicializarBancoDados() {
     const dbExistente = localStorage.getItem('nankim_db');
-    
-    // Se não existir, cria um usuário padrão para testes
     if (!dbExistente) {
         const mockUsers = [
             { id: 1, nome: "Estudante de Arte", email: "aluno@nankim.com", senha: "senha123" }
         ];
-        // Converte o array/objeto para string JSON e salva
         localStorage.setItem('nankim_db', JSON.stringify(mockUsers));
     }
 }
 
-// 2. Lógica de Autenticação Realista
+function validarEmailFormatado(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+}
+
+function limparMensagens(form) {
+    const alertas = form.querySelectorAll('.msg-erro, .msg-sucesso-info');
+    alertas.forEach(alerta => alerta.remove());
+}
+
 function configurarLogin() {
     const formLogin = document.getElementById('form-login');
+    if (!formLogin) return;
 
-    if (formLogin) {
-        formLogin.addEventListener('submit', (e) => {
-            e.preventDefault();
+    const emailInput = document.getElementById('login-email');
+    const senhaInput = document.getElementById('login-senha');
+    const btnToggleSenha = document.getElementById('btn-toggle-senha');
+    const linkEsqueciSenha = document.getElementById('link-esqueci-senha');
+    const btnSubmit = document.getElementById('btn-submit-login');
 
-            const emailInput = formLogin.querySelector('input[type="email"]').value;
-            const senhaInput = formLogin.querySelector('input[type="password"]').value;
-            const btnSubmit = formLogin.querySelector('button[type="submit"]');
+    // Alternar visualização da senha
+    btnToggleSenha.addEventListener('click', () => {
+        const tipoAtual = senhaInput.getAttribute('type');
+        senhaInput.setAttribute('type', tipoAtual === 'password' ? 'text' : 'password');
+        btnToggleSenha.textContent = tipoAtual === 'password' ? '🙈' : '👁️';
+    });
 
-            // Recupera e converte o JSON do banco falso de volta para Array do JS
-            const usuariosString = localStorage.getItem('nankim_db');
-            const usuarios = JSON.parse(usuariosString);
+    // Validação em Tempo Real
+    function checarCampo(input, condicaoValida, mensagemErro) {
+        const grupo = input.closest('.input-group');
+        const feedback = grupo.querySelector('.input-feedback');
 
-            // Busca se existe um usuário com o email e senha exatos
+        if (input.value.trim() === '') {
+            grupo.classList.remove('erro', 'sucesso');
+            feedback.textContent = '';
+            return false;
+        }
+
+        if (condicaoValida) {
+            grupo.classList.remove('erro');
+            grupo.classList.add('sucesso');
+            feedback.textContent = '';
+            return true;
+        } else {
+            grupo.classList.remove('sucesso');
+            grupo.classList.add('erro');
+            feedback.textContent = mensagemErro;
+            return false;
+        }
+    }
+
+    emailInput.addEventListener('input', () => {
+        checarCampo(emailInput, validarEmailFormatado(emailInput.value.trim()), 'Insira um e-mail válido');
+    });
+
+    senhaInput.addEventListener('input', () => {
+        checarCampo(senhaInput, senhaInput.value.length >= 6, 'A senha precisa ter pelo menos 6 caracteres');
+    });
+
+    // Fluxo: Esqueci minha senha
+    linkEsqueciSenha.addEventListener('click', (e) => {
+        e.preventDefault();
+        limparMensagens(formLogin);
+        const email = emailInput.value.trim();
+
+        if (validarEmailFormatado(email)) {
+            const divSucesso = document.createElement('div');
+            divSucesso.className = 'msg-sucesso-info';
+            divSucesso.innerHTML = `📧 Instruções enviadas para <strong>${email}</strong>`;
+            formLogin.insertBefore(divSucesso, formLogin.firstChild);
+            
+            // Remove aviso após 5 segundos
+            setTimeout(() => divSucesso.remove(), 5000);
+        } else {
+            const divErro = document.createElement('div');
+            divErro.className = 'msg-erro';
+            divErro.innerHTML = '⚠️ Digite um e-mail válido acima para recuperar sua senha.';
+            formLogin.insertBefore(divErro, formLogin.firstChild);
+            emailInput.focus();
+        }
+    });
+
+    // Submissão do Formulário
+    formLogin.addEventListener('submit', (e) => {
+        e.preventDefault();
+        limparMensagens(formLogin);
+
+        const emailValido = checarCampo(emailInput, validarEmailFormatado(emailInput.value.trim()), 'Insira um e-mail válido');
+        const senhaValida = checarCampo(senhaInput, senhaInput.value.length >= 6, 'Digite sua senha');
+
+        if (!emailValido || !senhaValida) return;
+
+        // Bloqueia o botão durante o carregamento
+        const textoOriginal = btnSubmit.textContent;
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = 'Autenticando...';
+        btnSubmit.style.opacity = '0.7';
+        btnSubmit.style.cursor = 'wait';
+
+        // Simula latência de rede
+        setTimeout(() => {
+            const usuarios = JSON.parse(localStorage.getItem('nankim_db')) || [];
+            const emailTratado = emailInput.value.trim().toLowerCase();
+            
             const usuarioEncontrado = usuarios.find(
-                user => user.email === emailInput && user.senha === senhaInput
+                user => user.email.toLowerCase() === emailTratado && user.senha === senhaInput.value
             );
 
             if (usuarioEncontrado) {
-                // Sucesso: Cria uma "Sessão" em JSON
                 const sessao = {
                     logado: true,
                     nome: usuarioEncontrado.nome,
@@ -43,28 +125,38 @@ function configurarLogin() {
                 };
                 sessionStorage.setItem('nankim_sessao', JSON.stringify(sessao));
 
-                // Feedback visual de sucesso
                 btnSubmit.textContent = 'Acesso Liberado!';
                 btnSubmit.style.backgroundColor = '#27ae60';
+                btnSubmit.style.opacity = '1';
                 
-                // Redireciona
                 setTimeout(() => {
                     window.location.href = 'area-aluno.html';
-                }, 1000);
-
+                }, 800);
             } else {
-                // Erro: Credenciais inválidas
-                alert('E-mail ou senha incorretos. Tente novamente.');
-                formLogin.reset();
+                // Falha no login: Restaura botão e aplica foco na senha
+                btnSubmit.disabled = false;
+                btnSubmit.textContent = textoOriginal;
+                btnSubmit.style.opacity = '1';
+                btnSubmit.style.cursor = 'pointer';
+
+                const divErro = document.createElement('div');
+                divErro.className = 'msg-erro';
+                divErro.innerHTML = '⚠️ E-mail ou senha incorretos.';
+                formLogin.insertBefore(divErro, formLogin.firstChild);
+
+                const containerModal = formLogin.closest('.modal-content');
+                containerModal.classList.add('animar-shake');
+                setTimeout(() => containerModal.classList.remove('animar-shake'), 500);
+
+                senhaInput.value = '';
+                senhaInput.focus();
+                senhaInput.closest('.input-group').classList.remove('sucesso');
             }
-        });
-    }
+        }, 1200);
+    });
 }
 
-// Executa as funções quando a página carrega
 document.addEventListener('DOMContentLoaded', () => {
     inicializarBancoDados();
-    
-    // Pequeno delay para garantir que o modal injetado via JS já exista no DOM
     setTimeout(configurarLogin, 100);
 });

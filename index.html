@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./css/home.css">
     <link rel="stylesheet" href="./css/cookies.css">
     <link rel="stylesheet" href="./css/termos.css">
+    <link rel="stylesheet" href="./css/global.css">
 </head>
 <body>
     <!-- Container onde o JS vai injetar o Menu -->
@@ -55,19 +56,35 @@
     <!-- Container onde o JS vai injetar o Rodapé -->
     <div id="footer-container"></div>
 
-    <!-- ================= MODAIS ================= -->
+   <!-- ================= MODAIS ================= -->
     
-    <!-- Modal de Login -->
+        <!-- Modal de Login -->
     <div id="modal-login" class="modal">
         <div class="modal-content">
             <span class="close-btn" data-close="login">&times;</span>
             <h2>Login - Área do Aluno</h2>
-            <form id="form-login">
-                <label>E-mail:</label>
-                <input type="email" required>
-                <label>Senha:</label>
-                <input type="password" required>
-                <button type="submit">Entrar</button>
+            
+            <form id="form-login" novalidate>
+                <div class="input-group">
+                    <label for="login-email">E-mail</label>
+                    <input type="email" id="login-email" placeholder="seuemail@dominio.com" required autocomplete="email">
+                    <small class="input-feedback"></small>
+                </div>
+
+                <div class="input-group">
+                    <label for="login-senha">Senha</label>
+                    <div class="campo-senha-wrapper">
+                        <input type="password" id="login-senha" placeholder="Digite sua senha" required autocomplete="current-password">
+                        <button type="button" id="btn-toggle-senha" class="btn-eye" aria-label="Mostrar senha">👁️</button>
+                    </div>
+                    <small class="input-feedback"></small>
+                </div>
+
+                <div class="login-acoes-auxiliares">
+                    <a href="#" id="link-esqueci-senha">Esqueceu sua senha?</a>
+                </div>
+
+                <button type="submit" id="btn-submit-login">Entrar na Plataforma</button>
             </form>
         </div>
     </div>
