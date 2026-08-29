@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nankim Escola de Arte - Cursos</title>
+    <link rel="stylesheet" href="./css/global.css">
+</head>
+
+<body>
+    <!-- O global.js injeta o menu dinamicamente aqui -->
+    <div id="header-container"></div>
+
+    <main style="padding: 4rem 5%; max-width: 1200px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <h1>Fundamentos do Desenho</h1>
+            <p>O ponto de partida para qualquer artista. Domine formas, perspectiva e luz.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem;">
+            <!-- Ementa do Curso -->
+            <section>
+                <h2>Ementa do Curso</h2>
+                <br>
+                <ul style="list-style: none; line-height: 2.5;">
+                    <li><strong>Módulo 1:</strong> A base de tudo (Linhas e Formas Primitivas)</li>
+                    <li><strong>Módulo 2:</strong> Desconstruindo objetos complexos</li>
+                    <li><strong>Módulo 3:</strong> Perspectiva com 1, 2 e 3 pontos de fuga</li>
+                    <li><strong>Módulo 4:</strong> Teoria da Luz e Sombra</li>
+                    <li><strong>Módulo 5:</strong> Renderização e Texturas Iniciais</li>
+                    <li><strong>Projeto Final:</strong> Composição de Cenário e Objetos</li>
+                </ul>
+            </section>
+
+            <!-- Tabela de Preços -->
+            <section
+                style="background: #f9f9f9; padding: 2rem; border-radius: 8px; border: 1px solid #eaeaea; height: fit-content;">
+                <h2 style="margin-bottom: 1.5rem;">Valor</h2>
+
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid #ddd; padding-bottom: 1rem;">
+                    <span style="font-size: 1.2rem;">R$ 49,90 <small>à vista</small></span>
+                    <button data-modal="checkout"
+                        style="background: #f39c12; color: #fff; border: none; padding: 0.8rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.3s;">Assinar</button>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 1.2rem;">12x de R$ 4,99</span>
+                    <button data-modal="checkout"
+                        style="background: #f39c12; color: #fff; border: none; padding: 0.8rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.3s;">Assinar</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Cursos Futuros -->
+        <section style="margin-top: 5rem;">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Próximas Trilhas (Em Breve)</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div
+                    style="background: #eee; padding: 2rem; border-radius: 8px; text-align: center; opacity: 0.5; position: relative;">
+                    <span
+                        style="position: absolute; top: 10px; right: 10px; background: #1a1a1a; color: #fff; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">Bloqueado</span>
+                    <h3>Intermediário: Anatomia Humana</h3>
+                </div>
+                <div
+                    style="background: #eee; padding: 2rem; border-radius: 8px; text-align: center; opacity: 0.5; position: relative;">
+                    <span
+                        style="position: absolute; top: 10px; right: 10px; background: #1a1a1a; color: #fff; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">Bloqueado</span>
+                    <h3>Avançado: Ilustração Digital</h3>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- O global.js injeta o rodapé dinamicamente aqui -->
+    <div id="footer-container"></div>
+
+    <!-- MODAL DE CHECKOUT (Mantido estático nesta página apenas) -->
+    <div id="modal-checkout" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" data-close="checkout">&times;</span>
+            <h2>Finalizar Compra</h2>
+            <p class="subtitulo-modal" style="margin-bottom: 1.5rem; color: #555;">Crie sua conta e insira os dados de
+                pagamento.</p>
+
+            <form id="form-checkout" novalidate>
+                <div class="input-group">
+                    <label for="check-nome">Nome Completo</label>
+                    <input type="text" id="check-nome" placeholder="Seu nome" required>
+                    <small class="input-feedback"></small>
+                </div>
+
+                <div class="input-group">
+                    <label for="check-email">E-mail de Acesso</label>
+                    <input type="email" id="check-email" placeholder="seuemail@dominio.com" required>
+                    <small class="input-feedback"></small>
+                </div>
+
+                <div class="input-group">
+                    <label for="check-senha">Crie uma Senha Forte</label>
+                    <div class="campo-senha-wrapper">
+                        <input type="password" id="check-senha" placeholder="Digite sua senha" required>
+                        <button type="button" id="btn-toggle-senha-checkout" class="btn-eye"
+                            aria-label="Mostrar senha">👁️</button>
+                    </div>
+                    <div id="requisitos-senha" class="senha-requisitos">
+                        <span id="req-tamanho">❌ Mínimo de 8 caracteres</span>
+                        <span id="req-maiuscula">❌ Uma letra maiúscula</span>
+                        <span id="req-numero">❌ Um número</span>
+                        <span id="req-especial">❌ Um caractere especial (@$!%*?&)</span>
+                    </div>
+                    <small class="input-feedback"></small>
+                </div>
+
+                <hr style="margin: 1.5rem 0; border: 0; border-top: 1px solid #eaeaea;">
+
+                <div class="input-group">
+                    <label for="check-num-cartao">Número do Cartão</label>
+                    <input type="text" id="check-num-cartao" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                    <small class="input-feedback"></small>
+                </div>
+
+                <div class="linha-inputs">
+                    <div class="input-group">
+                        <label for="check-validade">Validade</label>
+                        <input type="text" id="check-validade" placeholder="MM/AA" maxlength="5" required>
+                        <small class="input-feedback"></small>
+                    </div>
+                    <div class="input-group">
+                        <label for="check-cvv">CVV</label>
+                        <input type="text" id="check-cvv" placeholder="123" maxlength="3" required>
+                        <small class="input-feedback"></small>
+                    </div>
+                </div>
+
+                <button type="submit" id="btn-submit-checkout">Processar Pagamento Seguramente</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Importação Modular de Scripts -->
+    <script src="./js/global.js"></script>
+    <script src="./js/login.js"></script>
+    <script src="./js/termos.js"></script>
+    <!-- O script de cookies e checkout devem ser os últimos -->
+    <script src="./js/cookies.js"></script>
+    <script src="./js/checkout.js"></script>
+</body>
+
+</html>

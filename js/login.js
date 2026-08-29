@@ -1,3 +1,38 @@
+function injetarModalLogin() {
+    const html = `
+        <div id="modal-login" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" data-close="login">&times;</span>
+                <h2>Login - Área do Aluno</h2>
+                
+                <form id="form-login" novalidate>
+                    <div class="input-group">
+                        <label for="login-email">E-mail</label>
+                        <input type="email" id="login-email" placeholder="seuemail@dominio.com" required autocomplete="email">
+                        <small class="input-feedback"></small>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="login-senha">Senha</label>
+                        <div class="campo-senha-wrapper">
+                            <input type="password" id="login-senha" placeholder="Digite sua senha" required autocomplete="current-password">
+                            <button type="button" id="btn-toggle-senha" class="btn-eye" aria-label="Mostrar senha">👁️</button>
+                        </div>
+                        <small class="input-feedback"></small>
+                    </div>
+
+                    <div class="login-acoes-auxiliares">
+                        <a href="#" id="link-esqueci-senha">Esqueceu sua senha?</a>
+                    </div>
+
+                    <button type="submit" id="btn-submit-login">Entrar na Plataforma</button>
+                </form>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', html);
+}
+
 function inicializarBancoDados() {
     const dbExistente = localStorage.getItem('nankim_db');
     if (!dbExistente) {
@@ -28,14 +63,12 @@ function configurarLogin() {
     const linkEsqueciSenha = document.getElementById('link-esqueci-senha');
     const btnSubmit = document.getElementById('btn-submit-login');
 
-    // Alternar visualização da senha
     btnToggleSenha.addEventListener('click', () => {
         const tipoAtual = senhaInput.getAttribute('type');
         senhaInput.setAttribute('type', tipoAtual === 'password' ? 'text' : 'password');
         btnToggleSenha.textContent = tipoAtual === 'password' ? '🙈' : '👁️';
     });
 
-    // Validação em Tempo Real
     function checarCampo(input, condicaoValida, mensagemErro) {
         const grupo = input.closest('.input-group');
         const feedback = grupo.querySelector('.input-feedback');
@@ -64,10 +97,9 @@ function configurarLogin() {
     });
 
     senhaInput.addEventListener('input', () => {
-        checarCampo(senhaInput, senhaInput.value.length >= 6, 'A senha precisa ter pelo menos 6 caracteres');
+        checarCampo(senhaInput, senhaInput.value.length >= 6, 'Mínimo de 6 caracteres');
     });
 
-    // Fluxo: Esqueci minha senha
     linkEsqueciSenha.addEventListener('click', (e) => {
         e.preventDefault();
         limparMensagens(formLogin);
@@ -78,8 +110,6 @@ function configurarLogin() {
             divSucesso.className = 'msg-sucesso-info';
             divSucesso.innerHTML = `📧 Instruções enviadas para <strong>${email}</strong>`;
             formLogin.insertBefore(divSucesso, formLogin.firstChild);
-            
-            // Remove aviso após 5 segundos
             setTimeout(() => divSucesso.remove(), 5000);
         } else {
             const divErro = document.createElement('div');
@@ -90,7 +120,6 @@ function configurarLogin() {
         }
     });
 
-    // Submissão do Formulário
     formLogin.addEventListener('submit', (e) => {
         e.preventDefault();
         limparMensagens(formLogin);
@@ -100,14 +129,12 @@ function configurarLogin() {
 
         if (!emailValido || !senhaValida) return;
 
-        // Bloqueia o botão durante o carregamento
         const textoOriginal = btnSubmit.textContent;
         btnSubmit.disabled = true;
         btnSubmit.textContent = 'Autenticando...';
         btnSubmit.style.opacity = '0.7';
         btnSubmit.style.cursor = 'wait';
 
-        // Simula latência de rede
         setTimeout(() => {
             const usuarios = JSON.parse(localStorage.getItem('nankim_db')) || [];
             const emailTratado = emailInput.value.trim().toLowerCase();
@@ -117,23 +144,15 @@ function configurarLogin() {
             );
 
             if (usuarioEncontrado) {
-                const sessao = {
-                    logado: true,
-                    nome: usuarioEncontrado.nome,
-                    email: usuarioEncontrado.email,
-                    horario: new Date().toISOString()
-                };
+                const sessao = { logado: true, nome: usuarioEncontrado.nome, email: usuarioEncontrado.email };
                 sessionStorage.setItem('nankim_sessao', JSON.stringify(sessao));
 
                 btnSubmit.textContent = 'Acesso Liberado!';
                 btnSubmit.style.backgroundColor = '#27ae60';
                 btnSubmit.style.opacity = '1';
                 
-                setTimeout(() => {
-                    window.location.href = 'area-aluno.html';
-                }, 800);
+                setTimeout(() => window.location.href = 'area-aluno.html', 800);
             } else {
-                // Falha no login: Restaura botão e aplica foco na senha
                 btnSubmit.disabled = false;
                 btnSubmit.textContent = textoOriginal;
                 btnSubmit.style.opacity = '1';
@@ -157,6 +176,7 @@ function configurarLogin() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    injetarModalLogin();
     inicializarBancoDados();
     setTimeout(configurarLogin, 100);
 });

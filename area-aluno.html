@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Aluno - Nankim</title>
+    
+    <!-- Script guardião: deve carregar antes de renderizar a página -->
+    <script src="./js/auth.js"></script>
+    
+    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/area-aluno.css">
+</head>
+<body>
+    <!-- O global.js injeta o menu aqui -->
+    <div id="header-container"></div>
+
+    <main class="painel-aluno">
+        <header class="boas-vindas">
+            <h1>Bem-vindo(a) de volta, <span id="nome-aluno">Aluno</span>! 🎨</h1>
+            <p>Continue sua jornada artística de onde parou.</p>
+        </header>
+
+        <section class="curso-ativo">
+            <!-- Área do Vídeo Principal -->
+            <div class="video-destaque">
+                <div class="placeholder-video">▶️ Módulo 2: Desconstruindo objetos</div>
+            </div>
+            
+            <!-- Barra Lateral de Progresso -->
+            <aside class="trilha-progresso">
+                <strong>Seu Progresso no Curso</strong>
+                <div class="barra-fundo">
+                    <div class="barra-preenchimento" style="width: 25%;"></div>
+                </div>
+                <p>25% Concluído (1/4 Módulos)</p>
+                
+                <ul class="lista-aulas">
+                    <li class="concluida">✅ Módulo 1: A base de tudo</li>
+                    <li class="atual">▶️ Módulo 2: Desconstruindo objetos</li>
+                    <li>🔒 Módulo 3: Perspectiva com 1, 2 e 3 pontos</li>
+                    <li>🔒 Módulo 4: Teoria da Luz e Sombra</li>
+                </ul>
+            </aside>
+        </section>
+    </main>
+
+    <!-- O global.js injeta o rodapé e modais aqui -->
+    <div id="footer-container"></div>
+    
+    <script src="./js/global.js"></script>
+</body>
+</html>

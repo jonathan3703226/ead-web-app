@@ -1,12 +1,217 @@
-/* ================= FORMULÁRIO DE LOGIN E VALIDAÇÕES ================= */
+/* ================= RESET BÁSICO E TIPOGRAFIA ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* ================= CABEÇALHO (MENU) ================= */
+.menu-global {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 5%;
+}
+
+.menu-global .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.menu-global nav {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.menu-global nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.menu-global nav a:hover {
+    color: #f39c12;
+}
+
+.btn-login {
+    background-color: #f39c12;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-login:hover {
+    background-color: #e67e22;
+}
+
+/* ================= RODAPÉ ================= */
+.rodape-global {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    text-align: center;
+    padding: 2rem 5%;
+    margin-top: 4rem;
+}
+
+.rodape-global p {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.rodape-global a {
+    color: #f39c12;
+    text-decoration: none;
+    font-size: 0.9rem;
+    border: 1px solid #f39c12;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.rodape-global a:hover {
+    background-color: #f39c12;
+    color: #fff;
+}
+
+/* ================= MODAIS (ESTRUTURA BASE E SCROLL) ================= */
+.modal {
+    display: none; /* Oculto por padrão, ativado via JS */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    box-sizing: border-box; /* Garante que o padding não estoure a tela */
+    max-height: 85vh; /* Limita a altura a 85% da tela */
+    overflow-y: auto; /* Adiciona rolagem se o conteúdo for longo */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.modal-largo {
+    max-width: 800px;
+}
+
+/* Scrollbar customizada para os modais */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+.modal-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 8px;
+}
+.modal-content::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 8px;
+}
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: #f39c12;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #999;
+}
+
+.close-btn:hover {
+    color: #333;
+}
+
+.modal-content h2 {
+    margin-bottom: 1.5rem;
+    color: #1a1a1a;
+    font-size: 1.5rem;
+}
+
+/* ================= FORMULÁRIOS E CAMPOS DE TEXTO ================= */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#form-checkout {
+    padding-bottom: 1.5rem; /* Espaço extra para o botão de submit no scroll */
+}
+
 .input-group {
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
     position: relative;
-    margin-bottom: 0.5rem;
 }
 
+.input-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #444;
+}
+
+.input-group input {
+    width: 100%;
+    box-sizing: border-box !important; /* Força o limite de largura interno */
+    max-width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #f39c12;
+}
+
+/* Ajuste Flexbox para Validade e CVV (Checkout) */
+.linha-inputs {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.linha-inputs .input-group {
+    flex: 1;
+    min-width: 0; /* Impede que os inputs vazem para a direita */
+}
+
+/* Componente de Senha com Ícone (Login) */
 .campo-senha-wrapper {
     position: relative;
     display: flex;
@@ -15,106 +220,145 @@
 }
 
 .campo-senha-wrapper input {
-    width: 100%;
-    padding-right: 2.8rem !important;
-    box-sizing: border-box;
+    padding-right: 2.5rem;
 }
 
 .btn-eye {
     position: absolute;
     right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent !important;
-    border: none !important;
-    padding: 4px !important;
-    margin: 0 !important;
+    background: none;
+    border: none;
     cursor: pointer;
-    font-size: 1.1rem;
-    z-index: 2;
-    box-shadow: none !important;
-    width: auto !important;
+    font-size: 1.2rem;
 }
 
-.btn-eye:hover {
-    opacity: 0.7;
-}
-
-/* Feedbacks Visuais */
-.input-feedback {
-    font-size: 0.75rem;
-    min-height: 1rem;
-    margin-top: -2px;
-}
-
-.input-group.sucesso input {
-    border-color: #27ae60 !important;
-}
-
-.input-group.erro input {
-    border-color: #e74c3c !important;
-}
-
-.input-group.erro .input-feedback {
-    color: #e74c3c;
-}
-
-/* Ações Auxiliares */
+/* Ações secundárias (Esqueceu a senha) */
 .login-acoes-auxiliares {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: -0.2rem;
-    margin-bottom: 0.8rem;
+    text-align: right;
+    margin-top: -0.5rem;
 }
 
 .login-acoes-auxiliares a {
-    color: #f39c12;
+    color: #555;
+    font-size: 0.9rem;
     text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 500;
-    transition: color 0.2s ease;
 }
 
 .login-acoes-auxiliares a:hover {
-    color: #d68910;
     text-decoration: underline;
+    color: #f39c12;
 }
 
-/* Mensagens de Alerta */
-.msg-erro, .msg-sucesso-info {
-    padding: 0.8rem;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    text-align: center;
-    margin-bottom: 1rem;
-    animation: fadeIn 0.3s ease-in;
+/* Botão Principal do Formulário */
+form button[type="submit"] {
+    background-color: #f39c12;
+    color: #fff;
+    border: none;
+    padding: 1rem;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+}
+
+form button[type="submit"]:hover:not(:disabled) {
+    background-color: #e67e22;
+}
+
+/* ================= FEEDBACK E VALIDAÇÃO (JS) ================= */
+.input-feedback {
+    font-size: 0.8rem;
+    color: #e74c3c;
+    min-height: 1.2rem;
+}
+
+.input-group.erro input {
+    border-color: #e74c3c;
+}
+
+.input-group.sucesso input {
+    border-color: #27ae60;
 }
 
 .msg-erro {
-    background-color: #fadbd8;
-    color: #78281f;
-    border: 1px solid #f5b7b1;
+    background-color: #fdeaea;
+    color: #e74c3c;
+    padding: 0.8rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    border-left: 4px solid #e74c3c;
 }
 
 .msg-sucesso-info {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
+    background-color: #eafaf1;
+    color: #27ae60;
+    padding: 0.8rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    border-left: 4px solid #27ae60;
 }
 
-/* Animações */
 .animar-shake {
-    animation: shake 0.4s ease-in-out;
+    animation: shake 0.5s;
 }
 
 @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-8px); }
-    40%, 80% { transform: translateX(8px); }
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-5px); }
-    to { opacity: 1; transform: translateY(0); }
+@media (max-width: 768px) {
+    .menu-principal {
+        display: none;
+    }
+
+    .btn-mobile {
+        display: inline-flex;
+    }
+
+    .nav-ativa {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: #111827;
+        z-index: 10;
+    }
+
+    .nav-ativa a {
+        display: block;
+        width: 100%;
+        padding: 1rem;
+        color: #fff;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* ================= VALIDAÇÃO VISUAL DE SENHA ================= */
+.senha-requisitos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: #777;
+    transition: all 0.3s ease;
+}
+
+.senha-requisitos span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.senha-requisitos span.valido {
+    color: #27ae60;
+    font-weight: 500;
 }

@@ -1,64 +1,69 @@
-// 1. Definição dos Componentes Globais
-const headerComponent = `
-    <header>
-        <div class="logo">Nankim Escola de Arte</div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="quem-somos.html">Quem Somos</a></li>
-                <li><a href="cursos.html">Cursos</a></li>
-                <li><a href="contato.html">Contato</a></li>
-                <li><button data-modal="login">Login</button></li>
-            </ul>
-        </nav>
-    </header>
-`;
+// ================= GERENCIAMENTO GLOBAL DE MODAIS =================
 
-const footerComponent = `
-    <footer>
-        <p>&copy; 2026 Nankim Escola de Arte. Todos os direitos reservados.</p>
-        <button data-modal="termos">Termos e Políticas de Privacidade</button>
-    </footer>
-`;
+// 1. Lida apenas com os botões de ABRIR e FECHAR (no clique normal)
+document.addEventListener('click', (e) => {
+    // Abrir Modal
+    const btnAbrir = e.target.closest('[data-modal]');
+    if (btnAbrir) {
+        e.preventDefault();
+        const modalId = btnAbrir.getAttribute('data-modal');
+        const modal = document.getElementById(`modal-${modalId}`);
+        if (modal) modal.style.display = 'flex';
+    }
 
-// 2. Função de Injeção no DOM
-function renderizarComponentes() {
-    document.getElementById('header-container').innerHTML = headerComponent;
-    document.getElementById('footer-container').innerHTML = footerComponent;
-    
-    // Inicializa os eventos de modal SOMENTE após injetar o menu e rodapé
-    inicializarModais();
+    // Fechar Modal (botão X)
+    const btnFechar = e.target.closest('[data-close]');
+    if (btnFechar) {
+        const modalId = btnFechar.getAttribute('data-close');
+        const modal = document.getElementById(`modal-${modalId}`);
+        if (modal) modal.style.display = 'none';
+    }
+});
+
+// 2. Lida com o clique no fundo escuro de forma isolada
+document.addEventListener('mousedown', (e) => {
+    // Só fecha se o usuário *começar* o clique exatamente no fundo escuro
+    // Isso impede que selecionar texto e soltar o mouse fora feche a tela sem querer
+    if (e.target.classList.contains('modal')) {
+        e.target.style.display = 'none';
+    }
+});
+// ================= INJEÇÃO DE MENU E RODAPÉ =================
+// Se você já tinha um código específico de menu e rodapé, pode colá-lo aqui dentro.
+function injetarMenuERodape() {
+    const header = document.getElementById('header-container');
+    const footer = document.getElementById('footer-container');
+
+    if (header) {
+        header.innerHTML = `
+            <header class="menu-global">
+                <div class="logo">NANKIM ESCOLA DE ARTE</div>
+
+                <button class="btn-mobile" aria-label="Abrir menu" type="button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <nav>
+                    <a href="index.html">Home</a>
+                    <a href="#">Quem Somos</a>
+                    <a href="cursos.html">Cursos</a>
+                    <a href="#">Contato</a>
+                    <button data-modal="login" class="btn-login">Login</button>
+                </nav>
+            </header>
+        `;
+    }
+
+    if (footer) {
+        footer.innerHTML = `
+            <footer class="rodape-global">
+                <p>&copy; 2026 Nankim Escola de Arte. Todos os direitos reservados.</p>
+                <a href="#" data-modal="termos">Termos e Políticas de Privacidade</a>
+            </footer>
+        `;
+    }
 }
 
-// 3. Lógica de Controle dos Modais
-function inicializarModais() {
-    const botoesAbrir = document.querySelectorAll('[data-modal]');
-    const botoesFechar = document.querySelectorAll('[data-close]');
-
-    // Abrir modal
-    botoesAbrir.forEach(botao => {
-        botao.addEventListener('click', (e) => {
-            e.preventDefault(); // Evita recarregamento se for link
-            const modalId = botao.getAttribute('data-modal');
-            document.getElementById(`modal-${modalId}`).style.display = 'flex';
-        });
-    });
-
-    // Fechar modal pelo botão "X"
-    botoesFechar.forEach(botao => {
-        botao.addEventListener('click', () => {
-            const modalId = botao.getAttribute('data-close');
-            document.getElementById(`modal-${modalId}`).style.display = 'none';
-        });
-    });
-
-    // Fechar modal clicando fora do conteúdo (no overlay escuro)
-    window.addEventListener('click', (e) => {
-        if (e.target.classList.contains('modal')) {
-            e.target.style.display = 'none';
-        }
-    });
-}
-
-// Executa a injeção ao carregar a página
-document.addEventListener('DOMContentLoaded', renderizarComponentes);
+document.addEventListener('DOMContentLoaded', injetarMenuERodape);
