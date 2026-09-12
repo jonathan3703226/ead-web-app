@@ -5,7 +5,7 @@
   <img src="https://img.shields.io/badge/CSS3-RESPONSIVO-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" />
   <img src="https://img.shields.io/badge/JavaScript-VANILLA_ES6-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" />
   <img src="https://img.shields.io/badge/Mobile--First-DESIGN-purple?style=for-the-badge" alt="Mobile First" />
-  <img src="https://img.shields.io/badge/Status-Conclu%C3%ADdo-success?style=for-the-badge" alt="Status" />
+  <img src="https://img.shields.io/badge/Status-Em_Desenvolvimento-yellow?style=for-the-badge" alt="Status" />
 </div>
 
 Aplicação web responsiva desenvolvida como MVP para a **Nankim**, uma escola de cursos online focada em artes visuais. O foco arquitetural do projeto foi a construção de uma interface fluida, modular e acessível, utilizando JavaScript puro (Vanilla JS) para a renderização dinâmica de componentes e controle de interatividade.
