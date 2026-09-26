@@ -1,160 +1,134 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nankim Escola de Arte - Home</title>
+    <title>Nankim Escola de Arte | Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/global.css">
     <link rel="stylesheet" href="./css/home.css">
     <link rel="stylesheet" href="./css/cookies.css">
     <link rel="stylesheet" href="./css/termos.css">
-    <link rel="stylesheet" href="./css/global.css">
 </head>
-
 <body>
-    <!-- Container onde o JS vai injetar o Menu -->
     <div id="header-container"></div>
 
     <main>
-        <!-- Banner Principal -->
-        <section id="hero">
-            <h1>Sua Jornada Artística Começa Aqui</h1>
-            <p>Aprenda arte de forma estruturada, do nível básico ao avançado.</p>
-            <button data-modal="login">Área do Aluno</button>
-            <a href=.cursos.html"><button>Ver Cursos</button></a>
+        <section class="hero-parallax-u" aria-labelledby="titulo-hero-principal">
+            <div class="hero-conteudo">
+                <h1 id="titulo-hero-principal">Aprenda Qualquer<br>Tipo de Arte em<br><span class="highlight">um só Lugar!</span></h1>
+                <p>A maior plataforma de arte do Brasil na palma da sua mão.<br>Prazer, nós somos a <strong>Nankim Escola de Arte!</strong></p>
+                <a href="cursos.html" class="btn-roxo">Quero participar</a>
+            </div>
+
+            <div class="grade-u" aria-hidden="true">
+                <div class="col-u col-alta" id="col1"></div>
+                <div class="col-u col-media-alta" id="col2"></div>
+                <div class="col-u col-media-baixa" id="col3"></div>
+                <div class="col-u col-baixa" id="col4"></div>
+                <div class="col-u col-baixa" id="col5"></div>
+                <div class="col-u col-media-baixa" id="col6"></div>
+                <div class="col-u col-media-alta" id="col7"></div>
+                <div class="col-u col-alta" id="col8"></div>
+            </div>
         </section>
 
-        <!-- Proposta de Valor -->
-        <section id="proposta">
-            <h2>Por que escolher a Nankim?</h2>
-            <ul>
-                <li>Roteiro progressivo e estruturado.</li>
-                <li>Foco absoluto nos fundamentos do desenho.</li>
-                <li>Metodologia passo a passo para evitar lacunas de aprendizado.</li>
-            </ul>
-        </section>
-
-        <!-- Visão Geral da Jornada -->
-        <section id="jornada">
-            <h2>Trilha de Aprendizado</h2>
-            <div class="trilha-grid">
-                <div class="curso-card">
-                    <h3>Fundamentos do Desenho</h3>
-                    <p>Status: Disponível</p>
-                    <button data-modal="checkout">Comprar Agora</button>
+        <section class="sobre-metodo" aria-labelledby="titulo-metodo">
+            <div class="container">
+                <div class="texto-central">
+                    <h2 id="titulo-metodo">Chega de travar nos mesmos erros</h2>
+                    <p>Aprender artes visuais sozinho pode ser difícil diante de tantas informações soltas. É comum pular etapas essenciais, como estrutura, perspectiva e sombreamento, e acabar frustrado ou sem saber como avançar.</p>
                 </div>
-                <div class="curso-card">
-                    <h3>Intermediário: Anatomia</h3>
-                    <p>Status: Em breve</p>
-                </div>
-                <div class="curso-card">
-                    <h3>Avançado: Ilustração Digital</h3>
-                    <p>Status: Em breve</p>
+                <div class="cards-beneficios">
+                    <div class="card">
+                        <div class="icone-card" aria-hidden="true">🎨</div>
+                        <h3>Organização Completa</h3>
+                        <p>Um ecossistema centralizado para você saber qual é o próximo passo da sua trilha.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icone-card" aria-hidden="true">📐</div>
+                        <h3>Foco nos Fundamentos</h3>
+                        <p>Construa uma base técnica sólida antes de avançar para técnicas mais complexas.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icone-card" aria-hidden="true">🚀</div>
+                        <h3>Roteiro Progressivo</h3>
+                        <p>Uma formação que guia você do nível básico ao avançado, passo a passo.</p>
+                    </div>
                 </div>
             </div>
         </section>
+
     </main>
 
-    <!-- Container onde o JS vai injetar o Rodapé -->
     <div id="footer-container"></div>
 
-    <!-- ================= MODAIS ================= -->
-
-    <!-- Modal de Login -->
     <div id="modal-login" class="modal">
         <div class="modal-content">
             <span class="close-btn" data-close="login">&times;</span>
             <h2>Login - Área do Aluno</h2>
-
             <form id="form-login" novalidate>
                 <div class="input-group">
                     <label for="login-email">E-mail</label>
-                    <input type="email" id="login-email" placeholder="seuemail@dominio.com" required
-                        autocomplete="email">
+                    <input type="email" id="login-email" placeholder="seuemail@dominio.com" required autocomplete="email">
                     <small class="input-feedback"></small>
                 </div>
-
                 <div class="input-group">
                     <label for="login-senha">Senha</label>
                     <div class="campo-senha-wrapper">
-                        <input type="password" id="login-senha" placeholder="Digite sua senha" required
-                            autocomplete="current-password">
-                        <button type="button" id="btn-toggle-senha" class="btn-eye"
-                            aria-label="Mostrar senha">👁️</button>
+                        <input type="password" id="login-senha" placeholder="Digite sua senha" required autocomplete="current-password">
+                        <button type="button" id="btn-toggle-senha" class="btn-eye" aria-label="Mostrar senha">👁️</button>
                     </div>
                     <small class="input-feedback"></small>
                 </div>
-
                 <div class="login-acoes-auxiliares">
                     <a href="#" id="link-esqueci-senha">Esqueceu sua senha?</a>
                 </div>
-
                 <button type="submit" id="btn-submit-login">Entrar na Plataforma</button>
             </form>
         </div>
     </div>
 
-    <!-- Modal de Checkout -->
     <div id="modal-checkout" class="modal">
         <div class="modal-content">
             <span class="close-btn" data-close="checkout">&times;</span>
             <h2>Checkout Simulado</h2>
             <form id="form-checkout">
-                <label>Nome no Cartão:</label>
-                <input type="text" required>
-                <label>Número do Cartão:</label>
-                <input type="text" required>
+                <label for="checkout-nome">Nome no Cartão:</label>
+                <input type="text" id="checkout-nome" required>
+                <label for="checkout-numero">Número do Cartão:</label>
+                <input type="text" id="checkout-numero" required>
                 <button type="submit">Finalizar Compra</button>
             </form>
         </div>
     </div>
 
-    <!-- Modal de Termos -->
     <div id="modal-termos" class="modal">
         <div class="modal-content modal-largo">
             <span class="close-btn" data-close="termos">&times;</span>
             <h2>Termos de Uso e Política de Privacidade</h2>
-
             <div class="conteudo-scroll">
                 <h3>1. Aceitação dos Termos</h3>
-                <p>Ao acessar e utilizar a plataforma Nankim Escola de Arte, você concorda expressamente com estes
-                    Termos de Uso. Caso não concorde com alguma cláusula, solicitamos que não utilize nossos serviços.
-                </p>
-
+                <p>Ao acessar e utilizar a plataforma Nankim Escola de Arte, você concorda expressamente com estes Termos de Uso. Caso não concorde com alguma cláusula, solicitamos que não utilize nossos serviços.</p>
                 <h3>2. Propriedade Intelectual e Direitos Autorais</h3>
-                <p><strong>2.1. Nosso Conteúdo:</strong> Todos os vídeos, apostilas, metodologias e designs apresentados
-                    na plataforma são de propriedade exclusiva da Nankim. É terminantemente proibida a cópia, pirataria
-                    ou distribuição não autorizada.</p>
-                <p><strong>2.2. Sua Arte:</strong> Os exercícios e desenhos submetidos por você na Área do Aluno
-                    pertencem exclusivamente a você. A Nankim não reivindica direitos autorais sobre suas criações, mas
-                    reserva-se o direito de solicitar autorização para exibi-los em murais de "Trabalhos de Alunos" com
-                    os devidos créditos.</p>
-
+                <p><strong>2.1. Nosso Conteúdo:</strong> Todos os vídeos, apostilas, metodologias e designs apresentados na plataforma são de propriedade exclusiva da Nankim. É terminantemente proibida a cópia, pirataria ou distribuição não autorizada.</p>
+                <p><strong>2.2. Sua Arte:</strong> Os exercícios e desenhos submetidos por você na Área do Aluno pertencem exclusivamente a você. A Nankim não reivindica direitos autorais sobre suas criações, mas reserva-se o direito de solicitar autorização para exibi-los em murais de "Trabalhos de Alunos" com os devidos créditos.</p>
                 <h3>3. Política de Privacidade e Tratamento de Dados</h3>
                 <p>Respeitamos sua privacidade em conformidade com a LGPD (Lei Geral de Proteção de Dados):</p>
                 <ul>
-                    <li><strong>Coleta:</strong> Coletamos apenas dados essenciais para o funcionamento da sua conta
-                        (nome, e-mail e senha criptografada).</li>
-                    <li><strong>Cookies:</strong> Utilizamos cookies para manter sua sessão ativa e analisar métricas de
-                        acesso, conforme gerenciado por você em nosso painel de preferências de cookies.</li>
-                    <li><strong>Compartilhamento:</strong> Não vendemos nem compartilhamos seus dados pessoais com
-                        terceiros sob nenhuma hipótese.</li>
+                    <li><strong>Coleta:</strong> Coletamos apenas dados essenciais para o funcionamento da sua conta (nome, e-mail e senha criptografada).</li>
+                    <li><strong>Cookies:</strong> Utilizamos cookies para manter sua sessão ativa e analisar métricas de acesso, conforme gerenciado por você em nosso painel de preferências de cookies.</li>
+                    <li><strong>Compartilhamento:</strong> Não vendemos nem compartilhamos seus dados pessoais com terceiros sob nenhuma hipótese.</li>
                 </ul>
-
                 <h3>4. Pagamentos e Política de Reembolso</h3>
-                <p>Os pagamentos são processados por gateways seguros e independentes. Em conformidade com o Código de
-                    Defesa do Consumidor, oferecemos uma garantia incondicional de 7 (sete) dias. Caso o método de
-                    ensino de Fundamentos do Desenho não atenda às suas expectativas, o reembolso integral pode ser
-                    solicitado dentro deste prazo.</p>
-
+                <p>Os pagamentos são processados por gateways seguros e independentes. Em conformidade com o Código de Defesa do Consumidor, oferecemos uma garantia incondicional de 7 (sete) dias. Caso o método de ensino de Fundamentos do Desenho não atenda às suas expectativas, o reembolso integral pode ser solicitado dentro deste prazo.</p>
                 <h3>5. Regras de Conduta</h3>
-                <p>O ambiente da comunidade e a área de feedback de exercícios devem ser locais de respeito mútuo. Não
-                    será tolerado assédio, discriminação ou críticas destrutivas aos trabalhos de outros estudantes. A
-                    violação desta regra resultará no banimento imediato da conta sem direito a reembolso.</p>
-
+                <p>O ambiente da comunidade e a área de feedback de exercícios devem ser locais de respeito mútuo. Não será tolerado assédio, discriminação ou críticas destrutivas aos trabalhos de outros estudantes. A violação desta regra resultará no banimento imediato da conta sem direito a reembolso.</p>
                 <hr>
-                <p><small><em>Última atualização: 27 de agosto de 2026. (Plataforma em versão MVP para fins de validação
-                            acadêmica).</em></small></p>
+                <p><small><em>Última atualização: 27 de agosto de 2026. (Plataforma em versão MVP para fins de validação acadêmica).</em></small></p>
             </div>
         </div>
     </div>
@@ -163,6 +137,6 @@
     <script src="./js/login.js"></script>
     <script src="./js/termos.js"></script>
     <script src="./js/cookies.js"></script>
+    <script src="./js/home.js"></script>
 </body>
-
 </html>

@@ -1,4 +1,6 @@
 function injetarModalLogin() {
+    if (document.getElementById('modal-login')) return;
+
     const html = `
         <div id="modal-login" class="modal">
             <div class="modal-content">

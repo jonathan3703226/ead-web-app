@@ -1,0 +1,74 @@
+.pagina-contato {
+	display: grid;
+	min-height: 65vh;
+	place-items: center;
+	padding: 64px 6%;
+	background: #f4efe4;
+	color: #1d2d3c;
+}
+
+.contato-conteudo {
+	width: min(720px, 100%);
+	padding: clamp(28px, 6vw, 56px);
+	border-left: 5px solid #b33f30;
+	background: #fbf8f1;
+	box-shadow: 0 16px 40px rgba(29, 45, 60, 0.12);
+}
+
+.contato-etiqueta {
+	margin-bottom: 10px;
+	color: #b33f30;
+	font-size: 0.8rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.contato-conteudo h1 {
+	margin-bottom: 16px;
+	color: #1d2d3c;
+	font-family: 'Noto Serif JP', Georgia, serif;
+	font-size: clamp(2.2rem, 6vw, 3.2rem);
+	line-height: 1.15;
+}
+
+.contato-conteudo > p:not(.contato-etiqueta) {
+	margin-bottom: 24px;
+	color: #4c4943;
+	font-size: 1.05rem;
+	line-height: 1.8;
+}
+
+.contato-link-cursos {
+	display: inline-flex;
+	min-height: 46px;
+	align-items: center;
+	padding: 10px 20px;
+	border-radius: 4px;
+	background: #b33f30;
+	color: #fff;
+	font-weight: 700;
+	text-decoration: none;
+	transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.contato-link-cursos:hover {
+	transform: translateY(-2px);
+	background: #912e23;
+}
+
+.contato-link-cursos:focus-visible {
+	outline: 3px solid #24394d;
+	outline-offset: 3px;
+}
+
+@media (max-width: 768px) {
+	.pagina-contato {
+		min-height: 60vh;
+		padding: 40px 6%;
+	}
+
+	.contato-conteudo {
+		padding: 28px 22px;
+	}
+}

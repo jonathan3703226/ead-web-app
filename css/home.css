@@ -1,0 +1,197 @@
+body {
+	overflow-x: hidden;
+	background-color: #24394d;
+}
+
+main,
+main * {
+	font-family: 'Montserrat', system-ui, sans-serif;
+}
+
+/* ==========================================================
+   Seção Hero Parallax em U (Título Isolado)
+   ========================================================== */
+.hero-parallax-u { 
+    position: relative; width: 100%; 
+	min-height: 1080px;
+    overflow: hidden; 
+	background-color: #24394d;
+	background-image: radial-gradient(rgba(224, 211, 186, 0.12) 0.8px, transparent 0.8px), linear-gradient(135deg, #24394d, #172b3e);
+	background-size: 8px 8px, 100% 100%;
+	display: flex;
+	justify-content: center;
+}
+
+/* Texto limpo e fixado no topo */
+.hero-parallax-u .hero-conteudo { 
+    position: absolute; 
+    top: 140px; /* Bem no alto, livre das imagens */
+    left: 50%; transform: translateX(-50%); 
+    width: 100%; max-width: 850px; text-align: center; z-index: 20; 
+    background: transparent; /* Sem fundo */
+    backdrop-filter: none; 
+    box-shadow: none;
+}
+.hero-parallax-u .hero-conteudo h1 { font-size: 4.2rem; font-weight: 900; line-height: 1.05; letter-spacing: -2px; margin-bottom: 1.5rem; color: #f4efe4; }
+.hero-parallax-u .highlight { background: linear-gradient(135deg, #f4efe4 0%, #c7533d 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero-parallax-u .hero-conteudo p { font-size: 1.1rem; color: #e7e0d4; line-height: 1.5; font-weight: 600; }
+
+
+.btn-roxo { 
+    margin-top: 2rem;
+	display: inline-block; background-color: #b33f30; color: #ffffff; 
+    font-size: 1.2rem; font-weight: 900; text-transform: uppercase; text-decoration: none; 
+	padding: 1.2rem 3.5rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(8, 18, 28, 0.35); 
+    transition: all 0.3s ease; 
+}
+.btn-roxo:hover { background-color: #8f3025; transform: scale(1.05); }
+
+/* GRADE DE 8 COLUNAS */
+.grade-u { 
+    display: flex; justify-content: center; gap: 12px; 
+    width: 100%; padding: 0 2%; position: absolute; top: 0; z-index: 10;
+}
+
+.col-u { 
+    display: flex; flex-direction: column; gap: 12px; 
+    width: 11%; 
+    will-change: transform; 
+}
+
+.img-p { height: 90px; }
+.img-m { height: 130px; }
+.img-g { height: 180px; }
+.col-u img { width: 100%; border-radius: 8px; object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.3s; }
+.col-u img:hover { transform: scale(1.05); z-index: 30; position: relative; }
+
+/* Margens massivas para as imagens começarem abaixo do texto */
+.col-alta { margin-top: 200px; }          
+.col-media-alta { margin-top: 440px; }    
+.col-media-baixa { margin-top: 550px; }   
+.col-baixa { margin-top: 580px; } 
+
+/* ==========================================================
+   Seção 2: Justificativa
+   ========================================================== */
+.sobre-metodo { padding: 4.5rem 2rem 8rem; background-color: #e8ddc9; background-image: radial-gradient(rgba(48, 43, 35, 0.1) 0.75px, transparent 0.75px), linear-gradient(112deg, rgba(255, 255, 255, 0.32), transparent 60%); background-size: 8px 8px, 100% 100%; position: relative; z-index: 100; }
+.container { max-width: 1100px; margin: 0 auto; }
+.texto-central { text-align: center; max-width: 800px; margin: 0 auto 4rem; }
+.texto-central h2 { font-size: 2.8rem; font-weight: 900; color: #1d2d3c; margin-bottom: 1.2rem; letter-spacing: -1px; }
+.texto-central p { font-size: 1.15rem; color: #4c4943; line-height: 1.7; }
+.cards-beneficios { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
+.card { background: #f8f2e7; padding: 3rem 2.5rem; border-radius: 8px; box-shadow: 0 10px 30px rgba(20, 34, 48, 0.12); transition: all 0.4s ease; border-bottom: 4px solid #304b68; }
+.card:hover { transform: translateY(-6px); box-shadow: 0 18px 36px rgba(20, 34, 48, 0.2); border-bottom-color: #b33f30; }
+.icone-card { font-size: 2.5rem; margin-bottom: 1.5rem; }
+.card h3 { font-size: 1.5rem; font-weight: 800; color: #1d2d3c; margin-bottom: 1rem; }
+.card p { color: #4c4943; line-height: 1.6; font-size: 1.05rem; }
+
+footer { text-align: center; padding: 2.5rem; background: #fff; border-top: 1px solid #eaeaea; font-size: 0.95rem; color: #666; position: relative; z-index: 100; }
+footer a { color: #8b5cf6; text-decoration: none; font-weight: 700; }
+
+@media (max-width: 1024px) {
+	.hero-parallax-u {
+		min-height: auto;
+		flex-direction: column;
+	}
+
+	.hero-parallax-u .hero-conteudo {
+		position: relative;
+		top: 0;
+		left: 0;
+		transform: none;
+		padding: 100px 20px 2rem;
+		background: transparent;
+		backdrop-filter: none;
+		box-shadow: none;
+	}
+
+	.hero-parallax-u .hero-conteudo h1 {
+		font-size: clamp(2.6rem, 7vw, 4rem);
+	}
+
+	.grade-u {
+		position: relative;
+		top: auto;
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 10px;
+		padding: 0 5% 48px;
+	}
+
+	.col-u {
+		display: contents;
+		width: auto;
+	}
+
+	.col-alta,
+	.col-media-alta,
+	.col-media-baixa,
+	.col-baixa {
+		margin-top: 0;
+	}
+
+	.col-u img {
+		width: 100%;
+		height: clamp(90px, 18vw, 170px);
+	}
+}
+
+@media (max-width: 768px) {
+	.grade-u {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		grid-auto-rows: 1px;
+		grid-auto-flow: dense;
+		gap: 8px;
+		padding: 0 8px 36px;
+	}
+
+	.col-u img.img-p {
+		height: 100%;
+		min-height: 0;
+		grid-row: span 10;
+	}
+
+	.col-u img.img-m {
+		height: 100%;
+		min-height: 0;
+		grid-row: span 15;
+	}
+
+	.col-u img.img-g {
+		height: 100%;
+		min-height: 0;
+		grid-row: span 20;
+	}
+
+	.hero-parallax-u .hero-conteudo {
+		padding: 72px 6% 1.5rem;
+	}
+
+	.hero-parallax-u .hero-conteudo h1 {
+		font-size: clamp(2.15rem, 8vw, 3.5rem);
+		letter-spacing: 0;
+	}
+
+	.sobre-metodo {
+		padding: 3.5rem 6% 4rem;
+	}
+
+	.texto-central {
+		margin-bottom: 2rem;
+	}
+
+	.texto-central h2 {
+		font-size: clamp(1.8rem, 7vw, 2.5rem);
+		letter-spacing: 0;
+	}
+
+	.cards-beneficios {
+		grid-template-columns: 1fr;
+		gap: 1.25rem;
+	}
+
+	.card {
+		padding: 2rem 1.5rem;
+	}
+}
+

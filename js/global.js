@@ -38,29 +38,36 @@ function injetarMenuERodape() {
         header.innerHTML = `
             <header class="menu-global">
                 <div class="logo">NANKIM ESCOLA DE ARTE</div>
-
-                <button class="btn-mobile" aria-label="Abrir menu" type="button">
+                <button class="btn-mobile" aria-label="Abrir menu" aria-expanded="false" type="button">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
-
                 <nav>
                     <a href="index.html">Home</a>
-                    <a href="#">Quem Somos</a>
+                    <a href="quem-somos.html">Quem Somos</a>
                     <a href="cursos.html">Cursos</a>
-                    <a href="#">Contato</a>
+                    <a href="contato.html">Contato</a>
                     <button data-modal="login" class="btn-login">Login</button>
                 </nav>
             </header>
         `;
+
+        const botaoMenu = header.querySelector('.btn-mobile');
+        const navegacao = header.querySelector('.menu-global nav');
+
+        botaoMenu.addEventListener('click', () => {
+            const menuAberto = navegacao.classList.toggle('menu-aberto');
+            botaoMenu.setAttribute('aria-expanded', String(menuAberto));
+            botaoMenu.setAttribute('aria-label', menuAberto ? 'Fechar menu' : 'Abrir menu');
+        });
     }
 
     if (footer) {
         footer.innerHTML = `
             <footer class="rodape-global">
                 <p>&copy; 2026 Nankim Escola de Arte. Todos os direitos reservados.</p>
-                <a href="#" data-modal="termos">Termos e Políticas de Privacidade</a>
+                <a href="politica-privacidade.html">Termos e Políticas de Privacidade</a>
             </footer>
         `;
     }
