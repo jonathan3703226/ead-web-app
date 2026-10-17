@@ -15,8 +15,32 @@
 		<section class="contato-conteudo" aria-labelledby="titulo-contato">
 			<p class="contato-etiqueta">Nankim Escola de Arte</p>
 			<h1 id="titulo-contato">Contato</h1>
-			<p>Estamos preparando nossos canais de atendimento. Enquanto isso, conheça as trilhas e cursos disponíveis na Nankim.</p>
-			<a class="contato-link-cursos" href="cursos.html">Ver cursos</a>
+			<p>Tem dúvidas sobre os cursos ou quer conversar com o Thiago? Envie uma mensagem ou fale com a gente pelas redes sociais.</p>
+			<div class="contato-layout">
+				<form id="form-contato" class="form-contato">
+					<div class="input-group">
+						<label for="contato-nome">Seu nome</label>
+						<input id="contato-nome" name="nome" type="text" autocomplete="name" required>
+					</div>
+					<div class="input-group">
+						<label for="contato-email">Seu e-mail</label>
+						<input id="contato-email" name="email" type="email" autocomplete="email" required>
+					</div>
+					<div class="input-group">
+						<label for="contato-mensagem">Mensagem</label>
+						<textarea id="contato-mensagem" name="mensagem" rows="5" required></textarea>
+					</div>
+					<button class="contato-link-cursos" type="submit">Preparar e-mail</button>
+					<p id="contato-feedback" class="contato-feedback" role="status" aria-live="polite"></p>
+				</form>
+				<aside class="contato-redes" aria-label="Canais de contato">
+					<h2>Fale com o Thiago</h2>
+					<a href="mailto:nankimartschool@gmail.com">E-mail: nankimartschool@gmail.com</a>
+					<a href="https://wa.me/5561982123948" target="_blank" rel="noopener noreferrer">WhatsApp: +55 61 98212-3948</a>
+					<a href="https://www.instagram.com/nankim.art.school/" target="_blank" rel="noopener noreferrer">Instagram: @nankim.art.school</a>
+					<a href="cursos.html">Conheça os cursos</a>
+				</aside>
+			</div>
 		</section>
 	</main>
 
@@ -25,5 +49,6 @@
 	<script src="./js/global.js"></script>
 	<script src="./js/login.js"></script>
 	<script src="./js/cookies.js"></script>
+	<script src="./js/contato.js"></script>
 </body>
 </html>

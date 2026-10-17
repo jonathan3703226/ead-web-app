@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/global.css">
     <link rel="stylesheet" href="./css/cursos.css">
+    <link rel="stylesheet" href="./css/checkout.css">
     <link rel="stylesheet" href="./css/cookies.css">
 </head>
 
@@ -98,66 +99,12 @@
     <!-- O global.js injeta o rodapé dinamicamente aqui -->
     <div id="footer-container"></div>
 
-    <!-- MODAL DE CHECKOUT (Mantido estático nesta página apenas) -->
     <div id="modal-checkout" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" data-close="checkout">&times;</span>
-            <h2>Finalizar Compra</h2>
-            <p class="subtitulo-modal">Crie sua conta e insira os dados de
-                pagamento.</p>
-
-            <form id="form-checkout" novalidate>
-                <div class="input-group">
-                    <label for="check-nome">Nome Completo</label>
-                    <input type="text" id="check-nome" placeholder="Seu nome" required>
-                    <small class="input-feedback"></small>
-                </div>
-
-                <div class="input-group">
-                    <label for="check-email">E-mail de Acesso</label>
-                    <input type="email" id="check-email" placeholder="seuemail@dominio.com" required>
-                    <small class="input-feedback"></small>
-                </div>
-
-                <div class="input-group">
-                    <label for="check-senha">Crie uma Senha Forte</label>
-                    <div class="campo-senha-wrapper">
-                        <input type="password" id="check-senha" placeholder="Digite sua senha" required>
-                        <button type="button" id="btn-toggle-senha-checkout" class="btn-eye"
-                            aria-label="Mostrar senha">👁️</button>
-                    </div>
-                    <div id="requisitos-senha" class="senha-requisitos">
-                        <span id="req-tamanho">❌ Mínimo de 8 caracteres</span>
-                        <span id="req-maiuscula">❌ Uma letra maiúscula</span>
-                        <span id="req-numero">❌ Um número</span>
-                        <span id="req-especial">❌ Um caractere especial (@$!%*?&)</span>
-                    </div>
-                    <small class="input-feedback"></small>
-                </div>
-
-                <hr style="margin: 1.5rem 0; border: 0; border-top: 1px solid #eaeaea;">
-
-                <div class="input-group">
-                    <label for="check-num-cartao">Número do Cartão</label>
-                    <input type="text" id="check-num-cartao" placeholder="0000 0000 0000 0000" maxlength="19" required>
-                    <small class="input-feedback"></small>
-                </div>
-
-                <div class="linha-inputs">
-                    <div class="input-group">
-                        <label for="check-validade">Validade</label>
-                        <input type="text" id="check-validade" placeholder="MM/AA" maxlength="5" required>
-                        <small class="input-feedback"></small>
-                    </div>
-                    <div class="input-group">
-                        <label for="check-cvv">CVV</label>
-                        <input type="text" id="check-cvv" placeholder="123" maxlength="3" required>
-                        <small class="input-feedback"></small>
-                    </div>
-                </div>
-
-                <button type="submit" id="btn-submit-checkout">Processar Pagamento Seguramente</button>
-            </form>
+        <div class="modal-content modal-checkout" role="dialog" aria-modal="true" aria-labelledby="checkout-titulo">
+            <button class="close-btn" type="button" data-close="checkout" aria-label="Fechar checkout">&times;</button>
+            <h2 id="checkout-titulo">Assinar Fundamentos do Desenho</h2>
+            <p class="subtitulo-modal" id="checkout-subtitulo">Identifique sua conta para continuar.</p>
+            <div id="checkout-stage"></div>
         </div>
     </div>
 

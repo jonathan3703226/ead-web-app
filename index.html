@@ -19,7 +19,7 @@
     <main>
         <section class="hero-parallax-u" aria-labelledby="titulo-hero-principal">
             <div class="hero-conteudo">
-                <h1 id="titulo-hero-principal">Aprenda Qualquer<br>Tipo de Arte em<br><span class="highlight">um só Lugar!</span></h1>
+                <h1 id="titulo-hero-principal">Onde o sonho<br>ganha traço</h1>
                 <p>A maior plataforma de arte do Brasil na palma da sua mão.<br>Prazer, nós somos a <strong>Nankim Escola de Arte!</strong></p>
                 <a href="cursos.html" class="btn-roxo">Quero participar</a>
             </div>
@@ -44,17 +44,14 @@
                 </div>
                 <div class="cards-beneficios">
                     <div class="card">
-                        <div class="icone-card" aria-hidden="true">🎨</div>
                         <h3>Organização Completa</h3>
                         <p>Um ecossistema centralizado para você saber qual é o próximo passo da sua trilha.</p>
                     </div>
                     <div class="card">
-                        <div class="icone-card" aria-hidden="true">📐</div>
                         <h3>Foco nos Fundamentos</h3>
                         <p>Construa uma base técnica sólida antes de avançar para técnicas mais complexas.</p>
                     </div>
                     <div class="card">
-                        <div class="icone-card" aria-hidden="true">🚀</div>
                         <h3>Roteiro Progressivo</h3>
                         <p>Uma formação que guia você do nível básico ao avançado, passo a passo.</p>
                     </div>
@@ -65,46 +62,6 @@
     </main>
 
     <div id="footer-container"></div>
-
-    <div id="modal-login" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" data-close="login">&times;</span>
-            <h2>Login - Área do Aluno</h2>
-            <form id="form-login" novalidate>
-                <div class="input-group">
-                    <label for="login-email">E-mail</label>
-                    <input type="email" id="login-email" placeholder="seuemail@dominio.com" required autocomplete="email">
-                    <small class="input-feedback"></small>
-                </div>
-                <div class="input-group">
-                    <label for="login-senha">Senha</label>
-                    <div class="campo-senha-wrapper">
-                        <input type="password" id="login-senha" placeholder="Digite sua senha" required autocomplete="current-password">
-                        <button type="button" id="btn-toggle-senha" class="btn-eye" aria-label="Mostrar senha">👁️</button>
-                    </div>
-                    <small class="input-feedback"></small>
-                </div>
-                <div class="login-acoes-auxiliares">
-                    <a href="#" id="link-esqueci-senha">Esqueceu sua senha?</a>
-                </div>
-                <button type="submit" id="btn-submit-login">Entrar na Plataforma</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="modal-checkout" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" data-close="checkout">&times;</span>
-            <h2>Checkout Simulado</h2>
-            <form id="form-checkout">
-                <label for="checkout-nome">Nome no Cartão:</label>
-                <input type="text" id="checkout-nome" required>
-                <label for="checkout-numero">Número do Cartão:</label>
-                <input type="text" id="checkout-numero" required>
-                <button type="submit">Finalizar Compra</button>
-            </form>
-        </div>
-    </div>
 
     <div id="modal-termos" class="modal">
         <div class="modal-content modal-largo">
@@ -119,12 +76,12 @@
                 <h3>3. Política de Privacidade e Tratamento de Dados</h3>
                 <p>Respeitamos sua privacidade em conformidade com a LGPD (Lei Geral de Proteção de Dados):</p>
                 <ul>
-                    <li><strong>Coleta:</strong> Coletamos apenas dados essenciais para o funcionamento da sua conta (nome, e-mail e senha criptografada).</li>
-                    <li><strong>Cookies:</strong> Utilizamos cookies para manter sua sessão ativa e analisar métricas de acesso, conforme gerenciado por você em nosso painel de preferências de cookies.</li>
-                    <li><strong>Compartilhamento:</strong> Não vendemos nem compartilhamos seus dados pessoais com terceiros sob nenhuma hipótese.</li>
+                    <li><strong>Protótipo:</strong> Este MVP salva nome, e-mail, senha e matrícula no armazenamento local do navegador. A senha não é criptografada; não use dados ou senhas reais.</li>
+                    <li><strong>Pagamento:</strong> O checkout é uma demonstração e não processa cobranças. Não informe dados reais de cartão.</li>
+                    <li><strong>Cookies:</strong> As preferências são salvas no armazenamento local do navegador. Métricas e cookies de marketing não estão integrados.</li>
                 </ul>
                 <h3>4. Pagamentos e Política de Reembolso</h3>
-                <p>Os pagamentos são processados por gateways seguros e independentes. Em conformidade com o Código de Defesa do Consumidor, oferecemos uma garantia incondicional de 7 (sete) dias. Caso o método de ensino de Fundamentos do Desenho não atenda às suas expectativas, o reembolso integral pode ser solicitado dentro deste prazo.</p>
+                <p>Este protótipo não processa pagamentos reais; a confirmação de checkout serve apenas para demonstrar a interface e não representa uma compra. Uma versão de produção deverá informar as condições de cobrança, cancelamento e reembolso antes da contratação.</p>
                 <h3>5. Regras de Conduta</h3>
                 <p>O ambiente da comunidade e a área de feedback de exercícios devem ser locais de respeito mútuo. Não será tolerado assédio, discriminação ou críticas destrutivas aos trabalhos de outros estudantes. A violação desta regra resultará no banimento imediato da conta sem direito a reembolso.</p>
                 <hr>

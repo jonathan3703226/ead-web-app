@@ -6,8 +6,32 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.rodape-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.rodape-global .link-preferencias-cookies {
+    padding: 0.5rem 0;
+    border: 0;
+    background: transparent;
+    color: #ccc;
+    font: inherit;
+    font-size: 0.9rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.rodape-global .link-preferencias-cookies:hover {
+    color: #f39c12;
+}
+
 body {
-    background-color: #ffffff;
+    background-color: #F4EBD0;
     color: #333;
     line-height: 1.6;
 }
@@ -29,10 +53,38 @@ video {
 }
 
 .menu-global .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-decoration: none;
     text-transform: uppercase;
-    letter-spacing: 2px;
+}
+
+.menu-global .logo small {
+    display: block;
+    margin-top: 0.12rem;
+    color: #d2c9b8;
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+}
+
+.logo-selo {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    place-items: center;
+    border: 2px solid #f4efe4;
+    border-radius: 50%;
+    background: #b33f30;
+    color: #fff;
+    font-family: Georgia, serif;
+    font-size: 1.65rem;
 }
 
 .menu-global nav {
@@ -42,6 +94,7 @@ video {
 }
 
 .menu-global nav a {
+    position: relative;
     color: #ffffff;
     text-decoration: none;
     font-size: 1rem;
@@ -49,6 +102,28 @@ video {
 }
 
 .menu-global nav a:hover {
+    color: #f39c12;
+}
+
+.menu-global nav a::after {
+    position: absolute;
+    right: 0;
+    bottom: -0.45rem;
+    left: 0;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    background: #f39c12;
+    content: "";
+    transition: transform 0.2s ease;
+}
+
+.menu-global nav a:hover::after,
+.menu-global nav a.pagina-ativa::after {
+    transform: scaleX(1);
+}
+
+.menu-global nav a.pagina-ativa {
     color: #f39c12;
 }
 
@@ -62,6 +137,58 @@ video {
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s ease;
+}
+
+.usuario-menu {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.menu-conta {
+    position: relative;
+}
+
+.menu-conta-opcoes {
+    position: absolute;
+    top: calc(100% + 0.55rem);
+    right: 0;
+    z-index: 1001;
+    display: grid;
+    min-width: 180px;
+    padding: 0.4rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    background: #202020;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+}
+
+.menu-conta-opcoes[hidden] {
+    display: none;
+}
+
+.menu-conta-opcoes a,
+.menu-conta-opcoes button {
+    padding: 0.7rem 0.85rem;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: #fff;
+    font: inherit;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.menu-conta-opcoes a:hover,
+.menu-conta-opcoes button:hover {
+    background: rgba(243, 156, 18, 0.16);
+    color: #f5b347;
+}
+
+.menu-conta-opcoes a::after {
+    display: none;
 }
 
 .btn-login:hover {
@@ -86,11 +213,12 @@ video {
 @media (max-width: 900px) {
     .menu-global {
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: space-between;
     }
 
     .menu-global nav {
         width: 100%;
+        justify-content: center;
     }
 }
 
@@ -121,6 +249,20 @@ video {
         width: 100%;
         padding: 0.75rem 1rem;
         text-align: center;
+    }
+
+    .menu-global nav.menu-aberto .menu-conta {
+        width: 100%;
+    }
+
+    .menu-global nav.menu-aberto .menu-conta-opcoes {
+        position: static;
+        min-width: 0;
+        margin-top: 0.4rem;
+    }
+
+    .menu-global nav.menu-aberto a::after {
+        display: none;
     }
 
     .linha-inputs {
@@ -176,7 +318,7 @@ video {
 }
 
 .modal-content {
-    background-color: #fff;
+    background-color: #F4EBD0;
     padding: 2rem;
     border-radius: 8px;
     width: 90%;
@@ -245,6 +387,29 @@ form {
     position: relative;
 }
 
+.input-group[hidden],
+[hidden] {
+    display: none !important;
+}
+
+.alternar-cadastro {
+    margin: 0;
+    color: #555;
+    font-size: 0.92rem;
+    text-align: center;
+}
+
+.alternar-cadastro button {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #8f3025;
+    font: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .input-group label {
     font-size: 0.9rem;
     font-weight: 600;
@@ -258,6 +423,7 @@ form {
     padding: 0.8rem;
     border: 1px solid #ccc;
     border-radius: 4px;
+    background-color: #FDF5E6;
     font-size: 1rem;
     transition: border-color 0.3s;
 }

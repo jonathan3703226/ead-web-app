@@ -1,19 +1,22 @@
 function injetarModalLogin() {
     if (document.getElementById('modal-login')) return;
 
-    const html = `
+    document.body.insertAdjacentHTML('beforeend', `
         <div id="modal-login" class="modal">
-            <div class="modal-content">
-                <span class="close-btn" data-close="login">&times;</span>
-                <h2>Login - Área do Aluno</h2>
-                
+            <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="titulo-login">
+                <button class="close-btn" type="button" data-close="login" aria-label="Fechar">&times;</button>
+                <h2 id="titulo-login">Login - Área do Aluno</h2>
                 <form id="form-login" novalidate>
+                    <div class="input-group campo-cadastro" hidden>
+                        <label for="login-nome">Nome completo</label>
+                        <input type="text" id="login-nome" autocomplete="name">
+                        <small class="input-feedback"></small>
+                    </div>
                     <div class="input-group">
                         <label for="login-email">E-mail</label>
                         <input type="email" id="login-email" placeholder="seuemail@dominio.com" required autocomplete="email">
                         <small class="input-feedback"></small>
                     </div>
-
                     <div class="input-group">
                         <label for="login-senha">Senha</label>
                         <div class="campo-senha-wrapper">
@@ -22,163 +25,182 @@ function injetarModalLogin() {
                         </div>
                         <small class="input-feedback"></small>
                     </div>
-
                     <div class="login-acoes-auxiliares">
                         <a href="#" id="link-esqueci-senha">Esqueceu sua senha?</a>
                     </div>
-
                     <button type="submit" id="btn-submit-login">Entrar na Plataforma</button>
+                    <p class="alternar-cadastro"><span id="texto-alternar">Ainda não tem conta?</span> <button type="button" id="link-cadastro">Cadastre-se</button></p>
                 </form>
             </div>
         </div>
-    `;
-    document.body.insertAdjacentHTML('beforeend', html);
+    `);
 }
 
-function inicializarBancoDados() {
-    const dbExistente = localStorage.getItem('nankim_db');
-    if (!dbExistente) {
-        const mockUsers = [
-            { id: 1, nome: "Estudante de Arte", email: "aluno@nankim.com", senha: "senha123" }
-        ];
-        localStorage.setItem('nankim_db', JSON.stringify(mockUsers));
+function obterUsuarios() {
+    const dados = localStorage.getItem('nankim_db');
+    if (!dados) return [];
+    try {
+        const usuarios = JSON.parse(dados);
+        if (!Array.isArray(usuarios)) throw new TypeError('O banco local precisa ser uma lista.');
+        return usuarios;
+    } catch (error) {
+        console.error('Não foi possível ler as contas locais da Nankim:', error);
+        throw error;
     }
-}
-
-function validarEmailFormatado(email) {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-}
-
-function limparMensagens(form) {
-    const alertas = form.querySelectorAll('.msg-erro, .msg-sucesso-info');
-    alertas.forEach(alerta => alerta.remove());
 }
 
 function configurarLogin() {
-    const formLogin = document.getElementById('form-login');
-    if (!formLogin) return;
+    const form = document.getElementById('form-login');
+    if (!form) return;
 
-    const emailInput = document.getElementById('login-email');
-    const senhaInput = document.getElementById('login-senha');
-    const btnToggleSenha = document.getElementById('btn-toggle-senha');
-    const linkEsqueciSenha = document.getElementById('link-esqueci-senha');
+    const nome = document.getElementById('login-nome');
+    const email = document.getElementById('login-email');
+    const senha = document.getElementById('login-senha');
     const btnSubmit = document.getElementById('btn-submit-login');
+    const btnCadastro = document.getElementById('link-cadastro');
+    const titulo = document.getElementById('titulo-login');
+    const textoAlternar = document.getElementById('texto-alternar');
+    let tituloLogin = 'Login - Área do Aluno';
+    let modoCadastro = false;
 
-    btnToggleSenha.addEventListener('click', () => {
-        const tipoAtual = senhaInput.getAttribute('type');
-        senhaInput.setAttribute('type', tipoAtual === 'password' ? 'text' : 'password');
-        btnToggleSenha.textContent = tipoAtual === 'password' ? '🙈' : '👁️';
-    });
-
-    function checarCampo(input, condicaoValida, mensagemErro) {
-        const grupo = input.closest('.input-group');
-        const feedback = grupo.querySelector('.input-feedback');
-
-        if (input.value.trim() === '') {
-            grupo.classList.remove('erro', 'sucesso');
-            feedback.textContent = '';
-            return false;
+    function mostrarMensagem(texto, tipo = 'msg-erro', mostrarLinkCursos = false) {
+        form.querySelectorAll('.msg-erro, .msg-sucesso-info').forEach((mensagem) => mensagem.remove());
+        if (!texto) return;
+        const mensagem = document.createElement('div');
+        mensagem.className = tipo;
+        mensagem.setAttribute('role', 'status');
+        mensagem.textContent = texto;
+        if (mostrarLinkCursos) {
+            const link = document.createElement('a');
+            link.href = 'cursos.html';
+            link.textContent = ' Ver cursos';
+            mensagem.append(link);
         }
-
-        if (condicaoValida) {
-            grupo.classList.remove('erro');
-            grupo.classList.add('sucesso');
-            feedback.textContent = '';
-            return true;
-        } else {
-            grupo.classList.remove('sucesso');
-            grupo.classList.add('erro');
-            feedback.textContent = mensagemErro;
-            return false;
-        }
+        form.insertBefore(mensagem, form.firstChild);
     }
 
-    emailInput.addEventListener('input', () => {
-        checarCampo(emailInput, validarEmailFormatado(emailInput.value.trim()), 'Insira um e-mail válido');
-    });
+    function trocarModoCadastro() {
+        modoCadastro = !modoCadastro;
+        const grupoNome = nome.closest('.input-group');
+        grupoNome.hidden = !modoCadastro;
+        nome.required = modoCadastro;
+        titulo.textContent = modoCadastro ? 'Crie sua conta Nankim' : tituloLogin;
+        btnSubmit.textContent = modoCadastro ? 'Criar cadastro' : 'Entrar na Plataforma';
+        textoAlternar.textContent = modoCadastro ? 'Já tem conta?' : 'Ainda não tem conta?';
+        btnCadastro.textContent = modoCadastro ? 'Fazer login' : 'Cadastre-se';
+        document.getElementById('link-esqueci-senha').hidden = modoCadastro;
+        mostrarMensagem('');
+    }
 
-    senhaInput.addEventListener('input', () => {
-        checarCampo(senhaInput, senhaInput.value.length >= 6, 'Mínimo de 6 caracteres');
-    });
+    btnCadastro.addEventListener('click', trocarModoCadastro);
+    document.addEventListener('click', (event) => {
+        const elemento = event.target instanceof Element ? event.target : null;
+        const botaoTrocarConta = elemento && elemento.closest('[data-account-switch]');
+        if (botaoTrocarConta) {
+            tituloLogin = 'Trocar de conta';
+            while (modoCadastro) trocarModoCadastro();
+            titulo.textContent = tituloLogin;
+            form.reset();
+            mostrarMensagem('Entre com a nova conta. Sua sessão atual continua ativa até o novo login ser confirmado.', 'msg-sucesso-info');
+            return;
+        }
 
-    linkEsqueciSenha.addEventListener('click', (e) => {
-        e.preventDefault();
-        limparMensagens(formLogin);
-        const email = emailInput.value.trim();
+        if (elemento && elemento.closest('[data-modal="login"]')) {
+            tituloLogin = 'Login - Área do Aluno';
+            if (!modoCadastro) titulo.textContent = tituloLogin;
+        }
 
-        if (validarEmailFormatado(email)) {
-            const divSucesso = document.createElement('div');
-            divSucesso.className = 'msg-sucesso-info';
-            divSucesso.innerHTML = `📧 Instruções enviadas para <strong>${email}</strong>`;
-            formLogin.insertBefore(divSucesso, formLogin.firstChild);
-            setTimeout(() => divSucesso.remove(), 5000);
-        } else {
-            const divErro = document.createElement('div');
-            divErro.className = 'msg-erro';
-            divErro.innerHTML = '⚠️ Digite um e-mail válido acima para recuperar sua senha.';
-            formLogin.insertBefore(divErro, formLogin.firstChild);
-            emailInput.focus();
+        if (elemento && elemento.closest('[data-modal-mode="cadastro"]')) {
+            if (!modoCadastro) btnCadastro.click();
         }
     });
 
-    formLogin.addEventListener('submit', (e) => {
-        e.preventDefault();
-        limparMensagens(formLogin);
+    document.getElementById('btn-toggle-senha').addEventListener('click', () => {
+        const visivel = senha.type === 'password';
+        senha.type = visivel ? 'text' : 'password';
+        document.getElementById('btn-toggle-senha').textContent = visivel ? '🙈' : '👁️';
+    });
 
-        const emailValido = checarCampo(emailInput, validarEmailFormatado(emailInput.value.trim()), 'Insira um e-mail válido');
-        const senhaValida = checarCampo(senhaInput, senhaInput.value.length >= 6, 'Digite sua senha');
+    document.getElementById('link-esqueci-senha').addEventListener('click', (event) => {
+        event.preventDefault();
+        mostrarMensagem('A recuperação de senha por e-mail ainda não está configurada.');
+    });
 
-        if (!emailValido || !senhaValida) return;
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        mostrarMensagem('');
+        const emailTratado = email.value.trim().toLowerCase();
+        const senhaValidaCadastro = senha.value.length >= 8 &&
+            /[A-Z]/.test(senha.value) && /[0-9]/.test(senha.value) && /[^A-Za-z0-9]/.test(senha.value);
 
-        const textoOriginal = btnSubmit.textContent;
-        btnSubmit.disabled = true;
-        btnSubmit.textContent = 'Autenticando...';
-        btnSubmit.style.opacity = '0.7';
-        btnSubmit.style.cursor = 'wait';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTratado) || senha.value.length < (modoCadastro ? 8 : 6)) {
+            mostrarMensagem(modoCadastro
+                ? 'Informe um e-mail válido e uma senha de pelo menos 8 caracteres.'
+                : 'Informe um e-mail válido e uma senha de pelo menos 6 caracteres.');
+            return;
+        }
 
-        setTimeout(() => {
-            const usuarios = JSON.parse(localStorage.getItem('nankim_db')) || [];
-            const emailTratado = emailInput.value.trim().toLowerCase();
-            
-            const usuarioEncontrado = usuarios.find(
-                user => user.email.toLowerCase() === emailTratado && user.senha === senhaInput.value
-            );
+        if (modoCadastro && (!nome.value.trim() || !senhaValidaCadastro)) {
+            mostrarMensagem('Informe seu nome e use uma senha com 8 caracteres, letra maiúscula, número e símbolo.');
+            return;
+        }
 
-            if (usuarioEncontrado) {
-                const sessao = { logado: true, nome: usuarioEncontrado.nome, email: usuarioEncontrado.email };
-                sessionStorage.setItem('nankim_sessao', JSON.stringify(sessao));
+        let usuarios;
+        try {
+            usuarios = obterUsuarios();
+        } catch {
+            mostrarMensagem('Não foi possível acessar os dados locais. Tente novamente ou limpe os dados do site.');
+            return;
+        }
 
-                btnSubmit.textContent = 'Acesso Liberado!';
-                btnSubmit.style.backgroundColor = '#27ae60';
-                btnSubmit.style.opacity = '1';
-                
-                setTimeout(() => window.location.href = 'area-aluno.html', 800);
-            } else {
-                btnSubmit.disabled = false;
-                btnSubmit.textContent = textoOriginal;
-                btnSubmit.style.opacity = '1';
-                btnSubmit.style.cursor = 'pointer';
-
-                const divErro = document.createElement('div');
-                divErro.className = 'msg-erro';
-                divErro.innerHTML = '⚠️ E-mail ou senha incorretos.';
-                formLogin.insertBefore(divErro, formLogin.firstChild);
-
-                const containerModal = formLogin.closest('.modal-content');
-                containerModal.classList.add('animar-shake');
-                setTimeout(() => containerModal.classList.remove('animar-shake'), 500);
-
-                senhaInput.value = '';
-                senhaInput.focus();
-                senhaInput.closest('.input-group').classList.remove('sucesso');
+        const usuario = usuarios.find((conta) => conta.email.toLowerCase() === emailTratado);
+        if (modoCadastro) {
+            if (usuario) {
+                mostrarMensagem('Este e-mail já possui cadastro. Faça login para continuar.');
+                return;
             }
-        }, 1200);
+            usuarios.push({
+                id: Date.now(),
+                nome: nome.value.trim(),
+                email: emailTratado,
+                senha: senha.value,
+                matriculado: false,
+                cursos: []
+            });
+            try {
+                localStorage.setItem('nankim_db', JSON.stringify(usuarios));
+            } catch (error) {
+                console.error('Não foi possível salvar o cadastro local:', error);
+                mostrarMensagem('Não foi possível salvar seu cadastro neste navegador. Verifique o espaço disponível e tente novamente.');
+                return;
+            }
+            trocarModoCadastro();
+            email.value = emailTratado;
+            mostrarMensagem('Cadastro criado. Para acessar as aulas, finalize a assinatura de um curso.', 'msg-sucesso-info', true);
+            return;
+        }
+
+        if (!usuario || usuario.senha !== senha.value) {
+            mostrarMensagem('E-mail ou senha incorretos.');
+            return;
+        }
+
+        try {
+            sessionStorage.setItem('nankim_sessao', JSON.stringify({
+                logado: true,
+                nome: usuario.nome,
+                email: usuario.email
+            }));
+        } catch (error) {
+            console.error('Não foi possível iniciar a sessão local:', error);
+            mostrarMensagem('Seu navegador não permitiu iniciar a sessão. Verifique as configurações de armazenamento e tente novamente.');
+            return;
+        }
+        window.location.href = 'area-aluno.html';
     });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     injetarModalLogin();
-    inicializarBancoDados();
-    setTimeout(configurarLogin, 100);
+    configurarLogin();
 });

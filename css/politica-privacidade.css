@@ -109,7 +109,7 @@ h1, h2, h3 {
 
 .politica-bloco {
     display: grid;
-    grid-template-columns: 1.3fr 0.8fr;
+    grid-template-columns: 1fr;
     gap: 1.6rem;
     align-items: center;
     margin-bottom: 1.6rem;
@@ -158,56 +158,6 @@ h1, h2, h3 {
     color: rgba(245, 242, 236, 0.82);
 }
 
-.espaco-desenho {
-    min-height: 250px;
-    margin: 1.1rem;
-    border-radius: 18px;
-    border: 2px solid rgba(215, 169, 59, 0.5);
-    background:
-        linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
-        linear-gradient(135deg, #a59e96 0%, #d6c7b5 38%, #9a9186 100%);
-    position: relative;
-    overflow: hidden;
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25);
-}
-
-.espaco-desenho::before,
-.espaco-desenho::after {
-    content: "";
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.7;
-}
-
-.espaco-desenho::before {
-    width: 140px;
-    height: 140px;
-    background: rgba(255, 255, 255, 0.12);
-    top: 30px;
-    left: 36px;
-    box-shadow: 0 0 0 12px rgba(255,255,255,0.05);
-}
-
-.espaco-desenho::after {
-    width: 170px;
-    height: 170px;
-    background: rgba(13, 27, 42, 0.12);
-    right: 30px;
-    bottom: 24px;
-}
-
-.politica-bloco:nth-child(2) .espaco-desenho {
-    background:
-        linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)),
-        linear-gradient(135deg, #d7d0c7 0%, #8f8b83 100%);
-}
-
-.politica-bloco:nth-child(3) .espaco-desenho {
-    background:
-        linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
-        linear-gradient(135deg, #d5c3a5 0%, #b6a381 52%, #8d7d63 100%);
-}
-
 @media (max-width: 768px) {
     .seta-avancar {
         top: 18px;
@@ -240,8 +190,4 @@ h1, h2, h3 {
         padding: 1.5rem 1.2rem;
     }
 
-    .espaco-desenho {
-        min-height: 210px;
-        margin: 0 1rem 1.2rem;
-    }
 }

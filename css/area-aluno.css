@@ -1,111 +1,454 @@
+.area-aluno-shell {
+    position: relative;
+    isolation: isolate;
+}
+
+.acesso-restrito {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 32px 20px;
+    background: rgba(8, 13, 19, 0.7);
+    -webkit-backdrop-filter: blur(9px);
+    backdrop-filter: blur(9px);
+}
+
+html[data-aluno-acesso="liberado"] .acesso-restrito {
+    display: none;
+}
+
+.card-acesso-restrito {
+    width: min(460px, 100%);
+    padding: clamp(28px, 6vw, 42px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 16px;
+    background: linear-gradient(145deg, #1d2d3c, #111b25);
+    color: #f4efe4;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.48);
+    text-align: center;
+}
+
+.icone-acesso-restrito {
+    display: grid;
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 20px;
+    place-items: center;
+    border: 1px solid rgba(231, 160, 146, 0.45);
+    border-radius: 50%;
+    background: rgba(179, 63, 48, 0.18);
+    color: #e7a092;
+    font-size: 1.8rem;
+}
+
+.card-acesso-restrito .painel-etiqueta {
+    color: #e7a092;
+}
+
+.card-acesso-restrito h1 {
+    margin: 0 0 12px;
+    color: #fff;
+    font-family: Georgia, serif;
+    font-size: clamp(1.8rem, 5vw, 2.3rem);
+}
+
+.card-acesso-restrito > p:not(.painel-etiqueta, .cadastro-restrito) {
+    margin: 0 auto 20px;
+    color: #d4dbe1;
+    line-height: 1.65;
+}
+
+.curso-ativo[hidden],
+.sem-cursos[hidden] {
+    display: none;
+}
+
+.sem-cursos {
+    padding: clamp(24px, 4vw, 36px);
+    border: 1px solid #e2dbcf;
+    border-radius: 10px;
+    background: #fbf8f1;
+    box-shadow: 0 12px 30px rgba(29, 45, 60, 0.08);
+}
+
+.sem-cursos h3 {
+    margin: 0 0 8px;
+    color: #1d2d3c;
+    font-family: Georgia, serif;
+    font-size: 1.4rem;
+}
+
+.sem-cursos p {
+    margin: 0 0 20px;
+    color: #57544e;
+    line-height: 1.6;
+}
+
+.botao-comprar-curso {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 18px;
+    border-radius: 6px;
+    background: #b33f30;
+    color: #fff;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.botao-comprar-curso:hover {
+    background: #912e23;
+}
+
+.botao-login-restrito {
+    width: 100%;
+    min-height: 50px;
+    padding: 12px 20px;
+    border: 0;
+    border-radius: 7px;
+    background: #b33f30;
+    color: #fff;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.botao-login-restrito:hover {
+    transform: translateY(-1px);
+    background: #c64d3d;
+}
+
+.botao-login-restrito:focus-visible,
+.cadastro-restrito button:focus-visible {
+    outline: 3px solid #f4efe4;
+    outline-offset: 3px;
+}
+
+.cadastro-restrito {
+    margin: 18px 0 0;
+    color: #c2cbd3;
+    font-size: 0.9rem;
+}
+
+.cadastro-restrito button {
+    padding: 4px;
+    border: 0;
+    background: transparent;
+    color: #f2a99c;
+    font: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
 .painel-aluno {
-    padding: 4rem 5%;
-    max-width: 1200px;
+    width: min(1180px, 100%);
+    min-height: 72vh;
     margin: 0 auto;
-    min-height: 70vh;
+    padding: 56px 5%;
+    color: #1d2d3c;
 }
 
 .boas-vindas {
-    margin-bottom: 3rem;
+    margin-bottom: 42px;
 }
 
-.curso-ativo {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 2rem;
+.painel-etiqueta {
+    margin: 0 0 8px;
+    color: #b33f30;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
 }
 
-.video-destaque {
-    background-color: #1a1a1a;
-    border-radius: 8px;
-    aspect-ratio: 16/9;
+.boas-vindas h1 {
+    margin-bottom: 8px;
+    font-family: Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+}
+
+.boas-vindas > p:last-child {
+    color: #57544e;
+}
+
+.secao-cabecalho {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: transform 0.2s ease;
+    align-items: end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 18px;
 }
 
-.video-destaque:hover {
-    transform: scale(0.99);
+.secao-cabecalho h2,
+.trilha-progresso h2 {
+    margin: 0;
+    color: #1d2d3c;
+    font-family: Georgia, serif;
+    font-size: 1.55rem;
 }
 
-.trilha-progresso {
-    background: #f9f9f9;
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid #eaeaea;
+.secao-cabecalho > a {
+    color: #8f3025;
+    font-weight: 700;
+    text-underline-offset: 3px;
+}
+
+.cartao-curso {
+    display: grid;
+    grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1.5fr);
+    overflow: hidden;
+    margin-bottom: 42px;
+    border: 1px solid #e2dbcf;
+    border-radius: 10px;
+    background: #fbf8f1;
+    box-shadow: 0 12px 30px rgba(29, 45, 60, 0.08);
+}
+
+.lista-meus-cursos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr));
+    gap: 22px;
+}
+
+.cartao-curso.curso-selecionado {
+    border-color: #b33f30;
+    box-shadow: 0 12px 30px rgba(179, 63, 48, 0.13);
+}
+
+.curso-capa {
+    display: grid;
+    min-height: 245px;
+    place-items: center;
+    background: radial-gradient(circle at 30% 28%, #b33f30, transparent 35%), linear-gradient(135deg, #24394d, #172b3e);
+    color: #f4efe4;
+    font-size: 4rem;
+}
+
+.curso-resumo {
+    padding: clamp(22px, 4vw, 36px);
+}
+
+.curso-resumo h3 {
+    margin-bottom: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.55rem;
+}
+
+.curso-resumo > p:not(.painel-etiqueta) {
+    margin-bottom: 22px;
+    color: #57544e;
+    line-height: 1.6;
+}
+
+.progresso-curso {
+    margin-bottom: 22px;
+}
+
+.progresso-legenda {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 9px;
+    font-size: 0.92rem;
+}
+
+.progresso-legenda strong {
+    color: #276f48;
 }
 
 .barra-fundo {
     width: 100%;
     height: 10px;
-    background: #e0e0e0;
-    border-radius: 5px;
-    margin: 1rem 0;
     overflow: hidden;
+    border-radius: 6px;
+    background: #dedbd4;
 }
 
 .barra-preenchimento {
+    width: 0;
     height: 100%;
+    border-radius: inherit;
     background: #27ae60;
+    transition: width 0.3s ease;
+}
+
+.botao-continuar {
+    display: inline-flex;
+    min-height: 46px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
     border-radius: 5px;
+    background: #b33f30;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.botao-continuar:hover {
+    background: #912e23;
+}
+
+.curso-ativo {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(260px, 0.8fr);
+    gap: 24px;
+}
+
+.aula-conteudo {
+    min-width: 0;
+}
+
+.video-destaque {
+    display: flex;
+    min-height: 280px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    border-radius: 9px;
+    background: #172b3e;
+    color: #fff;
+    text-align: center;
+}
+
+.video-destaque p {
+    margin: 12px 0 4px;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.video-destaque small {
+    color: #d2c9b8;
+}
+
+.icone-play {
+    display: grid;
+    width: 58px;
+    height: 58px;
+    place-items: center;
+    padding-left: 4px;
+    border-radius: 50%;
+    background: #b33f30;
+}
+
+.marcar-concluida {
+    min-height: 42px;
+    margin-top: 18px;
+    padding: 9px 15px;
+    border: 1px solid #f4efe4;
+    border-radius: 5px;
+    background: transparent;
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.marcar-concluida:hover {
+    background: #b33f30;
+}
+
+.trilha-progresso {
+    padding: 22px;
+    border: 1px solid #e2dbcf;
+    border-radius: 9px;
+    background: #fbf8f1;
+}
+
+.trilha-progresso h2 {
+    margin-bottom: 12px;
+    font-size: 1.25rem;
 }
 
 .lista-aulas {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 0;
     list-style: none;
-    margin-top: 1.5rem;
 }
 
-.lista-aulas li {
-    padding: 1rem 0;
-    border-bottom: 1px solid #ddd;
-    font-size: 0.95rem;
-    color: #777;
+.lista-aulas button {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background: transparent;
+    color: #57544e;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
 }
 
-.lista-aulas li:last-child {
-    border-bottom: none;
+.lista-aulas button:hover,
+.lista-aulas button.aula-atual {
+    border-color: #e8ddc9;
+    background: #f4efe4;
+    color: #8f3025;
+    font-weight: 700;
 }
 
-.lista-aulas li.concluida { color: #27ae60; }
-.lista-aulas li.atual { color: #f39c12; font-weight: bold; }
+.lista-aulas button.aula-concluida::before {
+    color: #27ae60;
+    content: "✓ ";
+}
 
-@media (max-width: 768px) {
-    .painel-aluno {
-        width: 100%;
-        padding: 2.5rem 6%;
+@media (max-width: 800px) {
+    .acesso-restrito {
+        padding: 24px 18px;
     }
 
+    .painel-aluno {
+        padding: 40px 6%;
+    }
+
+    .cartao-curso,
     .curso-ativo {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
     }
 
-    .boas-vindas {
-        margin-bottom: 2rem;
+    .curso-capa {
+        min-height: 150px;
+    }
+}
+
+@media (max-height: 620px) {
+    .acesso-restrito {
+        align-items: start;
+        padding-top: 20px;
     }
 
-    .boas-vindas h1 {
-        font-size: clamp(1.7rem, 7vw, 2.3rem);
-        line-height: 1.2;
+    .card-acesso-restrito {
+        padding: 20px;
     }
 
-    .video-destaque {
+    .icone-acesso-restrito {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 14px;
+    }
+}
+
+@media (max-width: 520px) {
+    .secao-cabecalho {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .progresso-legenda {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .botao-continuar {
         width: 100%;
-        font-size: clamp(1rem, 4vw, 1.35rem);
-        text-align: center;
-    }
-
-    .trilha-progresso {
-        min-width: 0;
-        padding: 1.25rem;
-    }
-
-    .lista-aulas li {
-        line-height: 1.5;
-        overflow-wrap: anywhere;
     }
 }
