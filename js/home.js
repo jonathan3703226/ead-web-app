@@ -78,3 +78,45 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+
+
+
+// Física de Parallax para o Losango da Seção 3
+document.addEventListener("DOMContentLoaded", () => {
+    const colunasLosango = [];
+    for (let i = 1; i <= 5; i++) {
+        colunasLosango[i] = document.getElementById("losango-col" + i);
+    }
+
+    let scrollAtual = window.scrollY;
+    let scrollAnimado = 0;
+
+    // Velocidades para criar profundidade e movimento oposto entre as colunas
+    const velocidadesLosango = {
+        1: -0.08, // Ponta esquerda sobe devagar
+        2: 0.06,  // Intermediária descendo suave
+        3: 0.00,  // Centro (Thiago) fixado para facilitar a leitura e clique
+        4: 0.06,  // Intermediária descendo suave
+        5: -0.08  // Ponta direita sobe devagar
+    };
+
+    window.addEventListener("scroll", () => {
+        scrollAtual = window.scrollY;
+    }, { passive: true });
+
+    function animarLosango() {
+        if (window.innerWidth > 900) {
+            scrollAnimado += (scrollAtual - scrollAnimado) * 0.05;
+
+            for (let i = 1; i <= 5; i++) {
+                if (colunasLosango[i]) {
+                    let deslocamento = scrollAnimado * velocidadesLosango[i];
+                    colunasLosango[i].style.transform = `translateY(${deslocamento}px)`;
+                }
+            }
+        }
+        requestAnimationFrame(animarLosango);
+    }
+
+    animarLosango();
+});
