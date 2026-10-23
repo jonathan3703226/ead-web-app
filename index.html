@@ -32,33 +32,123 @@
 <section class="super-header-gnomon">
     <div class="header-container-limpo">
         
-        <!-- 1. Título Lento em Escada -->
-        <h1 class="titulo-gnomon-gigante">
-            <span class="linha-topo">ESCOLA DE ARTE</span>
-            <span class="linha-baixo">& ILUSTRAÇÃO</span>
+        <!-- a - Título sem negrito, afastado do topo, com animação cruzada lenta -->
+        <h1 class="titulo-cuberto-estilo">
+            <span class="linha-esquerda">Escola de Arte</span>
+            <span class="linha-direita">& Ilustração</span>
         </h1>
 
-        <!-- 2. Pergunta Estática com 'sonho' vermelho -->
-        <h2 class="subtitulo-pergunta-cuberto">
-            Quantas vezes você já guardou o seu 
-            <span class="destaque-sonho">sonho</span> 
-            na gaveta?
-        </h2>
+        <!-- b - Pergunta em negrito com prefixo '//' vermelho e colada no vídeo -->
+        <div class="bloco-proposta-cta">
+            <h2 class="subtitulo-pergunta-cuberto">
+                <span class="prefixo-barra">//</span>
+                <span id="texto-digitado"></span><span class="cursor-typing">|</span>
+            </h2>
+        </div>
 
-        <!-- 3. Player de Vídeo Contido -->
+        <!-- c - Vídeo com texto na parte inferior e efeito de surgimento -->
         <div class="container-video-showreel">
             <video id="video-showreel-header" autoplay loop muted playsinline poster="./imagens/banner-caneta.jpg">
                 <source src="/assets/video/video.mp4" type="video/mp4">
                 Seu navegador não suporta a exibição de vídeos.
             </video>
+            
+            <div class="overlay-video"></div>
+            
+            <!-- Texto posicionado na parte inferior com animação -->
+            <div class="texto-sobre-video">
+                <p>O talento não é um dom reservado a poucos <br>— é método, técnica e constância.</p>
+            </div>
         </div>
 
-        <!-- 4. Efeito de Digitação Clássico -->
-        <div class="bloco-proposta-cta">
-            <p class="texto-digitacao-wrapper">
-                <span class="prefixo-barra">//</span>
-                <span id="texto-digitado"></span><span class="cursor-typing">|</span>
-            </p>
+    </div>
+</section>
+
+
+
+<!-- Seção 2: Vitrine de Cursos (Catálogo & Oferta) -->
+<section class="secao-vitrine-cursos" id="cursos">
+    <div class="container-vitrine">
+        
+        <!-- Cabeçalho com o Novo Texto Único -->
+        <div class="cabecalho-vitrine">
+            <h2 class="titulo-vitrine">
+                Do primeiro esboço ao portfólio profissional, ensinamos você a dominar o traço e dar vida às suas ideias.
+            </h2>
+        </div>
+
+        <!-- Grid de Cards dos Cursos -->
+        <div class="grid-cards-cursos">
+
+            <!-- Card 1 — Destaque (Disponível) com Selo Mais Vantajoso -->
+            <article class="card-curso card-disponivel card-com-bg" style="--bg-image: url('https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=80');">
+                <div class="overlay-card-bg"></div>
+                <div class="selo-destaque-card">MAIS VANTAJOSO</div>
+                
+                <div class="conteudo-card-wrapper">
+                    <div class="header-card-curso">
+                        <span class="tag-status status-disponivel">
+                            <span class="ponto-status"></span> DISPONÍVEL AGORA
+                        </span>
+                        <span class="categoria-curso">Fundamentos</span>
+                    </div>
+                    <div class="corpo-card-curso">
+                        <h3 class="nome-curso">Fundamentos do Desenho</h3>
+                        <p class="descricao-curso">A base sólida para destravar qualquer estilo. Domine formas, luz, sombra e perspectiva.</p>
+                    </div>
+                    <div class="footer-card-curso">
+                        <div class="bloco-preco">
+                            <span class="rotulo-preco">Na Assinatura:</span>
+                            <div class="preco-destaque-card">R$ 49,90 <span class="mes">/mês</span></div>
+                            <span class="preco-avulso">ou R$ 79,90 avulso</span>
+                        </div>
+                        <a href="#assinar" class="btn-card-cta">Assinar por R$ 49,90</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 2 — Intermediário (Em Breve) -->
+            <article class="card-curso card-em-breve card-com-bg" style="--bg-image: url('https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80');">
+                <div class="overlay-card-bg"></div>
+                
+                <div class="conteudo-card-wrapper">
+                    <div class="header-card-curso">
+                        <span class="tag-status status-em-breve">
+                            <span class="icone-cadeado">🔒</span> EM BREVE
+                        </span>
+                        <span class="categoria-curso">Intermediário</span>
+                    </div>
+                    <div class="corpo-card-curso">
+                        <h3 class="nome-curso">Anatomia Humana</h3>
+                        <p class="descricao-curso">Proporções, musculatura e pose com dinamismo e precisão para elevar suas criações.</p>
+                    </div>
+                    <div class="footer-card-curso">
+                        <button class="btn-card-bloqueado" disabled>Em breve no catálogo</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 3 — Avançado (Em Breve) -->
+            <article class="card-curso card-em-breve card-com-bg" style="--bg-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80');">
+                <div class="overlay-card-bg"></div>
+                
+                <div class="conteudo-card-wrapper">
+                    <div class="header-card-curso">
+                        <span class="tag-status status-em-breve">
+                            <span class="icone-cadeado">🔒</span> EM BREVE
+                        </span>
+                        <span class="categoria-curso">Avançado</span>
+                    </div>
+                    <div class="corpo-card-curso">
+                        <h3 class="nome-curso">Ilustração Digital</h3>
+                        <p class="descricao-curso">Pintura, acabamento profissional e workflows completos voltados para o mercado.</p>
+                    </div>
+                    <div class="footer-card-curso">
+                        <button class="btn-card-bloqueado" disabled>Em breve no catálogo</button>
+                    </div>
+                </div>
+            </article>
+
         </div>
 
     </div>

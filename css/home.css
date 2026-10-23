@@ -12,9 +12,9 @@ main * {
    Área 1 - SUPER Header
    ========================================================== */
 .super-header-gnomon {
-    background-color: #ffffff !important; /* Força o fundo branco */
+    background-color: #ffffff !important; 
     color: #000000;
-    padding: 5rem 0 4rem 0;
+    padding: 8rem 0 3rem 0; /* Afastado do topo (8rem) */
     width: 100%;
     overflow: hidden;
 }
@@ -28,105 +28,57 @@ main * {
     align-items: center;
 }
 
-/* 1. Título Animado Lento */
-.titulo-gnomon-gigante {
-    font-family: 'Share Tech', sans-serif !important;
-    font-size: clamp(2.5rem, 7.5vw, 6.5rem) !important;
-    line-height: 0.88 !important;
+/* a - Título Sem Negrito com Efeitos Lentos da Esquerda/Direita */
+.titulo-cuberto-estilo {
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: clamp(2.8rem, 6vw, 5.2rem) !important; 
+    font-weight: 600 !important; /* Sem negrito conforme solicitado */
     color: #000000;
+    text-align: center;
+    line-height: 1.1;
+    max-width: 950px;
+    margin-bottom: 2.5rem;
+    letter-spacing: -1.5px;
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 900px;
-    margin-bottom: 2.5rem;
-    margin-top: 2rem;
-    letter-spacing: -2px;
 }
 
-.linha-topo {
+.linha-esquerda {
     display: block;
-    text-align: left;
-    align-self: flex-start;
-    font-family: 'Share Tech', sans-serif !important;
-    font-weight: 400 !important;
-    -webkit-text-stroke: 1.5px #000000;
-    animation: entrarDaEsquerdaLento 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    align-self: center;
+    opacity: 0;
+    animation: entrarEsquerdaLento 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.linha-baixo {
+.linha-direita {
     display: block;
-    text-align: right;
-    align-self: flex-end;
-    font-family: 'Share Tech', sans-serif !important;
-    font-weight: 400 !important;
-    -webkit-text-stroke: 1.5px #000000;
-    animation: entrarDaDireitaLento 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    align-self: center;
+    opacity: 0;
+    animation: entrarDireitaLento 2.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
 }
 
-/* 2. Pergunta Elegante */
-.subtitulo-pergunta-cuberto {
-    font-family: 'Lobster Two', cursive;
-    font-size: clamp(1.2rem, 2vw, 1.8rem);
-    font-weight: 700;
-    color: #1a1a1a;
-    margin-bottom: 2.5rem;
-    text-align: center;
-}
-
-.destaque-sonho {
-    font-family: 'Caveat', cursive;
-    font-size: 1.5em;
-    font-weight: 700;
-    color: #b33f30; /* Vermelho Nankim */
-    background-color: transparent !important; /* Remove o bloco preto */
-    display: inline-block;
-    transform: rotate(-2deg);
-    text-decoration: underline;
-    text-decoration-color: #b33f30;
-    text-underline-offset: 3px;
-    line-height: 1;
-}
-
-/* 3. Vídeo Contido (Sem vazar) */
-.container-video-showreel {
-    width: 100%;
-    max-width: 1000px; /* Trava a largura do vídeo */
-    aspect-ratio: 16 / 8;
-    border-radius: 20px;
-    overflow: hidden;
-    margin-bottom: 2.5rem;
-    background-color: #f4f4f4;
-    animation: expandirVideoLento 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.container-video-showreel video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-/* 4. Digitação Clássica */
+/* b - Pergunta em Negrito com Prefixo // e Encostada no Vídeo */
 .bloco-proposta-cta {
     width: 100%;
-    max-width: 1000px;
     display: flex;
-    justify-content: flex-start;
-    text-align: left;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 0.5rem; /* Margem quase nula para colar no vídeo */
+    min-height: 40px;
 }
 
-.texto-digitacao-wrapper {
-    font-family: 'Caveat', cursive;
-    font-size: clamp(1.6rem, 2.5vw, 2.4rem);
-    font-weight: 600;
+.subtitulo-pergunta-cuberto {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-weight: 400 !important; /* Em negrito */
     color: #1a1a1a;
-    line-height: 1.3;
 }
 
 .prefixo-barra {
     color: #b33f30;
-    margin-right: 8px;
-    font-weight: 700;
+    margin-right: 6px;
+    font-weight: 800;
 }
 
 .cursor-typing {
@@ -136,11 +88,326 @@ main * {
     animation: piscarCursor 0.8s infinite;
 }
 
-/* Keyframes */
+/* c - Vídeo com Texto Inferior e Efeito de Surgimento */
+.container-video-showreel {
+    width: 100%;
+    max-width: 1050px;
+    aspect-ratio: 16 / 7;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 0; /* Colado na pergunta acima */
+    margin-bottom: 2.5rem;
+    background-color: #000;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    opacity: 0;
+    animation: fadeUpScaleLento 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+}
+
+.container-video-showreel video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.overlay-video {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,0.7) 100%); /* Sombra suave focada na base */
+    z-index: 1;
+}
+
+/* Texto posicionado na parte inferior */
+.texto-sobre-video {
+    position: absolute;
+    bottom: 8%; /* Ajustado para a parte inferior */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    width: 90%;
+    text-align: center;
+    opacity: 0;
+    animation: subirTextoVideo 1.8s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards; /* Efeito de subida e revelação */
+}
+
+.texto-sobre-video p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 1.4;
+    letter-spacing: -0.5px;
+}
+
+/* Keyframes Refinados */
+@keyframes entrarEsquerdaLento {
+    from { opacity: 0; transform: translateX(-120px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes entrarDireitaLento {
+    from { opacity: 0; transform: translateX(120px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes subirTextoVideo {
+    from { opacity: 0; transform: translate(-50%, 30px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
 @keyframes piscarCursor { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-@keyframes entrarDaEsquerdaLento { from { opacity: 0; transform: translateX(-150px); } to { opacity: 1; transform: translateX(0); } }
-@keyframes entrarDaDireitaLento { from { opacity: 0; transform: translateX(150px); } to { opacity: 1; transform: translateX(0); } }
-@keyframes expandirVideoLento { from { opacity: 0; transform: scale(0.96) translateY(30px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+@keyframes fadeUpScaleLento { 
+    from { opacity: 0; transform: translateY(30px) scale(0.96); } 
+    to { opacity: 1; transform: translateY(0) scale(1); } 
+}
+
+
+/* ==========================================================
+   Seção 2: Vitrine de Cursos (Catálogo & Oferta)
+   ========================================================== */
+.secao-vitrine-cursos {
+    background-color: #ffffff !important; /* Fundo mantido branco */
+    padding: 6rem 2% 7rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.container-vitrine {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 4%;
+}
+
+.cabecalho-vitrine {
+    text-align: center;
+    margin-bottom: 4rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.titulo-vitrine {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+    font-weight: 600;
+    color: #111111;
+    line-height: 1.4;
+    letter-spacing: -0.5px;
+}
+
+/* Grid e Cards com Imagem de Fundo */
+.grid-cards-cursos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.card-curso {
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background-size: cover;
+    background-position: center;
+    background-image: var(--bg-image);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Camada escura sobre a imagem do card para dar leitura ao texto */
+.overlay-card-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.96) 100%);
+    backdrop-filter: blur(3px);
+    z-index: 1;
+    transition: background 0.3s ease;
+}
+
+.card-curso:hover .overlay-card-bg {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.93) 100%);
+}
+
+.conteudo-card-wrapper {
+    position: relative;
+    z-index: 2;
+    padding: 2.2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+/* Selo MAIS VANTAJOSO no 1º Quadro */
+.selo-destaque-card {
+    position: absolute;
+    top: 0;
+    right: 2rem;
+    background-color: #b33f30;
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 0.4rem 0.9rem;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    z-index: 3;
+    box-shadow: 0 4px 10px rgba(179, 63, 48, 0.3);
+}
+
+.card-disponivel:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    border-color: #111111;
+}
+
+.card-em-breve {
+    opacity: 0.85;
+}
+
+/* Tags de Status */
+.header-card-curso {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.tag-status {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 0.35rem 0.75rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-disponivel {
+    background-color: #e6f7ed;
+    color: #0d8a43;
+}
+
+.ponto-status {
+    width: 7px;
+    height: 7px;
+    background-color: #0d8a43;
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulsarVerde 1.5s infinite;
+}
+
+.status-em-breve {
+    background-color: #f0f0f0;
+    color: #666666;
+}
+
+.categoria-curso {
+    font-size: 0.8rem;
+    color: #777777;
+    font-weight: 600;
+}
+
+/* Corpo do Card */
+.nome-curso {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 0.75rem;
+}
+
+.descricao-curso {
+    font-size: 0.92rem;
+    color: #444444;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+}
+
+/* Preço e Botões */
+.bloco-preco {
+    margin-bottom: 1.2rem;
+}
+
+.rotulo-preco {
+    font-size: 0.78rem;
+    color: #666666;
+    display: block;
+}
+
+.preco-destaque-card {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #111111;
+}
+
+.preco-destaque-card .mes {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #555555;
+}
+
+.preco-avulso {
+    font-size: 0.82rem;
+    color: #777777;
+    display: block;
+    margin-top: 2px;
+}
+
+.btn-card-cta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: #111111;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.9rem;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: background-color 0.25s ease, transform 0.2s ease;
+}
+
+.btn-card-cta:hover {
+    background-color: #b33f30;
+}
+
+.btn-card-bloqueado {
+    width: 100%;
+    background-color: #e5e5e5;
+    color: #888888;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.9rem;
+    border-radius: 12px;
+    border: none;
+    cursor: not-allowed;
+}
+
+/* Classes para Revelação ao Rolar a Página (Scroll Reveal) */
+.revelar-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.revelar-scroll.visivel {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes pulsarVerde {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.25); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+
+
 
 /* ==========================================================
    Seção 3: Prova Visual (Galeria em Losango com Card Central)
