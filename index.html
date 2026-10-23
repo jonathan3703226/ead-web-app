@@ -5,14 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nankim Escola de Arte | Home</title>
+
+    <!-- Conexão Prévia Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Comfortaa:wght@500;600;700&family=Lobster&display=swap" rel="stylesheet">
+
+    <!-- Unificação de Todas as Fontes em uma Única Requisição -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Comfortaa:wght@500;600;700&family=Lobster&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:wght@400;500;600;700;900&family=Share+Tech&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/global.css">
     <link rel="stylesheet" href="./css/home.css">
@@ -24,113 +25,107 @@
     <div id="header-container"></div>
 
     <main>
-        <!-- Área 1: SUPER Header -->
-<section class="secao-super-header" aria-labelledby="titulo-hero-principal">
-    <div class="super-header-conteudo">
+
+
+
+<!-- Área 1: SUPER Header -->
+<section class="super-header-gnomon">
+    <div class="header-container-limpo">
         
-        <!-- 1. Tag Superior -->
-        <span class="tag-superior">// ESCOLA DE ARTE & ILUSTRAÇÃO</span>
-        
-        <!-- 2. Título Principal (H1) -->
-        <h1 id="titulo-hero-principal" class="titulo-gigante">
+        <!-- 1. Título Lento em Escada -->
+        <h1 class="titulo-gnomon-gigante">
+            <span class="linha-topo">ESCOLA DE ARTE</span>
+            <span class="linha-baixo">& ILUSTRAÇÃO</span>
+        </h1>
+
+        <!-- 2. Pergunta Estática com 'sonho' vermelho -->
+        <h2 class="subtitulo-pergunta-cuberto">
             Quantas vezes você já guardou o seu 
             <span class="destaque-sonho">sonho</span> 
             na gaveta?
-        </h1>
-        
-        <!-- 4. Subtítulo / Proposta de Valor -->
-        <p class="subtitulo-valor">
-            O talento não é um dom reservado a poucos — é método, técnica e constância. Do primeiro esboço ao portfólio profissional, ensinamos você a dominar o traço e dar vida às suas ideias.
-        </p>
-        
-        <!-- 5. Chamada para Ação (CTA) -->
-        <div class="cta-wrapper">
-            <a href="cursos.html" class="btn-primario-super">Conhecer Cursos</a>
-        </div>
+        </h2>
 
-    </div>
-
-    <!-- 3. Player de Vídeo Principal -->
-    <div class="super-header-midia">
-        <div class="video-container-principal">
+        <!-- 3. Player de Vídeo Contido -->
+        <div class="container-video-showreel">
             <video id="video-showreel-header" autoplay loop muted playsinline poster="./imagens/banner-caneta.jpg">
                 <source src="/assets/video/video.mp4" type="video/mp4">
                 Seu navegador não suporta a exibição de vídeos.
             </video>
         </div>
+
+        <!-- 4. Efeito de Digitação Clássico -->
+        <div class="bloco-proposta-cta">
+            <p class="texto-digitacao-wrapper">
+                <span class="prefixo-barra">//</span>
+                <span id="texto-digitado"></span><span class="cursor-typing">|</span>
+            </p>
+        </div>
+
     </div>
 </section>
 
-<!-- Mantemos o divisor de onda, se você ainda quiser a transição para a próxima seção -->
-<div class="divisor-onda-ics" aria-hidden="true">
-    <svg viewBox="0 0 1440 90" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0,30 Q360,90 720,45 T1440,30 L1440,90 L0,90 Z" fill="#1a1a1a"/>
-    </svg>
-</div>
-        
-        
-        
-                
-        
-        
-<!-- Seção 3: Prova Visual (A Inspiração) -->
-<section class="secao-prova-visual" aria-labelledby="titulo-prova-visual">
-    
-    <div class="cabecalho-prova-visual">
-        <h2 id="titulo-prova-visual">Seus desenhos podem ser assim.</h2>
-    </div>
 
-    <!-- Container em Formato de Losango/Diamante -->
-    <div class="grid-losango-wrapper">
-        
-        <!-- Coluna 1 (Ponta Esquerda) -->
-        <div class="col-losango col-ponta" id="losango-col1">
-            <img src="./imagens/arte 1.jpg" alt="Arte de Aluno 1" class="img-losango img-g">
-            <img src="./imagens/arte 2.jpg" alt="Arte de Aluno 2" class="img-losango img-m">
-        </div>
+        <!-- Seção 3: Prova Visual (A Inspiração) -->
+        <section class="secao-prova-visual" aria-labelledby="titulo-prova-visual">
 
-        <!-- Coluna 2 (Intermediária Esquerda) -->
-        <div class="col-losango col-media" id="losango-col2">
-            <img src="./imagens/arte 3.jpg" alt="Arte de Aluno 3" class="img-losango img-m">
-            <img src="./imagens/arte 4.jpg" alt="Arte de Aluno 4" class="img-losango img-g">
-            <img src="./imagens/arte 5.jpg" alt="Arte de Aluno 5" class="img-losango img-m">
-        </div>
+            <div class="cabecalho-prova-visual">
+                <h2 id="titulo-prova-visual">Seus desenhos podem ser assim.</h2>
+            </div>
 
-        <!-- Coluna 3 (Coluna Central com o Card do Fundador) -->
-        <div class="col-losango col-centro" id="losango-col3">
-            <img src="./imagens/arte 6.jpg" alt="Arte no Topo" class="img-losango img-m">
+            <!-- Container em Formato de Losango/Diamante -->
+            <div class="grid-losango-wrapper">
 
-            <!-- CARD CENTRAL DO THIAGO (FUNDADOR) -->
-            <a href="quem-somos.html" class="card-fundador-centro" aria-label="Conheça Thiago, fundador da Nankim">
-                <div class="foto-thiago-wrapper">
-                    <img src="/imagens/thiago.jpg" alt="Thiago - Fundador da Nankim" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'">
+                <!-- Coluna 1 (Ponta Esquerda) -->
+                <div class="col-losango col-ponta" id="losango-col1">
+                    <img src="./imagens/arte 1.jpg" alt="Arte de Aluno 1" class="img-losango img-g">
+                    <img src="./imagens/arte 2.jpg" alt="Arte de Aluno 2" class="img-losango img-m">
                 </div>
-                <div class="conteudo-card-fundador">
-                    <span class="tag-fundador">FUNDADOR NANKIM</span>
-                    <p class="texto-fundador">Obras reais desenvolvidas por Thiago, fundador da Nankim. Conheça quem vai guiar a sua evolução.</p>
-                    <span class="link-conhecer">Conhecer História ➔</span>
+
+                <!-- Coluna 2 (Intermediária Esquerda) -->
+                <div class="col-losango col-media" id="losango-col2">
+                    <img src="./imagens/arte 3.jpg" alt="Arte de Aluno 3" class="img-losango img-m">
+                    <img src="./imagens/arte 4.jpg" alt="Arte de Aluno 4" class="img-losango img-g">
+                    <img src="./imagens/arte 5.jpg" alt="Arte de Aluno 5" class="img-losango img-m">
                 </div>
-            </a>
 
-            <img src="./imagens/arte 7.jpg" alt="Arte na Base" class="img-losango img-m">
-        </div>
+                <!-- Coluna 3 (Coluna Central com o Card do Fundador) -->
+                <div class="col-losango col-centro" id="losango-col3">
+                    <img src="./imagens/arte 6.jpg" alt="Arte no Topo" class="img-losango img-m">
 
-        <!-- Coluna 4 (Intermediária Direita) -->
-        <div class="col-losango col-media" id="losango-col4">
-            <img src="./imagens/arte 8.jpg" alt="Arte de Aluno 8" class="img-losango img-m">
-            <img src="./imagens/arte 9.jpg" alt="Arte de Aluno 9" class="img-losango img-g">
-            <img src="./imagens/arte 10.jpg" alt="Arte de Aluno 10" class="img-losango img-m">
-        </div>
+                    <!-- CARD CENTRAL DO THIAGO (FUNDADOR) -->
+                    <a href="quem-somos.html" class="card-fundador-centro"
+                        aria-label="Conheça Thiago, fundador da Nankim">
+                        <div class="foto-thiago-wrapper">
+                            <img src="/imagens/thiago.jpg" alt="Thiago - Fundador da Nankim"
+                                onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'">
+                        </div>
+                        <div class="conteudo-card-fundador">
+                            <span class="tag-fundador">FUNDADOR NANKIM</span>
+                            <p class="texto-fundador">Obras reais desenvolvidas por Thiago, fundador da Nankim. Conheça
+                                quem vai guiar a sua evolução.</p>
+                            <span class="link-conhecer">Conhecer História ➔</span>
+                        </div>
+                    </a>
 
-        <!-- Coluna 5 (Ponta Direita) -->
-        <div class="col-losango col-ponta" id="losango-col5">
-            <img src="./imagens/arte 11.jpg" alt="Arte de Aluno 11" class="img-losango img-g">
-            <img src="./imagens/arte 12.jpg" alt="Arte de Aluno 12" class="img-losango img-m">
-        </div>
+                    <img src="./imagens/arte 7.jpg" alt="Arte na Base" class="img-losango img-m">
+                </div>
 
-    </div>
+                <!-- Coluna 4 (Intermediária Direita) -->
+                <div class="col-losango col-media" id="losango-col4">
+                    <img src="./imagens/arte 8.jpg" alt="Arte de Aluno 8" class="img-losango img-m">
+                    <img src="./imagens/arte 9.jpg" alt="Arte de Aluno 9" class="img-losango img-g">
+                    <img src="./imagens/arte 10.jpg" alt="Arte de Aluno 10" class="img-losango img-m">
+                </div>
 
-</section>        
+                <!-- Coluna 5 (Ponta Direita) -->
+                <div class="col-losango col-ponta" id="losango-col5">
+                    <img src="./imagens/arte 11.jpg" alt="Arte de Aluno 11" class="img-losango img-g">
+                    <img src="./imagens/arte 12.jpg" alt="Arte de Aluno 12" class="img-losango img-m">
+                </div>
+
+            </div>
+
+        </section>
 
 
 

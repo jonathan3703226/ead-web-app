@@ -120,3 +120,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
     animarLosango();
 });
+document.addEventListener("DOMContentLoaded", () => {
+    const elementoTexto = document.getElementById("texto-digitado");
+    if (!elementoTexto) return;
+
+    const textoCompleto = "O talento não é um dom reservado a poucos — é método, técnica e constância.";
+    let index = 0;
+    let apagando = false;
+    const velocidadeDigitacao = 60; 
+    const velocidadeApagar = 30;    
+    const pausaAposEscribir = 3000; 
+
+    function efeitoDigitacaoLoop() {
+        if (!apagando && index < textoCompleto.length) {
+            elementoTexto.textContent += textoCompleto.charAt(index);
+            index++;
+            setTimeout(efeitoDigitacaoLoop, velocidadeDigitacao);
+        } else if (!apagando && index === textoCompleto.length) {
+            setTimeout(() => {
+                apagando = true;
+                efeitoDigitacaoLoop();
+            }, pausaAposEscribir);
+        } else if (apagando && index > 0) {
+            elementoTexto.textContent = textoCompleto.substring(0, index - 1);
+            index--;
+            setTimeout(efeitoDigitacaoLoop, velocidadeApagar);
+        } else if (apagando && index === 0) {
+            apagando = false;
+            setTimeout(efeitoDigitacaoLoop, 500);
+        }
+    }
+
+    efeitoDigitacaoLoop();
+});
