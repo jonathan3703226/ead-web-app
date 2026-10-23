@@ -66,55 +66,54 @@
 
 
 
-<!-- Seção 2: Vitrine de Cursos (Estilo Cuberto Dark) -->
-<section class="secao-vitrine-cursos cuberto-dark-section" id="cursos">
+<<!-- Bloco Escuro Estilo Cuberto (Unifica Seção 2 e Seção 3) -->
+<div class="cuberto-dark-section">
+
+  <!-- Seção 2: Vitrine de Cursos -->
+<section class="secao-vitrine-cursos" id="cursos">
     <div class="container-vitrine">
         
-        <!-- Cabeçalho -->
         <div class="cabecalho-vitrine">
-            <h2 class="titulo-vitrine">
-                Do primeiro esboço ao portfólio profissional, ensinamos você a dominar o traço e dar vida às suas ideias.
+            <h2 class="titulo-destaque-vitrine">
+                Do primeiro esboço ao portfólio profissional
             </h2>
+            <p class="subtitulo-detalhe-vitrine">
+                Ensinamos você a dominar o traço e dar vida às suas ideias.
+            </p>
         </div>
 
-        <!-- Grid de Cards -->
         <div class="grid-cards-cursos">
 
             <!-- Card 1 — Destaque (Disponível) -->
             <article class="card-curso card-disponivel card-com-video">
-                <!-- Vídeo de Fundo que toca ao passar o mouse -->
-                <video class="video-bg-card" loop muted playsinline poster="./imagens/banner-caneta.jpg">
+                <video class="video-bg-card" loop muted playsinline preload="metadata">
                     <source src="./assets/video/video-fundamento.mp4" type="video/mp4">
+                    <source src="/assets/video/video-fundamento.mp4" type="video/mp4">
                 </video>
                 <div class="overlay-card-bg"></div>
-                <div class="selo-destaque-card">MAIS VANTAJOSO</div>
                 
                 <div class="conteudo-card-wrapper">
                     <div class="header-card-curso">
                         <span class="tag-status status-disponivel">
                             <span class="ponto-status"></span> DISPONÍVEL AGORA
                         </span>
-                        <span class="categoria-curso">Fundamentos</span>
+                        <span class="categoria-curso">Básico</span>
                     </div>
                     <div class="corpo-card-curso">
                         <h3 class="nome-curso">Fundamentos do Desenho</h3>
                         <p class="descricao-curso">A base sólida para destravar qualquer estilo. Domine formas, luz, sombra e perspectiva.</p>
                     </div>
                     <div class="footer-card-curso">
-                        <div class="bloco-preco">
-                            <span class="rotulo-preco">Na Assinatura:</span>
-                            <div class="preco-destaque-card">R$ 49,90 <span class="mes">/mês</span></div>
-                            <span class="preco-avulso">ou R$ 79,90 avulso</span>
-                        </div>
-                        <a href="#assinar" class="btn-card-cta">Assinar por R$ 49,90</a>
+                        <a href="cursos.html" class="btn-card-cta">Conhecer o Curso</a>
                     </div>
                 </div>
             </article>
 
             <!-- Card 2 — Intermediário (Em Breve) -->
             <article class="card-curso card-em-breve card-com-video">
-                <video class="video-bg-card" loop muted playsinline poster="./imagens/arte 3.jpg">
+                <video class="video-bg-card" loop muted playsinline preload="metadata">
                     <source src="./assets/video/video-anatomia.mp4" type="video/mp4">
+                    <source src="/assets/video/video-anatomia.mp4" type="video/mp4">
                 </video>
                 <div class="overlay-card-bg"></div>
                 
@@ -137,8 +136,9 @@
 
             <!-- Card 3 — Avançado (Em Breve) -->
             <article class="card-curso card-em-breve card-com-video">
-                <video class="video-bg-card" loop muted playsinline poster="./imagens/arte 9.jpg">
+                <video class="video-bg-card" loop muted playsinline preload="metadata">
                     <source src="./assets/video/video-digital.mp4" type="video/mp4">
+                    <source src="/assets/video/video-digital.mp4" type="video/mp4">
                 </video>
                 <div class="overlay-card-bg"></div>
                 
@@ -164,6 +164,72 @@
     </div>
 </section>
 
+    <!-- 5. Seção Degustação da Plataforma -->
+    <section class="secao-degustacao-plataforma" id="degustacao">
+        <div class="container-degustacao">
+            
+            <!-- Cabeçalho Degustação -->
+            <div class="cabecalho-degustacao">
+                <span class="badge-gratuito">100% GRATUITO</span>
+                <h2 class="titulo-degustacao">Quer experimentar antes de decidir?</h2>
+            </div>
+
+            <!-- Conteúdo Principal em Duas Colunas -->
+            <div class="grid-degustacao">
+                
+                <!-- Lado Esquerdo: Mockup da Interface -->
+                <div class="coluna-mockup-degustacao">
+                    <div class="moldura-mockup-player">
+                        <div class="barra-superior-mockup">
+                            <span class="bolinha vermelho"></span>
+                            <span class="bolinha amarelo"></span>
+                            <span class="bolinha verde"></span>
+                            <span class="titulo-aba-mockup">AULA DEGUSTAÇÃO — NANKIM EAD</span>
+                        </div>
+                        <div class="corpo-player-mockup">
+                            <video autoplay loop muted playsinline poster="./imagens/banner-caneta.jpg">
+                                <source src="/assets/video/video.mp4" type="video/mp4">
+                            </video>
+                            <div class="tag-ao-vivo">AULA GRATUITA</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lado Direito: Benefícios & CTA -->
+                <div class="coluna-beneficios-degustacao">
+                    <ul class="lista-beneficios-degustacao">
+                        <li class="item-beneficio">
+                            <span class="icone-beneficio">🎬</span>
+                            <div>
+                                <h4>Aula Prática Completa</h4>
+                                <p>Conteúdo direto ao ponto extraído dos cursos oficiais.</p>
+                            </div>
+                        </li>
+                        <li class="item-beneficio">
+                            <span class="icone-beneficio">💻</span>
+                            <div>
+                                <h4>Acesso Direto à Plataforma</h4>
+                                <p>Navegue pela interface e sinta a experiência do aluno Nankim.</p>
+                            </div>
+                        </li>
+                        <li class="item-beneficio">
+                            <span class="icone-beneficio">✏️</span>
+                            <div>
+                                <h4>Exercício Guiado</h4>
+                                <p>Coloque a mão na massa e veja seu progresso no primeiro dia.</p>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <a href="cadastro.html" class="btn-degustacao-cta">Quero Testar a Plataforma Grátis</a>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+</div>
 
         <!-- Seção 3: Prova Visual (A Inspiração) -->
         <section class="secao-prova-visual" aria-labelledby="titulo-prova-visual">

@@ -165,19 +165,25 @@ main * {
 
 
 
-
 /* ==========================================================
-   Seção 2: Vitrine de Cursos (Estilo Cuberto Dark)
+   Bloco Escuro Unificado — Estilo Cuberto
    ========================================================== */
 .cuberto-dark-section {
-    background-color: #0d0d0d !important; /* Fundo preto elegante */
+    background-color: #0a0a0a !important;
     color: #ffffff;
-    padding: 7rem 2% 8rem;
-    border-top-left-radius: 40px; /* Bordas arredondadas idênticas ao site Cuberto */
+    padding: 7rem 0 8rem;
+    border-top-left-radius: 40px; /* Bordas arredondadas inspiradas no site Cuberto */
     border-top-right-radius: 40px;
-    margin-top: -20px; /* Leve sobreposição sobre a seção branca superior */
+    margin-top: -20px; /* Leve sobreposição sobre a seção clara superior */
     position: relative;
     z-index: 5;
+}
+
+/* ==========================================================
+   Seção 2: Vitrine de Cursos (Vídeos Visíveis)
+   ========================================================== */
+.secao-vitrine-cursos {
+    width: 100%;
 }
 
 .container-vitrine {
@@ -186,24 +192,34 @@ main * {
     padding: 0 4%;
 }
 
+/* 1. Cabeçalho */
 .cabecalho-vitrine {
     text-align: center;
-    margin-bottom: 4.5rem;
+    margin-bottom: 4rem;
     max-width: 900px;
     margin-left: auto;
     margin-right: auto;
 }
 
-.titulo-vitrine {
+.titulo-destaque-vitrine {
     font-family: 'Montserrat', sans-serif;
-    font-size: clamp(1.4rem, 2.5vw, 2.2rem);
-    font-weight: 500;
+    font-size: clamp(2rem, 3.8vw, 3.2rem);
+    font-weight: 800 !important;
     color: #ffffff;
-    line-height: 1.4;
-    letter-spacing: -0.5px;
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+    margin-bottom: 1rem;
 }
 
-/* Grid de Cards */
+.subtitulo-detalhe-vitrine {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+    font-weight: 300 !important;
+    color: #cccccc;
+    letter-spacing: -0.3px;
+}
+
+/* 2. Grid e Cards */
 .grid-cards-cursos {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -214,15 +230,15 @@ main * {
     border-radius: 24px;
     position: relative;
     overflow: hidden;
-    background-color: #1a1a1a;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    min-height: 440px;
+    background-color: #000000;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    min-height: 420px;
     display: flex;
     flex-direction: column;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* Vídeo de fundo dentro do card */
+/* 3. VÍDEO DE FUNDO DO CARD (Ajustado para Visibilidade Máxima) */
 .video-bg-card {
     position: absolute;
     top: 0;
@@ -230,34 +246,34 @@ main * {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: 0;
-    opacity: 0.25; /* Sutil no estado normal */
-    transition: opacity 0.5s ease, transform 0.6s ease;
-    filter: grayscale(30%);
+    z-index: 1; /* Garante que fica visível acima do fundo do card */
+    opacity: 0.65; /* Opacidade alta para o vídeo ser visto com clareza */
+    transition: opacity 0.4s ease, transform 0.5s ease;
+    filter: brightness(1);
 }
 
 .card-curso:hover .video-bg-card {
-    opacity: 0.65; /* Ganha destaque total ao passar o mouse */
+    opacity: 0.95; /* Fica quase total ao passar o mouse */
     transform: scale(1.05);
-    filter: grayscale(0%);
 }
 
-/* Overlay escuro de gradiente para garantir leitura */
+/* 4. MÁSCARA ESCURA (Suave para não cobrir o vídeo) */
 .overlay-card-bg {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(15, 15, 15, 0.85) 0%, rgba(10, 10, 10, 0.95) 100%);
-    z-index: 1;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.85) 100%);
+    z-index: 2; /* Fica por cima do vídeo, mas deixa-o passar */
     transition: background 0.4s ease;
 }
 
 .card-curso:hover .overlay-card-bg {
-    background: linear-gradient(180deg, rgba(15, 15, 15, 0.65) 0%, rgba(10, 10, 10, 0.88) 100%);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.75) 100%);
 }
 
+/* 5. CONTEÚDO (Por cima do vídeo e do gradiente) */
 .conteudo-card-wrapper {
     position: relative;
-    z-index: 2;
+    z-index: 3; /* Sempre acima do vídeo (z-index 1) e da máscara (z-index 2) */
     padding: 2.2rem 2rem;
     display: flex;
     flex-direction: column;
@@ -265,7 +281,6 @@ main * {
     height: 100%;
 }
 
-/* Selo "MAIS VANTAJOSO" */
 .selo-destaque-card {
     position: absolute;
     top: 0;
@@ -278,21 +293,10 @@ main * {
     padding: 0.4rem 0.9rem;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    z-index: 3;
+    z-index: 4;
     box-shadow: 0 4px 12px rgba(179, 63, 48, 0.4);
 }
 
-.card-disponivel:hover {
-    transform: translateY(-8px);
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-}
-
-.card-em-breve {
-    opacity: 0.85;
-}
-
-/* Tags de Status */
 .header-card-curso {
     display: flex;
     justify-content: space-between;
@@ -312,9 +316,9 @@ main * {
 }
 
 .status-disponivel {
-    background-color: rgba(13, 138, 67, 0.2);
+    background-color: rgba(13, 138, 67, 0.3);
     color: #2ecc71;
-    border: 1px solid rgba(46, 204, 113, 0.3);
+    border: 1px solid rgba(46, 204, 113, 0.4);
 }
 
 .ponto-status {
@@ -323,66 +327,34 @@ main * {
     background-color: #2ecc71;
     border-radius: 50%;
     display: inline-block;
-    animation: pulsarVerde 1.5s infinite;
 }
 
 .status-em-breve {
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: rgba(255, 255, 255, 0.1);
     color: #aaaaaa;
 }
 
 .categoria-curso {
     font-size: 0.8rem;
-    color: #888888;
+    color: #cccccc;
     font-weight: 600;
 }
 
-/* Corpo do Card */
 .nome-curso {
-    font-size: 1.45rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #ffffff;
     margin-bottom: 0.75rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
 }
 
 .descricao-curso {
-    font-size: 0.92rem;
-    color: #cccccc;
-    line-height: 1.5;
-    margin-bottom: 2rem;
-}
-
-/* Preços */
-.bloco-preco {
-    margin-bottom: 1.2rem;
-}
-
-.rotulo-preco {
-    font-size: 0.78rem;
-    color: #999999;
-    display: block;
-}
-
-.preco-destaque-card {
-    font-size: 1.6rem;
-    font-weight: 800;
+    font-size: 0.95rem;
     color: #ffffff;
+    line-height: 1.5;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.8);
 }
 
-.preco-destaque-card .mes {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: #aaaaaa;
-}
-
-.preco-avulso {
-    font-size: 0.82rem;
-    color: #888888;
-    display: block;
-    margin-top: 2px;
-}
-
-/* Botões */
 .btn-card-cta {
     display: block;
     width: 100%;
@@ -391,10 +363,10 @@ main * {
     color: #000000;
     font-weight: 700;
     font-size: 0.95rem;
-    padding: 0.9rem;
+    padding: 0.95rem;
     border-radius: 12px;
     text-decoration: none;
-    transition: background-color 0.25s ease, transform 0.2s ease, color 0.25s ease;
+    transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 .btn-card-cta:hover {
@@ -404,33 +376,202 @@ main * {
 
 .btn-card-bloqueado {
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.08);
-    color: #666666;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #888888;
     font-weight: 600;
-    font-size: 0.9rem;
-    padding: 0.9rem;
+    font-size: 0.95rem;
+    padding: 0.95rem;
     border-radius: 12px;
     border: none;
     cursor: not-allowed;
 }
-
-/* Animação do Scroll */
-.revelar-scroll {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform;
+/* ==========================================================
+   Seção 3: Degustação da Plataforma (Curso Gratuito)
+   ========================================================== */
+.secao-degustacao-plataforma {
+    margin-top: 8rem;
+    padding-top: 5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    width: 100%;
 }
 
-.revelar-scroll.visivel {
-    opacity: 1;
-    transform: translateY(0);
+.container-degustacao {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 4%;
 }
 
-@keyframes pulsarVerde {
-    0% { transform: scale(0.95); opacity: 0.8; }
-    50% { transform: scale(1.25); opacity: 1; }
-    100% { transform: scale(0.95); opacity: 0.8; }
+/* 1. Cabeçalho */
+.cabecalho-degustacao {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.badge-gratuito {
+    display: inline-block;
+    background-color: #b33f30;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+}
+
+.titulo-degustacao {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -1px;
+}
+
+/* 2. Grid de Conteúdo (Duas Colunas) */
+.grid-degustacao {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+    align-items: center;
+}
+
+/* 3. Lado Esquerdo: Mockup de Interface */
+.coluna-mockup-degustacao {
+    width: 100%;
+}
+
+.moldura-mockup-player {
+    background: #181818;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+}
+
+.barra-superior-mockup {
+    background: #222222;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.bolinha {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.bolinha.vermelho { background-color: #ff5f56; }
+.bolinha.amarelo { background-color: #ffbd2e; }
+.bolinha.verde { background-color: #27c93f; }
+
+.titulo-aba-mockup {
+    font-size: 0.7rem;
+    color: #888888;
+    font-weight: 600;
+    margin-left: 8px;
+    letter-spacing: 0.5px;
+}
+
+.corpo-player-mockup {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background-color: #000;
+}
+
+.corpo-player-mockup video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.tag-ao-vivo {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.4);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.3rem 0.7rem;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+}
+
+/* 4. Lado Direito: Benefícios & Botão */
+.coluna-beneficios-degustacao {
+    width: 100%;
+}
+
+.lista-beneficios-degustacao {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.item-beneficio {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+}
+
+.icone-beneficio {
+    font-size: 1.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.6rem;
+    border-radius: 12px;
+    line-height: 1;
+}
+
+.item-beneficio h4 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.3rem;
+}
+
+.item-beneficio p {
+    font-size: 0.92rem;
+    color: #aaaaaa;
+    line-height: 1.4;
+}
+
+.btn-degustacao-cta {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    background-color: #b33f30;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 1.1rem;
+    border-radius: 14px;
+    text-decoration: none;
+    box-shadow: 0 10px 25px rgba(179, 63, 48, 0.3);
+    transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+}
+
+.btn-degustacao-cta:hover {
+    background-color: #c94838;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(179, 63, 48, 0.4);
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+    .secao-degustacao-plataforma {
+        margin-top: 5rem;
+        padding-top: 3.5rem;
+    }
+    .grid-degustacao {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
 }
 
 
@@ -596,4 +737,20 @@ main * {
         max-width: 360px;
         margin-top: 0 !important;
     }
+}
+
+
+/* ==========================================================
+   Animação de Revelação Suave no Scroll
+   ========================================================== */
+.revelar-scroll {
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.revelar-scroll.visivel {
+    opacity: 1;
+    transform: translateY(0);
 }

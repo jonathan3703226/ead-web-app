@@ -121,9 +121,20 @@ document.addEventListener("DOMContentLoaded", () => {
     animarLosango();
 });
 
+
+
+
+
+
+
+
+
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
 
-    // 1. Efeito de Digitação
+    // 1. Efeito de Digitação na Pergunta
     const elementoTexto = document.getElementById("texto-digitado");
     if (elementoTexto) {
         const textoCompleto = "Quantas vezes você já guardou o seu sonho na gaveta?";
@@ -155,27 +166,32 @@ document.addEventListener("DOMContentLoaded", () => {
         efeitoDigitacaoLoop();
     }
 
-    // 2. Play / Pause nos Vídeos de Fundo dos Cards ao passar o Mouse
+    // 2. Tocar Vídeo dos Cards APENAS no Hover do Mouse
     const cardsComVideo = document.querySelectorAll('.card-com-video');
 
     cardsComVideo.forEach(card => {
         const video = card.querySelector('.video-bg-card');
         if (!video) return;
 
+        // Toca o vídeo suavemente ao entrar
         card.addEventListener('mouseenter', () => {
-            video.play().catch(err => {
-                console.log("Autoplay bloqueado pelo navegador:", err);
-            });
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(err => {
+                    console.log("Aguardando interação para reproduzir:", err);
+                });
+            }
         });
 
+        // Pausa o vídeo ao sair com o mouse
         card.addEventListener('mouseleave', () => {
             video.pause();
         });
     });
 
-    // 3. Revelação Suave no Scroll da Página
+    // 3. Efeito de Revelação Lenta ao Rolar a Página (Scroll Reveal)
     const elementosParaAnimar = document.querySelectorAll(
-        '.titulo-cuberto-estilo, .bloco-proposta-cta, .container-video-showreel, .cabecalho-vitrine, .card-curso'
+        '.cabecalho-vitrine, .card-curso, .cabecalho-degustacao, .coluna-mockup-degustacao, .coluna-beneficios-degustacao'
     );
 
     elementosParaAnimar.forEach(el => el.classList.add('revelar-scroll'));
@@ -188,7 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }, {
         threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px"
+        rootMargin: "0px 0px -40px 0px"
     });
 
     elementosParaAnimar.forEach(el => observerScroll.observe(el));
