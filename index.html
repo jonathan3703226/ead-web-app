@@ -49,7 +49,7 @@
         <!-- c - Vídeo com texto na parte inferior e efeito de surgimento -->
         <div class="container-video-showreel">
             <video id="video-showreel-header" autoplay loop muted playsinline poster="./imagens/banner-caneta.jpg">
-                <source src="/assets/video/video.mp4" type="video/mp4">
+                <source src="/assets/video/video-principal.mp4" type="video/mp4">
                 Seu navegador não suporta a exibição de vídeos.
             </video>
             
@@ -66,22 +66,26 @@
 
 
 
-<!-- Seção 2: Vitrine de Cursos (Catálogo & Oferta) -->
-<section class="secao-vitrine-cursos" id="cursos">
+<!-- Seção 2: Vitrine de Cursos (Estilo Cuberto Dark) -->
+<section class="secao-vitrine-cursos cuberto-dark-section" id="cursos">
     <div class="container-vitrine">
         
-        <!-- Cabeçalho com o Novo Texto Único -->
+        <!-- Cabeçalho -->
         <div class="cabecalho-vitrine">
             <h2 class="titulo-vitrine">
                 Do primeiro esboço ao portfólio profissional, ensinamos você a dominar o traço e dar vida às suas ideias.
             </h2>
         </div>
 
-        <!-- Grid de Cards dos Cursos -->
+        <!-- Grid de Cards -->
         <div class="grid-cards-cursos">
 
-            <!-- Card 1 — Destaque (Disponível) com Selo Mais Vantajoso -->
-            <article class="card-curso card-disponivel card-com-bg" style="--bg-image: url('https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=80');">
+            <!-- Card 1 — Destaque (Disponível) -->
+            <article class="card-curso card-disponivel card-com-video">
+                <!-- Vídeo de Fundo que toca ao passar o mouse -->
+                <video class="video-bg-card" loop muted playsinline poster="./imagens/banner-caneta.jpg">
+                    <source src="/assets/video/video-fundamento.mp4" type="video/mp4">
+                </video>
                 <div class="overlay-card-bg"></div>
                 <div class="selo-destaque-card">MAIS VANTAJOSO</div>
                 
@@ -108,7 +112,10 @@
             </article>
 
             <!-- Card 2 — Intermediário (Em Breve) -->
-            <article class="card-curso card-em-breve card-com-bg" style="--bg-image: url('https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80');">
+            <article class="card-curso card-em-breve card-com-video">
+                <video class="video-bg-card" loop muted playsinline poster="./imagens/arte 3.jpg">
+                    <source src="/assets/video/video-anatomia.mp4" type="video/mp4">
+                </video>
                 <div class="overlay-card-bg"></div>
                 
                 <div class="conteudo-card-wrapper">
@@ -129,7 +136,10 @@
             </article>
 
             <!-- Card 3 — Avançado (Em Breve) -->
-            <article class="card-curso card-em-breve card-com-bg" style="--bg-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80');">
+            <article class="card-curso card-em-breve card-com-video">
+                <video class="video-bg-card" loop muted playsinline poster="./imagens/arte 9.jpg">
+                    <source src="/assets/video/video-digital.mp4" type="video/mp4">
+                </video>
                 <div class="overlay-card-bg"></div>
                 
                 <div class="conteudo-card-wrapper">

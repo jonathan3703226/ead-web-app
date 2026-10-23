@@ -121,7 +121,6 @@ document.addEventListener("DOMContentLoaded", () => {
     animarLosango();
 });
 
-
 document.addEventListener("DOMContentLoaded", () => {
 
     // 1. Efeito de Digitação
@@ -156,7 +155,25 @@ document.addEventListener("DOMContentLoaded", () => {
         efeitoDigitacaoLoop();
     }
 
-    // 2. Revelação Unificada de Elementos ao Rolar a Página (Scroll Reveal)
+    // 2. Play / Pause nos Vídeos de Fundo dos Cards ao passar o Mouse
+    const cardsComVideo = document.querySelectorAll('.card-com-video');
+
+    cardsComVideo.forEach(card => {
+        const video = card.querySelector('.video-bg-card');
+        if (!video) return;
+
+        card.addEventListener('mouseenter', () => {
+            video.play().catch(err => {
+                console.log("Autoplay bloqueado pelo navegador:", err);
+            });
+        });
+
+        card.addEventListener('mouseleave', () => {
+            video.pause();
+        });
+    });
+
+    // 3. Revelação Suave no Scroll da Página
     const elementosParaAnimar = document.querySelectorAll(
         '.titulo-cuberto-estilo, .bloco-proposta-cta, .container-video-showreel, .cabecalho-vitrine, .card-curso'
     );
@@ -170,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }, {
-        threshold: 0.1, // Dispara assim que 10% do elemento aparece na tela
+        threshold: 0.1,
         rootMargin: "0px 0px -50px 0px"
     });
 

@@ -164,13 +164,20 @@ main * {
 }
 
 
+
+
 /* ==========================================================
-   Seção 2: Vitrine de Cursos (Catálogo & Oferta)
+   Seção 2: Vitrine de Cursos (Estilo Cuberto Dark)
    ========================================================== */
-.secao-vitrine-cursos {
-    background-color: #ffffff !important; /* Fundo mantido branco */
-    padding: 6rem 2% 7rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+.cuberto-dark-section {
+    background-color: #0d0d0d !important; /* Fundo preto elegante */
+    color: #ffffff;
+    padding: 7rem 2% 8rem;
+    border-top-left-radius: 40px; /* Bordas arredondadas idênticas ao site Cuberto */
+    border-top-right-radius: 40px;
+    margin-top: -20px; /* Leve sobreposição sobre a seção branca superior */
+    position: relative;
+    z-index: 5;
 }
 
 .container-vitrine {
@@ -181,7 +188,7 @@ main * {
 
 .cabecalho-vitrine {
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 4.5rem;
     max-width: 900px;
     margin-left: auto;
     margin-right: auto;
@@ -190,13 +197,13 @@ main * {
 .titulo-vitrine {
     font-family: 'Montserrat', sans-serif;
     font-size: clamp(1.4rem, 2.5vw, 2.2rem);
-    font-weight: 600;
-    color: #111111;
+    font-weight: 500;
+    color: #ffffff;
     line-height: 1.4;
     letter-spacing: -0.5px;
 }
 
-/* Grid e Cards com Imagem de Fundo */
+/* Grid de Cards */
 .grid-cards-cursos {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -204,31 +211,48 @@ main * {
 }
 
 .card-curso {
-    border-radius: 20px;
+    border-radius: 24px;
     position: relative;
     overflow: hidden;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    background-size: cover;
-    background-position: center;
-    background-image: var(--bg-image);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
-    min-height: 420px;
+    background-color: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 440px;
     display: flex;
     flex-direction: column;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* Camada escura sobre a imagem do card para dar leitura ao texto */
+/* Vídeo de fundo dentro do card */
+.video-bg-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    opacity: 0.25; /* Sutil no estado normal */
+    transition: opacity 0.5s ease, transform 0.6s ease;
+    filter: grayscale(30%);
+}
+
+.card-curso:hover .video-bg-card {
+    opacity: 0.65; /* Ganha destaque total ao passar o mouse */
+    transform: scale(1.05);
+    filter: grayscale(0%);
+}
+
+/* Overlay escuro de gradiente para garantir leitura */
 .overlay-card-bg {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.96) 100%);
-    backdrop-filter: blur(3px);
+    background: linear-gradient(180deg, rgba(15, 15, 15, 0.85) 0%, rgba(10, 10, 10, 0.95) 100%);
     z-index: 1;
-    transition: background 0.3s ease;
+    transition: background 0.4s ease;
 }
 
 .card-curso:hover .overlay-card-bg {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.93) 100%);
+    background: linear-gradient(180deg, rgba(15, 15, 15, 0.65) 0%, rgba(10, 10, 10, 0.88) 100%);
 }
 
 .conteudo-card-wrapper {
@@ -241,27 +265,27 @@ main * {
     height: 100%;
 }
 
-/* Selo MAIS VANTAJOSO no 1º Quadro */
+/* Selo "MAIS VANTAJOSO" */
 .selo-destaque-card {
     position: absolute;
     top: 0;
     right: 2rem;
     background-color: #b33f30;
     color: #ffffff;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 800;
     letter-spacing: 1px;
     padding: 0.4rem 0.9rem;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     z-index: 3;
-    box-shadow: 0 4px 10px rgba(179, 63, 48, 0.3);
+    box-shadow: 0 4px 12px rgba(179, 63, 48, 0.4);
 }
 
 .card-disponivel:hover {
     transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-    border-color: #111111;
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
 }
 
 .card-em-breve {
@@ -288,27 +312,28 @@ main * {
 }
 
 .status-disponivel {
-    background-color: #e6f7ed;
-    color: #0d8a43;
+    background-color: rgba(13, 138, 67, 0.2);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.3);
 }
 
 .ponto-status {
     width: 7px;
     height: 7px;
-    background-color: #0d8a43;
+    background-color: #2ecc71;
     border-radius: 50%;
     display: inline-block;
     animation: pulsarVerde 1.5s infinite;
 }
 
 .status-em-breve {
-    background-color: #f0f0f0;
-    color: #666666;
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #aaaaaa;
 }
 
 .categoria-curso {
     font-size: 0.8rem;
-    color: #777777;
+    color: #888888;
     font-weight: 600;
 }
 
@@ -316,69 +341,71 @@ main * {
 .nome-curso {
     font-size: 1.45rem;
     font-weight: 700;
-    color: #111111;
+    color: #ffffff;
     margin-bottom: 0.75rem;
 }
 
 .descricao-curso {
     font-size: 0.92rem;
-    color: #444444;
+    color: #cccccc;
     line-height: 1.5;
     margin-bottom: 2rem;
 }
 
-/* Preço e Botões */
+/* Preços */
 .bloco-preco {
     margin-bottom: 1.2rem;
 }
 
 .rotulo-preco {
     font-size: 0.78rem;
-    color: #666666;
+    color: #999999;
     display: block;
 }
 
 .preco-destaque-card {
     font-size: 1.6rem;
     font-weight: 800;
-    color: #111111;
+    color: #ffffff;
 }
 
 .preco-destaque-card .mes {
     font-size: 0.85rem;
     font-weight: 500;
-    color: #555555;
+    color: #aaaaaa;
 }
 
 .preco-avulso {
     font-size: 0.82rem;
-    color: #777777;
+    color: #888888;
     display: block;
     margin-top: 2px;
 }
 
+/* Botões */
 .btn-card-cta {
     display: block;
     width: 100%;
     text-align: center;
-    background-color: #111111;
-    color: #ffffff;
-    font-weight: 600;
+    background-color: #ffffff;
+    color: #000000;
+    font-weight: 700;
     font-size: 0.95rem;
     padding: 0.9rem;
     border-radius: 12px;
     text-decoration: none;
-    transition: background-color 0.25s ease, transform 0.2s ease;
+    transition: background-color 0.25s ease, transform 0.2s ease, color 0.25s ease;
 }
 
 .btn-card-cta:hover {
     background-color: #b33f30;
+    color: #ffffff;
 }
 
 .btn-card-bloqueado {
     width: 100%;
-    background-color: #e5e5e5;
-    color: #888888;
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #666666;
     font-weight: 600;
     font-size: 0.9rem;
     padding: 0.9rem;
@@ -387,7 +414,7 @@ main * {
     cursor: not-allowed;
 }
 
-/* Classes para Revelação ao Rolar a Página (Scroll Reveal) */
+/* Animação do Scroll */
 .revelar-scroll {
     opacity: 0;
     transform: translateY(40px);
@@ -405,6 +432,7 @@ main * {
     50% { transform: scale(1.25); opacity: 1; }
     100% { transform: scale(0.95); opacity: 0.8; }
 }
+
 
 
 
