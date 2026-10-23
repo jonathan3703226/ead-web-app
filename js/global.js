@@ -41,32 +41,30 @@ function injetarMenuERodape() {
 
     if (header) {
         header.innerHTML = `
-            <header class="menu-global">
-                <a class="logo logo-magnetico" href="index.html" aria-label="Nankim Escola de Arte - início">
-                    <div class="logo-icone-wrapper">
-                        <img src="./imagens/logo-simbolo.png" alt="Selo Nankim" class="logo-img-simbolo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'><circle cx=\'20\' cy=\'20\' r=\'18\' fill=\'%23b33f30\'/><text x=\'50%\' y=\'58%\' text-anchor=\'middle\' fill=\'white\' font-size=\'20\' font-family=\'Georgia\'>N</text></svg>'">
-                    </div>
-                    <div class="logo-texto-wrapper">
-                        <span class="logo-fixo">Nankim</span>
-                        <span class="logo-expansivel">Art School</span>
-                    </div>
-                </a>
+    <header class="menu-global">
+        <a class="logo" href="index.html" aria-label="Nankim Escola de Arte - início">
+            <div class="logo-icone-wrapper">
+                <img src="/assets/icons/logo.svg" alt="Selo Nankim" class="logo-img-simbolo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'><circle cx=\'20\' cy=\'20\' r=\'18\' fill=\'%23b33f30\'/><text x=\'50%\' y=\'58%\' text-anchor=\'middle\' fill=\'white\' font-size=\'20\' font-family=\'Georgia\'>N</text></svg>'">
+            </div>
+            <div class="logo-texto-wrapper">
+                <span class="logo-fixo">Nankim</span>
+                <span class="logo-expansivel">Art School</span>
+            </div>
+        </a>
 
-                <button class="btn-mobile" aria-label="Abrir menu" aria-expanded="false" type="button">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <nav>
-                    <a href="index.html" class="link-magnetico"><span class="dot-hover"></span>Home</a>
-                    <a href="quem-somos.html" class="link-magnetico"><span class="dot-hover"></span>Quem Somos</a>
-                    <a href="cursos.html" class="link-magnetico"><span class="dot-hover"></span>Cursos</a>
-                    <a href="contato.html" class="link-magnetico"><span class="dot-hover"></span>Contato</a>
-                    <button data-modal="login" class="btn-login link-magnetico">Login</button>
-                </nav>
-            </header>
-        `;
-
+        <button class="btn-mobile" aria-label="Abrir menu" aria-expanded="false" type="button">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav>
+            <a href="quem-somos.html" class="link-magnetico"><span class="dot-hover"></span>Quem Somos</a>
+            <a href="cursos.html" class="link-magnetico"><span class="dot-hover"></span>Cursos</a>
+            <a href="contato.html" class="link-magnetico"><span class="dot-hover"></span>Contato</a>
+            <button data-modal="login" class="btn-login link-magnetico">Login</button>
+        </nav>
+    </header>
+`;
         const botaoMenu = header.querySelector('.btn-mobile');
         const navegacao = header.querySelector('.menu-global nav');
         const botaoLogin = navegacao.querySelector('.btn-login');
@@ -213,7 +211,7 @@ window.addEventListener('scroll', () => {
 // Rolagem suave ao clicar na logo estando na Home
 document.addEventListener('click', (event) => {
     const logoLink = event.target.closest('.menu-global .logo');
-    
+
     if (logoLink) {
         const caminhoAtual = window.location.pathname.split('/').pop() || 'index.html';
 
