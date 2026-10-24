@@ -591,476 +591,201 @@ body {
 .grid-cards-cursos .card-curso:nth-child(3) { transition-delay: 0.55s; }
 
 
-/* ==========================================================
-   Seção 3: Degustação da Plataforma (Selo Circular + Botão Padronizado)
-   ========================================================== */
-.secao-degustacao-plataforma {
-    margin-top: 6rem;
-    padding-top: 2rem;
-    width: 100%;
+/* ================= SEÇÃO DEGUSTAÇÃO ================= */
+.secao-degustacao {
+    background-color: #000000 !important;
+    color: #ffffff;
+    padding: 2rem 5% 7rem;
+    border-radius: 0 !important;
+    margin-top: 0 !important;
+    position: relative;
+    z-index: 5;
+    box-shadow: none !important;
 }
 
-.container-degustacao {
-    max-width: 1200px;
+.degustacao-container {
+    max-width: 1080px;
     margin: 0 auto;
-    padding: 0 4%;
 }
 
-.grid-degustacao {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3.5rem;
-    align-items: center;
-}
-
-/* Lado Esquerdo: Selo Circular Grande */
-.coluna-mockup-degustacao {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-.wrapper-selo-degustacao {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-}
-
-.selo-circular-gratis {
+/* Card Principal */
+.degustacao-card-destaque {
     position: relative;
-    width: 260px;
-    height: 260px;
-    border-radius: 50%;
-    border: 6px dashed #b33f30; /* Anel externo estilizado estilo carimbo */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: radial-gradient(circle, rgba(179, 63, 48, 0.15) 0%, rgba(10, 10, 10, 0.8) 80%);
-    box-shadow: 0 0 35px rgba(179, 63, 48, 0.25);
-    transform: rotate(-6deg); /* Leve inclinação para parecer carimbo */
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.selo-circular-gratis:hover {
-    transform: rotate(0deg) scale(1.04);
-    box-shadow: 0 0 45px rgba(179, 63, 48, 0.4);
-}
-
-.selo-conteudo-interno {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #ffffff;
-}
-
-.selo-topo {
-    font-size: 2.2rem;
-    font-weight: 900;
-    line-height: 1;
-    color: #ffffff;
-    letter-spacing: 1px;
-}
-
-.selo-principal {
-    font-size: 2.5rem;
-    font-weight: 900;
-    line-height: 1;
-    color: #b33f30;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin: 0.2rem 0;
-    text-shadow: 0 2px 10px rgba(179, 63, 48, 0.5);
-}
-
-.selo-rodape {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: #cccccc;
-    text-transform: uppercase;
-    margin-top: 0.3rem;
-}
-
-/* Lado Direito: Conteúdo e Tópicos */
-.coluna-beneficios-degustacao {
-    width: 100%;
-}
-
-.bloco-conteudo-minicurso {
-    display: flex;
-    flex-direction: column;
-}
-
-.titulo-minicurso-direita {
-    font-size: 2rem;
-    font-weight: 800;
-    color: #ffffff;
-    margin-bottom: 0.4rem;
-    letter-spacing: -0.5px;
-}
-
-.subtitulo-minicurso-topicos {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #b33f30;
-    margin-bottom: 1.5rem;
-}
-
-.lista-topicos-minicurso {
-    display: flex;
-    flex-direction: column;
-    gap: 1.1rem;
-    margin-bottom: 2.5rem;
-}
-
-.item-topico {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 1.05rem;
-    color: #e0e0e0;
-    font-weight: 400;
-}
-
-.bullet-icone {
-    color: #b33f30;
-    font-size: 1.1rem;
-}
-
-/* Botão da Seção 3 — Alinhado com o Padrão da Página + Magnético */
-.btn-degustacao-cta {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    text-align: center;
-    background-color: #b33f30;
-    color: #ffffff !important;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    padding: 0.95rem 1.8rem;
-    border-radius: 50px; /* Formato pílula igual aos outros botões */
-    border: 1px solid #b33f30;
-    text-decoration: none;
-    box-sizing: border-box;
-    cursor: pointer;
-    box-shadow: 0 10px 25px rgba(179, 63, 48, 0.35);
-    transition: background-color 0.3s ease, 
-                color 0.3s ease, 
-                border-color 0.3s ease, 
-                box-shadow 0.3s ease,
-                transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.btn-degustacao-cta:hover {
-    background-color: #ffffff;
-    color: #b33f30 !important;
-    border-color: #ffffff;
-    box-shadow: 0 12px 30px rgba(255, 255, 255, 0.2);
-}
-
-@media (max-width: 900px) {
-    .grid-degustacao {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-    }
-}
-/* ==========================================================
-   Animação do Selo (Apenas 1 Borda Giratória Lenta + Respiração Suave)
-   ========================================================== */
-
-/* 1. Respiração Suave e Cadenciada (Duração: 8s) */
-@keyframes respirarSelo {
-    0%, 100% {
-        transform: translateY(0px) scale(1);
-        box-shadow: 0 0 30px rgba(179, 63, 48, 0.25);
-    }
-    50% {
-        transform: translateY(-6px) scale(1.02); /* Escala e elevação bem discretas */
-        box-shadow: 0 0 45px rgba(179, 63, 48, 0.45);
-    }
-}
-
-/* 2. Rotação Contínua Bem Lenta (Duração: 35s) */
-@keyframes girarBordaTracejada {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-/* Container Principal do Selo (SEM borda própria para não duplicar) */
-.selo-circular-gratis {
-    position: relative;
-    width: 260px;
-    height: 260px;
-    border-radius: 50%;
-    border: none !important; /* Remove qualquer borda residual do container */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: radial-gradient(circle, rgba(179, 63, 48, 0.15) 0%, rgba(10, 10, 10, 0.85) 80%);
-    
-    /* Respiração lenta e relaxada (8 segundos por ciclo) */
-    animation: respirarSelo 8s ease-in-out infinite;
-    will-change: transform, box-shadow;
-}
-
-/* Única Borda Tracejada que Gira (no pseudo-elemento) */
-.selo-circular-gratis::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    border: 5px dashed #b33f30; /* Borda tracejada única */
-    
-    /* Rotação super hipnótica e lenta (35 segundos para 1 volta completa) */
-    animation: girarBordaTracejada 35s linear infinite;
-    will-change: transform;
-    pointer-events: none;
-}
-
-/* Conteúdo Interno Fixo e Legível */
-.selo-conteudo-interno {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #ffffff;
-}
-
-/* Pausa Suave no Hover */
-.selo-circular-gratis:hover {
-    animation-play-state: paused;
-    box-shadow: 0 0 55px rgba(179, 63, 48, 0.6);
-    transition: box-shadow 0.3s ease;
-}
-
-.selo-circular-gratis:hover::before {
-    animation-play-state: paused;
-}
-
-
-
-
-/* ==========================================================
-   Seção 3: Degustação da Plataforma (Integração Total com Seção 2)
-   ========================================================== */
-.secao-degustacao-plataforma {
-    margin-top: 6rem;
-    padding-top: 2rem;
-    border-top: none;
-    width: 100%;
-}
-
-.container-degustacao {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 4%;
-}
-
-.grid-degustacao {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3.5rem;
-    align-items: center;
-}
-
-/* Lado Esquerdo: Arte Capa do Minicurso */
-.coluna-mockup-degustacao {
-    width: 100%;
-}
-
-.card-capa-minicurso {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    border-radius: 24px;
+    background: #080808;
+    border-radius: 32px;
+    padding: 2px;
     overflow: hidden;
-    background: linear-gradient(135deg, #1f1f1f 0%, #0a0a0a 100%);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 2.2rem;
-    transition: transform 0.4s ease, border-color 0.4s ease;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
 }
 
-.card-capa-minicurso:hover {
-    transform: translateY(-5px);
-    border-color: rgba(179, 63, 48, 0.6);
-}
-
-/* Fundo com efeito de brilho e textura */
-.overlay-capa-arte {
+.borda-luz-vermelha {
     position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at top right, rgba(179, 63, 48, 0.25), transparent 70%);
-    pointer-events: none;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        transparent, 
+        transparent, 
+        transparent, 
+        #ff2a2a
+    );
+    animation: percorrerBorda 6s linear infinite;
+    z-index: 1;
 }
 
-/* Selo 100% Grátis Estilizado */
-.badge-gratuito-arte {
+@keyframes percorrerBorda {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.degustacao-card-conteudo-inner {
     position: relative;
     z-index: 2;
-    align-self: flex-start;
-    background-color: #b33f30;
-    color: #ffffff;
-    font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 1.5px;
-    padding: 0.45rem 1rem;
-    border-radius: 20px;
-    box-shadow: 0 4px 15px rgba(179, 63, 48, 0.4);
-}
-
-.conteudo-capa-arte {
-    position: relative;
-    z-index: 2;
-}
-
-.tag-minicurso-categoria {
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #aaaaaa;
-    letter-spacing: 1px;
-    display: block;
-    margin-bottom: 0.5rem;
-}
-
-.titulo-capa-arte {
-    font-size: 2rem;
-    font-weight: 800;
-    color: #ffffff;
-    line-height: 1.2;
-    margin-bottom: 0.5rem;
-}
-
-.descricao-capa-arte {
-    font-size: 0.95rem;
-    color: #cccccc;
-    font-weight: 300;
-}
-
-/* Lado Direito: Estrutura de Conteúdo */
-.coluna-beneficios-degustacao {
-    width: 100%;
-}
-
-.bloco-conteudo-minicurso {
-    display: flex;
-    flex-direction: column;
-}
-
-.titulo-minicurso-direita {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.5px;
-}
-
-.subtitulo-minicurso-topicos {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #b33f30;
-    margin-bottom: 1.5rem;
-}
-
-.lista-topicos-minicurso {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 2.5rem;
-}
-
-.item-topico {
-    display: flex;
+    background: linear-gradient(135deg, #111111 0%, #050505 100%);
+    border-radius: 30px;
+    padding: 3.8rem 3.2rem;
+    display: grid;
+    grid-template-columns: 280px 1fr; /* Aumentado a coluna para o selo maior */
+    gap: 3.5rem;
     align-items: center;
-    gap: 12px;
-    font-size: 1rem;
-    color: #e0e0e0;
-    font-weight: 400;
-    line-height: 1.4;
 }
 
-.bullet-icone {
-    color: #b33f30;
-    font-size: 1rem;
-}
-
-.btn-degustacao-cta {
-    display: inline-block;
-    width: 100%;
-    text-align: center;
-    background-color: #b33f30;
-    color: #ffffff;
-    font-weight: 700;
-    font-size: 1.05rem;
-    padding: 1.1rem;
-    border-radius: 14px;
-    text-decoration: none;
-    box-shadow: 0 10px 25px rgba(179, 63, 48, 0.3);
-    transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
-}
-
-/* ==========================================================
-   Botão da Seção 3 (Estilo Pílula com Reversão de Cores e Magnetismo)
-   ========================================================== */
-.btn-degustacao-cta {
-    display: inline-flex;
+/* Selo Ampliado Proporcionalmente (Aumentado de 210px para 260px) */
+.degustacao-selo-wrapper {
+    position: relative;
+    width: 260px;
+    height: 260px;
+    display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    margin: 0 auto;
+}
+
+.degustacao-circulo-giratorio {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px dashed rgba(255, 42, 42, 0.45);
+    background-color: rgba(255, 42, 42, 0.03);
+    animation: girarCirculo 18s linear infinite;
+    box-shadow: 0 0 20px rgba(255, 42, 42, 0.12);
+}
+
+@keyframes girarCirculo {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.degustacao-texto-pulsante {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
+    animation: efeitoRespiracao 3s ease-in-out infinite;
+}
+
+@keyframes efeitoRespiracao {
+    0% { transform: scale(1); opacity: 0.95; }
+    50% { transform: scale(1.06); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.95; }
+}
+
+.selo-sub-top {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #ffffff;
+    margin-bottom: 0.2rem;
+}
+
+.selo-destaque.selo-vermelho {
+    font-family: 'Audiowide', cursive;
+    font-size: 1.85rem;
+    color: #ff3b30 !important;
+    text-shadow: 0 0 15px rgba(255, 59, 48, 0.35);
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+/* Conteúdo da Direita */
+.degustacao-conteudo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.degustacao-titulo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.1rem;
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 0.8rem;
+    color: #ffffff;
+}
+
+.degustacao-descricao {
+    font-size: 1rem;
+    color: #b0b0b0;
+    line-height: 1.55;
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+}
+
+.degustacao-beneficios {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.degustacao-beneficios li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.98rem;
+    color: #e0e0e0;
+}
+
+/* Botão CTA */
+.btn-degustacao-cta {
     background-color: #ffffff;
     color: #000000 !important;
+    border: 1px solid #ffffff;
+    padding: 1.1rem 2.5rem;
+    border-radius: 50px;
     font-family: 'Montserrat', sans-serif;
     font-size: 1rem;
-    font-weight: 700;
-    padding: 0.95rem 1.8rem;
-    border-radius: 50px; /* Formato pílula idêntico ao botão de Login */
-    border: 1px solid #ffffff;
-    text-decoration: none;
-    box-sizing: border-box;
+    font-weight: 800;
     cursor: pointer;
-    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
-    /* Transições suaves para a reversão e efeito magnético do JS */
-    transition: background-color 0.3s ease, 
-                color 0.3s ease, 
-                border-color 0.3s ease, 
-                box-shadow 0.3s ease,
-                transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
 }
 
-/* Efeito de Reversão no Hover: Fundo Preto (#0a0a0a) com Texto e Borda Brancos */
 .btn-degustacao-cta:hover {
-    background-color: #0a0a0a; /* Fundo escuro da seção */
+    background-color: #222222;
     color: #ffffff !important;
-    border-color: #ffffff;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    border-color: #222222;
+    transform: translateY(-2px);
 }
 
 @media (max-width: 900px) {
-    .grid-degustacao {
+    .degustacao-card-conteudo-inner {
         grid-template-columns: 1fr;
+        padding: 2.5rem 1.8rem;
         gap: 2.5rem;
+        text-align: center;
+    }
+    .degustacao-conteudo {
+        align-items: center;
+    }
+    .degustacao-beneficios {
+        align-items: flex-start;
     }
 }
-
-
-
 
 /* ==========================================================
    Seção 4: Depoimentos / Sucesso dos Alunos (Efeito Stack)
