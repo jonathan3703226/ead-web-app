@@ -1,46 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // 1. Força o Autoplay em Loop Automático do Vídeo
-    const videoShowreel = document.getElementById('video-showreel');
+    // 1. Força Autoplay Muted no Vídeo do Header
+    const videoShowreel = document.getElementById('video-showreel-header');
     if (videoShowreel) {
-        videoShowreel.muted = true; // Necessário para garantir que navegadores permitam o autoplay
+        videoShowreel.muted = true;
         videoShowreel.play().catch((erro) => {
-            console.log("Tentativa de autoplay no vídeo:", erro);
+            console.log("Autoplay bloqueado pelo navegador:", erro);
         });
     }
 
-    // 2. Animação de Palavras/Textos Surgindo no Scroll (Word Reveal)
-    const elementosRevelacao = document.querySelectorAll('.titulo-revelacao, .texto-revelacao');
-
-    const observerRevelacao = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, { threshold: 0.2 });
-
-    elementosRevelacao.forEach((el) => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(35px)';
-        el.style.transition = 'opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
-        observerRevelacao.observe(el);
-    });
-
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    // 1. Efeito de Digitação na Pergunta
+    // 2. Efeito de Digitação da Pergunta (Typewriter Effect)
     const elementoTexto = document.getElementById("texto-digitado");
     if (elementoTexto) {
         const textoCompleto = "Quantas vezes você já guardou o seu sonho na gaveta?";
         let index = 0;
         let apagando = false;
-        const velocidadeDigitacao = 35; 
-        const velocidadeApagar = 20;    
-        const pausaAposEscribir = 4000; 
+        const velocidadeDigitacao = 35;
+        const velocidadeApagar = 20;
+        const pausaAposEscrever = 4000;
 
         function efeitoDigitacaoLoop() {
             if (!apagando && index < textoCompleto.length) {
@@ -51,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 setTimeout(() => {
                     apagando = true;
                     efeitoDigitacaoLoop();
-                }, pausaAposEscribir);
+                }, pausaAposEscrever);
             } else if (apagando && index > 0) {
                 elementoTexto.textContent = textoCompleto.substring(0, index - 1);
                 index--;
@@ -64,35 +41,29 @@ document.addEventListener("DOMContentLoaded", () => {
         efeitoDigitacaoLoop();
     }
 
-    // 2. Tocar Vídeo dos Cards APENAS no Hover do Mouse
+    // 3. Reprodução dos Vídeos dos Cards de Cursos Apenas no Hover
     const cardsComVideo = document.querySelectorAll('.card-com-video');
 
     cardsComVideo.forEach(card => {
         const video = card.querySelector('.video-bg-card');
         if (!video) return;
 
-        // Toca o vídeo suavemente ao entrar
         card.addEventListener('mouseenter', () => {
             const playPromise = video.play();
             if (playPromise !== undefined) {
                 playPromise.catch(err => {
-                    console.log("Aguardando interação para reproduzir:", err);
+                    console.log("Aguardando interação do usuário:", err);
                 });
             }
         });
 
-        // Pausa o vídeo ao sair com o mouse
         card.addEventListener('mouseleave', () => {
             video.pause();
         });
     });
 
-    // 3. Efeito de Revelação Lenta ao Rolar a Página (Scroll Reveal)
-    const elementosParaAnimar = document.querySelectorAll(
-        '.cabecalho-vitrine, .card-curso, .cabecalho-degustacao, .coluna-mockup-degustacao, .coluna-beneficios-degustacao'
-    );
-
-    elementosParaAnimar.forEach(el => el.classList.add('revelar-scroll'));
+    // 4. Carregamento Suave ao Descer a Página (Scroll Reveal Unificado)
+    const elementosParaAnimar = document.querySelectorAll('.revelar-scroll');
 
     const observerScroll = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -108,23 +79,3 @@ document.addEventListener("DOMContentLoaded", () => {
     elementosParaAnimar.forEach(el => observerScroll.observe(el));
 
 });
-
-// Efeito de Revelação ao Rolar a Página (Scroll Reveal)
-    const elementosParaAnimar = document.querySelectorAll(
-        '.cabecalho-vitrine, .card-curso, .cabecalho-degustacao, .coluna-mockup-degustacao, .coluna-beneficios-degustacao'
-    );
-
-    elementosParaAnimar.forEach(el => el.classList.add('revelar-scroll'));
-
-    const observerScroll = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visivel');
-            }
-        });
-    }, {
-        threshold: 0.15,
-        rootMargin: "0px 0px -40px 0px"
-    });
-
-    elementosParaAnimar.forEach(el => observerScroll.observe(el));

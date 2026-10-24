@@ -30,17 +30,17 @@
 
 
 
-        <!-- Área 1: SUPER Header -->
+<main>
+
+        <!-- Área 1: SUPER Header (Fundo Claro) -->
         <section class="super-header-gnomon">
             <div class="header-container-limpo">
 
-                <!-- a - Título sem negrito, afastado do topo, com animação cruzada lenta -->
                 <h1 class="titulo-cuberto-estilo">
                     <span class="linha-esquerda">Escola de Arte</span>
                     <span class="linha-direita">& Ilustração</span>
                 </h1>
 
-                <!-- b - Pergunta em negrito com prefixo '//' vermelho e colada no vídeo -->
                 <div class="bloco-proposta-cta">
                     <h2 class="subtitulo-pergunta-cuberto">
                         <span class="prefixo-barra">//</span>
@@ -48,7 +48,6 @@
                     </h2>
                 </div>
 
-                <!-- c - Vídeo com texto na parte inferior e efeito de surgimento -->
                 <div class="container-video-showreel">
                     <video id="video-showreel-header" autoplay loop muted playsinline
                         poster="./imagens/banner-caneta.jpg">
@@ -58,188 +57,234 @@
 
                     <div class="overlay-video"></div>
 
-                    <!-- Texto posicionado na parte inferior com animação -->
                     <div class="texto-sobre-video">
-                        <p>Talento sem método é só potencial <br>— o que transforma a intenção em resultado é a
-                            dedicação.</p>
+                        <p>Talento sem método é só potencial <br>— o que transforma a intenção em resultado é a dedicação.</p>
                     </div>
                 </div>
 
             </div>
         </section>
 
+        <!-- Bloco Escuro Cuberto (Envolve apenas Seção 2 e Seção 3) -->
+        <div class="cuberto-dark-section">
 
+            <!-- Seção 2: Vitrine de Cursos -->
+            <section class="secao-vitrine-cursos" id="cursos">
+                <div class="container-vitrine">
 
-        <<!-- Bloco Escuro Estilo Cuberto (Unifica Seção 2 e Seção 3) -->
-            <div class="cuberto-dark-section">
+                    <div class="cabecalho-vitrine">
+                        <h2 class="titulo-destaque-vitrine">
+                            Do primeiro esboço ao portfólio profissional
+                        </h2>
+                        <p class="subtitulo-detalhe-vitrine">
+                            Ensinamos você a dominar o traço e dar vida às suas ideias.
+                        </p>
+                    </div>
 
-                <!-- Seção 2: Vitrine de Cursos -->
-                <section class="secao-vitrine-cursos" id="cursos">
-                    <div class="container-vitrine">
+                    <div class="grid-cards-cursos">
 
-                        <div class="cabecalho-vitrine">
-                            <h2 class="titulo-destaque-vitrine">
-                                Do primeiro esboço ao portfólio profissional
-                            </h2>
-                            <p class="subtitulo-detalhe-vitrine">
-                                Ensinamos você a dominar o traço e dar vida às suas ideias.
-                            </p>
+                        <article class="card-curso card-disponivel card-com-video">
+                            <video class="video-bg-card" loop muted playsinline preload="metadata">
+                                <source src="./assets/video/video-fundamento.mp4" type="video/mp4">
+                                <source src="/assets/video/video-fundamento.mp4" type="video/mp4">
+                            </video>
+                            <div class="overlay-card-bg"></div>
+
+                            <div class="conteudo-card-wrapper">
+                                <div class="header-card-curso">
+                                    <span class="tag-status status-disponivel">
+                                        <span class="ponto-status"></span> DISPONÍVEL AGORA
+                                    </span>
+                                    <span class="categoria-curso">Básico</span>
+                                </div>
+                                <div class="corpo-card-curso">
+                                    <h3 class="nome-curso">Fundamentos do Desenho</h3>
+                                    <p class="descricao-curso">A base sólida para destravar qualquer estilo. Domine formas, luz, sombra e perspectiva.</p>
+                                </div>
+                                <div class="footer-card-curso">
+                                    <a href="cursos.html" class="btn-card-cta link-magnetico">Conhecer o Curso</a>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card-curso card-em-breve card-com-video">
+                            <video class="video-bg-card" loop muted playsinline preload="metadata">
+                                <source src="./assets/video/video-anatomia.mp4" type="video/mp4">
+                                <source src="/assets/video/video-anatomia.mp4" type="video/mp4">
+                            </video>
+                            <div class="overlay-card-bg"></div>
+
+                            <div class="conteudo-card-wrapper">
+                                <div class="header-card-curso">
+                                    <span class="tag-status status-em-breve">
+                                        <span class="icone-cadeado">🔒</span> EM BREVE
+                                    </span>
+                                    <span class="categoria-curso">Intermediário</span>
+                                </div>
+                                <div class="corpo-card-curso">
+                                    <h3 class="nome-curso">Anatomia Humana</h3>
+                                    <p class="descricao-curso">Proporções, musculatura e pose com dinamismo e precisão para elevar suas criações.</p>
+                                </div>
+                                <div class="footer-card-curso">
+                                    <button class="btn-card-bloqueado" disabled>Em breve no catálogo</button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card-curso card-em-breve card-com-video">
+                            <video class="video-bg-card" loop muted playsinline preload="metadata">
+                                <source src="./assets/video/video-digital.mp4" type="video/mp4">
+                                <source src="/assets/video/video-digital.mp4" type="video/mp4">
+                            </video>
+                            <div class="overlay-card-bg"></div>
+
+                            <div class="conteudo-card-wrapper">
+                                <div class="header-card-curso">
+                                    <span class="tag-status status-em-breve">
+                                        <span class="icone-cadeado">🔒</span> EM BREVE
+                                    </span>
+                                    <span class="categoria-curso">Avançado</span>
+                                </div>
+                                <div class="corpo-card-curso">
+                                    <h3 class="nome-curso">Ilustração Digital</h3>
+                                    <p class="descricao-curso">Pintura, acabamento profissional e workflows completos voltados para o mercado.</p>
+                                </div>
+                                <div class="footer-card-curso">
+                                    <button class="btn-card-bloqueado" disabled>Em breve no catálogo</button>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Seção 3: Degustação da Plataforma -->
+            <section class="secao-degustacao-plataforma" id="degustacao">
+                <div class="container-degustacao">
+                    
+                    <div class="cabecalho-vitrine revelar-scroll">
+                        <h2 class="titulo-destaque-vitrine">
+                            Conheça a área de alunos por dentro
+                        </h2>
+                        <p class="subtitulo-detalhe-vitrine">
+                            Acesse o minicurso introdutório e teste a plataforma sem pagar nada.
+                        </p>
+                    </div>
+
+                    <div class="grid-degustacao">
+                        
+                        <div class="coluna-mockup-degustacao revelar-scroll">
+                            <div class="wrapper-selo-degustacao">
+                                <div class="selo-circular-gratis">
+                                    <div class="selo-conteudo-interno">
+                                        <span class="selo-topo">100%</span>
+                                        <span class="selo-principal">GRÁTIS</span>
+                                        <span class="selo-rodape">AULA DEGUSTAÇÃO</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="grid-cards-cursos">
+                        <div class="coluna-beneficios-degustacao revelar-scroll">
+                            <div class="bloco-conteudo-minicurso">
+                                <h3 class="titulo-minicurso-direita">Introdução ao desenho</h3>
+                                <p class="subtitulo-minicurso-topicos">O que você vai encontrar:</p>
 
-                            <!-- Card 1 — Destaque (Disponível) -->
-                            <article class="card-curso card-disponivel card-com-video">
-                                <video class="video-bg-card" loop muted playsinline preload="metadata">
-                                    <source src="./assets/video/video-fundamento.mp4" type="video/mp4">
-                                    <source src="/assets/video/video-fundamento.mp4" type="video/mp4">
-                                </video>
-                                <div class="overlay-card-bg"></div>
+                                <ul class="lista-topicos-minicurso">
+                                    <li class="item-topico">
+                                        <span class="bullet-icone">✦</span>
+                                        <span>Estudos de análise e observação</span>
+                                    </li>
+                                    <li class="item-topico">
+                                        <span class="bullet-icone">✦</span>
+                                        <span>Estudos de observação da realidade</span>
+                                    </li>
+                                    <li class="item-topico">
+                                        <span class="bullet-icone">✦</span>
+                                        <span>Estudos de simplificação</span>
+                                    </li>
+                                </ul>
 
-                                <div class="conteudo-card-wrapper">
-                                    <div class="header-card-curso">
-                                        <span class="tag-status status-disponivel">
-                                            <span class="ponto-status"></span> DISPONÍVEL AGORA
-                                        </span>
-                                        <span class="categoria-curso">Básico</span>
-                                    </div>
-                                    <div class="corpo-card-curso">
-                                        <h3 class="nome-curso">Fundamentos do Desenho</h3>
-                                        <p class="descricao-curso">A base sólida para destravar qualquer estilo. Domine
-                                            formas, luz, sombra e perspectiva.</p>
-                                    </div>
-                                    <!-- Altere a linha do botão no Card 1 para incluir a classe link-magnetico -->
-                                    <div class="footer-card-curso">
-                                        <a href="cursos.html" class="btn-card-cta link-magnetico">Conhecer o Curso</a>
-                                    </div>
-                                </div>
-
-                            </article>
-
-                            <!-- Card 2 — Intermediário (Em Breve) -->
-                            <article class="card-curso card-em-breve card-com-video">
-                                <video class="video-bg-card" loop muted playsinline preload="metadata">
-                                    <source src="./assets/video/video-anatomia.mp4" type="video/mp4">
-                                    <source src="/assets/video/video-anatomia.mp4" type="video/mp4">
-                                </video>
-                                <div class="overlay-card-bg"></div>
-
-                                <div class="conteudo-card-wrapper">
-                                    <div class="header-card-curso">
-                                        <span class="tag-status status-em-breve">
-                                            <span class="icone-cadeado">🔒</span> EM BREVE
-                                        </span>
-                                        <span class="categoria-curso">Intermediário</span>
-                                    </div>
-                                    <div class="corpo-card-curso">
-                                        <h3 class="nome-curso">Anatomia Humana</h3>
-                                        <p class="descricao-curso">Proporções, musculatura e pose com dinamismo e
-                                            precisão para elevar suas criações.</p>
-                                    </div>
-                                    <div class="footer-card-curso">
-                                        <button class="btn-card-bloqueado" disabled>Em breve no catálogo</button>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <!-- Card 3 — Avançado (Em Breve) -->
-                            <article class="card-curso card-em-breve card-com-video">
-                                <video class="video-bg-card" loop muted playsinline preload="metadata">
-                                    <source src="./assets/video/video-digital.mp4" type="video/mp4">
-                                    <source src="/assets/video/video-digital.mp4" type="video/mp4">
-                                </video>
-                                <div class="overlay-card-bg"></div>
-
-                                <div class="conteudo-card-wrapper">
-                                    <div class="header-card-curso">
-                                        <span class="tag-status status-em-breve">
-                                            <span class="icone-cadeado">🔒</span> EM BREVE
-                                        </span>
-                                        <span class="categoria-curso">Avançado</span>
-                                    </div>
-                                    <div class="corpo-card-curso">
-                                        <h3 class="nome-curso">Ilustração Digital</h3>
-                                        <p class="descricao-curso">Pintura, acabamento profissional e workflows
-                                            completos voltados para o mercado.</p>
-                                    </div>
-                                    <div class="footer-card-curso">
-                                        <button class="btn-card-bloqueado" disabled>Em breve no catálogo</button>
-                                    </div>
-                                </div>
-                            </article>
-
+                                <a href="cadastro.html" class="btn-degustacao-cta link-magnetico">Quero Testar Grátis</a>
+                            </div>
                         </div>
 
                     </div>
-                </section>
 
-             
+                </div>
+            </section>
 
+        </div> <!-- / Fim do cuberto-dark-section -->
 
-                <!-- Seção 3: Degustação da Plataforma -->
-<section class="secao-degustacao-plataforma" id="degustacao">
-    <div class="container-degustacao">
-        
-        <!-- Cabeçalho da Seção -->
-        <div class="cabecalho-vitrine revelar-scroll">
-            <h2 class="titulo-destaque-vitrine">
-                Conheça a área de alunos por dentro
-            </h2>
-            <p class="subtitulo-detalhe-vitrine">
-                Acesse o minicurso introdutório e teste a plataforma sem pagar nada.
-            </p>
-        </div>
+        <!-- Seção 4: Case de Sucesso dos Ex-Alunos (Bloco Claro Cuberto) -->
+        <section class="cuberto-light-section" id="depoimentos">
+            <div class="container-vitrine">
+                
+                <div class="cabecalho-vitrine-claro revelar-scroll">
+                    <h2 class="titulo-destaque-claro">Onde o método Nankim pode te levar</h2>
+                    <p class="subtitulo-detalhe-claro">De alunos a profissionais consolidados no mercado.</p>
+                </div>
 
-        <!-- Conteúdo em Duas Colunas -->
-        <div class="grid-degustacao">
-            
-            <!-- Lado Esquerdo: Selo Circular "100% GRÁTIS" -->
-            <div class="coluna-mockup-degustacao revelar-scroll">
-                <div class="wrapper-selo-degustacao">
-                    <div class="selo-circular-gratis">
-                        <div class="selo-anel-externo"></div>
-                        <div class="selo-conteudo-interno">
-                            <span class="selo-topo">100%</span>
-                            <span class="selo-principal">GRÁTIS</span>
-                            <span class="selo-rodape">AULA DEGUSTAÇÃO</span>
+                <div class="wrapper-depoimentos-stack revelar-scroll">
+                    
+                    <!-- Card 1 -->
+                    <article class="card-depo">
+                        <div class="depo-header-sucesso">
+                            <div class="depo-foto" style="background-image: url('https://i.pravatar.cc/150?img=11');"></div>
+                            <div class="depo-info-aluno">
+                                <h3 class="depo-nome">Lucas Moura</h3>
+                                <span class="depo-cargo">Concept Artist</span>
+                                <span class="depo-empresa">Ubisoft Canadá</span>
+                            </div>
                         </div>
-                    </div>
+                        <p class="depo-quote">"A base sólida de fundamentos que aprendi na Nankim foi o divisor de águas para minha vaga internacional."</p>
+                    </article>
+
+                    <!-- Card 2 -->
+                    <article class="card-depo">
+                        <div class="depo-header-sucesso">
+                            <div class="depo-foto" style="background-image: url('https://i.pravatar.cc/150?img=47');"></div>
+                            <div class="depo-info-aluno">
+                                <h3 class="depo-nome">Mariana Silva</h3>
+                                <span class="depo-cargo">Ilustradora Senior</span>
+                                <span class="depo-empresa">Marvel Comics</span>
+                            </div>
+                        </div>
+                        <p class="depo-quote">"O método me deu velocidade e precisão técnica. Hoje realizo o sonho de desenhar para a Marvel."</p>
+                    </article>
+
+                    <!-- Card 3 -->
+                    <article class="card-depo">
+                        <div class="depo-header-sucesso">
+                            <div class="depo-foto" style="background-image: url('https://i.pravatar.cc/150?img=33');"></div>
+                            <div class="depo-info-aluno">
+                                <h3 class="depo-nome">Rafael Costa</h3>
+                                <span class="depo-cargo">2D Game Artist</span>
+                                <span class="depo-empresa">Riot Games</span>
+                            </div>
+                        </div>
+                        <p class="depo-quote">"Aprender com método me permitiu trabalhar de casa para estúdios gringos e faturar em moeda forte."</p>
+                    </article>
+
+                    <!-- Card 4 -->
+                    <article class="card-depo">
+                        <div class="depo-header-sucesso">
+                            <div class="depo-foto" style="background-image: url('https://i.pravatar.cc/150?img=44');"></div>
+                            <div class="depo-info-aluno">
+                                <h3 class="depo-nome">Camila Ribeiro</h3>
+                                <span class="depo-cargo">Character Designer</span>
+                                <span class="depo-empresa">Blizzard Entertainment</span>
+                            </div>
+                        </div>
+                        <p class="depo-quote">"Dominar anatomia e luz transformou meu portfólio e abriu portas na indústria de games."</p>
+                    </article>
+
                 </div>
+
             </div>
-
-            <!-- Lado Direito: Conteúdo sem o primeiro tópico e com botão padronizado -->
-            <div class="coluna-beneficios-degustacao revelar-scroll">
-                <div class="bloco-conteudo-minicurso">
-                    <h3 class="titulo-minicurso-direita">Introdução ao desenho</h3>
-                    <p class="subtitulo-minicurso-topicos">O que você vai encontrar:</p>
-
-                    <ul class="lista-topicos-minicurso">
-                        <li class="item-topico">
-                            <span class="bullet-icone">✦</span>
-                            <span>Estudos de análise e observação</span>
-                        </li>
-                        <li class="item-topico">
-                            <span class="bullet-icone">✦</span>
-                            <span>Estudos de observação da realidade</span>
-                        </li>
-                        <li class="item-topico">
-                            <span class="bullet-icone">✦</span>
-                            <span>Estudos de simplificação</span>
-                        </li>
-                    </ul>
-
-                    <a href="cadastro.html" class="btn-degustacao-cta link-magnetico">Quero Testar Grátis</a>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-</section>
-
-
-
-
+        </section>
 
     </main>
 

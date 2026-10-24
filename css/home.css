@@ -1,11 +1,167 @@
 body {
-	overflow-x: hidden;
-	background-color: #F4EBD0;
+    overflow-x: hidden;
+    background-color: #ffffff;
 }
 
-main,
-main * {
-	font-family: 'Montserrat', system-ui, sans-serif;
+/* Bloco Escuro Centralizado */
+.cuberto-dark-section {
+    background-color: #0a0a0a !important;
+    color: #ffffff;
+    padding: 7rem 0 8rem;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    margin-top: -20px;
+    position: relative;
+    z-index: 5;
+    box-shadow: 0 -30px 0 0 #ffffff;
+}
+
+/* Bloco Claro com Transição Curva (Igual ao Cuberto da Imagem) */
+.cuberto-light-section {
+    background-color: #ffffff !important;
+    color: #000000;
+    padding: 8rem 0 10rem;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    margin-top: -40px; /* Sobrepõe suavemente o bloco escuro anterior */
+    position: relative;
+    z-index: 6;
+    box-shadow: 0 -30px 0 0 #0a0a0a; /* Sombra preta para criar o encaixe perfeito da curva */
+}
+
+/* Cabeçalho da Seção Clara */
+.cabecalho-vitrine-claro {
+    text-align: center;
+    margin-bottom: 2rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.titulo-destaque-claro {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(2rem, 3.8vw, 3.2rem);
+    font-weight: 800 !important;
+    color: #000000;
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+    margin-bottom: 1rem;
+}
+
+.subtitulo-detalhe-claro {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+    font-weight: 300 !important;
+    color: #555555;
+    letter-spacing: -0.3px;
+}
+
+/* Estrutura dos Cards Empilhados */
+.wrapper-depoimentos-stack {
+    position: relative;
+    width: 100%;
+    height: 550px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+    cursor: pointer;
+}
+
+.card-depo {
+    position: absolute;
+    width: 340px;
+    height: 260px;
+    background-color: #f7f7f7;
+    border: 1px solid #e2e2e2;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
+}
+
+.depo-quote {
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+.depo-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.depo-autor {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.depo-foto {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+}
+
+.depo-nome {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #1a1a1a;
+}
+
+.depo-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #b33f30;
+    background-color: rgba(179, 63, 48, 0.08);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    align-self: flex-start;
+}
+
+/* Posições Iniciais (Juntos / Empilhados) */
+.card-depo:nth-child(1) { transform: rotate(-9deg) translate(-15px, -10px); z-index: 4; }
+.card-depo:nth-child(2) { transform: rotate(5deg) translate(15px, 15px); z-index: 3; }
+.card-depo:nth-child(3) { transform: rotate(-6deg) translate(-10px, 25px); z-index: 2; }
+.card-depo:nth-child(4) { transform: rotate(10deg) translate(20px, -5px); z-index: 1; }
+
+/* Posições Separadas no Hover */
+.wrapper-depoimentos-stack:hover .card-depo {
+    box-shadow: 0 25px 45px rgba(0,0,0,0.12);
+}
+
+.wrapper-depoimentos-stack:hover .card-depo:nth-child(1) {
+    transform: translate(-180px, -135px) rotate(-2deg);
+}
+.wrapper-depoimentos-stack:hover .card-depo:nth-child(2) {
+    transform: translate(180px, -130px) rotate(2deg);
+}
+.wrapper-depoimentos-stack:hover .card-depo:nth-child(3) {
+    transform: translate(-170px, 135px) rotate(1deg);
+}
+.wrapper-depoimentos-stack:hover .card-depo:nth-child(4) {
+    transform: translate(170px, 140px) rotate(-1deg);
+}
+
+@media (max-width: 850px) {
+    .wrapper-depoimentos-stack {
+        height: auto;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .card-depo {
+        position: relative;
+        width: 100%;
+        height: auto;
+        transform: none !important;
+    }
 }
 
 /* ==========================================================
@@ -900,6 +1056,131 @@ main * {
 
 
 
+
+/* ==========================================================
+   Seção 4: Depoimentos / Sucesso dos Alunos (Efeito Stack)
+   ========================================================== */
+.wrapper-depoimentos-stack {
+    position: relative;
+    width: 100%;
+    height: 550px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    cursor: pointer;
+}
+
+.card-depo {
+    position: absolute;
+    width: 340px;
+    height: 230px;
+    background-color: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 24px;
+    padding: 1.8rem;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
+}
+
+/* Header com Foto e Dados */
+.depo-header-sucesso {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.depo-foto {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #b33f30;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(179, 63, 48, 0.18);
+}
+
+.depo-info-aluno {
+    display: flex;
+    flex-direction: column;
+}
+
+.depo-nome {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #000000;
+    margin: 0 0 2px 0;
+    line-height: 1.2;
+}
+
+.depo-cargo {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #b33f30;
+    line-height: 1.2;
+}
+
+.depo-empresa {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #666666;
+    margin-top: 2px;
+}
+
+/* Depoimento discreto */
+.depo-quote {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    font-weight: 400;
+    color: #666666;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Posições Iniciais (Amontoados) */
+.card-depo:nth-child(1) { transform: rotate(-8deg) translate(-15px, -10px); z-index: 4; }
+.card-depo:nth-child(2) { transform: rotate(5deg) translate(15px, 15px); z-index: 3; }
+.card-depo:nth-child(3) { transform: rotate(-6deg) translate(-10px, 25px); z-index: 2; }
+.card-depo:nth-child(4) { transform: rotate(9deg) translate(20px, -5px); z-index: 1; }
+
+/* Posições Separadas no Hover */
+.wrapper-depoimentos-stack:hover .card-depo {
+    box-shadow: 0 25px 45px rgba(0,0,0,0.12);
+}
+
+.wrapper-depoimentos-stack:hover .card-depo:nth-child(1) {
+    transform: translate(-190px, -130px) rotate(-2deg);
+}
+.wrapper-depoimentos-stack:hover .card-depo:nth-child(2) {
+    transform: translate(190px, -125px) rotate(2deg);
+}
+.wrapper-depoimentos-stack:hover .card-depo:nth-child(3) {
+    transform: translate(-180px, 130px) rotate(1deg);
+}
+.wrapper-depoimentos-stack:hover .card-depo:nth-child(4) {
+    transform: translate(180px, 135px) rotate(-1deg);
+}
+
+@media (max-width: 850px) {
+    .wrapper-depoimentos-stack {
+        height: auto;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .card-depo {
+        position: relative;
+        width: 100%;
+        height: auto;
+        transform: none !important;
+    }
+}
 
 /* ==========================================================
    Animação de Revelação Suave no Scroll
