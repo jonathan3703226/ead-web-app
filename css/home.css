@@ -20,13 +20,13 @@ body {
 .cuberto-light-section {
     background-color: #ffffff !important;
     color: #000000;
-    padding: 8rem 0 10rem;
+    padding: 6rem 0 3rem; /* Diminuído de 10rem para 3rem na base */
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
-    margin-top: -40px; /* Sobrepõe suavemente o bloco escuro anterior */
+    margin-top: -40px;
     position: relative;
     z-index: 6;
-    box-shadow: 0 -30px 0 0 #0a0a0a; /* Sombra preta para criar o encaixe perfeito da curva */
+    box-shadow: 0 -30px 0 0 #0a0a0a;
 }
 
 /* Cabeçalho da Seção Clara */
@@ -60,11 +60,11 @@ body {
 .wrapper-depoimentos-stack {
     position: relative;
     width: 100%;
-    height: 550px;
+    height: 480px; /* Reduzido de 550px para 480px para eliminar sobra de espaço */
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 3rem;
+    margin-top: 2rem;
     cursor: pointer;
 }
 
@@ -1180,6 +1180,329 @@ body {
         height: auto;
         transform: none !important;
     }
+}
+
+
+/* ==========================================================
+   Seção 5: Missão & Propósito Institucional (Fundo Branco)
+   ========================================================== */
+.secao-missao-institucional {
+    background-color: #ffffff !important;
+    padding: 2rem 0 8rem; /* Diminuído de 6rem para 2rem no topo */
+    width: 100%;
+    position: relative;
+    z-index: 7;
+}
+
+.grid-missao {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-top: 3.5rem;
+}
+
+/* Lado Esquerdo: Galeria */
+.coluna-galeria-missao {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.moldura-foto-destaque {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
+    border: 1px solid #eaeaea;
+    background-color: #f5f5f5;
+}
+
+.moldura-foto-destaque img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+}
+
+.moldura-foto-destaque:hover img {
+    transform: scale(1.04);
+}
+
+.overlay-gradiente-foto {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.4) 100%);
+    pointer-events: none;
+}
+
+.badge-foto-legenda {
+    position: absolute;
+    bottom: 1.2rem;
+    left: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    color: #000000;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.45rem 1rem;
+    border-radius: 50px;
+    letter-spacing: 0.5px;
+}
+
+/* Grid de Miniaturas */
+.grid-thumbs-galeria {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+}
+
+.thumb-item {
+    aspect-ratio: 1;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid transparent;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+.thumb-item:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.thumb-item.ativo {
+    opacity: 1;
+    border-color: #b33f30;
+    box-shadow: 0 4px 12px rgba(179, 63, 48, 0.25);
+}
+
+/* Lado Direito: Card do Texto */
+.coluna-texto-missao {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-texto-proposito {
+    background-color: #fafafa;
+    border: 1px solid #ededed;
+    border-radius: 28px;
+    padding: 3rem 2.8rem;
+    position: relative;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.03);
+}
+
+.prefixo-aspas {
+    font-size: 4rem;
+    line-height: 1;
+    font-family: 'Caveat', cursive, Georgia, serif;
+    color: #b33f30;
+    display: block;
+    margin-bottom: -1.5rem;
+}
+
+.texto-missao-destaque {
+    font-size: 1.15rem;
+    line-height: 1.75;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 1.2rem;
+}
+
+.texto-missao-complemento {
+    font-size: 1rem;
+    line-height: 1.7;
+    font-weight: 400;
+    color: #555555;
+    margin-bottom: 2rem;
+}
+
+.rodape-autor-missao {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.linha-decorativa-vermelha {
+    width: 32px;
+    height: 3px;
+    background-color: #b33f30;
+    border-radius: 2px;
+}
+
+.nome-instrutor-missao {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: -0.2px;
+}
+
+@media (max-width: 900px) {
+    .grid-missao {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+    .card-texto-proposito {
+        padding: 2rem 1.8rem;
+    }
+}
+
+/* ==========================================================
+   Seção 6: FAQ (Fundo Escuro e Accordion)
+   ========================================================== */
+.cuberto-dark-footer-section {
+    background-color: #0a0a0a !important;
+    color: #ffffff;
+    padding: 8rem 0 10rem;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    margin-top: -40px;
+    position: relative;
+    z-index: 8;
+    box-shadow: 0 -30px 0 0 #ffffff; /* Cobre o fundo da seção anterior para fazer a curva perfeita */
+}
+
+.accordion-faq-container {
+    max-width: 800px;
+    margin: 4rem auto 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.faq-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.faq-pergunta {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    padding: 2.2rem 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: color 0.3s ease;
+}
+
+.faq-pergunta:hover {
+    color: #b33f30;
+}
+
+/* Ícone de Mais/Menos Animado (+) (-) */
+.faq-icone {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    margin-left: 1rem;
+}
+
+.faq-icone::before, .faq-icone::after {
+    content: '';
+    position: absolute;
+    background-color: currentColor;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+
+/* Linha horizontal do + */
+.faq-icone::before {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    transform: translateY(-50%);
+}
+
+/* Linha vertical do + */
+.faq-icone::after {
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    transform: translateX(-50%);
+}
+
+/* Estado Ativo (Gira a linha vertical e apaga para virar o Menos) */
+.faq-item.ativo .faq-icone::after {
+    transform: translateX(-50%) rotate(90deg);
+    opacity: 0;
+}
+
+.faq-resposta {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-resposta p {
+    color: #a0a0a0;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    padding-bottom: 2.2rem;
+    margin: 0;
+    padding-right: 2rem;
+}
+
+@media (max-width: 768px) {
+    .faq-pergunta {
+        font-size: 1.1rem;
+        padding: 1.8rem 0;
+    }
+}
+
+/* ==========================================================
+   Call to Action (Contato FAQ)
+   ========================================================== */
+.faq-contato-cta {
+    text-align: center;
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.faq-contato-cta p {
+    font-size: 1.15rem;
+    color: #cccccc;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.btn-faq-contato {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    color: #000000 !important;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    border: 1px solid #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.btn-faq-contato:hover {
+    background-color: #0a0a0a;
+    color: #ffffff !important;
+    border-color: #ffffff;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
 }
 
 /* ==========================================================

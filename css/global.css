@@ -260,57 +260,170 @@ video {
 
 /* ================= RODAPÉ ================= */
 .rodape-global {
-    background-color: #1a1a1a;
+    background-color: #000000;
     color: #ffffff;
-    text-align: center;
-    padding: 2rem 5%;
+    padding: 5rem 5% 2.5rem;
+    font-family: 'Montserrat', sans-serif;
+    position: relative;
+    z-index: 10;
 }
 
-.rodape-global p {
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-    color: #ccc;
-}
-
-.rodape-links {
+.rodape-container {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.rodape-superior {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     flex-wrap: wrap;
-    justify-content: center;
+    gap: 2rem;
+}
+
+/* Esquerda: Logo Nankim Padronizada */
+/* Esquerda: Logo Nankim Estática (Sem Link) */
+.logo-rodape-estatica {
+    display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.85rem;
+    color: #ffffff !important;
+    user-select: none;
 }
 
-.rodape-global a {
-    color: #f39c12;
+.logo-rodape-icone {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: contain;
+    display: block;
+    /* Inverte a cor do SVG (de preto para branco) */
+    filter: invert(1);
+}
+
+.logo-fixo-rodape {
+    font-family: 'Audiowide', cursive;
+    font-size: 1.6rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: #ffffff !important;
+}
+
+.logo-sub-rodape {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff !important;
+    padding-left: 0.35rem;
+}
+
+/* Direita: Textos e Ícones */
+.rodape-col-dir {
+    max-width: 480px;
+    text-align: right;
+}
+
+.rodape-sociais {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+}
+
+.rodape-sociais a {
+    color: #ffffff !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.08);
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.rodape-sociais a:hover {
+    background-color: #ffffff;
+    color: #000000 !important;
+}
+
+.rodape-desc-escola {
+    font-size: 0.92rem;
+    color: #a0a0a0;
+    line-height: 1.6;
+}
+
+/* Inferior: Direitos e Avisos Legais */
+.rodape-inferior {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 2rem;
+    font-size: 0.85rem;
+    color: #888888;
+}
+
+.rodape-copyright {
+    margin: 0;
+}
+
+.rodape-links-legais {
+    display: flex;
+    gap: 1.8rem;
+    flex-wrap: wrap;
+}
+
+.rodape-links-legais a, 
+.rodape-links-legais button {
+    color: #888888 !important;
     text-decoration: none;
-    font-size: 0.9rem;
-    border: 1px solid #f39c12;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-}
-
-.rodape-global a:hover {
-    background-color: #f39c12;
-    color: #fff;
-}
-
-.rodape-global .link-preferencias-cookies {
-    padding: 0.5rem 0;
-    border: 0;
-    background: transparent;
-    color: #ccc;
     font: inherit;
-    font-size: 0.9rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.3s ease, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.rodape-links-legais a:hover, 
+.rodape-links-legais button:hover {
+    color: #ffffff !important;
     text-decoration: underline;
     text-underline-offset: 3px;
-    cursor: pointer;
 }
 
-.rodape-global .link-preferencias-cookies:hover {
-    color: #f39c12;
-}
+@media (max-width: 850px) {
+    .rodape-superior {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .rodape-col-dir {
+        text-align: center;
+    }
+    
+    .rodape-sociais {
+        justify-content: center;
+    }
 
+    .rodape-inferior {
+        flex-direction: column-reverse;
+        justify-content: center;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .rodape-links-legais {
+        justify-content: center;
+    }
+}
 /* ================= MODAIS (ESTRUTURA BASE E SCROLL) ================= */
 .modal {
     display: none;

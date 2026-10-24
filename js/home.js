@@ -79,3 +79,88 @@ document.addEventListener("DOMContentLoaded", () => {
     elementosParaAnimar.forEach(el => observerScroll.observe(el));
 
 });
+
+
+// 5. Carrossel Automático e Interativo da Seção Missão
+    const listaFotosMissao = [
+        './assets/img/ensino/ensino1.jpeg',
+        './assets/img/ensino/ensino2.jpeg',
+        './assets/img/ensino/ensino3.jpeg',
+        './assets/img/ensino/ensino4.jpeg',
+        './assets/img/ensino/ensino5.jpeg',
+        './assets/img/ensino/ensino6.jpeg'
+    ];
+
+    const fotoPrincipal = document.getElementById('foto-missao-principal');
+    const botoesThumbs = document.querySelectorAll('.thumb-item');
+    let indexFotoAtual = 0;
+    let timerAutoplayMissao;
+
+    function trocarFotoMissao(novoIndex) {
+        if (!fotoPrincipal || novoIndex === indexFotoAtual) return;
+        
+        indexFotoAtual = novoIndex;
+
+        // Suave transição de opacidade
+        fotoPrincipal.style.opacity = '0.3';
+        
+        setTimeout(() => {
+            fotoPrincipal.src = listaFotosMissao[indexFotoAtual];
+            fotoPrincipal.style.opacity = '1';
+        }, 200);
+
+        // Atualiza a thumb ativa
+        botoesThumbs.forEach((btn, idx) => {
+            if (idx === indexFotoAtual) {
+                btn.classList.add('ativo');
+            } else {
+                btn.classList.remove('ativo');
+            }
+        });
+    }
+
+    function iniciarAutoplayMissao() {
+        timerAutoplayMissao = setInterval(() => {
+            let proximoIndex = (indexFotoAtual + 1) % listaFotosMissao.length;
+            trocarFotoMissao(proximoIndex);
+        }, 4500); // Troca a foto a cada 4.5 segundos
+    }
+
+    // Clique manual nas miniaturas
+    botoesThumbs.forEach((thumb) => {
+        thumb.addEventListener('click', (e) => {
+            clearInterval(timerAutoplayMissao);
+            const indexClicado = parseInt(e.currentTarget.getAttribute('data-index'));
+            trocarFotoMissao(indexClicado);
+            iniciarAutoplayMissao(); // Reinicia o temporizador
+        });
+    });
+
+    if (fotoPrincipal) {
+        iniciarAutoplayMissao();
+    }
+
+    // 6. Lógica do Accordion (FAQ)
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const perguntaBtn = item.querySelector('.faq-pergunta');
+        
+        perguntaBtn.addEventListener('click', () => {
+            const isAtivo = item.classList.contains('ativo');
+            
+            // Fechar todas as outras respostas abertas antes de abrir a nova
+            faqItems.forEach(i => {
+                i.classList.remove('ativo');
+                i.querySelector('.faq-resposta').style.maxHeight = null;
+            });
+
+            // Se o item clicado não estava ativo, abre ele
+            if (!isAtivo) {
+                item.classList.add('ativo');
+                const resposta = item.querySelector('.faq-resposta');
+                // Usa o scrollHeight para saber o tamanho real do conteúdo e animar
+                resposta.style.maxHeight = resposta.scrollHeight + "px";
+            }
+        });
+    });
