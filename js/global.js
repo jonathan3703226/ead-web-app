@@ -128,17 +128,6 @@ function injetarMenuERodape() {
                 <div class="rodape-container">
                     
                     <div class="rodape-superior">
-                        <!-- Canto Esquerdo: Logo + Marca Nankim (Estático) -->
-                        <div class="rodape-col-esq">
-                            <div class="logo-rodape-estatica">
-                                <img src="./assets/icons/logo.svg" alt="Selo Nankim" class="logo-rodape-icone" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'><circle cx=\'20\' cy=\'20\' r=\'18\' fill=\'%23ffffff\'/><text x=\'50%\' y=\'58%\' text-anchor=\'middle\' fill=\'black\' font-size=\'20\' font-family=\'Georgia\'>N</text></svg>'">
-                                <div class="logo-texto-wrapper">
-                                    <span class="logo-fixo-rodape">Nankim</span>
-                                    <span class="logo-sub-rodape">Art School</span>
-                                </div>
-                            </div>
-                        </div>
-                        
                         <!-- Canto Direito: Redes Sociais com Efeito Magnético e Descrição -->
                         <div class="rodape-col-dir">
                             <div class="rodape-sociais">

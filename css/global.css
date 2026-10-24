@@ -278,7 +278,7 @@ video {
 
 .rodape-superior {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end; /* Alinha o bloco de descrição à direita */
     align-items: flex-start;
     flex-wrap: wrap;
     gap: 2rem;

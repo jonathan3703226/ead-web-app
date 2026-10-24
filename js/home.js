@@ -61,9 +61,14 @@ document.addEventListener("DOMContentLoaded", () => {
             video.pause();
         });
     });
+    
 
-    // 4. Carregamento Suave ao Descer a Página (Scroll Reveal Unificado)
-    const elementosParaAnimar = document.querySelectorAll('.revelar-scroll');
+    // Garantir que cabeçalho e cards tenham a classe de animação
+    const elementosParaAnimar = document.querySelectorAll(
+        '.secao-vitrine-cursos .cabecalho-vitrine, .secao-vitrine-cursos .card-curso, .revelar-scroll'
+    );
+
+    elementosParaAnimar.forEach(el => el.classList.add('revelar-scroll'));
 
     const observerScroll = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
