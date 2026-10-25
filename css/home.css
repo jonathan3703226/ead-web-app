@@ -1086,7 +1086,7 @@ body {
    Seção 6: FAQ (Fundo Escuro e Accordion)
    ========================================================== */
 .cuberto-dark-footer-section {
-    background-color: #0a0a0a !important;
+    background-color: #000000 !important;
     color: #ffffff;
     padding: 8rem 0 10rem;
     border-top-left-radius: 40px;
