@@ -10,9 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const nome = document.getElementById('contato-nome').value.trim();
         const email = document.getElementById('contato-email').value.trim();
+        const telefone = document.getElementById('contato-telefone').value.trim();
         const mensagem = document.getElementById('contato-mensagem').value.trim();
         const assunto = encodeURIComponent(`Contato pelo site - ${nome}`);
-        const corpo = encodeURIComponent(`Nome: ${nome}\nE-mail: ${email}\n\n${mensagem}`);
+        const contatoTelefone = telefone ? `\nTelefone: ${telefone}` : '';
+        const corpo = encodeURIComponent(`Nome: ${nome}\nE-mail: ${email}${contatoTelefone}\n\n${mensagem}`);
         window.location.href = `mailto:${emailDestino}?subject=${assunto}&body=${corpo}`;
         feedback.textContent = `Seu aplicativo de e-mail foi solicitado para ${emailDestino}.`;
     });
