@@ -31,7 +31,7 @@ function injetarModaisAutenticacao() {
                         <button type="submit" id="btn-submit-login">Entrar na Plataforma</button>
                         <p class="alternar-cadastro">
                             <span>Ainda não tem conta?</span> 
-                            <button type="button" class="btn-abrir-cadastro">Cadastre-se</button>
+                            <button type="button" id="btn-alternar-para-cadastro">Cadastre-se</button>
                         </p>
                     </form>
                 </div>
@@ -51,7 +51,7 @@ function injetarModaisAutenticacao() {
                         
                         <div class="input-group">
                             <label for="cad-nome">Nome completo</label>
-                            <input type="text" id="cad-nome" placeholder="Seu nome completo" required autocomplete="name">
+                            <input type="text" id="cad-nome" placeholder="Seu nome e sobrenome" required autocomplete="name">
                             <small class="input-feedback"></small>
                         </div>
 
@@ -103,7 +103,6 @@ function injetarModaisAutenticacao() {
                             </div>
                         </div>
 
-                        <!-- Indicadores visuais de força da senha -->
                         <div class="senha-requisitos" id="painel-requisitos-senha">
                             <span id="req-minimo" class="req-item">✖ Mínimo de 8 caracteres</span>
                             <span id="req-maiuscula" class="req-item">✖ Pelo menos 1 letra maiúscula</span>
@@ -114,7 +113,7 @@ function injetarModaisAutenticacao() {
                         <div class="input-group checkbox-group">
                             <label class="label-termos">
                                 <input type="checkbox" id="cad-termos" required>
-                                <span>Li e aceito os <a href="#" data-modal="termos">Termos de Uso e Política de Privacidade</a></span>
+                                <span>Li e aceito os <a href="politica-privacidade.html" target="_blank">Termos de Uso e Política de Privacidade</a></span>
                             </label>
                             <small class="input-feedback"></small>
                         </div>
@@ -123,7 +122,7 @@ function injetarModaisAutenticacao() {
                         
                         <p class="alternar-cadastro">
                             <span>Já possui uma conta?</span> 
-                            <button type="button" class="btn-abrir-login">Fazer login</button>
+                            <button type="button" id="btn-alternar-para-login">Fazer login</button>
                         </p>
                     </form>
                 </div>
@@ -137,10 +136,8 @@ function obterUsuarios() {
     if (!dados) return [];
     try {
         const usuarios = JSON.parse(dados);
-        if (!Array.isArray(usuarios)) throw new TypeError('O banco local precisa ser uma lista.');
-        return usuarios;
+        return Array.isArray(usuarios) ? usuarios : [];
     } catch (error) {
-        console.error('Não foi possível ler as contas locais:', error);
         return [];
     }
 }
@@ -149,55 +146,39 @@ function configurarAutenticacao() {
     const formLogin = document.getElementById('form-login');
     const formCadastro = document.getElementById('form-cadastro');
 
-
     const svgOlhoAberto = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
     const svgOlhoFechado = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>`;
-    // Salva a nova conta liberando o Módulo 1 do curso Fundamentos do Desenho
-    const novoUsuario = {
-        id: Date.now(),
-        nome: inputNomeCad.value.trim(),
-        email: email,
-        telefone: inputTelefone.value.trim(),
-        senha: inputSenhaCad.value,
-        matriculado: false, // Matricula total do curso continua sendo via checkout
-        moduloGratuitoLiberado: true, // Libera o Módulo 1 na área do aluno
-        cursos: [
-            {
-                id: 'fundamentos-desenho',
-                nome: 'Fundamentos do Desenho',
-                apenasModulo1: true, // Indica acesso parcial ao curso
-                progresso: 0,
-                ultimaAula: 0,
-                aulasConcluidas: []
-            }
-        ]
-    };
-    // Funções de Ajuda para Validação Visual nos Campos
+
+    function exibirModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) modal.style.display = 'flex';
+    }
+
+    function ocultarModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) modal.style.display = 'none';
+    }
+
     function definirErroCampo(inputEl, mensagem) {
         if (!inputEl) return;
         const grupo = inputEl.closest('.input-group');
         if (!grupo) return;
 
+        let feedback = grupo.querySelector('.input-feedback');
+        if (!feedback) {
+            feedback = document.createElement('small');
+            feedback.className = 'input-feedback';
+            grupo.appendChild(feedback);
+        }
+
         if (mensagem) {
             grupo.classList.add('erro');
             grupo.classList.remove('sucesso');
-            const feedback = grupo.querySelector('.input-feedback');
-            if (feedback) feedback.textContent = mensagem;
+            feedback.textContent = mensagem;
         } else {
             grupo.classList.remove('erro');
             grupo.classList.add('sucesso');
-            const feedback = grupo.querySelector('.input-feedback');
-            if (feedback) feedback.textContent = '';
-        }
-    }
-
-    function limparValidacaoCampo(inputEl) {
-        if (!inputEl) return;
-        const grupo = inputEl.closest('.input-group');
-        if (grupo) {
-            grupo.classList.remove('erro', 'sucesso');
-            const feedback = grupo.querySelector('.input-feedback');
-            if (feedback) feedback.textContent = '';
+            feedback.textContent = '';
         }
     }
 
@@ -211,14 +192,38 @@ function configurarAutenticacao() {
         form.insertBefore(mensagem, form.firstChild);
     }
 
-    // 1. Gerenciador Global de Cliques
+    // 1. OUVINTE GLOBAL DE CLIQUES (Esqueci a senha, troca de modais e fechar)
     document.addEventListener('click', (e) => {
         const alvo = e.target instanceof Element ? e.target : null;
         if (!alvo) return;
 
-        // Alternar visibilidade da senha
+        // Clique em "Esqueceu sua senha?"
+        const linkEsqueci = alvo.closest('#link-esqueci-senha');
+        if (linkEsqueci) {
+            e.preventDefault();
+            const emailInput = document.getElementById('login-email');
+            const emailVal = emailInput ? emailInput.value.trim().toLowerCase() : '';
+
+            if (!emailVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+                definirErroCampo(emailInput, 'Digite seu e-mail acima para recuperar a senha.');
+                mostrarMensagemGeral(formLogin, 'Digite um e-mail válido no campo acima para recuperar a senha.');
+                if (emailInput) emailInput.focus();
+                return;
+            }
+
+            definirErroCampo(emailInput, '');
+            mostrarMensagemGeral(
+                formLogin, 
+                `Um e-mail de redefinição de senha foi enviado para ${emailVal}.`, 
+                'msg-sucesso-info'
+            );
+            return;
+        }
+
+        // Toggle Olho Senha
         const btnToggle = alvo.closest('.btn-toggle-senha');
         if (btnToggle) {
+            e.preventDefault();
             const wrapper = btnToggle.closest('.campo-senha-wrapper');
             const inputSenha = wrapper ? wrapper.querySelector('input') : null;
             if (inputSenha) {
@@ -229,25 +234,43 @@ function configurarAutenticacao() {
             return;
         }
 
-        // Trocar de Login para Cadastro
-        if (alvo.closest('.btn-abrir-cadastro') || alvo.closest('[data-modal="cadastro"]')) {
-            if (typeof fecharModal === 'function') fecharModal('login');
-            if (typeof abrirModal === 'function') abrirModal('cadastro');
+        // Trocar para Cadastro
+        if (alvo.closest('#btn-alternar-para-cadastro') || alvo.closest('[data-modal="cadastro"]')) {
+            e.preventDefault();
+            ocultarModal('modal-login');
+            exibirModal('modal-cadastro');
             return;
         }
 
-        // Trocar de Cadastro para Login
-        if (alvo.closest('.btn-abrir-login')) {
-            if (typeof fecharModal === 'function') fecharModal('cadastro');
-            if (typeof abrirModal === 'function') abrirModal('login');
+        // Trocar para Login
+        if (alvo.closest('#btn-alternar-para-login') || alvo.closest('[data-modal="login"]')) {
+            e.preventDefault();
+            ocultarModal('modal-cadastro');
+            exibirModal('modal-login');
             return;
+        }
+
+        // Fechar Modais (X)
+        const btnFechar = alvo.closest('[data-close]');
+        if (btnFechar) {
+            e.preventDefault();
+            const modalId = btnFechar.getAttribute('data-close');
+            ocultarModal(`modal-${modalId}`);
         }
     });
 
-    // 2. Máscara e Validação Instantânea de Celular/WhatsApp (DDD + 9 dígitos)
-    const inputTelefone = document.getElementById('cad-telefone');
-    if (inputTelefone) {
-        inputTelefone.addEventListener('input', (e) => {
+    // 2. VALIDAÇÃO INSTANTÂNEA E MÁSCARA DO CADASTRO
+    const inputNomeCad = document.getElementById('cad-nome');
+    const inputEmailCad = document.getElementById('cad-email');
+    const inputConfirmEmailCad = document.getElementById('cad-confirm-email');
+    const inputTelefoneCad = document.getElementById('cad-telefone');
+    const inputSenhaCad = document.getElementById('cad-senha');
+    const inputConfirmSenhaCad = document.getElementById('cad-confirm-senha');
+    const checkTermosCad = document.getElementById('cad-termos');
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (inputTelefoneCad) {
+        inputTelefoneCad.addEventListener('input', (e) => {
             let value = e.target.value.replace(/\D/g, '');
             if (value.length > 11) value = value.slice(0, 11);
 
@@ -260,35 +283,19 @@ function configurarAutenticacao() {
             }
             e.target.value = value;
 
-            // Validação instantânea do número exato
-            const APENAS_NUMEROS = value.replace(/\D/g, '');
-            if (APENAS_NUMEROS.length === 0) {
-                definirErroCampo(inputTelefone, 'Informe o número do seu celular.');
-            } else if (APENAS_NUMEROS.length < 11) {
-                definirErroCampo(inputTelefone, 'Informe o DDD + 9 dígitos (Ex: (61) 98765-4321).');
+            const digitos = value.replace(/\D/g, '');
+            if (digitos.length < 11) {
+                definirErroCampo(inputTelefoneCad, 'Informe DDD + 9 dígitos (Ex: (61) 98765-4321).');
             } else {
-                definirErroCampo(inputTelefone, '');
+                definirErroCampo(inputTelefoneCad, '');
             }
         });
     }
 
-    // 3. Validações Instantâneas no Cadastro
-    const inputNomeCad = document.getElementById('cad-nome');
-    const inputEmailCad = document.getElementById('cad-email');
-    const inputConfirmEmailCad = document.getElementById('cad-confirm-email');
-    const inputSenhaCad = document.getElementById('cad-senha');
-    const inputConfirmSenhaCad = document.getElementById('cad-confirm-senha');
-    const checkTermosCad = document.getElementById('cad-termos');
-
-    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    // a) Nome Completo
     if (inputNomeCad) {
         inputNomeCad.addEventListener('input', () => {
             const v = inputNomeCad.value.trim();
-            if (!v) {
-                definirErroCampo(inputNomeCad, 'Informe seu nome completo.');
-            } else if (v.length < 3 || !v.includes(' ')) {
+            if (v.length < 3 || !v.includes(' ')) {
                 definirErroCampo(inputNomeCad, 'Digite seu nome e sobrenome.');
             } else {
                 definirErroCampo(inputNomeCad, '');
@@ -296,65 +303,51 @@ function configurarAutenticacao() {
         });
     }
 
-    // b) E-mail Principal
     if (inputEmailCad) {
         inputEmailCad.addEventListener('input', () => {
             const v = inputEmailCad.value.trim().toLowerCase();
-            if (!v) {
-                definirErroCampo(inputEmailCad, 'Informe seu e-mail.');
-            } else if (!regexEmail.test(v)) {
-                definirErroCampo(inputEmailCad, 'E-mail inválido. Verifique o formato (ex: nome@dominio.com).');
+            if (!regexEmail.test(v)) {
+                definirErroCampo(inputEmailCad, 'Informe um e-mail válido (ex: nome@dominio.com).');
             } else {
                 definirErroCampo(inputEmailCad, '');
             }
 
-            // Dispara revalidação no campo de confirmação se ele já estiver preenchido
-            if (inputConfirmEmailCad && inputConfirmEmailCad.value.trim()) {
+            if (inputConfirmEmailCad && inputConfirmEmailCad.value) {
                 inputConfirmEmailCad.dispatchEvent(new Event('input'));
             }
         });
     }
 
-    // c) Confirmação de E-mail
     if (inputConfirmEmailCad) {
         inputConfirmEmailCad.addEventListener('input', () => {
-            const emailOrig = inputEmailCad ? inputEmailCad.value.trim().toLowerCase() : '';
             const confirmVal = inputConfirmEmailCad.value.trim().toLowerCase();
+            const origVal = inputEmailCad ? inputEmailCad.value.trim().toLowerCase() : '';
 
-            if (!confirmVal) {
-                definirErroCampo(inputConfirmEmailCad, 'Confirme seu e-mail.');
-            } else if (confirmVal !== emailOrig) {
-                definirErroCampo(inputConfirmEmailCad, 'Os e-mails digitados não são idênticos.');
+            if (confirmVal !== origVal || !confirmVal) {
+                definirErroCampo(inputConfirmEmailCad, 'Os e-mails digitados não são iguais.');
             } else {
                 definirErroCampo(inputConfirmEmailCad, '');
             }
         });
     }
 
-    // d) Senha e Requisitos Visuais
     if (inputSenhaCad) {
-        const reqMinimo = document.getElementById('req-minimo');
-        const reqMaiuscula = document.getElementById('req-maiuscula');
-        const reqNumero = document.getElementById('req-numero');
-        const reqSimbolo = document.getElementById('req-simbolo');
-
         inputSenhaCad.addEventListener('input', () => {
             const val = inputSenhaCad.value;
+            const temMin = val.length >= 8;
+            const temMai = /[A-Z]/.test(val);
+            const temNum = /[0-9]/.test(val);
+            const temSim = /[^A-Za-z0-9]/.test(val);
 
-            const temMinimo = val.length >= 8;
-            const temMaiuscula = /[A-Z]/.test(val);
-            const temNumero = /[0-9]/.test(val);
-            const temSimbolo = /[^A-Za-z0-9]/.test(val);
+            atualizarReq('req-minimo', temMin, 'Mínimo de 8 caracteres');
+            atualizarReq('req-maiuscula', temMai, 'Pelo menos 1 letra maiúscula');
+            atualizarReq('req-numero', temNum, 'Pelo menos 1 número');
+            atualizarReq('req-simbolo', temSim, 'Pelo menos 1 caractere especial (!@#$)');
 
-            atualizarReq(reqMinimo, temMinimo, 'Mínimo de 8 caracteres');
-            atualizarReq(reqMaiuscula, temMaiuscula, 'Pelo menos 1 letra maiúscula');
-            atualizarReq(reqNumero, temNumero, 'Pelo menos 1 número');
-            atualizarReq(reqSimbolo, temSimbolo, 'Pelo menos 1 caractere especial (!@#$)');
-
-            if (temMinimo && temMaiuscula && temNumero && temSimbolo) {
+            if (temMin && temMai && temNum && temSim) {
                 definirErroCampo(inputSenhaCad, '');
             } else {
-                definirErroCampo(inputSenhaCad, 'Sua senha não atende aos requisitos.');
+                definirErroCampo(inputSenhaCad, 'A senha não atende a todos os requisitos.');
             }
 
             if (inputConfirmSenhaCad && inputConfirmSenhaCad.value) {
@@ -362,7 +355,8 @@ function configurarAutenticacao() {
             }
         });
 
-        function atualizarReq(el, valido, texto) {
+        function atualizarReq(id, valido, texto) {
+            const el = document.getElementById(id);
             if (!el) return;
             if (valido) {
                 el.classList.add('valido');
@@ -374,15 +368,9 @@ function configurarAutenticacao() {
         }
     }
 
-    // e) Confirmação de Senha
     if (inputConfirmSenhaCad) {
         inputConfirmSenhaCad.addEventListener('input', () => {
-            const senhaOrig = inputSenhaCad ? inputSenhaCad.value : '';
-            const confirmVal = inputConfirmSenhaCad.value;
-
-            if (!confirmVal) {
-                definirErroCampo(inputConfirmSenhaCad, 'Confirme sua senha.');
-            } else if (confirmVal !== senhaOrig) {
+            if (inputConfirmSenhaCad.value !== inputSenhaCad.value || !inputConfirmSenhaCad.value) {
                 definirErroCampo(inputConfirmSenhaCad, 'As senhas digitadas não coincidem.');
             } else {
                 definirErroCampo(inputConfirmSenhaCad, '');
@@ -390,22 +378,85 @@ function configurarAutenticacao() {
         });
     }
 
-    // f) Checkbox de Termos
     if (checkTermosCad) {
         checkTermosCad.addEventListener('change', () => {
-            if (checkTermosCad.checked) {
-                definirErroCampo(checkTermosCad, '');
-            } else {
+            if (!checkTermosCad.checked) {
                 definirErroCampo(checkTermosCad, 'Aceite os termos para continuar.');
+            } else {
+                definirErroCampo(checkTermosCad, '');
             }
         });
     }
 
-    // 4. Submissão do Formulário de Login (Apenas E-mail e Senha)
+    // 3. SUBMISSÃO DO CADASTRO
+    if (formCadastro) {
+        formCadastro.addEventListener('submit', (event) => {
+            event.preventDefault();
+            mostrarMensagemGeral(formCadastro, '');
+
+            [inputNomeCad, inputEmailCad, inputConfirmEmailCad, inputTelefoneCad, inputSenhaCad, inputConfirmSenhaCad].forEach(el => {
+                if (el) el.dispatchEvent(new Event('input'));
+            });
+            if (checkTermosCad) checkTermosCad.dispatchEvent(new Event('change'));
+
+            if (formCadastro.querySelectorAll('.input-group.erro').length > 0) {
+                mostrarMensagemGeral(formCadastro, 'Corrija os campos destacados em vermelho acima.');
+                return;
+            }
+
+            const email = inputEmailCad.value.trim().toLowerCase();
+            const usuarios = obterUsuarios();
+
+            if (usuarios.some((c) => c.email.toLowerCase() === email)) {
+                definirErroCampo(inputEmailCad, 'Este e-mail já está cadastrado.');
+                mostrarMensagemGeral(formCadastro, 'Este e-mail já está cadastrado. Faça login para continuar.');
+                return;
+            }
+
+            const novoUsuario = {
+                id: Date.now(),
+                nome: inputNomeCad.value.trim(),
+                email: email,
+                telefone: inputTelefoneCad.value.trim(),
+                senha: inputSenhaCad.value,
+                matriculado: false,
+                cursos: [
+                    {
+                        id: 'fundamentos-desenho',
+                        nome: 'Fundamentos do Desenho',
+                        apenasModulo1: true,
+                        progresso: 0,
+                        ultimaAula: 0,
+                        aulasConcluidas: []
+                    }
+                ]
+            };
+
+            usuarios.push(novoUsuario);
+
+            try {
+                localStorage.setItem('nankim_db', JSON.stringify(usuarios));
+            } catch (error) {
+                mostrarMensagemGeral(formCadastro, 'Não foi possível salvar seu cadastro neste navegador.');
+                return;
+            }
+
+            ocultarModal('modal-cadastro');
+            exibirModal('modal-login');
+
+            const loginEmailInput = document.getElementById('login-email');
+            if (loginEmailInput) loginEmailInput.value = email;
+
+            mostrarMensagemGeral(formLogin, 'Conta criada com sucesso! Faça login para começar.', 'msg-sucesso-info');
+        });
+    }
+
+    // 4. SUBMISSÃO DO LOGIN
     if (formLogin) {
         formLogin.addEventListener('submit', (event) => {
             event.preventDefault();
             mostrarMensagemGeral(formLogin, '');
+
             const email = document.getElementById('login-email').value.trim().toLowerCase();
             const senha = document.getElementById('login-senha').value;
 
@@ -430,69 +481,9 @@ function configurarAutenticacao() {
                 }));
             } catch (error) {
                 console.error('Erro ao iniciar sessão:', error);
-                mostrarMensagemGeral(formLogin, 'Seu navegador não permitiu iniciar a sessão.');
-                return;
             }
 
             window.location.href = 'area-aluno.html';
-        });
-    }
-
-    // 5. Submissão do Formulário de Cadastro Completo
-    if (formCadastro) {
-        formCadastro.addEventListener('submit', (event) => {
-            event.preventDefault();
-            mostrarMensagemGeral(formCadastro, '');
-
-            // Força o evento input em todos para marcar visualmente qualquer campo vazio
-            [inputNomeCad, inputEmailCad, inputConfirmEmailCad, inputTelefone, inputSenhaCad, inputConfirmSenhaCad].forEach(el => {
-                if (el) el.dispatchEvent(new Event('input'));
-            });
-            if (checkTermosCad) checkTermosCad.dispatchEvent(new Event('change'));
-
-            const temCamposComErro = formCadastro.querySelectorAll('.input-group.erro').length > 0;
-            if (temCamposComErro) {
-                mostrarMensagemGeral(formCadastro, 'Por favor, corrija os campos marcados em vermelho acima.');
-                return;
-            }
-
-            const email = inputEmailCad.value.trim().toLowerCase();
-            const usuarios = obterUsuarios();
-
-            if (usuarios.some((c) => c.email.toLowerCase() === email)) {
-                definirErroCampo(inputEmailCad, 'Este e-mail já está cadastrado.');
-                mostrarMensagemGeral(formCadastro, 'Este e-mail já está cadastrado. Faça login para continuar.');
-                return;
-            }
-
-            // Salva a nova conta
-            const novoUsuario = {
-                id: Date.now(),
-                nome: inputNomeCad.value.trim(),
-                email: email,
-                telefone: inputTelefone.value.trim(),
-                senha: inputSenhaCad.value,
-                matriculado: false,
-                cursos: []
-            };
-
-            usuarios.push(novoUsuario);
-
-            try {
-                localStorage.setItem('nankim_db', JSON.stringify(usuarios));
-            } catch (error) {
-                console.error('Erro ao salvar no banco local:', error);
-                mostrarMensagemGeral(formCadastro, 'Não foi possível salvar o cadastro neste navegador.');
-                return;
-            }
-
-            if (typeof fecharModal === 'function') fecharModal('cadastro');
-            if (typeof abrirModal === 'function') abrirModal('login');
-
-            const loginEmailInput = document.getElementById('login-email');
-            if (loginEmailInput) loginEmailInput.value = email;
-
-            mostrarMensagemGeral(formLogin, 'Conta criada com sucesso! Faça login para começar.', 'msg-sucesso-info');
         });
     }
 }

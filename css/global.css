@@ -776,3 +776,97 @@ form button[type="submit"]:hover:not(:disabled) {
         grid-template-columns: 1fr;
     }
 }
+/* ==========================================================
+   Estilização dos Cards e Telas de Confirmação no Checkout
+   ========================================================== */
+
+/* Card de Confirmação do Cadastro */
+.msg-sucesso-card {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+    padding: 1rem 1.2rem;
+    border-radius: 16px;
+    font-size: 0.92rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Botão Pílula Preto Elegante (Substitui o cinza/vermelho antigo) */
+.btn-confirmacao-preto {
+    width: 100%;
+    background-color: #000000;
+    color: #ffffff !important;
+    border: 1px solid #000000;
+    padding: 1rem 1.8rem;
+    border-radius: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-confirmacao-preto:hover {
+    background-color: #222222;
+    transform: translateY(-2px);
+}
+
+/* Card de Matrícula Liberada com Barra de Progresso */
+.msg-liberado-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    padding: 1.2rem;
+    border-radius: 18px;
+    margin-bottom: 1.5rem;
+}
+
+.liberado-icone-wrapper {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    background-color: #dcfce7;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.liberado-textos strong {
+    display: block;
+    color: #166534;
+    font-size: 0.98rem;
+    margin-bottom: 0.2rem;
+}
+
+.liberado-textos p {
+    color: #15803d;
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+/* Barra de Animação de Carregamento Automático */
+.barra-carregando-wrapper {
+    width: 100%;
+    height: 6px;
+    background-color: #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.barra-carregando-progresso {
+    height: 100%;
+    background-color: #27ae60;
+    width: 0%;
+    animation: carregarRedirecionamento 2.2s linear forwards;
+}
+
+@keyframes carregarRedirecionamento {
+    from { width: 0%; }
+    to { width: 100%; }
+}

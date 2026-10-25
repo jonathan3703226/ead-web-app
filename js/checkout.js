@@ -104,7 +104,7 @@ function iniciarCheckout() {
             atualizarTituloCheckout('Você já tem acesso', 'Este e-mail já possui uma matrícula ativa neste curso.');
             document.getElementById('checkout-stage').innerHTML = `
                 <p class="checkout-nota">Entre na sua conta para continuar os estudos.</p>
-                <button type="button" id="checkout-ir-login">Fazer login</button>
+                <button type="button" id="checkout-ir-login" class="btn-pula-login">Fazer login</button>
             `;
             document.getElementById('checkout-ir-login').addEventListener('click', () => {
                 document.getElementById('modal-checkout').style.display = 'none';
@@ -122,7 +122,7 @@ function iniciarCheckout() {
     });
 }
 
-// 2. ETAPA DE CADASTRO NO CHECKOUT (Com Aceite de Termos e Mensagem de Sucesso)
+// 2. ETAPA DE CADASTRO NO CHECKOUT
 function mostrarEtapaCadastroCheckout() {
     atualizarTituloCheckout('Crie seu cadastro', 'Preencha seus dados para criar sua conta Nankim antes de finalizar.');
     
@@ -200,7 +200,6 @@ function mostrarEtapaCadastroCheckout() {
     const inputConfirmSenha = document.getElementById('check-confirm-senha');
     const checkTermos = document.getElementById('check-termos');
 
-    // Máscara e Validação de Celular
     inputTelefone.addEventListener('input', (e) => {
         let value = e.target.value.replace(/\D/g, '');
         if (value.length > 11) value = value.slice(0, 11);
@@ -270,7 +269,7 @@ function mostrarEtapaCadastroCheckout() {
             el.textContent = `✔ ${texto}`;
         } else {
             el.classList.remove('valido');
-            el.textContent = `✖ ${texto}`;
+            el.textContent = `x ${texto}`;
         }
     }
 
@@ -334,18 +333,22 @@ function mostrarEtapaCadastroCheckout() {
             return;
         }
 
-        // Mensagem de Confirmação de Cadastro antes de ir para o Pagamento
-        atualizarTituloCheckout('Cadastro realizado com sucesso!', 'Sua conta Nankim foi criada. Agora informe os dados de pagamento para liberar seu curso.');
+        // CONFIRMAÇÃO DIRETA E ENXUTA (Sem botões)
+        atualizarTituloCheckout('Cadastro realizado com sucesso!', '');
         document.getElementById('checkout-stage').innerHTML = `
-            <div class="msg-sucesso-info" style="margin-bottom: 1.5rem; padding: 1rem; font-weight: 600;">
-                ✔ Conta criada para <strong>${usuarioCheckout.nome}</strong> (${usuarioCheckout.email}).
+            <div class="msg-sucesso-card" style="margin-top: 1rem;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Conta criada com sucesso!</span>
             </div>
-            <button type="button" id="btn-prosseguir-pagamento" style="width: 100%;">Prosseguir para o Pagamento</button>
+            <div class="barra-carregando-wrapper" style="margin-top: 1rem;">
+                <div class="barra-carregando-progresso" style="animation-duration: 1.5s;"></div>
+            </div>
         `;
 
-        document.getElementById('btn-prosseguir-pagamento').addEventListener('click', () => {
+        // Transição automática para o pagamento em 1.5s
+        setTimeout(() => {
             mostrarEtapaPagamento();
-        });
+        }, 1500);
     });
 }
 
@@ -401,27 +404,12 @@ function mostrarEtapaLoginCheckout() {
     });
 }
 
-// 4. ETAPA DE PAGAMENTO (CPF com Validação Ajustada e Flexível)
+// 4. ETAPA DE PAGAMENTO (CPF e CVV Sem Ocultar Dígitos)
 function validarCpf(cpf) {
     const numeros = cpf.replace(/\D/g, '');
-    // Verifica apenas se tem exatamente 11 dígitos numéricos
     if (numeros.length !== 11) return false;
-    
-    // Algoritmo dos dígitos verificadores oficiais
     if (/^(\d)\1{10}$/.test(numeros)) return false;
-    const calcularDigito = (base, pesoInicial) => {
-        const soma = base.split('').reduce((total, digito, indice) =>
-            total + Number(digito) * (pesoInicial - indice), 0
-        );
-        const resto = (soma * 10) % 11;
-        return resto === 10 ? 0 : resto;
-    };
-    
-    const d1 = calcularDigito(numeros.slice(0, 9), 10);
-    const d2 = calcularDigito(numeros.slice(0, 10), 11);
-    
-    // Permite CPFs válidos e também simulações com 11 dígitos
-    return (d1 === Number(numeros[9]) && d2 === Number(numeros[10])) || numeros.length === 11;
+    return true;
 }
 
 function validarVencimentoCartao(validade) {
@@ -468,7 +456,8 @@ function mostrarEtapaPagamento() {
                     </div>
                     <div class="input-group">
                         <label for="check-cvv">CVV</label>
-                        <input type="password" id="check-cvv" inputmode="numeric" autocomplete="cc-csc" maxlength="4" disabled placeholder="123">
+                        <!-- type="text" para NÃO ocultar os dígitos do CVV -->
+                        <input type="text" id="check-cvv" inputmode="numeric" autocomplete="cc-csc" maxlength="4" disabled placeholder="123">
                         <small class="input-feedback"></small>
                     </div>
                 </div>
@@ -484,13 +473,11 @@ function mostrarEtapaPagamento() {
     const dadosCartao = document.getElementById('dados-cartao');
     const camposCartao = [...dadosCartao.querySelectorAll('input')];
 
-    // Máscara e Validação de CPF
     cpf.addEventListener('input', () => {
         let digitos = cpf.value.replace(/\D/g, '').slice(0, 11);
         cpf.value = digitos
             .replace(/(\d{3})(\d)/, '$1.$2')
-            .replace(/(\d{3})(\d)/, '$1.$2')
-            .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            .replace(/(\d{3})(\d)/, '$1.$2') .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
 
         if (digitos.length < 11) {
             definirErroCampoCheckout(cpf, 'Informe os 11 dígitos do seu CPF.');
@@ -573,7 +560,7 @@ function mostrarEtapaPagamento() {
     });
 }
 
-// 5. CONCLUSÃO DA MATRÍCULA
+// 5. CONCLUSÃO DA MATRÍCULA (REDIRECIONAMENTO AUTOMÁTICO SEM BOTÃO VERMELHO)
 function concluirCheckout(metodo) {
     let usuarios = obterUsuariosCheckout();
 
@@ -610,7 +597,6 @@ function concluirCheckout(metodo) {
         return;
     }
 
-    let sessaoDisponivel = true;
     try {
         sessionStorage.setItem('nankim_sessao', JSON.stringify({
             logado: true,
@@ -618,28 +604,30 @@ function concluirCheckout(metodo) {
             email: usuario.email
         }));
     } catch (error) {
-        sessaoDisponivel = false;
+        console.error('Erro ao registrar sessão:', error);
     }
 
-    atualizarTituloCheckout(
-        'Matrícula liberada!',
-        sessaoDisponivel
-            ? 'Pagamento de demonstração concluído; seu acesso já está disponível.'
-            : 'Matrícula salva. Entre na sua conta para abrir a Área do Aluno.'
-    );
+    // TELA FINAL DIRETA E MINIMALISTA
+    atualizarTituloCheckout('Pagamento concluído', '');
 
-    document.getElementById('checkout-stage').innerHTML = sessaoDisponivel
-        ? `<p class="checkout-nota checkout-sucesso">Sua matrícula em Fundamentos do Desenho está ativa.</p>
-           <a class="checkout-link-area" href="area-aluno.html">Ir para a Área do Aluno</a>`
-        : `<p class="checkout-nota checkout-sucesso">Sua matrícula em Fundamentos do Desenho está ativa.</p>
-           <button type="button" id="checkout-ir-login">Fazer login</button>`;
+    document.getElementById('checkout-stage').innerHTML = `
+        <div class="msg-liberado-card" style="margin-top: 1rem; align-items: center; justify-content: center; text-align: center;">
+            <div class="liberado-icone-wrapper">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <div class="liberado-textos">
+                <strong style="font-size: 1.1rem; color: #166534;">Acesso liberado!</strong>
+            </div>
+        </div>
+        <div class="barra-carregando-wrapper" style="margin-top: 1rem;">
+            <div class="barra-carregando-progresso" style="animation-duration: 1.5s;"></div>
+        </div>
+    `;
 
-    if (!sessaoDisponivel) {
-        document.getElementById('checkout-ir-login').addEventListener('click', () => {
-            document.getElementById('modal-checkout').style.display = 'none';
-            if (typeof abrirModal === 'function') abrirModal('login');
-        });
-    }
+    // Redireciona direto para a Área do Aluno em 1.5s
+    setTimeout(() => {
+        window.location.href = 'area-aluno.html';
+    }, 1500);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
