@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Associar o evento de fechar o modal aos botões com data-close
+        // Associar o evento de fechar o modal
         document.querySelectorAll('[data-close="checkout"]').forEach(btn => {
             btn.addEventListener('click', () => {
                 const modalCheckout = document.getElementById('modal-checkout');
@@ -107,117 +107,96 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Associar os eventos aos botões de Checkout Direto APÓS a criação do HTML no DOM
+        // Associar os eventos aos botões de Checkout Direto
         document.querySelectorAll('.btn-abrir-checkout-direto').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
-                
-                // Define as variáveis globais de checkout com os dados da sessão do aluno logado
-                emailCheckout = usuarioAtual.email;
-                usuarioCheckout = usuarioAtual;
-                
-                const modalCheckout = document.getElementById('modal-checkout');
-                if (modalCheckout) {
-                    modalCheckout.style.display = 'flex';
-                }
-
-                // Dispara diretamente a etapa de dados de pagamento (CPF / Cartão / PIX)
-                if (typeof mostrarEtapaPagamento === 'function') {
-                    mostrarEtapaPagamento();
+                if (typeof iniciarCheckoutLogado === 'function') {
+                    iniciarCheckoutLogado();
+                } else {
+                    console.error('Função iniciarCheckoutLogado não foi encontrada.');
                 }
             });
         });
-    }
 
-    function renderizarCursoFuturo(curso) {
-        const tagHTML = `<span class="tag-status tag-breve">Em breve</span>`;
-        const acoesHTML = `<button class="btn-acao-custom btn-detalhes" disabled>Em breve no catálogo</button>`;
-        const filtroImg = 'grayscale(100%) opacity(0.4)';
-
-        // Classe 'card-estatico' adicionada para remover o efeito de subida no hover
-        const htmlCard = `
-            <article class="curso-card-aluno card-estatico">
-                <img src="${curso.imagem}" alt="${curso.titulo}" class="curso-card-imagem" style="filter: ${filtroImg};">
-                <div class="curso-painel">
-                    <header class="curso-cabecalho">
-                        ${tagHTML}
-                        <h2>${curso.titulo}</h2>
-                    </header>
-                    <div class="curso-detalhes">
-                        <p class="curso-descricao">${curso.descricao}</p>
-                        <div class="curso-compra" style="margin-top: auto;">
-                            ${acoesHTML}
-                        </div>
-                    </div>
-                </div>
-            </article>
-        `;
-        containerCatalogo.innerHTML += htmlCard;
-    }
-    function renderizarCursoFundamentos() {
-        const matriculado = usuarioAtual.matriculado === true;
-        const degustacao = usuarioAtual.modulo1_liberado === true;
-
-        let tagHTML = '';
-        let progressoHTML = '';
-        let acoesHTML = '';
-        let filtroImg = 'grayscale(0%) opacity(1)';
-        const titulo = 'Fundamentos do Desenho';
-        const desc = 'O ponto de partida para qualquer artista. Domine formas, perspectiva e luz com uma trilha prática e progressiva.';
-        const imagem = './imagens/Fundamentos%20do%20Desenho.jpg';
-
-        if (matriculado) {
-            tagHTML = `<span class="tag-status tag-completo">Curso Completo</span>`;
-            progressoHTML = `
-                <div class="barra-fundo"><div class="barra-preenchida" style="width: 0%;"></div></div>
-                <span class="texto-progresso">0% concluído</span>
-            `;
-            acoesHTML = `<button type="button" class="btn-acao-custom btn-primario" onclick="alert('Indo para a Sala de Aula do Curso Completo!')">Continuar Curso</button>`;
-            
-            containerMatriculados.innerHTML += criarCardExpandivelHTML(titulo, desc, imagem, tagHTML, progressoHTML, acoesHTML, filtroImg, false);
-
-        } else if (degustacao) {
-            tagHTML = `<span class="tag-status tag-degustacao">Módulo 1 Liberado</span>`;
-            progressoHTML = `<span class="texto-aviso-bloqueado">Aproveite sua aula experimental grátis.</span>`;
-            
-            acoesHTML = `
-                <button type="button" class="btn-acao-custom btn-primario" onclick="alert('Indo para o Vídeo do Módulo 1')">Acessar Módulo 1</button>
-                <button type="button" class="btn-acao-custom btn-comprar btn-abrir-checkout-direto">Assinar / Comprar</button>
-            `;
-
-            containerMatriculados.innerHTML += criarCardExpandivelHTML(titulo, desc, imagem, tagHTML, progressoHTML, acoesHTML, filtroImg, true);
-
-        } else {
-            tagHTML = `<span class="tag-status tag-bloqueado">🔒 Bloqueado</span>`;
-            filtroImg = 'grayscale(100%) opacity(0.6)';
-            progressoHTML = `
-                <span class="texto-aviso-bloqueado" style="color: #e74c3c;">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                    Você ainda não possui acesso a este curso.
-                </span>
-            `;
-            
-            acoesHTML = `
-                <button type="button" class="btn-acao-custom btn-secundario" id="btn-liberar-mod1">Liberar Módulo 1 Grátis</button>
-                <button type="button" class="btn-acao-custom btn-comprar btn-abrir-checkout-direto">Assinar / Comprar</button>
-            `;
-
-            containerCatalogo.innerHTML += criarCardExpandivelHTML(titulo, desc, imagem, tagHTML, progressoHTML, acoesHTML, filtroImg, true);
+        // Evento para liberar Módulo 1 Grátis caso ainda esteja bloqueado
+        const btnLiberarMod1 = document.getElementById('btn-liberar-mod1');
+        if (btnLiberarMod1) {
+            btnLiberarMod1.addEventListener('click', () => {
+                usuarioAtual.modulo1_liberado = true;
+                const db = JSON.parse(localStorage.getItem('nankim_db')) || [];
+                const idx = db.findIndex(u => u.email === usuarioAtual.email);
+                if (idx !== -1) {
+                    db[idx].modulo1_liberado = true;
+                    localStorage.setItem('nankim_db', JSON.stringify(db));
+                }
+                renderizarCentralAlunos();
+            });
         }
-
-        setTimeout(() => {
-            const btnLiberar = document.getElementById('btn-liberar-mod1');
-            if (btnLiberar) {
-                btnLiberar.addEventListener('click', () => {
-                    usuarioAtual.modulo1_liberado = true;
-                    const index = dbUsuarios.findIndex(u => u.email === emailUsuario);
-                    dbUsuarios[index] = usuarioAtual;
-                    localStorage.setItem('nankim_db', JSON.stringify(dbUsuarios));
-                    renderizarCentralAlunos();
-                });
-            }
-        }, 50);
     }
+
+  function renderizarCursoFuturo(curso) {
+    const htmlCard = `
+        <article class="curso-card-aluno card-estatico">
+            <img src="${curso.imagem}" alt="${curso.titulo}" class="curso-card-imagem">
+            <div class="curso-painel">
+                <header class="curso-cabecalho">
+                    <span class="tag-status tag-breve">Em breve</span>
+                    <h2>${curso.titulo}</h2>
+                </header>
+            </div>
+        </article>
+    `;
+    containerCatalogo.innerHTML += htmlCard;
+}
+// 2. Em renderizarCursoFundamentos (Mudar o texto do botão para "Assinar Curso Completo"):
+// Onde está 'Assinar / Comprar', substitua por:
+// <button type="button" class="btn-acao-custom btn-comprar btn-abrir-checkout-direto">Assinar Curso Completo</button>
+
+function renderizarCursoFundamentos() {
+    const matriculado = usuarioAtual.matriculado === true;
+    const degustacao = usuarioAtual.modulo1_liberado === true;
+
+    let tagHTML = '';
+    let progressoHTML = '';
+    let acoesHTML = '';
+    let filtroImg = 'grayscale(0%) opacity(1)';
+    const titulo = 'Fundamentos do Desenho';
+    const desc = 'O ponto de partida para qualquer artista. Domine formas, perspectiva e luz com uma trilha prática e progressiva.';
+    const imagem = './imagens/Fundamentos%20do%20Desenho.jpg';
+
+    if (matriculado) {
+        tagHTML = `<span class="tag-status tag-completo">Curso Completo</span>`;
+        progressoHTML = `
+            <div class="barra-fundo"><div class="barra-preenchida" style="width: 0%;"></div></div>
+            <span class="texto-progresso">0% concluído</span>
+        `;
+        acoesHTML = `<button type="button" class="btn-acao-custom btn-primario" onclick="alert('Indo para a Sala de Aula do Curso Completo!')">Continuar Curso</button>`;
+        containerMatriculados.innerHTML += criarCardExpandivelHTML(titulo, desc, imagem, tagHTML, progressoHTML, acoesHTML, filtroImg, false);
+    } else if (degustacao) {
+        tagHTML = `<span class="tag-status tag-degustacao">Módulo 1 Liberado</span>`;
+        progressoHTML = `<span class="texto-aviso-bloqueado">Aproveite sua aula experimental grátis.</span>`;
+        acoesHTML = `
+            <button type="button" class="btn-acao-custom btn-primario" onclick="alert('Indo para o Vídeo do Módulo 1')">Acessar Módulo 1</button>
+            <button type="button" class="btn-acao-custom btn-comprar btn-abrir-checkout-direto">Assinar Curso Completo</button>
+
+        `;
+        containerMatriculados.innerHTML += criarCardExpandivelHTML(titulo, desc, imagem, tagHTML, progressoHTML, acoesHTML, filtroImg, true);
+    } else {
+        tagHTML = `<span class="tag-status tag-bloqueado">🔒 Bloqueado</span>`;
+        filtroImg = 'grayscale(100%) opacity(0.6)';
+        progressoHTML = `
+            <span class="texto-aviso-bloqueado" style="color: #e74c3c;">
+                Você ainda não possui acesso a este curso.
+            </span>
+        `;
+        acoesHTML = `
+            <button type="button" class="btn-acao-custom btn-secundario" id="btn-liberar-mod1">Liberar Módulo 1 Grátis</button>
+            <button type="button" class="btn-acao-custom btn-comprar btn-abrir-checkout-direto">Assinar Curso Completo</button>
+        `;
+        containerCatalogo.innerHTML += criarCardExpandivelHTML(titulo, desc, imagem, tagHTML, progressoHTML, acoesHTML, filtroImg, true);
+    }
+}
 
    
 

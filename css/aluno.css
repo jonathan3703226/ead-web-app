@@ -1,12 +1,14 @@
-/* ================= HEADER E LOGO ================= */
+/* ==========================================================
+   HEADER E LOGO DO ALUNO (CORRIGIDO)
+   ========================================================== */
 .header-aluno {
     background-color: #000000;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     padding: 0.8rem 5%;
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .header-aluno-container {
@@ -17,22 +19,23 @@
     margin: 0 auto;
 }
 
-/* ================= EFEITO DA LOGO ================= */
+/* Fix da Logo com Texto Visível */
 .logo-aluno-wrapper {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
     text-decoration: none;
     cursor: pointer;
 }
 
 .logo-icone-wrapper {
-    display: flex;
+    display: flex !important;
     width: 38px;
     height: 38px;
     align-items: center;
     justify-content: center;
     position: relative;
+    flex-shrink: 0;
 }
 
 .logo-img-simbolo {
@@ -48,8 +51,8 @@
 }
 
 .logo-texto-wrapper {
-    display: inline-flex;
-    align-items: center;
+    display: inline-flex !important;
+    align-items: center !important;
     white-space: nowrap;
     line-height: 1;
 }
@@ -58,11 +61,11 @@
     font-family: 'Audiowide', cursive;
     font-size: 1.6rem;
     font-weight: 400;
-    color: #ffffff;
+    color: #ffffff !important;
 }
 
 .logo-expansivel {
-    display: inline-flex;
+    display: inline-flex !important;
     align-items: center;
     max-width: 0;
     opacity: 0;
@@ -70,7 +73,7 @@
     font-family: 'Caveat', cursive;
     font-size: 1.05rem;
     font-weight: 700;
-    color: #ffffff;
+    color: #ffffff !important;
     line-height: 1;
     white-space: nowrap;
     transition: max-width 0.45s cubic-bezier(0.76, 0, 0.24, 1), 
@@ -87,7 +90,9 @@
 }
 
 /* Dropdown de Perfil */
-.perfil-dropdown { position: relative; }
+.perfil-dropdown { 
+    position: relative; 
+}
 
 .btn-perfil {
     background: transparent;
@@ -104,7 +109,9 @@
     transition: opacity 0.2s ease;
 }
 
-.btn-perfil:hover { opacity: 0.8; }
+.btn-perfil:hover { 
+    opacity: 0.8; 
+}
 
 .avatar-aluno {
     width: 32px;
@@ -132,7 +139,7 @@
     width: 240px;
     flex-direction: column;
     overflow: hidden;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.9);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
     z-index: 200;
 }
 
@@ -146,7 +153,8 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-.dropdown-menu a, .dropdown-menu button {
+.dropdown-menu a, 
+.dropdown-menu button {
     padding: 1rem 1.2rem;
     color: #d0d0d0;
     text-align: left;
@@ -160,7 +168,8 @@
     transition: all 0.2s ease;
 }
 
-.dropdown-menu a:hover, .dropdown-menu button:hover {
+.dropdown-menu a:hover, 
+.dropdown-menu button:hover {
     background-color: #1a1a1a;
     color: #ffffff;
     padding-left: 1.5rem;
@@ -172,10 +181,18 @@
     margin: 0;
 }
 
-.btn-sair-conta { color: #ff5e5e !important; }
-.btn-sair-conta:hover { background-color: rgba(255, 94, 94, 0.1) !important; color: #ff7575 !important; }
+.btn-sair-conta { 
+    color: #ff5e5e !important; 
+}
 
-/* ================= PAINEL ================= */
+.btn-sair-conta:hover { 
+    background-color: rgba(255, 94, 94, 0.1) !important; 
+    color: #ff7575 !important; 
+}
+
+/* ==========================================================
+   PAINEL E ESTRUTURA DA PÁGINA
+   ========================================================== */
 .painel-aluno {
     background-color: #070707;
     min-height: 100vh;
@@ -205,7 +222,6 @@
     font-size: 1.05rem;
 }
 
-/* Seções de Cursos (Empilhadas) */
 .secao-categoria-cursos {
     margin-bottom: 3.5rem;
 }
@@ -229,10 +245,11 @@
     gap: 2rem;
 }
 
-/* ================= CARD EXPANSÍVEL (ALTURA REDUZIDA E COMPACTO) ================= */
+/* ==========================================================
+   CARD BASE DOS CURSOS (IMAGEM LISA E LIMPIDA)
+   ========================================================== */
 .curso-card-aluno {
     position: relative;
-    /* Reduzido de 480px para 320px para não ficar gigante */
     height: 320px;
     width: 100%;
     overflow: hidden;
@@ -249,27 +266,22 @@
     border-color: rgba(255, 255, 255, 0.2);
 }
 
+/* Imagem 100% lisa, sem desfoque (blur) ou filtros escuros */
 .curso-card-imagem {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    filter: none !important;
     transition: transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.curso-card-aluno:hover .curso-card-imagem {
+.curso-card-aluno:not(.card-estatico):hover .curso-card-imagem {
     transform: scale(1.03);
 }
 
-.curso-card-aluno::after {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 10%) 15%, rgba(0, 0, 0, 85%) 100%);
-    content: "";
-    z-index: 1;
-}
-/* Painel do Card Interativo (Subida Suave) */
+/* Painel Padrão */
 .curso-painel {
     position: absolute;
     z-index: 2;
@@ -280,14 +292,13 @@
     height: 100%;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 18px;
-    background: linear-gradient(0deg, rgba(17, 11, 11, 0.96) 60%, rgba(17, 11, 11, 0.4) 100%);
-    backdrop-filter: blur(8px);
+    padding: 22px;
+    background: linear-gradient(0deg, rgba(17, 11, 11, 0.95) 45%, rgba(17, 11, 11, 0.1) 100%);
     color: #fff;
     transition: transform 0.42s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-/* Opcional: Se desejar o efeito deslizante nos cursos ativos, ajuste o transform */
+/* Efeito de subir o painel no Hover (APENAS para cursos interativos) */
 .curso-card-aluno:not(.card-estatico) .curso-painel {
     transform: translateY(calc(100% - 95px));
 }
@@ -296,138 +307,21 @@
     transform: translateY(0);
 }
 
-.curso-detalhes {
-    display: flex;
-    min-height: 0;
-    flex: 1;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding-top: 8px;
-    opacity: 0;
-    transition: opacity 0.24s ease 0.08s;
-}
-
-.curso-card-aluno:not(.card-estatico):hover .curso-detalhes {
-    opacity: 1;
-}
-/* Painel Deslizante */
-.curso-painel {
-    position: absolute;
-    z-index: 2;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    height: 85%;
-    flex-direction: column;
-    padding: 24px;
-    transform: translateY(calc(100% - 116px));
-    border-top: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(23, 23, 23, 0.97);
-    backdrop-filter: blur(10px);
-    color: #fff;
-    transition: transform 0.42s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.curso-card-aluno:hover .curso-painel {
-    transform: translateY(0);
-}
-
-/* ================= CARDS ESTÁTICOS ("EM BREVE" SEM EFEITO DE SUBIR) ================= */
-.curso-card-aluno.card-estatico .curso-painel {
-    transform: translateY(0) !important;
-    background: rgba(15, 15, 15, 0.82) !important;
-}
-
-.curso-card-aluno.card-estatico .curso-detalhes {
-    opacity: 1 !important;
-}
-
-.curso-card-aluno.card-estatico:hover .curso-card-imagem {
-    transform: none !important;
+.curso-cabecalho {
+    flex: 0 0 auto;
 }
 
 .curso-cabecalho h2 {
-    color: #fff;
-    font-size: 1.35rem;
+    color: #ffffff !important;
+    font-size: clamp(1.4rem, 2vw, 1.8rem);
     font-weight: 800;
     letter-spacing: -0.03em;
-    line-height: 1.2;
-    margin-bottom: 2px;
-}
-
-.curso-descricao {
-    margin-bottom: 8px;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.82rem;
-    line-height: 1.4;
-}
-
-.curso-compra {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    padding-top: 10px;
-    margin-top: 6px;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-}
-/* ================= CARDS COMPACTOS ================= */
-.curso-card-aluno {
-    position: relative;
-    height: 320px; /* Reduzido de 480px para diminuir o tamanho dos cards */
-    width: 100%;
-    overflow: hidden;
-    border-radius: 16px;
-    background: #171717;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease;
-}
-
-.curso-card-aluno:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
-    border-color: rgba(255, 255, 255, 0.2);
-}
-
-.curso-card-imagem {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.curso-card-aluno:not(.card-estatico):hover .curso-card-imagem {
-    transform: scale(1.03);
-}
-
-/* Painel com Efeito Hover Apenas para Cursos Ativos */
-.curso-painel {
-    position: absolute;
-    z-index: 2;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 18px;
-    background: linear-gradient(0deg, rgba(17, 11, 11, 0.96) 60%, rgba(17, 11, 11, 0.4) 100%);
-    backdrop-filter: blur(8px);
-    color: #fff;
-    transition: transform 0.42s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.curso-card-aluno:not(.card-estatico) .curso-painel {
-    transform: translateY(calc(100% - 90px));
-}
-
-.curso-card-aluno:not(.card-estatico):hover .curso-painel {
-    transform: translateY(0);
+    line-height: 1.15;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .curso-detalhes {
@@ -445,24 +339,19 @@
     opacity: 1;
 }
 
-/* ================= CARDS ESTÁTICOS (CURSOS EM BREVE) ================= */
-.curso-card-aluno.card-estatico .curso-painel {
-    transform: translateY(0) !important;
-    background: rgba(15, 15, 15, 0.85) !important;
+.curso-descricao {
+    margin-bottom: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+    line-height: 1.5;
 }
 
-.curso-card-aluno.card-estatico .curso-detalhes {
-    opacity: 1 !important;
-}
-
-.curso-cabecalho {
-    flex: 0 0 auto;
-    position: relative;
-}
-
+/* Tags de Status */
 .tag-status {
-    display: inline-block;
-    margin-bottom: 8px;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    margin-bottom: 6px;
     padding: 4px 10px;
     border-radius: 50px;
     font-size: 0.68rem;
@@ -471,41 +360,12 @@
     text-transform: uppercase;
 }
 
-.tag-bloqueado { background: rgba(0,0,0,0.6); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+.tag-bloqueado { background: rgba(0, 0, 0, 0.6); color: #fff; border: 1px solid rgba(255, 255, 255, 0.2); }
 .tag-degustacao { background: #27ae60; color: #fff; }
 .tag-completo { background: #27ae60; color: #fff; }
-.tag-breve { background: #222; color: #888; border: 1px solid #333; }
+.tag-breve { background: #222222; color: #ffffff; border: 1px solid #444444; }
 
-.curso-cabecalho h2 {
-    color: #fff;
-    font-size: clamp(1.5rem, 2vw, 1.9rem);
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    line-height: 1.15;
-    margin-bottom: 4px;
-}
-
-.curso-detalhes {
-    display: flex;
-    min-height: 0;
-    flex: 1;
-    flex-direction: column;
-    padding-top: 12px;
-    opacity: 0;
-    transition: opacity 0.24s ease 0.08s;
-}
-
-.curso-card-aluno:hover .curso-detalhes {
-    opacity: 1;
-}
-
-.curso-descricao {
-    margin-bottom: 12px;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.88rem;
-    line-height: 1.5;
-}
-
+/* Status de Progresso / Avisos */
 .area-status-curso {
     margin-bottom: 12px;
 }
@@ -540,15 +400,15 @@
     color: #aaa;
 }
 
-/* Rodapé do Painel (Preço e Botão de Ação) */
+/* Rodapé dos Cursos Ativos */
 .curso-compra {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    padding-top: 14px;
+    padding-top: 12px;
     margin-top: auto;
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .curso-compra p {
@@ -570,7 +430,6 @@
     letter-spacing: -0.02em;
 }
 
-/* Botões */
 .btn-acao-custom {
     display: inline-flex;
     min-height: 44px;
@@ -591,27 +450,59 @@
     background: #ffffff;
     color: #000000;
 }
-.btn-primario:hover { background: #dcdcdc; transform: translateY(-1px); }
+.btn-primario:hover { 
+    background: #dcdcdc; 
+    transform: translateY(-1px); 
+}
 
 .btn-secundario {
     background: transparent;
     color: #ffffff;
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
-.btn-secundario:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+.btn-secundario:hover { 
+    border-color: #fff; 
+    background: rgba(255, 255, 255, 0.08); 
+}
 
 .btn-comprar {
-    background: #b33f30;
-    color: #ffffff;
+    background: #ffffff;
+    color: #000000;
+    font-weight: 700;
+    border: none;
 }
 .btn-comprar:hover {
-    background: #912e23;
+    background: #e0e0e0;
     transform: translateY(-1px);
 }
 
-.btn-detalhes {
-    background: rgba(255, 255, 255, 0.05);
-    color: #777;
-    cursor: not-allowed;
+/* ==========================================================
+   CARDS ESTÁTICOS ("EM BREVE" - FIXO E EXIBINDO TEXTOS)
+   ========================================================== */
+.curso-card-aluno.card-estatico {
+    position: relative;
+    height: 320px;
     width: 100%;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.curso-card-aluno.card-estatico .curso-painel {
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 100px !important;
+    transform: none !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 18px 22px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(15, 15, 15, 0.95) 60%);
+}
+
+.curso-card-aluno.card-estatico:hover .curso-painel {
+    transform: none !important;
+}
+
+.curso-card-aluno.card-estatico .curso-detalhes {
+    display: none !important;
 }
