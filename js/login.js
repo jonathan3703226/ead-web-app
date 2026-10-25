@@ -1,182 +1,494 @@
-function injetarModalLogin() {
-    const html = `
-        <div id="modal-login" class="modal">
-            <div class="modal-content">
-                <span class="close-btn" data-close="login">&times;</span>
-                <h2>Login - Área do Aluno</h2>
-                
-                <form id="form-login" novalidate>
-                    <div class="input-group">
-                        <label for="login-email">E-mail</label>
-                        <input type="email" id="login-email" placeholder="seuemail@dominio.com" required autocomplete="email">
-                        <small class="input-feedback"></small>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="login-senha">Senha</label>
-                        <div class="campo-senha-wrapper">
-                            <input type="password" id="login-senha" placeholder="Digite sua senha" required autocomplete="current-password">
-                            <button type="button" id="btn-toggle-senha" class="btn-eye" aria-label="Mostrar senha">👁️</button>
+function injetarModaisAutenticacao() {
+    // 1. Modal de Login (Apenas E-mail e Senha)
+    if (!document.getElementById('modal-login')) {
+        document.body.insertAdjacentHTML('beforeend', `
+            <div id="modal-login" class="modal">
+                <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="titulo-login">
+                    <button class="close-btn" type="button" data-close="login" aria-label="Fechar">&times;</button>
+                    <h2 id="titulo-login">Login - Área do Aluno</h2>
+                    <form id="form-login" novalidate>
+                        <div class="input-group">
+                            <label for="login-email">E-mail</label>
+                            <input type="email" id="login-email" placeholder="seuemail@dominio.com" required autocomplete="email">
+                            <small class="input-feedback"></small>
                         </div>
-                        <small class="input-feedback"></small>
-                    </div>
-
-                    <div class="login-acoes-auxiliares">
-                        <a href="#" id="link-esqueci-senha">Esqueceu sua senha?</a>
-                    </div>
-
-                    <button type="submit" id="btn-submit-login">Entrar na Plataforma</button>
-                </form>
+                        <div class="input-group">
+                            <label for="login-senha">Senha</label>
+                            <div class="campo-senha-wrapper">
+                                <input type="password" id="login-senha" placeholder="Digite sua senha" required autocomplete="current-password">
+                                <button type="button" class="btn-toggle-senha btn-eye" aria-label="Mostrar senha">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                            <small class="input-feedback"></small>
+                        </div>
+                        <div class="login-acoes-auxiliares">
+                            <a href="#" id="link-esqueci-senha">Esqueceu sua senha?</a>
+                        </div>
+                        <button type="submit" id="btn-submit-login">Entrar na Plataforma</button>
+                        <p class="alternar-cadastro">
+                            <span>Ainda não tem conta?</span> 
+                            <button type="button" id="btn-alternar-para-cadastro">Cadastre-se</button>
+                        </p>
+                    </form>
+                </div>
             </div>
-        </div>
-    `;
-    document.body.insertAdjacentHTML('beforeend', html);
-}
+        `);
+    }
 
-function inicializarBancoDados() {
-    const dbExistente = localStorage.getItem('nankim_db');
-    if (!dbExistente) {
-        const mockUsers = [
-            { id: 1, nome: "Estudante de Arte", email: "aluno@nankim.com", senha: "senha123" }
-        ];
-        localStorage.setItem('nankim_db', JSON.stringify(mockUsers));
+    // 2. Modal de Cadastro Completo
+    if (!document.getElementById('modal-cadastro')) {
+        document.body.insertAdjacentHTML('beforeend', `
+            <div id="modal-cadastro" class="modal">
+                <div class="modal-content modal-largo" role="dialog" aria-modal="true" aria-labelledby="titulo-cadastro">
+                    <button class="close-btn" type="button" data-close="cadastro" aria-label="Fechar">&times;</button>
+                    <h2 id="titulo-cadastro">Crie sua conta Nankim</h2>
+                    
+                    <form id="form-cadastro" novalidate>
+                        
+                        <div class="input-group">
+                            <label for="cad-nome">Nome completo</label>
+                            <input type="text" id="cad-nome" placeholder="Seu nome e sobrenome" required autocomplete="name">
+                            <small class="input-feedback"></small>
+                        </div>
+
+                        <div class="linha-inputs">
+                            <div class="input-group">
+                                <label for="cad-email">E-mail de acesso</label>
+                                <input type="email" id="cad-email" placeholder="seuemail@dominio.com" required autocomplete="email">
+                                <small class="input-feedback"></small>
+                            </div>
+                            <div class="input-group">
+                                <label for="cad-confirm-email">Confirme seu e-mail</label>
+                                <input type="email" id="cad-confirm-email" placeholder="Repita seu e-mail" required autocomplete="off">
+                                <small class="input-feedback"></small>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="cad-telefone">Celular / WhatsApp (DDD + 9 dígitos)</label>
+                            <input type="tel" id="cad-telefone" placeholder="(00) 90000-0000" maxlength="15" autocomplete="tel" required>
+                            <small class="input-feedback"></small>
+                        </div>
+
+                        <div class="linha-inputs">
+                            <div class="input-group">
+                                <label for="cad-senha">Crie sua senha</label>
+                                <div class="campo-senha-wrapper">
+                                    <input type="password" id="cad-senha" placeholder="Digite sua senha" required autocomplete="new-password">
+                                    <button type="button" class="btn-toggle-senha btn-eye" aria-label="Mostrar senha">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <small class="input-feedback"></small>
+                            </div>
+                            <div class="input-group">
+                                <label for="cad-confirm-senha">Confirme sua senha</label>
+                                <div class="campo-senha-wrapper">
+                                    <input type="password" id="cad-confirm-senha" placeholder="Repita sua senha" required autocomplete="new-password">
+                                    <button type="button" class="btn-toggle-senha btn-eye" aria-label="Mostrar senha">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <small class="input-feedback"></small>
+                            </div>
+                        </div>
+
+                        <div class="senha-requisitos" id="painel-requisitos-senha">
+                            <span id="req-minimo" class="req-item">✖ Mínimo de 8 caracteres</span>
+                            <span id="req-maiuscula" class="req-item">✖ Pelo menos 1 letra maiúscula</span>
+                            <span id="req-numero" class="req-item">✖ Pelo menos 1 número</span>
+                            <span id="req-simbolo" class="req-item">✖ Pelo menos 1 caractere especial (!@#$)</span>
+                        </div>
+
+                        <div class="input-group checkbox-group">
+                            <label class="label-termos">
+                                <input type="checkbox" id="cad-termos" required>
+                                <span>Li e aceito os <a href="politica-privacidade.html" target="_blank">Termos de Uso e Política de Privacidade</a></span>
+                            </label>
+                            <small class="input-feedback"></small>
+                        </div>
+
+                        <button type="submit" id="btn-submit-cadastro">Criar minha conta</button>
+                        
+                        <p class="alternar-cadastro">
+                            <span>Já possui uma conta?</span> 
+                            <button type="button" id="btn-alternar-para-login">Fazer login</button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        `);
     }
 }
 
-function validarEmailFormatado(email) {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
+function obterUsuarios() {
+    const dados = localStorage.getItem('nankim_db');
+    if (!dados) return [];
+    try {
+        const usuarios = JSON.parse(dados);
+        return Array.isArray(usuarios) ? usuarios : [];
+    } catch (error) {
+        return [];
+    }
 }
 
-function limparMensagens(form) {
-    const alertas = form.querySelectorAll('.msg-erro, .msg-sucesso-info');
-    alertas.forEach(alerta => alerta.remove());
-}
-
-function configurarLogin() {
+function configurarAutenticacao() {
     const formLogin = document.getElementById('form-login');
-    if (!formLogin) return;
+    const formCadastro = document.getElementById('form-cadastro');
 
-    const emailInput = document.getElementById('login-email');
-    const senhaInput = document.getElementById('login-senha');
-    const btnToggleSenha = document.getElementById('btn-toggle-senha');
-    const linkEsqueciSenha = document.getElementById('link-esqueci-senha');
-    const btnSubmit = document.getElementById('btn-submit-login');
+    const svgOlhoAberto = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
+    const svgOlhoFechado = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>`;
 
-    btnToggleSenha.addEventListener('click', () => {
-        const tipoAtual = senhaInput.getAttribute('type');
-        senhaInput.setAttribute('type', tipoAtual === 'password' ? 'text' : 'password');
-        btnToggleSenha.textContent = tipoAtual === 'password' ? '🙈' : '👁️';
-    });
+    function exibirModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) modal.style.display = 'flex';
+    }
 
-    function checarCampo(input, condicaoValida, mensagemErro) {
-        const grupo = input.closest('.input-group');
-        const feedback = grupo.querySelector('.input-feedback');
+    function ocultarModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) modal.style.display = 'none';
+    }
 
-        if (input.value.trim() === '') {
-            grupo.classList.remove('erro', 'sucesso');
-            feedback.textContent = '';
-            return false;
+    function definirErroCampo(inputEl, mensagem) {
+        if (!inputEl) return;
+        const grupo = inputEl.closest('.input-group');
+        if (!grupo) return;
+
+        let feedback = grupo.querySelector('.input-feedback');
+        if (!feedback) {
+            feedback = document.createElement('small');
+            feedback.className = 'input-feedback';
+            grupo.appendChild(feedback);
         }
 
-        if (condicaoValida) {
+        if (mensagem) {
+            grupo.classList.add('erro');
+            grupo.classList.remove('sucesso');
+            feedback.textContent = mensagem;
+        } else {
             grupo.classList.remove('erro');
             grupo.classList.add('sucesso');
             feedback.textContent = '';
-            return true;
-        } else {
-            grupo.classList.remove('sucesso');
-            grupo.classList.add('erro');
-            feedback.textContent = mensagemErro;
-            return false;
         }
     }
 
-    emailInput.addEventListener('input', () => {
-        checarCampo(emailInput, validarEmailFormatado(emailInput.value.trim()), 'Insira um e-mail válido');
-    });
+    function mostrarMensagemGeral(form, texto, tipo = 'msg-erro') {
+        form.querySelectorAll('.msg-erro, .msg-sucesso-info').forEach((m) => m.remove());
+        if (!texto) return;
+        const mensagem = document.createElement('div');
+        mensagem.className = tipo;
+        mensagem.setAttribute('role', 'status');
+        mensagem.textContent = texto;
+        form.insertBefore(mensagem, form.firstChild);
+    }
 
-    senhaInput.addEventListener('input', () => {
-        checarCampo(senhaInput, senhaInput.value.length >= 6, 'Mínimo de 6 caracteres');
-    });
+    // 1. OUVINTE GLOBAL DE CLIQUES (Esqueci a senha, troca de modais e fechar)
+    document.addEventListener('click', (e) => {
+        const alvo = e.target instanceof Element ? e.target : null;
+        if (!alvo) return;
 
-    linkEsqueciSenha.addEventListener('click', (e) => {
-        e.preventDefault();
-        limparMensagens(formLogin);
-        const email = emailInput.value.trim();
+        // Clique em "Esqueceu sua senha?"
+        const linkEsqueci = alvo.closest('#link-esqueci-senha');
+        if (linkEsqueci) {
+            e.preventDefault();
+            const emailInput = document.getElementById('login-email');
+            const emailVal = emailInput ? emailInput.value.trim().toLowerCase() : '';
 
-        if (validarEmailFormatado(email)) {
-            const divSucesso = document.createElement('div');
-            divSucesso.className = 'msg-sucesso-info';
-            divSucesso.innerHTML = `📧 Instruções enviadas para <strong>${email}</strong>`;
-            formLogin.insertBefore(divSucesso, formLogin.firstChild);
-            setTimeout(() => divSucesso.remove(), 5000);
-        } else {
-            const divErro = document.createElement('div');
-            divErro.className = 'msg-erro';
-            divErro.innerHTML = '⚠️ Digite um e-mail válido acima para recuperar sua senha.';
-            formLogin.insertBefore(divErro, formLogin.firstChild);
-            emailInput.focus();
+            if (!emailVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+                definirErroCampo(emailInput, 'Digite seu e-mail acima para recuperar a senha.');
+                mostrarMensagemGeral(formLogin, 'Digite um e-mail válido no campo acima para recuperar a senha.');
+                if (emailInput) emailInput.focus();
+                return;
+            }
+
+            definirErroCampo(emailInput, '');
+            mostrarMensagemGeral(
+                formLogin, 
+                `Um e-mail de redefinição de senha foi enviado para ${emailVal}.`, 
+                'msg-sucesso-info'
+            );
+            return;
+        }
+
+        // Toggle Olho Senha
+        const btnToggle = alvo.closest('.btn-toggle-senha');
+        if (btnToggle) {
+            e.preventDefault();
+            const wrapper = btnToggle.closest('.campo-senha-wrapper');
+            const inputSenha = wrapper ? wrapper.querySelector('input') : null;
+            if (inputSenha) {
+                const visivel = inputSenha.type === 'password';
+                inputSenha.type = visivel ? 'text' : 'password';
+                btnToggle.innerHTML = visivel ? svgOlhoFechado : svgOlhoAberto;
+            }
+            return;
+        }
+
+        // Trocar para Cadastro
+        if (alvo.closest('#btn-alternar-para-cadastro') || alvo.closest('[data-modal="cadastro"]')) {
+            e.preventDefault();
+            ocultarModal('modal-login');
+            exibirModal('modal-cadastro');
+            return;
+        }
+
+        // Trocar para Login
+        if (alvo.closest('#btn-alternar-para-login') || alvo.closest('[data-modal="login"]')) {
+            e.preventDefault();
+            ocultarModal('modal-cadastro');
+            exibirModal('modal-login');
+            return;
+        }
+
+        // Fechar Modais (X)
+        const btnFechar = alvo.closest('[data-close]');
+        if (btnFechar) {
+            e.preventDefault();
+            const modalId = btnFechar.getAttribute('data-close');
+            ocultarModal(`modal-${modalId}`);
         }
     });
 
-    formLogin.addEventListener('submit', (e) => {
-        e.preventDefault();
-        limparMensagens(formLogin);
+    // 2. VALIDAÇÃO INSTANTÂNEA E MÁSCARA DO CADASTRO
+    const inputNomeCad = document.getElementById('cad-nome');
+    const inputEmailCad = document.getElementById('cad-email');
+    const inputConfirmEmailCad = document.getElementById('cad-confirm-email');
+    const inputTelefoneCad = document.getElementById('cad-telefone');
+    const inputSenhaCad = document.getElementById('cad-senha');
+    const inputConfirmSenhaCad = document.getElementById('cad-confirm-senha');
+    const checkTermosCad = document.getElementById('cad-termos');
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        const emailValido = checarCampo(emailInput, validarEmailFormatado(emailInput.value.trim()), 'Insira um e-mail válido');
-        const senhaValida = checarCampo(senhaInput, senhaInput.value.length >= 6, 'Digite sua senha');
+    if (inputTelefoneCad) {
+        inputTelefoneCad.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.slice(0, 11);
 
-        if (!emailValido || !senhaValida) return;
-
-        const textoOriginal = btnSubmit.textContent;
-        btnSubmit.disabled = true;
-        btnSubmit.textContent = 'Autenticando...';
-        btnSubmit.style.opacity = '0.7';
-        btnSubmit.style.cursor = 'wait';
-
-        setTimeout(() => {
-            const usuarios = JSON.parse(localStorage.getItem('nankim_db')) || [];
-            const emailTratado = emailInput.value.trim().toLowerCase();
-            
-            const usuarioEncontrado = usuarios.find(
-                user => user.email.toLowerCase() === emailTratado && user.senha === senhaInput.value
-            );
-
-            if (usuarioEncontrado) {
-                const sessao = { logado: true, nome: usuarioEncontrado.nome, email: usuarioEncontrado.email };
-                sessionStorage.setItem('nankim_sessao', JSON.stringify(sessao));
-
-                btnSubmit.textContent = 'Acesso Liberado!';
-                btnSubmit.style.backgroundColor = '#27ae60';
-                btnSubmit.style.opacity = '1';
-                
-                setTimeout(() => window.location.href = 'area-aluno.html', 800);
-            } else {
-                btnSubmit.disabled = false;
-                btnSubmit.textContent = textoOriginal;
-                btnSubmit.style.opacity = '1';
-                btnSubmit.style.cursor = 'pointer';
-
-                const divErro = document.createElement('div');
-                divErro.className = 'msg-erro';
-                divErro.innerHTML = '⚠️ E-mail ou senha incorretos.';
-                formLogin.insertBefore(divErro, formLogin.firstChild);
-
-                const containerModal = formLogin.closest('.modal-content');
-                containerModal.classList.add('animar-shake');
-                setTimeout(() => containerModal.classList.remove('animar-shake'), 500);
-
-                senhaInput.value = '';
-                senhaInput.focus();
-                senhaInput.closest('.input-group').classList.remove('sucesso');
+            if (value.length > 6) {
+                value = `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7)}`;
+            } else if (value.length > 2) {
+                value = `(${value.slice(0, 2)}) ${value.slice(2)}`;
+            } else if (value.length > 0) {
+                value = `(${value}`;
             }
-        }, 1200);
-    });
+            e.target.value = value;
+
+            const digitos = value.replace(/\D/g, '');
+            if (digitos.length < 11) {
+                definirErroCampo(inputTelefoneCad, 'Informe DDD + 9 dígitos (Ex: (61) 98765-4321).');
+            } else {
+                definirErroCampo(inputTelefoneCad, '');
+            }
+        });
+    }
+
+    if (inputNomeCad) {
+        inputNomeCad.addEventListener('input', () => {
+            const v = inputNomeCad.value.trim();
+            if (v.length < 3 || !v.includes(' ')) {
+                definirErroCampo(inputNomeCad, 'Digite seu nome e sobrenome.');
+            } else {
+                definirErroCampo(inputNomeCad, '');
+            }
+        });
+    }
+
+    if (inputEmailCad) {
+        inputEmailCad.addEventListener('input', () => {
+            const v = inputEmailCad.value.trim().toLowerCase();
+            if (!regexEmail.test(v)) {
+                definirErroCampo(inputEmailCad, 'Informe um e-mail válido (ex: nome@dominio.com).');
+            } else {
+                definirErroCampo(inputEmailCad, '');
+            }
+
+            if (inputConfirmEmailCad && inputConfirmEmailCad.value) {
+                inputConfirmEmailCad.dispatchEvent(new Event('input'));
+            }
+        });
+    }
+
+    if (inputConfirmEmailCad) {
+        inputConfirmEmailCad.addEventListener('input', () => {
+            const confirmVal = inputConfirmEmailCad.value.trim().toLowerCase();
+            const origVal = inputEmailCad ? inputEmailCad.value.trim().toLowerCase() : '';
+
+            if (confirmVal !== origVal || !confirmVal) {
+                definirErroCampo(inputConfirmEmailCad, 'Os e-mails digitados não são iguais.');
+            } else {
+                definirErroCampo(inputConfirmEmailCad, '');
+            }
+        });
+    }
+
+    if (inputSenhaCad) {
+        inputSenhaCad.addEventListener('input', () => {
+            const val = inputSenhaCad.value;
+            const temMin = val.length >= 8;
+            const temMai = /[A-Z]/.test(val);
+            const temNum = /[0-9]/.test(val);
+            const temSim = /[^A-Za-z0-9]/.test(val);
+
+            atualizarReq('req-minimo', temMin, 'Mínimo de 8 caracteres');
+            atualizarReq('req-maiuscula', temMai, 'Pelo menos 1 letra maiúscula');
+            atualizarReq('req-numero', temNum, 'Pelo menos 1 número');
+            atualizarReq('req-simbolo', temSim, 'Pelo menos 1 caractere especial (!@#$)');
+
+            if (temMin && temMai && temNum && temSim) {
+                definirErroCampo(inputSenhaCad, '');
+            } else {
+                definirErroCampo(inputSenhaCad, 'A senha não atende a todos os requisitos.');
+            }
+
+            if (inputConfirmSenhaCad && inputConfirmSenhaCad.value) {
+                inputConfirmSenhaCad.dispatchEvent(new Event('input'));
+            }
+        });
+
+        function atualizarReq(id, valido, texto) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            if (valido) {
+                el.classList.add('valido');
+                el.textContent = `✔ ${texto}`;
+            } else {
+                el.classList.remove('valido');
+                el.textContent = `✖ ${texto}`;
+            }
+        }
+    }
+
+    if (inputConfirmSenhaCad) {
+        inputConfirmSenhaCad.addEventListener('input', () => {
+            if (inputConfirmSenhaCad.value !== inputSenhaCad.value || !inputConfirmSenhaCad.value) {
+                definirErroCampo(inputConfirmSenhaCad, 'As senhas digitadas não coincidem.');
+            } else {
+                definirErroCampo(inputConfirmSenhaCad, '');
+            }
+        });
+    }
+
+    if (checkTermosCad) {
+        checkTermosCad.addEventListener('change', () => {
+            if (!checkTermosCad.checked) {
+                definirErroCampo(checkTermosCad, 'Aceite os termos para continuar.');
+            } else {
+                definirErroCampo(checkTermosCad, '');
+            }
+        });
+    }
+
+    // 3. SUBMISSÃO DO CADASTRO
+    if (formCadastro) {
+        formCadastro.addEventListener('submit', (event) => {
+            event.preventDefault();
+            mostrarMensagemGeral(formCadastro, '');
+
+            [inputNomeCad, inputEmailCad, inputConfirmEmailCad, inputTelefoneCad, inputSenhaCad, inputConfirmSenhaCad].forEach(el => {
+                if (el) el.dispatchEvent(new Event('input'));
+            });
+            if (checkTermosCad) checkTermosCad.dispatchEvent(new Event('change'));
+
+            if (formCadastro.querySelectorAll('.input-group.erro').length > 0) {
+                mostrarMensagemGeral(formCadastro, 'Corrija os campos destacados em vermelho acima.');
+                return;
+            }
+
+            const email = inputEmailCad.value.trim().toLowerCase();
+            const usuarios = obterUsuarios();
+
+            if (usuarios.some((c) => c.email.toLowerCase() === email)) {
+                definirErroCampo(inputEmailCad, 'Este e-mail já está cadastrado.');
+                mostrarMensagemGeral(formCadastro, 'Este e-mail já está cadastrado. Faça login para continuar.');
+                return;
+            }
+
+            const novoUsuario = {
+                id: Date.now(),
+                nome: inputNomeCad.value.trim(),
+                email: email,
+                telefone: inputTelefoneCad.value.trim(),
+                senha: inputSenhaCad.value,
+                matriculado: false,
+                cursos: [
+                    {
+                        id: 'fundamentos-desenho',
+                        nome: 'Fundamentos do Desenho',
+                        apenasModulo1: true,
+                        progresso: 0,
+                        ultimaAula: 0,
+                        aulasConcluidas: []
+                    }
+                ]
+            };
+
+            usuarios.push(novoUsuario);
+
+            try {
+                localStorage.setItem('nankim_db', JSON.stringify(usuarios));
+            } catch (error) {
+                mostrarMensagemGeral(formCadastro, 'Não foi possível salvar seu cadastro neste navegador.');
+                return;
+            }
+
+            ocultarModal('modal-cadastro');
+            exibirModal('modal-login');
+
+            const loginEmailInput = document.getElementById('login-email');
+            if (loginEmailInput) loginEmailInput.value = email;
+
+            mostrarMensagemGeral(formLogin, 'Conta criada com sucesso! Faça login para começar.', 'msg-sucesso-info');
+        });
+    }
+
+    // 4. SUBMISSÃO DO LOGIN
+    if (formLogin) {
+        formLogin.addEventListener('submit', (event) => {
+            event.preventDefault();
+            mostrarMensagemGeral(formLogin, '');
+
+            const email = document.getElementById('login-email').value.trim().toLowerCase();
+            const senha = document.getElementById('login-senha').value;
+
+            if (!regexEmail.test(email) || senha.length < 6) {
+                mostrarMensagemGeral(formLogin, 'Informe um e-mail válido e a senha da sua conta.');
+                return;
+            }
+
+            const usuarios = obterUsuarios();
+            const usuario = usuarios.find((c) => c.email.toLowerCase() === email);
+
+            if (!usuario || usuario.senha !== senha) {
+                mostrarMensagemGeral(formLogin, 'E-mail ou senha incorretos.');
+                return;
+            }
+
+            try {
+                sessionStorage.setItem('nankim_sessao', JSON.stringify({
+                    logado: true,
+                    nome: usuario.nome || email.split('@')[0],
+                    email: usuario.email
+                }));
+            } catch (error) {
+                console.error('Erro ao iniciar sessão:', error);
+            }
+
+            window.location.href = 'area-aluno.html';
+        });
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    injetarModalLogin();
-    inicializarBancoDados();
-    setTimeout(configurarLogin, 100);
+    injetarModaisAutenticacao();
+    configurarAutenticacao();
 });

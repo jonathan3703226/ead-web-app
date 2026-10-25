@@ -1,107 +1,359 @@
-/* ================= ESTRUTURA DE CURSOS ================= */
-.curso-destaque {
-    padding: 3rem 5%;
+/* Catálogo: fundo de papel, títulos de alto contraste e vermelho terroso. */
+.pagina-cursos {
+    --cursos-papel: #fbf8f3;
+    --cursos-tinta: #000;
+    --cursos-vermelho: #a83d30;
+    --cursos-painel: #171717;
+    min-height: 100vh;
+    padding: 132px 6% 96px;
+    background: var(--cursos-papel);
+    color: var(--cursos-tinta);
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.catalogo-cursos {
+    width: min(1220px, 100%);
+    margin: 0 auto;
+}
+
+.catalogo-cabecalho {
+    max-width: 760px;
+    margin: 0 auto 52px;
+    text-align: center;
+}
+
+.catalogo-eyebrow {
+    margin-bottom: 14px;
+    color: var(--cursos-vermelho);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.catalogo-eyebrow span {
+    margin-right: 5px;
+}
+
+.catalogo-cabecalho h1 {
+    margin-bottom: 16px;
+    color: var(--cursos-tinta);
+    font-size: clamp(2.3rem, 6vw, 4.8rem);
+    font-weight: 800;
+    letter-spacing: -0.065em;
+    line-height: 1.02;
+}
+
+.catalogo-cabecalho h1 span {
+    color: var(--cursos-vermelho);
+}
+
+.catalogo-introducao {
+    max-width: 570px;
+    margin: 0 auto;
+    color: #5d5a56;
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    line-height: 1.7;
+}
+
+/* Grid mobile-first: uma coluna no celular, mais colunas conforme o espaço. */
+.cursos-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+}
+
+.curso-card {
+    position: relative;
+    height: 510px;
+    min-width: 0;
+    overflow: hidden;
+    isolation: isolate;
+    border-radius: 16px;
+    background: var(--cursos-painel);
+    box-shadow: 0 16px 38px rgb(0 0 0 / 15%);
+    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease;
+}
+
+.curso-card-imagem {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.curso-card::after {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: linear-gradient(180deg, rgb(0 0 0 / 4%) 15%, rgb(0 0 0 / 72%) 100%);
+    content: "";
+}
+
+/* O cabeçalho fica sempre visível; os detalhes começam comprimidos abaixo dele. */
+.curso-painel {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    height: 84%;
+    flex-direction: column;
+    padding: 22px;
+    transform: translateY(calc(100% - 126px));
+    border-top: 1px solid rgb(255 255 255 / 14%);
+    background: rgb(23 23 23 / 96%);
+    color: #fff;
+    transition: transform 0.42s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .curso-cabecalho {
-    text-align: center;
-    margin-bottom: 3rem;
+    flex: 0 0 auto;
 }
 
-.curso-conteudo {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 3rem;
-    justify-content: space-between;
-}
-
-.ementa, .investimento {
-    flex: 1;
-    min-width: 300px;
-}
-
-/* ================= LISTA E TABELA ================= */
-.lista-aulas {
-    list-style: none;
-    padding: 0;
-}
-
-.lista-aulas li {
-    padding: 1rem 0;
-    border-bottom: 1px solid #ddd;
-}
-
-.tabela-valores {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-}
-
-.tabela-valores th, .tabela-valores td {
-    padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-.destaque-tabela {
-    background-color: #f9f9f9;
-    border-left: 4px solid #f39c12;
-}
-
-.btn-comprar {
-    width: 100%;
-    padding: 0.5rem;
-}
-
-/* ================= CURSOS FUTUROS (EM BREVE) ================= */
-.trilha-futura {
-    padding: 3rem 5%;
-    background-color: #f4f4f4;
-    text-align: center;
-}
-
-.grid-cursos {
-    display: flex;
-    gap: 2rem;
-    justify-content: center;
-    margin-top: 2rem;
-    flex-wrap: wrap;
-}
-
-.card-bloqueado {
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    width: 300px;
-    opacity: 0.6; /* Feedback visual de inativo */
-    position: relative;
-    border: 1px dashed #ccc;
-    cursor: not-allowed;
-}
-
-.badge-breve {
+.curso-nivel {
     display: inline-block;
-    background-color: #333;
+    margin-bottom: 8px;
+    color: #ee9b8e;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+}
+
+.curso-cabecalho h2 {
+    max-width: 340px;
     color: #fff;
-    padding: 0.3rem 0.8rem;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    margin-top: 1rem;
+    font-size: clamp(1.55rem, 2.4vw, 2rem);
+    font-weight: 750;
+    letter-spacing: -0.045em;
+    line-height: 1.12;
 }
 
-/* ================= MODAL CHECKOUT ================= */
-.linha-inputs {
+.curso-detalhes {
     display: flex;
-    gap: 1rem;
-}
-
-.linha-inputs .input-group {
+    min-height: 0;
     flex: 1;
+    flex-direction: column;
+    padding-top: 15px;
+    opacity: 0;
+    transition: opacity 0.24s ease 0.08s;
 }
 
-.subtitulo-modal {
-    font-size: 0.9rem;
-    color: #666;
-    margin-bottom: 1.5rem;
-    margin-top: -10px;
+.curso-descricao {
+    margin-bottom: 14px;
+    color: rgb(255 255 255 / 79%);
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+.curso-metadados {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px 16px;
+    margin-bottom: 15px;
+    color: rgb(255 255 255 / 88%);
+    font-size: 0.76rem;
+}
+
+.curso-metadados li {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.curso-metadados svg {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+    fill: none;
+    stroke: #ee9b8e;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.7;
+}
+
+.curso-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: auto;
+    padding-bottom: 14px;
+}
+
+.curso-tags li {
+    padding: 5px 10px;
+    border: 1px solid rgb(255 255 255 / 27%);
+    border-radius: 999px;
+    color: rgb(255 255 255 / 89%);
+    font-size: 0.7rem;
+}
+
+/* A ação de compra usa o modal de checkout que já existe no projeto. */
+.curso-compra {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 14px;
+    border-top: 1px solid rgb(255 255 255 / 19%);
+}
+
+.curso-compra p {
+    display: grid;
+    gap: 1px;
+    min-width: max-content;
+}
+
+.curso-compra p span {
+    color: rgb(255 255 255 / 70%);
+    font-size: 0.68rem;
+}
+
+.curso-compra p strong {
+    color: #fff;
+    font-size: 1.12rem;
+    letter-spacing: -0.02em;
+}
+
+.botao-assinar {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+    border-radius: 6px;
+    background: var(--cursos-vermelho);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-align: center;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.botao-assinar:hover {
+    transform: translateY(-2px);
+    background: #862e24;
+}
+
+.curso-aviso {
+    width: fit-content;
+    margin-top: auto;
+    padding: 9px 13px;
+    border: 1px solid rgb(238 155 142 / 45%);
+    border-radius: 999px;
+    background: rgb(168 61 48 / 20%);
+    color: #f1b3a9;
+    font-size: 0.76rem;
+    font-weight: 700;
+}
+
+/* O conteúdo só expande enquanto há hover; o foco mantém suporte por teclado. */
+.curso-card:hover .curso-painel,
+.curso-card:focus-within .curso-painel {
+    transform: translateY(0);
+}
+
+.curso-card:hover,
+.curso-card:focus-within {
+    z-index: 2;
+    transform: translateY(-6px);
+    box-shadow: 0 26px 56px rgb(0 0 0 / 22%);
+}
+
+.curso-card:hover .curso-detalhes,
+.curso-card:focus-within .curso-detalhes {
+    opacity: 1;
+    transition-delay: 0.12s;
+}
+
+.curso-card:hover .curso-card-imagem,
+.curso-card:focus-within .curso-card-imagem {
+    transform: scale(1.045);
+}
+
+.botao-assinar:focus-visible {
+    outline: 3px solid #f4b0a5;
+    outline-offset: 4px;
+}
+
+@media (min-width: 640px) {
+    .pagina-cursos {
+        padding-right: 5%;
+        padding-left: 5%;
+    }
+
+    .cursos-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .cursos-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* Touch não possui hover persistente; exiba os detalhes para manter o conteúdo acessível. */
+@media (hover: none) {
+    .curso-painel {
+        transform: translateY(0);
+    }
+
+    .curso-detalhes {
+        opacity: 1;
+    }
+
+    .curso-card-imagem {
+        transform: scale(1.025);
+    }
+}
+
+@media (max-width: 639px) {
+    .pagina-cursos {
+        padding: 112px 20px 64px;
+    }
+
+    .catalogo-cabecalho {
+        margin-bottom: 34px;
+        text-align: left;
+    }
+
+    .catalogo-introducao {
+        margin-left: 0;
+    }
+
+    .curso-card {
+        height: 500px;
+        border-radius: 13px;
+    }
+
+    .curso-painel {
+        height: 84%;
+        padding: 20px;
+        transform: translateY(calc(100% - 120px));
+    }
+
+    .curso-compra {
+        gap: 8px;
+    }
+
+    .botao-assinar {
+        padding-right: 11px;
+        padding-left: 11px;
+        font-size: 0.73rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .curso-card-imagem,
+    .curso-painel,
+    .curso-detalhes,
+    .botao-assinar {
+        transition-duration: 0.01ms;
+    }
 }

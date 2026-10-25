@@ -1,4 +1,6 @@
 function injetarModalTermos() {
+    if (document.getElementById('modal-termos')) return;
+
     const html = `
         <div id="modal-termos" class="modal">
             <div class="modal-content modal-largo">

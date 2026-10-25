@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Contato - Nankim Escola de Arte</title>
+	<link rel="stylesheet" href="./css/global.css">
+	<link rel="stylesheet" href="./css/contato.css">
+	<link rel="stylesheet" href="./css/cookies.css">
+</head>
+<body>
+	<div id="header-container"></div>
+
+	<main class="pagina-contato">
+		<!-- Banner de contato com imagem da comunidade artística Nankim -->
+		<section class="contato-hero" aria-labelledby="titulo-contato">
+			<img class="contato-hero-imagem" src="./assets/img/ensino/ensino4.jpeg" alt="" aria-hidden="true">
+			<div class="contato-hero-overlay"></div>
+			<div class="contato-hero-conteudo">
+				<p class="contato-hero-etiqueta"><span aria-hidden="true">//</span> Estamos aqui para ajudar</p>
+				<h1 id="titulo-contato">Contato</h1>
+			</div>
+		</section>
+
+		<!-- Informações de atendimento e formulário em duas colunas -->
+		<section class="contato-principal" aria-labelledby="titulo-atendimento">
+			<div class="contato-layout">
+				<div class="contato-informacoes">
+					<p class="contato-sobretitulo"><span aria-hidden="true">//</span> Vamos conversar</p>
+					<h2 id="titulo-atendimento">Entre em contato com a gente!</h2>
+					<p class="contato-texto-apoio">Tem dúvidas sobre os cursos, matrículas ou quer saber mais sobre a Nankim? Nosso time está pronto para ajudar.</p>
+					<p class="contato-atendimento">Atendimento para cursos e matrículas:</p>
+
+					<address class="contato-canais">
+						<a href="mailto:nankimartschool@gmail.com">
+							<span class="contato-canal-rotulo">E-mail</span>
+							<span>nankimartschool@gmail.com</span>
+						</a>
+						<a href="https://wa.me/5561982123948" target="_blank" rel="noopener noreferrer">
+							<span class="contato-canal-rotulo">WhatsApp</span>
+							<span>+55 61 98212-3948</span>
+						</a>
+					</address>
+				</div>
+
+				<form id="form-contato" class="form-contato">
+					<div class="input-group">
+						<label for="contato-nome">Nome</label>
+						<input id="contato-nome" name="nome" type="text" autocomplete="name" placeholder="Como podemos chamar você?" required>
+					</div>
+					<div class="input-group">
+						<label for="contato-email">E-mail</label>
+						<input id="contato-email" name="email" type="email" autocomplete="email" placeholder="voce@exemplo.com" required>
+					</div>
+					<div class="input-group">
+						<label for="contato-telefone">Telefone <span>(opcional)</span></label>
+						<input id="contato-telefone" name="telefone" type="tel" autocomplete="tel" placeholder="(00) 00000-0000">
+					</div>
+					<div class="input-group">
+						<label for="contato-mensagem">Mensagem</label>
+						<textarea id="contato-mensagem" name="mensagem" rows="5" placeholder="Escreva sua mensagem aqui..." required></textarea>
+					</div>
+					<button class="contato-botao-enviar" type="submit">Enviar mensagem</button>
+					<p id="contato-feedback" class="contato-feedback" role="status" aria-live="polite"></p>
+				</form>
+			</div>
+		</section>
+	</main>
+
+	<div id="footer-container"></div>
+
+	<script src="./js/global.js"></script>
+	<script src="./js/login.js"></script>
+	<script src="./js/cookies.js"></script>
+	<script src="./js/contato.js"></script>
+</body>
+</html>

@@ -38,6 +38,15 @@ O projeto priorizou a **reutilização de código e a modularidade**, utilizando
 *   **Modais de Interação:** Modais para autenticação de usuário e simulação de checkout.
 *   **Banner de Consentimento de Cookies:** Notificação customizada de privacidade alinhada às diretrizes da LGPD com salvamento de estado local.
 *   **Navegação Adaptativa:** Menu e componentes inteiramente responsivos otimizados para toque e ponteiro.
+*   **Galeria ampliável:** Lightbox acessível para visualizar as imagens da home em tela cheia.
+*   **Área do Aluno:** Painel de cursos, retomada da última aula e progresso persistido no navegador.
+*   **Cadastro e checkout separados:** Cadastro sem matrícula não libera aulas; a etapa de assinatura oferece PIX, boleto e cartão.
+
+### Limites da demonstração front-end
+
+O projeto não possui servidor, banco de dados ou integração com um gateway de pagamentos. Cadastro, sessão, matrícula e progresso são armazenados no navegador (`localStorage`/`sessionStorage`) apenas para demonstração e podem ser alterados pelo próprio usuário. O checkout não realiza cobranças: a confirmação ativa uma matrícula simulada. Não use dados reais de cartão.
+
+Para produção, a autenticação, a autorização da Área do Aluno e a confirmação de pagamentos precisam ser implementadas em um backend confiável, com um provedor de pagamentos e tratamento seguro de dados pessoais. O formulário de contato prepara uma mensagem para `nankimartschool@gmail.com` no aplicativo de e-mail do visitante.
 
 ---
 

@@ -1,21 +1,27 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const sessionKey = 'nankim_sessao';
-  const sessionData = sessionStorage.getItem(sessionKey);
-
-  if (!sessionData) {
-    window.location.replace('index.html');
-    return;
-  }
+(() => {
+  const root = document.documentElement;
+  root.dataset.alunoAcesso = 'negado';
 
   try {
-    const usuario = JSON.parse(sessionData);
-    const nomeAluno = document.getElementById('nome-aluno');
+    const sessionData = sessionStorage.getItem('nankim_sessao');
+    if (!sessionData) return;
 
-    if (nomeAluno && usuario && usuario.nome) {
-      nomeAluno.textContent = usuario.nome;
+    const sessao = JSON.parse(sessionData);
+    const usuarios = JSON.parse(localStorage.getItem('nankim_db') || '[]');
+    if (!Array.isArray(usuarios)) {
+      throw new TypeError('O cadastro local precisa ser uma lista.');
+    }
+
+    const usuario = usuarios.find((conta) =>
+      conta.email.toLowerCase() === String(sessao.email || '').toLowerCase()
+    );
+    if (usuario && sessao.logado === true) {
+      root.dataset.alunoAcesso = 'liberado';
+    } else {
+      sessionStorage.removeItem('nankim_sessao');
     }
   } catch (error) {
-    console.error('Erro ao ler sessão:', error);
-    window.location.replace('index.html');
+    console.error('Não foi possível validar o acesso à Área do Aluno:', error);
+    sessionStorage.removeItem('nankim_sessao');
   }
-});
+})();

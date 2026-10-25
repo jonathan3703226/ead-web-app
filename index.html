@@ -4,165 +4,505 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nankim Escola de Arte - Home</title>
+    <title>Nankim Escola de Arte | Home</title>
+
+    <!-- Conexão Prévia Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Unificação de Todas as Fontes em uma Única Requisição -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Comfortaa:wght@500;600;700&family=Lobster&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:wght@400;500;600;700;900&family=Share+Tech&family=Sora:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/global.css">
     <link rel="stylesheet" href="./css/home.css">
     <link rel="stylesheet" href="./css/cookies.css">
     <link rel="stylesheet" href="./css/termos.css">
-    <link rel="stylesheet" href="./css/global.css">
 </head>
 
 <body>
-    <!-- Container onde o JS vai injetar o Menu -->
     <div id="header-container"></div>
 
     <main>
-        <!-- Banner Principal -->
-        <section id="hero">
-            <h1>Sua Jornada Artística Começa Aqui</h1>
-            <p>Aprenda arte de forma estruturada, do nível básico ao avançado.</p>
-            <button data-modal="login">Área do Aluno</button>
-            <a href=.cursos.html"><button>Ver Cursos</button></a>
-        </section>
 
-        <!-- Proposta de Valor -->
-        <section id="proposta">
-            <h2>Por que escolher a Nankim?</h2>
-            <ul>
-                <li>Roteiro progressivo e estruturado.</li>
-                <li>Foco absoluto nos fundamentos do desenho.</li>
-                <li>Metodologia passo a passo para evitar lacunas de aprendizado.</li>
-            </ul>
-        </section>
 
-        <!-- Visão Geral da Jornada -->
-        <section id="jornada">
-            <h2>Trilha de Aprendizado</h2>
-            <div class="trilha-grid">
-                <div class="curso-card">
-                    <h3>Fundamentos do Desenho</h3>
-                    <p>Status: Disponível</p>
-                    <button data-modal="checkout">Comprar Agora</button>
-                </div>
-                <div class="curso-card">
-                    <h3>Intermediário: Anatomia</h3>
-                    <p>Status: Em breve</p>
-                </div>
-                <div class="curso-card">
-                    <h3>Avançado: Ilustração Digital</h3>
-                    <p>Status: Em breve</p>
-                </div>
-            </div>
-        </section>
-    </main>
 
-    <!-- Container onde o JS vai injetar o Rodapé -->
-    <div id="footer-container"></div>
+        <main>
 
-    <!-- ================= MODAIS ================= -->
+            <!-- Área 1: SUPER Header (Fundo Claro) -->
+            <section class="super-header-gnomon">
+                <div class="header-container-limpo">
 
-    <!-- Modal de Login -->
-    <div id="modal-login" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" data-close="login">&times;</span>
-            <h2>Login - Área do Aluno</h2>
+                    <h1 class="titulo-cuberto-estilo">
+                        <span class="linha-esquerda">Escola de Arte</span>
+                        <span class="linha-direita">& Ilustração</span>
+                    </h1>
 
-            <form id="form-login" novalidate>
-                <div class="input-group">
-                    <label for="login-email">E-mail</label>
-                    <input type="email" id="login-email" placeholder="seuemail@dominio.com" required
-                        autocomplete="email">
-                    <small class="input-feedback"></small>
-                </div>
-
-                <div class="input-group">
-                    <label for="login-senha">Senha</label>
-                    <div class="campo-senha-wrapper">
-                        <input type="password" id="login-senha" placeholder="Digite sua senha" required
-                            autocomplete="current-password">
-                        <button type="button" id="btn-toggle-senha" class="btn-eye"
-                            aria-label="Mostrar senha">👁️</button>
+                    <div class="bloco-proposta-cta">
+                        <h2 class="subtitulo-pergunta-cuberto">
+                            <span class="prefixo-barra">//</span>
+                            <span id="texto-digitado"></span><span class="cursor-typing">|</span>
+                        </h2>
                     </div>
-                    <small class="input-feedback"></small>
+
+                    <div class="container-video-showreel">
+                        <video id="video-showreel-header" autoplay loop muted playsinline
+                            poster="./imagens/banner-caneta.jpg">
+                            <source src="./assets/video/video-principal.mp4" type="video/mp4">
+                            Seu navegador não suporta a exibição de vídeos.
+                        </video>
+
+                        <div class="overlay-video"></div>
+
+                        <div class="texto-sobre-video">
+                            <p>Talento sem método é só potencial <br>— o que transforma a intenção em resultado é a
+                                dedicação.</p>
+                        </div>
+                    </div>
+
                 </div>
+            </section>
 
-                <div class="login-acoes-auxiliares">
-                    <a href="#" id="link-esqueci-senha">Esqueceu sua senha?</a>
+            <!-- Bloco Escuro Cuberto (Envolve apenas Seção 2 e Seção 3) -->
+            <div class="cuberto-dark-section">
+
+                <!-- Seção 2: Vitrine de Cursos -->
+                <section class="secao-vitrine-cursos" id="cursos">
+                    <div class="container-vitrine">
+
+                        <div class="cabecalho-vitrine">
+                            <h2 class="titulo-destaque-vitrine">
+                                Do primeiro esboço ao portfólio profissional
+                            </h2>
+                            <p class="subtitulo-detalhe-vitrine">
+                                Ensinamos você a dominar o traço e dar vida às suas ideias.
+                            </p>
+                        </div>
+
+                        <div class="grid-cards-cursos">
+
+                            <article class="card-curso card-disponivel card-com-video">
+                                <video class="video-bg-card" loop muted playsinline preload="metadata">
+                                    <source src="./assets/video/video-fundamento.mp4" type="video/mp4">
+                                    <source src="/assets/video/video-fundamento.mp4" type="video/mp4">
+                                </video>
+                                <div class="overlay-card-bg"></div>
+
+                                <div class="conteudo-card-wrapper">
+                                    <div class="header-card-curso">
+                                        <span class="tag-status status-disponivel">
+                                            <span class="ponto-status"></span> DISPONÍVEL AGORA
+                                        </span>
+                                        <span class="categoria-curso">Básico</span>
+                                    </div>
+                                    <div class="corpo-card-curso">
+                                        <h3 class="nome-curso">Fundamentos do Desenho</h3>
+                                        <p class="descricao-curso">A base sólida para destravar qualquer estilo. Domine
+                                            formas, luz, sombra e perspectiva.</p>
+                                    </div>
+                                    <div class="footer-card-curso">
+                                        <a href="cursos.html" class="btn-card-cta link-magnetico">Conhecer o Curso</a>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <article class="card-curso card-em-breve card-com-video">
+                                <video class="video-bg-card" loop muted playsinline preload="metadata">
+                                    <source src="./assets/video/video-anatomia.mp4" type="video/mp4">
+                                    <source src="/assets/video/video-anatomia.mp4" type="video/mp4">
+                                </video>
+                                <div class="overlay-card-bg"></div>
+
+                                <div class="conteudo-card-wrapper">
+                                    <div class="header-card-curso">
+                                        <span class="tag-status status-em-breve">
+                                            <span class="icone-cadeado">🔒</span> EM BREVE
+                                        </span>
+                                        <span class="categoria-curso">Intermediário</span>
+                                    </div>
+                                    <div class="corpo-card-curso">
+                                        <h3 class="nome-curso">Anatomia Humana</h3>
+                                        <p class="descricao-curso">Proporções, musculatura e pose com dinamismo e
+                                            precisão para elevar suas criações.</p>
+                                    </div>
+                                    <div class="footer-card-curso">
+                                        <button class="btn-card-bloqueado" disabled>Em breve no catálogo</button>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <article class="card-curso card-em-breve card-com-video">
+                                <video class="video-bg-card" loop muted playsinline preload="metadata">
+                                    <source src="./assets/video/video-digital.mp4" type="video/mp4">
+                                    <source src="/assets/video/video-digital.mp4" type="video/mp4">
+                                </video>
+                                <div class="overlay-card-bg"></div>
+
+                                <div class="conteudo-card-wrapper">
+                                    <div class="header-card-curso">
+                                        <span class="tag-status status-em-breve">
+                                            <span class="icone-cadeado">🔒</span> EM BREVE
+                                        </span>
+                                        <span class="categoria-curso">Avançado</span>
+                                    </div>
+                                    <div class="corpo-card-curso">
+                                        <h3 class="nome-curso">Ilustração Digital</h3>
+                                        <p class="descricao-curso">Pintura, acabamento profissional e workflows
+                                            completos voltados para o mercado.</p>
+                                    </div>
+                                    <div class="footer-card-curso">
+                                        <button class="btn-card-bloqueado" disabled>Em breve no catálogo</button>
+                                    </div>
+                                </div>
+                            </article>
+
+                        </div>
+
+                    </div>
+                </section>
+
+              <!-- ================= SEÇÃO 3: DEGUSTAÇÃO / PLATAFORMA ================= -->
+<section class="secao-degustacao">
+    <div class="degustacao-container">
+        
+        <div class="degustacao-card-destaque">
+            <!-- Feixe de luz vermelha fluindo na borda -->
+            <div class="borda-luz-vermelha"></div>
+            
+            <div class="degustacao-card-conteudo-inner">
+                <!-- Selo Ampliado: Círculo Giratório Maior + Texto MÓDULO 1 100% GRÁTIS -->
+                <div class="degustacao-selo-wrapper">
+                    <div class="degustacao-circulo-giratorio"></div>
+                    <div class="degustacao-texto-pulsante">
+                        <span class="selo-sub-top">MÓDULO 1</span>
+                        <span class="selo-destaque selo-vermelho">100% GRÁTIS</span>
+                    </div>
                 </div>
+                
+                <!-- Conteúdo da Direita -->
+                <div class="degustacao-conteudo">
+                    <h2 class="degustacao-titulo">Sua primeira aula é por nossa conta.</h2>
+                    <p class="degustacao-descricao">
+                        Conheça nossa plataforma por dentro e experimente um módulo do curso antes de decidir pela compra.
+                    </p>
 
-                <button type="submit" id="btn-submit-login">Entrar na Plataforma</button>
-            </form>
+                    <ul class="degustacao-beneficios">
+                        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Acesse um módulo gratuitamente</li>
+                        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Conheça nossa metodologia de ensino</li>
+                        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Descubra como é aprender com a Nankim</li>
+                    </ul>
+
+                    <button type="button" class="btn-degustacao-cta link-magnetico" data-modal="cadastro">
+                        Experimentar gratuitamente
+                    </button>
+                </div>
+            </div>
+            
         </div>
+
     </div>
+</section>
 
-    <!-- Modal de Checkout -->
-    <div id="modal-checkout" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" data-close="checkout">&times;</span>
-            <h2>Checkout Simulado</h2>
-            <form id="form-checkout">
-                <label>Nome no Cartão:</label>
-                <input type="text" required>
-                <label>Número do Cartão:</label>
-                <input type="text" required>
-                <button type="submit">Finalizar Compra</button>
-            </form>
-        </div>
-    </div>
+            </div> <!-- / Fim do cuberto-dark-section -->
 
-    <!-- Modal de Termos -->
-    <div id="modal-termos" class="modal">
-        <div class="modal-content modal-largo">
-            <span class="close-btn" data-close="termos">&times;</span>
-            <h2>Termos de Uso e Política de Privacidade</h2>
+            <!-- Seção 4: Case de Sucesso dos Ex-Alunos (Bloco Claro Cuberto) -->
+            <section class="cuberto-light-section" id="depoimentos">
+                <div class="container-vitrine">
 
-            <div class="conteudo-scroll">
-                <h3>1. Aceitação dos Termos</h3>
-                <p>Ao acessar e utilizar a plataforma Nankim Escola de Arte, você concorda expressamente com estes
-                    Termos de Uso. Caso não concorde com alguma cláusula, solicitamos que não utilize nossos serviços.
-                </p>
+                    <div class="cabecalho-vitrine-claro revelar-scroll">
+                        <h2 class="titulo-destaque-claro">Onde o método Nankim pode te levar</h2>
+                        <p class="subtitulo-detalhe-claro">De alunos a profissionais consolidados no mercado.</p>
+                    </div>
 
-                <h3>2. Propriedade Intelectual e Direitos Autorais</h3>
-                <p><strong>2.1. Nosso Conteúdo:</strong> Todos os vídeos, apostilas, metodologias e designs apresentados
-                    na plataforma são de propriedade exclusiva da Nankim. É terminantemente proibida a cópia, pirataria
-                    ou distribuição não autorizada.</p>
-                <p><strong>2.2. Sua Arte:</strong> Os exercícios e desenhos submetidos por você na Área do Aluno
-                    pertencem exclusivamente a você. A Nankim não reivindica direitos autorais sobre suas criações, mas
-                    reserva-se o direito de solicitar autorização para exibi-los em murais de "Trabalhos de Alunos" com
-                    os devidos créditos.</p>
+                    <div class="wrapper-depoimentos-stack revelar-scroll">
 
-                <h3>3. Política de Privacidade e Tratamento de Dados</h3>
-                <p>Respeitamos sua privacidade em conformidade com a LGPD (Lei Geral de Proteção de Dados):</p>
-                <ul>
-                    <li><strong>Coleta:</strong> Coletamos apenas dados essenciais para o funcionamento da sua conta
-                        (nome, e-mail e senha criptografada).</li>
-                    <li><strong>Cookies:</strong> Utilizamos cookies para manter sua sessão ativa e analisar métricas de
-                        acesso, conforme gerenciado por você em nosso painel de preferências de cookies.</li>
-                    <li><strong>Compartilhamento:</strong> Não vendemos nem compartilhamos seus dados pessoais com
-                        terceiros sob nenhuma hipótese.</li>
-                </ul>
+                        <!-- Card 1 -->
+                        <article class="card-depo">
+                            <div class="depo-header-sucesso">
+                                <div class="depo-foto"
+                                    style="background-image: url('https://i.pravatar.cc/150?img=11');"></div>
+                                <div class="depo-info-aluno">
+                                    <h3 class="depo-nome">Lucas Moura</h3>
+                                    <span class="depo-cargo">Concept Artist</span>
+                                    <span class="depo-empresa">Ubisoft Canadá</span>
+                                </div>
+                            </div>
+                            <p class="depo-quote">"A base sólida de fundamentos que aprendi na Nankim foi o divisor de
+                                águas para minha vaga internacional."</p>
+                        </article>
 
-                <h3>4. Pagamentos e Política de Reembolso</h3>
-                <p>Os pagamentos são processados por gateways seguros e independentes. Em conformidade com o Código de
-                    Defesa do Consumidor, oferecemos uma garantia incondicional de 7 (sete) dias. Caso o método de
-                    ensino de Fundamentos do Desenho não atenda às suas expectativas, o reembolso integral pode ser
-                    solicitado dentro deste prazo.</p>
+                        <!-- Card 2 -->
+                        <article class="card-depo">
+                            <div class="depo-header-sucesso">
+                                <div class="depo-foto"
+                                    style="background-image: url('https://i.pravatar.cc/150?img=47');"></div>
+                                <div class="depo-info-aluno">
+                                    <h3 class="depo-nome">Mariana Silva</h3>
+                                    <span class="depo-cargo">Ilustradora Senior</span>
+                                    <span class="depo-empresa">Marvel Comics</span>
+                                </div>
+                            </div>
+                            <p class="depo-quote">"O método me deu velocidade e precisão técnica. Hoje realizo o sonho
+                                de desenhar para a Marvel."</p>
+                        </article>
 
-                <h3>5. Regras de Conduta</h3>
-                <p>O ambiente da comunidade e a área de feedback de exercícios devem ser locais de respeito mútuo. Não
-                    será tolerado assédio, discriminação ou críticas destrutivas aos trabalhos de outros estudantes. A
-                    violação desta regra resultará no banimento imediato da conta sem direito a reembolso.</p>
+                        <!-- Card 3 -->
+                        <article class="card-depo">
+                            <div class="depo-header-sucesso">
+                                <div class="depo-foto"
+                                    style="background-image: url('https://i.pravatar.cc/150?img=33');"></div>
+                                <div class="depo-info-aluno">
+                                    <h3 class="depo-nome">Rafael Costa</h3>
+                                    <span class="depo-cargo">2D Game Artist</span>
+                                    <span class="depo-empresa">Riot Games</span>
+                                </div>
+                            </div>
+                            <p class="depo-quote">"Aprender com método me permitiu trabalhar de casa para estúdios
+                                gringos e faturar em moeda forte."</p>
+                        </article>
 
-                <hr>
-                <p><small><em>Última atualização: 27 de agosto de 2026. (Plataforma em versão MVP para fins de validação
-                            acadêmica).</em></small></p>
+                        <!-- Card 4 -->
+                        <article class="card-depo">
+                            <div class="depo-header-sucesso">
+                                <div class="depo-foto"
+                                    style="background-image: url('https://i.pravatar.cc/150?img=44');"></div>
+                                <div class="depo-info-aluno">
+                                    <h3 class="depo-nome">Camila Ribeiro</h3>
+                                    <span class="depo-cargo">Character Designer</span>
+                                    <span class="depo-empresa">Blizzard Entertainment</span>
+                                </div>
+                            </div>
+                            <p class="depo-quote">"Dominar anatomia e luz transformou meu portfólio e abriu portas na
+                                indústria de games."</p>
+                        </article>
+
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Seção 5: Missão & Propósito Institucional (Fundo Branco) -->
+            <section class="secao-missao-institucional" id="missao">
+                <div class="container-vitrine">
+
+                    <!-- Cabeçalho alinhado com o padrão das outras seções -->
+                    <div class="cabecalho-vitrine-claro revelar-scroll">
+                        <h2 class="titulo-destaque-claro">Ensinar é a nossa missão</h2>
+                        <p class="subtitulo-detalhe-claro">A paixão por transformar vidas através da arte vai muito além
+                            das telas.</p>
+                    </div>
+
+                    <!-- Conteúdo em Duas Colunas -->
+                    <div class="grid-missao revelar-scroll">
+
+                        <!-- Lado Esquerdo: Galeria Slider de Fotos em Alta Qualidade -->
+                        <div class="coluna-galeria-missao">
+                            <div class="moldura-foto-destaque">
+                                <img id="foto-missao-principal" src="./assets/img/ensino/ensino1.jpeg"
+                                    alt="Thiago ensinando arte para crianças da comunidade">
+                                <div class="overlay-gradiente-foto"></div>
+                                <span class="badge-foto-legenda">Aulas na Comunidade ✦</span>
+                            </div>
+
+                            <!-- Miniaturas de Seleção / Indicadores -->
+                            <div class="grid-thumbs-galeria">
+                                <button class="thumb-item ativo" data-index="0"
+                                    style="background-image: url('./assets/img/ensino/ensino1.jpeg');"
+                                    aria-label="Ver foto 1"></button>
+                                <button class="thumb-item" data-index="1"
+                                    style="background-image: url('./assets/img/ensino/ensino2.jpeg');"
+                                    aria-label="Ver foto 2"></button>
+                                <button class="thumb-item" data-index="2"
+                                    style="background-image: url('./assets/img/ensino/ensino3.jpeg');"
+                                    aria-label="Ver foto 3"></button>
+                                <button class="thumb-item" data-index="3"
+                                    style="background-image: url('./assets/img/ensino/ensino4.jpeg');"
+                                    aria-label="Ver foto 4"></button>
+                                <button class="thumb-item" data-index="4"
+                                    style="background-image: url('./assets/img/ensino/ensino5.jpeg');"
+                                    aria-label="Ver foto 5"></button>
+                                <button class="thumb-item" data-index="5"
+                                    style="background-image: url('./assets/img/ensino/ensino6.jpeg');"
+                                    aria-label="Ver foto 6"></button>
+                            </div>
+                        </div>
+
+                        <!-- Lado Direito: Texto Institucional Estilizado -->
+                        <div class="coluna-texto-missao">
+                            <div class="card-texto-proposito">
+                                <span class="prefixo-aspas">“</span>
+                                <p class="texto-missao-destaque">
+                                    Acreditamos que a arte tem o poder de libertar potenciais e transformar realidades.
+                                    Além da plataforma, o Thiago dedica parte do seu tempo a ensinar crianças da
+                                    comunidade a darem seus primeiros passos no desenho.
+                                </p>
+                                <p class="texto-missao-complemento">
+                                    É essa mesma dedicação, paciência e amor pela arte que alimentam a metodologia
+                                    Nankim todos os dias.
+                                </p>
+                                <div class="rodape-autor-missao">
+                                    <span class="linha-decorativa-vermelha"></span>
+                                    <span class="nome-instrutor-missao">Thiago — Fundador & Instrutor</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </section>
+            <!-- Seção 6: FAQ (Fundo Escuro Cuberto) -->
+            <section class="cuberto-dark-footer-section" id="faq">
+                <div class="container-vitrine">
+
+                    <!-- Cabeçalho -->
+                    <div class="cabecalho-vitrine revelar-scroll">
+                        <h2 class="titulo-destaque-vitrine">DÚVIDAS FREQUENTES</h2>
+                        <p class="subtitulo-detalhe-vitrine">Está com alguma dúvida? Estamos aqui pra te ajudar!</p>
+                    </div>
+
+                    <!-- Accordion / Sanfona -->
+                    <div class="accordion-faq-container revelar-scroll">
+
+                        <!-- Pergunta 1 -->
+                        <div class="faq-item">
+                            <button class="faq-pergunta">
+                                Preciso saber desenhar alguma coisa para começar?
+                                <span class="faq-icone"></span>
+                            </button>
+                            <div class="faq-resposta">
+                                <p>Não! O curso foi estruturado exatamente para pegar você pela mão desde o primeiro
+                                    traço. Começamos do absoluto zero, focando em fundamentos essenciais antes de
+                                    avançar para técnicas complexas.</p>
+                            </div>
+                        </div>
+
+                        <!-- Pergunta 2 -->
+                        <div class="faq-item">
+                            <button class="faq-pergunta">
+                                Quais materiais eu preciso comprar?
+                                <span class="faq-icone"></span>
+                            </button>
+                            <div class="faq-resposta">
+                                <p>Apenas o básico: papel sulfite comum, um lápis 2B (ou HB) e uma borracha. Não é
+                                    necessário investir em materiais caros para aprender os fundamentos da arte.</p>
+                            </div>
+                        </div>
+
+                        <!-- Pergunta 3 -->
+                        <div class="faq-item">
+                            <button class="faq-pergunta">
+                                Como funcionam as correções do professor?
+                                <span class="faq-icone"></span>
+                            </button>
+                            <div class="faq-resposta">
+                                <p>Você enviará seus exercícios através da nossa plataforma exclusiva. O Thiago ou a
+                                    equipe de monitores fará correções visuais (overpaint) diretamente sobre o seu
+                                    desenho, apontando exatamente onde e como melhorar.</p>
+                            </div>
+                        </div>
+
+                        <!-- Pergunta 4 -->
+                        <div class="faq-item">
+                            <button class="faq-pergunta">
+                                E se eu não gostar do curso?
+                                <span class="faq-icone"></span>
+                            </button>
+                            <div class="faq-resposta">
+                                <p>Você está 100% seguro. Oferecemos uma garantia incondicional de 7 dias. Se achar que
+                                    a metodologia não é para você, basta solicitar o cancelamento na plataforma e
+                                    devolvemos seu dinheiro sem burocracia.</p>
+                            </div>
+                        </div>
+
+                        <!-- Pergunta 5 -->
+                        <div class="faq-item">
+                            <button class="faq-pergunta">
+                                O método serve para quem quer fazer arte digital?
+                                <span class="faq-icone"></span>
+                            </button>
+                            <div class="faq-resposta">
+                                <p>Sim! Os fundamentos da arte (anatomia, perspectiva, luz e sombra) são universais.
+                                    Tudo o que você aprende com lápis e papel se aplica perfeitamente à pintura digital,
+                                    3D ou animação.</p>
+                            </div>
+                        </div>
+
+                    </div> <!-- Fim do Accordion -->
+
+                    <!-- Call to Action - Contato -->
+                    <div class="faq-contato-cta revelar-scroll">
+                        <p>Não encontrou sua dúvida acima? <br>Entre em contato com a gente!</p>
+                        <a href="contato.html" class="btn-faq-contato link-magnetico">CONTATO</a>
+                    </div>
+
+                </div> <!-- Fim do container-vitrine -->
+            </section> <!-- Fim da cuberto-dark-footer-section -->
+
+        </main>
+
+        <div id="footer-container"></div>
+
+        <div id="modal-termos" class="modal">
+            <div class="modal-content modal-largo">
+                <span class="close-btn" data-close="termos">&times;</span>
+                <h2>Termos de Uso e Política de Privacidade</h2>
+                <div class="conteudo-scroll">
+                    <h3>1. Aceitação dos Termos</h3>
+                    <p>Ao acessar e utilizar a plataforma Nankim Escola de Arte, você concorda expressamente com estes
+                        Termos de Uso. Caso não concorde com alguma cláusula, solicitamos que não utilize nossos
+                        serviços.
+                    </p>
+                    <h3>2. Propriedade Intelectual e Direitos Autorais</h3>
+                    <p><strong>2.1. Nosso Conteúdo:</strong> Todos os vídeos, apostilas, metodologias e designs
+                        apresentados
+                        na plataforma são de propriedade exclusiva da Nankim. É terminantemente proibida a cópia,
+                        pirataria
+                        ou distribuição não autorizada.</p>
+                    <p><strong>2.2. Sua Arte:</strong> Os exercícios e desenhos submetidos por você na Área do Aluno
+                        pertencem exclusivamente a você. A Nankim não reivindica direitos autorais sobre suas criações,
+                        mas
+                        reserva-se o direito de solicitar autorização para exibi-los em murais de "Trabalhos de Alunos"
+                        com
+                        os devidos créditos.</p>
+                    <h3>3. Política de Privacidade e Tratamento de Dados</h3>
+                    <p>Respeitamos sua privacidade em conformidade com a LGPD (Lei Geral de Proteção de Dados):</p>
+                    <ul>
+                        <li><strong>Protótipo:</strong> Este MVP salva nome, e-mail, senha e matrícula no armazenamento
+                            local do navegador. A senha não é criptografada; não use dados ou senhas reais.</li>
+                        <li><strong>Pagamento:</strong> O checkout é uma demonstração e não processa cobranças. Não
+                            informe
+                            dados reais de cartão.</li>
+                        <li><strong>Cookies:</strong> As preferências são salvas no armazenamento local do navegador.
+                            Métricas e cookies de marketing não estão integrados.</li>
+                    </ul>
+                    <h3>4. Pagamentos e Política de Reembolso</h3>
+                    <p>Este protótipo não processa pagamentos reais; a confirmação de checkout serve apenas para
+                        demonstrar
+                        a interface e não representa uma compra. Uma versão de produção deverá informar as condições de
+                        cobrança, cancelamento e reembolso antes da contratação.</p>
+                    <h3>5. Regras de Conduta</h3>
+                    <p>O ambiente da comunidade e a área de feedback de exercícios devem ser locais de respeito mútuo.
+                        Não
+                        será tolerado assédio, discriminação ou críticas destrutivas aos trabalhos de outros estudantes.
+                        A
+                        violação desta regra resultará no banimento imediato da conta sem direito a reembolso.</p>
+                    <hr>
+                    <p><small><em>Última atualização: 27 de agosto de 2026. (Plataforma em versão MVP para fins de
+                                validação
+                                acadêmica).</em></small></p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <script src="./js/global.js"></script>
-    <script src="./js/login.js"></script>
-    <script src="./js/termos.js"></script>
-    <script src="./js/cookies.js"></script>
+        <script src="./js/global.js"></script>
+        <script src="./js/login.js"></script>
+        <script src="./js/termos.js"></script>
+        <script src="./js/cookies.js"></script>
+        <script src="./js/home.js"></script>
 </body>
 
 </html>
