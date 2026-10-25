@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nankim Escola de Arte - Cursos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/cursos.css">
+    <link rel="stylesheet" href="./css/checkout.css">
+    <link rel="stylesheet" href="./css/cookies.css">
+</head>
+
+<body>
+    <!-- O global.js injeta o menu dinamicamente aqui -->
+    <div id="header-container"></div>
+
+    <main class="pagina-curso">
+        <section class="hero-curso" aria-labelledby="titulo-curso">
+            <div class="video-curso video-em-breve" role="img" aria-label="Vídeo de apresentação do curso em breve">
+                <img src="./imagens/arte%201.jpg" alt="">
+                <span>Vídeo de apresentação em breve</span>
+            </div>
+
+            <div class="resumo-curso">
+                <p class="etiqueta-curso">Curso de desenho</p>
+                <h1 id="titulo-curso">Fundamentos do Desenho</h1>
+                <p class="descricao-curso">O ponto de partida para qualquer artista. Domine formas, perspectiva e luz com uma trilha prática e progressiva.</p>
+
+                <section class="card-valor" aria-labelledby="titulo-valor">
+                    <h2 id="titulo-valor">Invista na sua jornada</h2>
+                    <div class="opcao-valor">
+                        <p><strong>R$ 49,90</strong><span>à vista</span></p>
+                        <button class="botao-assinar" type="button" data-modal="checkout">Assinar</button>
+                    </div>
+                    <div class="opcao-valor">
+                        <p><strong>12x de R$ 4,99</strong></p>
+                        <button class="botao-assinar" type="button" data-modal="checkout">Assinar</button>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <section class="ementa-curso" aria-labelledby="titulo-ementa">
+            <header class="cabecalho-ementa">
+                <p class="etiqueta-curso">Conteúdo do curso</p>
+                <h2 id="titulo-ementa">Ementa do Curso</h2>
+                <p>Fundamentos sólidos, da primeira linha ao projeto final.</p>
+            </header>
+            <div class="grid-modulos">
+                <article class="card-modulo">
+                    <span class="numero-modulo">01</span>
+                    <div><h3>A base de tudo</h3><p>Linhas e formas primitivas</p></div>
+                </article>
+                <article class="card-modulo">
+                    <span class="numero-modulo">02</span>
+                    <div><h3>Desconstruindo objetos</h3><p>Observe e construa objetos complexos</p></div>
+                </article>
+                <article class="card-modulo">
+                    <span class="numero-modulo">03</span>
+                    <div><h3>Perspectiva</h3><p>Um, dois e três pontos de fuga</p></div>
+                </article>
+                <article class="card-modulo">
+                    <span class="numero-modulo">04</span>
+                    <div><h3>Teoria da Luz e Sombra</h3><p>Volume, iluminação e contraste</p></div>
+                </article>
+                <article class="card-modulo">
+                    <span class="numero-modulo">05</span>
+                    <div><h3>Renderização e Texturas</h3><p>Primeiros recursos de acabamento</p></div>
+                </article>
+                <article class="card-modulo modulo-final">
+                    <span class="numero-modulo">✦</span>
+                    <div><h3>Projeto Final</h3><p>Composição de cenário e objetos</p></div>
+                </article>
+            </div>
+        </section>
+
+        <section class="trilhas-futuras" aria-labelledby="titulo-trilhas-futuras">
+            <header class="cabecalho-trilhas">
+                <p class="etiqueta-curso">Continue aprendendo</p>
+                <h2 id="titulo-trilhas-futuras">Próximas Trilhas</h2>
+            </header>
+            <div class="grid-trilhas-futuras">
+                <article class="card-trilha-bloqueada">
+                    <span class="selo-bloqueado">Em breve</span>
+                    <h3>Intermediário: Anatomia Humana</h3>
+                </article>
+                <article class="card-trilha-bloqueada">
+                    <span class="selo-bloqueado">Em breve</span>
+                    <h3>Avançado:<br>Ilustração Digital</h3>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <!-- O global.js injeta o rodapé dinamicamente aqui -->
+    <div id="footer-container"></div>
+
+    <div id="modal-checkout" class="modal">
+        <div class="modal-content modal-checkout" role="dialog" aria-modal="true" aria-labelledby="checkout-titulo">
+            <button class="close-btn" type="button" data-close="checkout" aria-label="Fechar checkout">&times;</button>
+            <h2 id="checkout-titulo">Assinar Fundamentos do Desenho</h2>
+            <p class="subtitulo-modal" id="checkout-subtitulo">Identifique sua conta para continuar.</p>
+            <div id="checkout-stage"></div>
+        </div>
+    </div>
+
+    <!-- Importação Modular de Scripts -->
+    <script src="./js/global.js"></script>
+    <script src="./js/login.js"></script>
+    <script src="./js/termos.js"></script>
+    <!-- O script de cookies e checkout devem ser os últimos -->
+    <script src="./js/cookies.js"></script>
+    <script src="./js/checkout.js"></script>
+</body>
+
+</html>

@@ -1,100 +1,756 @@
-/* Reset Básico */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Montserrat', system-ui, sans-serif; background-color: #ffffff; color: #111; overflow-x: hidden; }
-
-/* Navegação Global */
-.navbar { 
-    display: flex; justify-content: space-between; align-items: center; 
-    padding: 1.2rem 5%; background: rgba(255, 255, 255, 0.95); 
-    backdrop-filter: blur(10px); border-bottom: 1px solid #eaeaea; 
-    position: fixed; width: 100%; top: 0; z-index: 100; 
+body {
+	overflow-x: hidden;
+	background-color: #F4EBD0;
 }
-.logo { font-size: 1.5rem; font-weight: 900; color: #111; letter-spacing: -0.5px; }
-.nav-links { list-style: none; display: flex; gap: 2rem; align-items: center; }
-.nav-links a { text-decoration: none; color: #444; font-weight: 600; transition: color 0.2s; position: relative; }
-.nav-links a:hover { color: #8b5cf6; }
-.btn-login { background: #111; color: #fff !important; padding: 0.6rem 1.8rem; border-radius: 8px; transition: all 0.3s ease; }
-.btn-login:hover { background: #8b5cf6; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3); }
+
+main,
+main * {
+	font-family: 'Montserrat', system-ui, sans-serif;
+}
 
 /* ==========================================================
-   Seção Hero Parallax em U (Título Isolado)
+   Área 1 - SUPER Header
    ========================================================== */
-.hero-parallax-u { 
-    position: relative; width: 100%; 
-    min-height: 1550px; /* Altura gigante para evitar cortes na base */
-    overflow: hidden; 
-    background-color: #ffffff; display: flex; justify-content: center; 
+.super-header-gnomon {
+    background-color: #ffffff !important; 
+    color: #000000;
+    padding: 8rem 0 3rem 0; /* Afastado do topo (8rem) */
+    width: 100%;
+    overflow: hidden;
 }
 
-/* Texto limpo e fixado no topo */
-.hero-conteudo { 
-    position: absolute; 
-    top: 140px; /* Bem no alto, livre das imagens */
-    left: 50%; transform: translateX(-50%); 
-    width: 100%; max-width: 850px; text-align: center; z-index: 20; 
-    background: transparent; /* Sem fundo */
-    backdrop-filter: none; 
-    box-shadow: none;
-}
-.hero-conteudo h1 { font-size: 4.2rem; font-weight: 900; line-height: 1.05; letter-spacing: -2px; margin-bottom: 1.5rem; color: #111; }
-.highlight { background: linear-gradient(135deg, #111 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.hero-conteudo p { font-size: 1.1rem; color: #555; line-height: 1.5; font-weight: 600; }
-
-
-.btn-roxo { 
-    margin-top: 2rem;
-    display: inline-block; background-color: #8b5cf6; color: #ffffff; 
-    font-size: 1.2rem; font-weight: 900; text-transform: uppercase; text-decoration: none; 
-    padding: 1.2rem 3.5rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4); 
-    transition: all 0.3s ease; 
-}
-.btn-roxo:hover { background-color: #7c3aed; transform: scale(1.05); }
-
-/* GRADE DE 8 COLUNAS */
-.grade-u { 
-    display: flex; justify-content: center; gap: 12px; 
-    width: 100%; padding: 0 2%; position: absolute; top: 0; z-index: 10;
+.header-container-limpo {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 4%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.col-u { 
-    display: flex; flex-direction: column; gap: 12px; 
-    width: 11%; 
-    will-change: transform; 
+/* a - Título Sem Negrito com Efeitos Lentos da Esquerda/Direita */
+.titulo-cuberto-estilo {
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: clamp(2.8rem, 6vw, 5.2rem) !important; 
+    font-weight: 600 !important; /* Sem negrito conforme solicitado */
+    color: #000000;
+    text-align: center;
+    line-height: 1.1;
+    max-width: 950px;
+    margin-bottom: 2.5rem;
+    letter-spacing: -1.5px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
-.img-p { height: 90px; }
-.img-m { height: 130px; }
-.img-g { height: 180px; }
-.col-u img { width: 100%; border-radius: 8px; object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.3s; }
-.col-u img:hover { transform: scale(1.05); z-index: 30; position: relative; }
+.linha-esquerda {
+    display: block;
+    align-self: center;
+    opacity: 0;
+    animation: entrarEsquerdaLento 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
 
-/* Margens massivas para as imagens começarem abaixo do texto */
-.col-alta { margin-top: 200px; }          
-.col-media-alta { margin-top: 440px; }    
-.col-media-baixa { margin-top: 550px; }   
-.col-baixa { margin-top: 580px; } 
+.linha-direita {
+    display: block;
+    align-self: center;
+    opacity: 0;
+    animation: entrarDireitaLento 2.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+}
+
+/* b - Pergunta em Negrito com Prefixo // e Encostada no Vídeo */
+.bloco-proposta-cta {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 0.5rem; /* Margem quase nula para colar no vídeo */
+    min-height: 40px;
+}
+
+.subtitulo-pergunta-cuberto {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-weight: 400 !important; /* Em negrito */
+    color: #1a1a1a;
+}
+
+.prefixo-barra {
+    color: #b33f30;
+    margin-right: 6px;
+    font-weight: 800;
+}
+
+.cursor-typing {
+    display: inline-block;
+    color: #b33f30;
+    font-weight: 700;
+    animation: piscarCursor 0.8s infinite;
+}
+
+/* c - Vídeo com Texto Inferior e Efeito de Surgimento */
+.container-video-showreel {
+    width: 100%;
+    max-width: 1050px;
+    aspect-ratio: 16 / 7;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 0; /* Colado na pergunta acima */
+    margin-bottom: 2.5rem;
+    background-color: #000;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    opacity: 0;
+    animation: fadeUpScaleLento 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+}
+
+.container-video-showreel video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.overlay-video {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,0.7) 100%); /* Sombra suave focada na base */
+    z-index: 1;
+}
+
+/* Texto posicionado na parte inferior */
+.texto-sobre-video {
+    position: absolute;
+    bottom: 8%; /* Ajustado para a parte inferior */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    width: 90%;
+    text-align: center;
+    opacity: 0;
+    animation: subirTextoVideo 1.8s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards; /* Efeito de subida e revelação */
+}
+
+.texto-sobre-video p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 1.4;
+    letter-spacing: -0.5px;
+}
+
+/* Keyframes Refinados */
+@keyframes entrarEsquerdaLento {
+    from { opacity: 0; transform: translateX(-120px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes entrarDireitaLento {
+    from { opacity: 0; transform: translateX(120px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes subirTextoVideo {
+    from { opacity: 0; transform: translate(-50%, 30px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes piscarCursor { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+@keyframes fadeUpScaleLento { 
+    from { opacity: 0; transform: translateY(30px) scale(0.96); } 
+    to { opacity: 1; transform: translateY(0) scale(1); } 
+}
+
+
 
 /* ==========================================================
-   Seção 2: Justificativa
+   Bloco Escuro Unificado — Estilo Cuberto
    ========================================================== */
-.sobre-metodo { padding: 8rem 2rem; background-color: #fafafa; position: relative; z-index: 100; }
-.container { max-width: 1100px; margin: 0 auto; }
-.texto-central { text-align: center; max-width: 800px; margin: 0 auto 4rem; }
-.texto-central h2 { font-size: 2.8rem; font-weight: 900; color: #111; margin-bottom: 1.2rem; letter-spacing: -1px; }
-.texto-central p { font-size: 1.15rem; color: #666; line-height: 1.7; }
-.cards-beneficios { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
-.card { background: #ffffff; padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04); transition: all 0.4s ease; border-bottom: 4px solid transparent; }
-.card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(139, 92, 246, 0.1); border-bottom: 4px solid #8b5cf6; }
-.icone-card { font-size: 2.5rem; margin-bottom: 1.5rem; }
-.card h3 { font-size: 1.5rem; font-weight: 800; color: #111; margin-bottom: 1rem; }
-.card p { color: #555; line-height: 1.6; font-size: 1.05rem; }
+.cuberto-dark-section {
+    background-color: #0a0a0a !important;
+    color: #ffffff;
+    padding: 7rem 0 8rem;
+    border-top-left-radius: 40px; /* Bordas arredondadas inspiradas no site Cuberto */
+    border-top-right-radius: 40px;
+    margin-top: -20px; /* Leve sobreposição sobre a seção clara superior */
+    position: relative;
+    z-index: 5;
+}
 
-footer { text-align: center; padding: 2.5rem; background: #fff; border-top: 1px solid #eaeaea; font-size: 0.95rem; color: #666; position: relative; z-index: 100; }
-footer a { color: #8b5cf6; text-decoration: none; font-weight: 700; }
+/* ==========================================================
+   Seção 2: Vitrine de Cursos (Vídeos Visíveis)
+   ========================================================== */
+.secao-vitrine-cursos {
+    width: 100%;
+}
 
-@media (max-width: 1024px) {
-    .grade-u { display: none; }
-    .hero-parallax-u { min-height: auto; }
-    .hero-conteudo { position: relative; top: 0; left: 0; transform: none; padding: 140px 20px 4rem; background: transparent; backdrop-filter: none; box-shadow: none; }
-    .nav-links { display: none; }
+.container-vitrine {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 4%;
+}
+
+/* 1. Cabeçalho */
+.cabecalho-vitrine {
+    text-align: center;
+    margin-bottom: 4rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.titulo-destaque-vitrine {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(2rem, 3.8vw, 3.2rem);
+    font-weight: 800 !important;
+    color: #ffffff;
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+    margin-bottom: 1rem;
+}
+
+.subtitulo-detalhe-vitrine {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+    font-weight: 300 !important;
+    color: #cccccc;
+    letter-spacing: -0.3px;
+}
+
+/* 2. Grid e Cards */
+.grid-cards-cursos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.card-curso {
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    background-color: #000000;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* 3. VÍDEO DE FUNDO DO CARD (Ajustado para Visibilidade Máxima) */
+.video-bg-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1; /* Garante que fica visível acima do fundo do card */
+    opacity: 0.65; /* Opacidade alta para o vídeo ser visto com clareza */
+    transition: opacity 0.4s ease, transform 0.5s ease;
+    filter: brightness(1);
+}
+
+.card-curso:hover .video-bg-card {
+    opacity: 0.95; /* Fica quase total ao passar o mouse */
+    transform: scale(1.05);
+}
+
+/* 4. MÁSCARA ESCURA (Suave para não cobrir o vídeo) */
+.overlay-card-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.85) 100%);
+    z-index: 2; /* Fica por cima do vídeo, mas deixa-o passar */
+    transition: background 0.4s ease;
+}
+
+.card-curso:hover .overlay-card-bg {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.75) 100%);
+}
+
+/* 5. CONTEÚDO (Por cima do vídeo e do gradiente) */
+.conteudo-card-wrapper {
+    position: relative;
+    z-index: 3; /* Sempre acima do vídeo (z-index 1) e da máscara (z-index 2) */
+    padding: 2.2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.selo-destaque-card {
+    position: absolute;
+    top: 0;
+    right: 2rem;
+    background-color: #b33f30;
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 0.4rem 0.9rem;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    z-index: 4;
+    box-shadow: 0 4px 12px rgba(179, 63, 48, 0.4);
+}
+
+.header-card-curso {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.tag-status {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 0.35rem 0.75rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-disponivel {
+    background-color: rgba(13, 138, 67, 0.3);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.4);
+}
+
+.ponto-status {
+    width: 7px;
+    height: 7px;
+    background-color: #2ecc71;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status-em-breve {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #aaaaaa;
+}
+
+.categoria-curso {
+    font-size: 0.8rem;
+    color: #cccccc;
+    font-weight: 600;
+}
+
+.nome-curso {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+
+.descricao-curso {
+    font-size: 0.95rem;
+    color: #ffffff;
+    line-height: 1.5;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+}
+
+.btn-card-cta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: #ffffff;
+    color: #000000;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.95rem;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.btn-card-cta:hover {
+    background-color: #b33f30;
+    color: #ffffff;
+}
+
+.btn-card-bloqueado {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #888888;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.95rem;
+    border-radius: 12px;
+    border: none;
+    cursor: not-allowed;
+}
+/* ==========================================================
+   Seção 3: Degustação da Plataforma (Curso Gratuito)
+   ========================================================== */
+.secao-degustacao-plataforma {
+    margin-top: 8rem;
+    padding-top: 5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    width: 100%;
+}
+
+.container-degustacao {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 4%;
+}
+
+/* 1. Cabeçalho */
+.cabecalho-degustacao {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.badge-gratuito {
+    display: inline-block;
+    background-color: #b33f30;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+}
+
+.titulo-degustacao {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -1px;
+}
+
+/* 2. Grid de Conteúdo (Duas Colunas) */
+.grid-degustacao {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+    align-items: center;
+}
+
+/* 3. Lado Esquerdo: Mockup de Interface */
+.coluna-mockup-degustacao {
+    width: 100%;
+}
+
+.moldura-mockup-player {
+    background: #181818;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+}
+
+.barra-superior-mockup {
+    background: #222222;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.bolinha {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.bolinha.vermelho { background-color: #ff5f56; }
+.bolinha.amarelo { background-color: #ffbd2e; }
+.bolinha.verde { background-color: #27c93f; }
+
+.titulo-aba-mockup {
+    font-size: 0.7rem;
+    color: #888888;
+    font-weight: 600;
+    margin-left: 8px;
+    letter-spacing: 0.5px;
+}
+
+.corpo-player-mockup {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background-color: #000;
+}
+
+.corpo-player-mockup video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.tag-ao-vivo {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.4);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.3rem 0.7rem;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+}
+
+/* 4. Lado Direito: Benefícios & Botão */
+.coluna-beneficios-degustacao {
+    width: 100%;
+}
+
+.lista-beneficios-degustacao {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.item-beneficio {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+}
+
+.icone-beneficio {
+    font-size: 1.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.6rem;
+    border-radius: 12px;
+    line-height: 1;
+}
+
+.item-beneficio h4 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.3rem;
+}
+
+.item-beneficio p {
+    font-size: 0.92rem;
+    color: #aaaaaa;
+    line-height: 1.4;
+}
+
+.btn-degustacao-cta {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    background-color: #b33f30;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 1.1rem;
+    border-radius: 14px;
+    text-decoration: none;
+    box-shadow: 0 10px 25px rgba(179, 63, 48, 0.3);
+    transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+}
+
+.btn-degustacao-cta:hover {
+    background-color: #c94838;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(179, 63, 48, 0.4);
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+    .secao-degustacao-plataforma {
+        margin-top: 5rem;
+        padding-top: 3.5rem;
+    }
+    .grid-degustacao {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+}
+
+
+
+
+
+/* ==========================================================
+   Seção 3: Prova Visual (Galeria em Losango com Card Central)
+   ========================================================== */
+.secao-prova-visual {
+    padding: 5rem 2% 8rem;
+    background-color: #1a1a1a; /* Fundo escuro noturno para dar destaque às obras */
+    color: #ffffff;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+}
+
+.cabecalho-prova-visual h2 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    font-weight: 800;
+    color: #fff8e8;
+    margin-bottom: 3.5rem;
+    letter-spacing: -0.02em;
+}
+
+/* CONTAINER EM FORMATO DE LOSANGO (GRID 5 COLUNAS) */
+.grid-losango-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    min-height: 750px;
+}
+
+.col-losango {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 18%;
+    will-change: transform;
+}
+
+/* Tamanho das Imagens */
+.img-losango {
+    width: 100%;
+    border-radius: 14px;
+    object-fit: cover;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.img-m { height: 210px; }
+.img-g { height: 290px; }
+
+.img-losango:hover {
+    transform: scale(1.04);
+    border-color: #f39c12;
+    z-index: 5;
+}
+
+/* DESLOCAMENTO DAS COLUNAS PARA FORMAR O LOSANGO (DIAMANTE) */
+.col-ponta {
+    margin-top: 120px; /* Pontas do diamante começam mais rebaixadas */
+}
+
+.col-media {
+    margin-top: 40px;
+}
+
+.col-centro {
+    margin-top: 0;
+    width: 22%; /* Coluna central levemente mais larga para destacar o Thiago */
+}
+
+/* CARD CENTRAL DO FUNDADOR (THIAGO) */
+.card-fundador-centro {
+    background: linear-gradient(145deg, #242424, #141414);
+    border: 2px solid #b33f30; /* Borda destaque em tom Nankim */
+    border-radius: 20px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    box-shadow: 0 15px 35px rgba(179, 63, 48, 0.3);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.card-fundador-centro:hover {
+    transform: translateY(-8px) scale(1.03);
+    border-color: #f39c12;
+    box-shadow: 0 22px 45px rgba(243, 156, 18, 0.35);
+}
+
+.foto-thiago-wrapper {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #f39c12;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+
+.foto-thiago-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.tag-fundador {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: #f39c12;
+    background: rgba(243, 156, 18, 0.12);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+}
+
+.texto-fundador {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #e0e0e0;
+    line-height: 1.5;
+}
+
+.link-conhecer {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 0.3rem;
+    transition: color 0.3s;
+}
+
+.card-fundador-centro:hover .link-conhecer {
+    color: #f39c12;
+}
+
+/* Responsividade Mobile */
+@media (max-width: 900px) {
+    .grid-losango-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+    .col-losango {
+        width: 100%;
+        max-width: 360px;
+        margin-top: 0 !important;
+    }
+}
+
+
+/* ==========================================================
+   Animação de Revelação Suave no Scroll
+   ========================================================== */
+.revelar-scroll {
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.revelar-scroll.visivel {
+    opacity: 1;
+    transform: translateY(0);
 }

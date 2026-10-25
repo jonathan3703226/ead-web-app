@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-aluno-acesso="negado">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Aluno - Nankim</title>
+    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/area-aluno.css">
+    <link rel="stylesheet" href="./css/cookies.css">
+    <script src="./js/auth.js"></script>
+</head>
+<body>
+    <div id="header-container"></div>
+
+    <div class="area-aluno-shell">
+        <main class="painel-aluno" inert>
+            <header class="boas-vindas">
+                <p class="painel-etiqueta">Sua jornada artística</p>
+                <h1>Seja bem-vindo(a), <span id="nome-aluno">Aluno</span></h1>
+                <p>Continue aprendendo no seu ritmo.</p>
+            </header>
+
+            <section class="meus-cursos" aria-labelledby="titulo-meus-cursos">
+                <div class="secao-cabecalho">
+                    <div>
+                        <p class="painel-etiqueta">Aprendizagem</p>
+                        <h2 id="titulo-meus-cursos">Meus Cursos</h2>
+                    </div>
+                    <a href="cursos.html">Explorar cursos</a>
+                </div>
+
+                <div class="lista-meus-cursos" id="lista-meus-cursos"></div>
+                <div class="sem-cursos" id="sem-cursos" hidden>
+                    <h3>Você ainda não tem cursos matriculados</h3>
+                    <p>Escolha um curso para começar sua jornada artística. Depois da compra, as aulas e o progresso aparecerão aqui.</p>
+                    <a class="botao-comprar-curso" href="cursos.html">Conhecer cursos</a>
+                </div>
+            </section>
+
+            <section class="curso-ativo" aria-labelledby="titulo-aula" hidden>
+                <div class="aula-conteudo">
+                    <div class="secao-cabecalho">
+                        <div>
+                            <p class="painel-etiqueta">Continue de onde parou</p>
+                            <h2 id="titulo-aula">Sua última aula</h2>
+                        </div>
+                    </div>
+                    <div class="video-destaque" id="aula-atual">
+                        <span class="icone-play" aria-hidden="true">▶</span>
+                        <p id="nome-aula-atual">Módulo 1: A base de tudo</p>
+                        <small>O conteúdo de vídeo será disponibilizado nesta área.</small>
+                        <button class="marcar-concluida" id="marcar-concluida" type="button">Marcar aula como concluída</button>
+                    </div>
+                </div>
+
+                <aside class="trilha-progresso" aria-labelledby="titulo-trilha">
+                    <h2 id="titulo-trilha">Conteúdo do curso</h2>
+                    <ol class="lista-aulas" id="lista-aulas"></ol>
+                </aside>
+            </section>
+        </main>
+
+        <section class="acesso-restrito" aria-labelledby="titulo-acesso-restrito">
+            <div class="card-acesso-restrito">
+                <span class="icone-acesso-restrito" aria-hidden="true">✦</span>
+                <p class="painel-etiqueta">Área do Aluno</p>
+                <h1 id="titulo-acesso-restrito">Acesso Restrito</h1>
+                <p>Faça login para ver seus cursos, acompanhar seu progresso e continuar de onde parou.</p>
+                <button class="botao-login-restrito" type="button" data-modal="login">Faça o Login</button>
+                <p class="cadastro-restrito">Ainda não tem conta?
+                    <button type="button" data-modal="login" data-modal-mode="cadastro">ou Cadastre-se</button>
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <div id="footer-container"></div>
+    <script src="./js/global.js"></script>
+    <script src="./js/login.js"></script>
+    <script src="./js/cookies.js"></script>
+    <script src="./js/area-aluno.js"></script>
+</body>
+</html>

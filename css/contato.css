@@ -1,0 +1,140 @@
+.pagina-contato {
+	display: grid;
+	min-height: 65vh;
+	place-items: center;
+	padding: 64px 6%;
+	background: #F4EBD0;
+	color: #1d2d3c;
+}
+
+.contato-conteudo {
+	width: min(1000px, 100%);
+	padding: clamp(28px, 6vw, 56px);
+	border-left: 5px solid #b33f30;
+	background: #fbf8f1;
+	box-shadow: 0 16px 40px rgba(29, 45, 60, 0.12);
+}
+
+.contato-etiqueta {
+	margin-bottom: 10px;
+	color: #b33f30;
+	font-size: 0.8rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.contato-conteudo h1 {
+	margin-bottom: 16px;
+	color: #1d2d3c;
+	font-family: 'Noto Serif JP', Georgia, serif;
+	font-size: clamp(2.2rem, 6vw, 3.2rem);
+	line-height: 1.15;
+}
+
+.contato-conteudo > p:not(.contato-etiqueta) {
+	margin-bottom: 24px;
+	color: #4c4943;
+	font-size: 1.05rem;
+	line-height: 1.8;
+}
+
+.contato-layout {
+	display: grid;
+	grid-template-columns: minmax(0, 1.4fr) minmax(220px, 0.8fr);
+	align-items: start;
+	gap: 32px;
+}
+
+.form-contato .input-group input,
+.form-contato textarea {
+	width: 100%;
+	padding: 12px;
+	border: 1px solid #c9c2b5;
+	border-radius: 5px;
+	background: #FDF5E6;
+	color: #1d2d3c;
+	font: inherit;
+}
+
+.form-contato textarea {
+	resize: vertical;
+}
+
+.form-contato .input-group input:focus,
+.form-contato textarea:focus {
+	border-color: #b33f30;
+	outline: 2px solid rgba(179, 63, 48, 0.18);
+}
+
+.contato-link-cursos {
+	display: inline-flex;
+	min-height: 46px;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 20px;
+	border: 0;
+	border-radius: 4px;
+	background: #b33f30;
+	color: #fff;
+	font: inherit;
+	font-weight: 700;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.contato-link-cursos:hover {
+	transform: translateY(-2px);
+	background: #912e23;
+}
+
+.contato-link-cursos:focus-visible {
+	outline: 3px solid #24394d;
+	outline-offset: 3px;
+}
+
+.contato-redes {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	padding: 22px;
+	border-radius: 7px;
+	background: #e8ddc9;
+}
+
+.contato-redes h2 {
+	font-size: 1.1rem;
+}
+
+.contato-redes a {
+	color: #8f3025;
+	font-weight: 700;
+	line-height: 1.5;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 3px;
+	overflow-wrap: anywhere;
+}
+
+.contato-feedback {
+	min-height: 1.5em;
+	margin: 0;
+	color: #4c4943;
+	font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+	.pagina-contato {
+		min-height: 60vh;
+		padding: 40px 6%;
+	}
+
+	.contato-conteudo {
+		padding: 28px 22px;
+	}
+
+	.contato-layout {
+		grid-template-columns: 1fr;
+		gap: 26px;
+	}
+}
