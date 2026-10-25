@@ -1,0 +1,617 @@
+/* ================= HEADER E LOGO ================= */
+.header-aluno {
+    background-color: #000000;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 0.8rem 5%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.header-aluno-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* ================= EFEITO DA LOGO ================= */
+.logo-aluno-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.logo-icone-wrapper {
+    display: flex;
+    width: 38px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.logo-img-simbolo {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+    filter: invert(1);
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.logo-aluno-wrapper:hover .logo-img-simbolo {
+    transform: rotate(360deg);
+}
+
+.logo-texto-wrapper {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    line-height: 1;
+}
+
+.logo-fixo {
+    font-family: 'Audiowide', cursive;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: #ffffff;
+}
+
+.logo-expansivel {
+    display: inline-flex;
+    align-items: center;
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    font-family: 'Caveat', cursive;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1;
+    white-space: nowrap;
+    transition: max-width 0.45s cubic-bezier(0.76, 0, 0.24, 1), 
+                opacity 0.35s ease, 
+                padding-left 0.35s ease,
+                padding-right 0.35s ease;
+}
+
+.logo-aluno-wrapper:hover .logo-expansivel {
+    max-width: 200px;
+    opacity: 1;
+    padding-left: 0.35rem;
+    padding-right: 0.5rem;
+}
+
+/* Dropdown de Perfil */
+.perfil-dropdown { position: relative; }
+
+.btn-perfil {
+    background: transparent;
+    color: #ffffff;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: opacity 0.2s ease;
+}
+
+.btn-perfil:hover { opacity: 0.8; }
+
+.avatar-aluno {
+    width: 32px;
+    height: 32px;
+    background-color: #b33f30;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #111111;
+    border: 1px solid #222;
+    border-radius: 12px;
+    margin-top: 15px;
+    width: 240px;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.9);
+    z-index: 200;
+}
+
+.dropdown-menu.show {
+    display: flex;
+    animation: abrirDropdown 0.2s ease forwards;
+}
+
+@keyframes abrirDropdown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-menu a, .dropdown-menu button {
+    padding: 1rem 1.2rem;
+    color: #d0d0d0;
+    text-align: left;
+    background: transparent;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.dropdown-menu a:hover, .dropdown-menu button:hover {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding-left: 1.5rem;
+}
+
+.linha-divisoria {
+    height: 1px;
+    background-color: #222;
+    margin: 0;
+}
+
+.btn-sair-conta { color: #ff5e5e !important; }
+.btn-sair-conta:hover { background-color: rgba(255, 94, 94, 0.1) !important; color: #ff7575 !important; }
+
+/* ================= PAINEL ================= */
+.painel-aluno {
+    background-color: #070707;
+    min-height: 100vh;
+    padding: 3.5rem 5%;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.painel-conteudo-central {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.boas-vindas {
+    margin-bottom: 3rem;
+}
+
+.boas-vindas h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.4rem;
+    letter-spacing: -1px;
+}
+
+.boas-vindas p {
+    color: #888;
+    font-size: 1.05rem;
+}
+
+/* Seções de Cursos (Empilhadas) */
+.secao-categoria-cursos {
+    margin-bottom: 3.5rem;
+}
+
+.titulo-secao-cursos {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.3px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 0.75rem;
+}
+
+.grid-cursos-aluno {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* ================= CARD EXPANSÍVEL (ALTURA REDUZIDA E COMPACTO) ================= */
+.curso-card-aluno {
+    position: relative;
+    /* Reduzido de 480px para 320px para não ficar gigante */
+    height: 320px;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 16px;
+    background: #171717;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease;
+}
+
+.curso-card-aluno:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.curso-card-imagem {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.curso-card-aluno:hover .curso-card-imagem {
+    transform: scale(1.03);
+}
+
+.curso-card-aluno::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 10%) 15%, rgba(0, 0, 0, 85%) 100%);
+    content: "";
+    z-index: 1;
+}
+/* Painel do Card Interativo (Subida Suave) */
+.curso-painel {
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 18px;
+    background: linear-gradient(0deg, rgba(17, 11, 11, 0.96) 60%, rgba(17, 11, 11, 0.4) 100%);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    transition: transform 0.42s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* Opcional: Se desejar o efeito deslizante nos cursos ativos, ajuste o transform */
+.curso-card-aluno:not(.card-estatico) .curso-painel {
+    transform: translateY(calc(100% - 95px));
+}
+
+.curso-card-aluno:not(.card-estatico):hover .curso-painel {
+    transform: translateY(0);
+}
+
+.curso-detalhes {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-top: 8px;
+    opacity: 0;
+    transition: opacity 0.24s ease 0.08s;
+}
+
+.curso-card-aluno:not(.card-estatico):hover .curso-detalhes {
+    opacity: 1;
+}
+/* Painel Deslizante */
+.curso-painel {
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    height: 85%;
+    flex-direction: column;
+    padding: 24px;
+    transform: translateY(calc(100% - 116px));
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(23, 23, 23, 0.97);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    transition: transform 0.42s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.curso-card-aluno:hover .curso-painel {
+    transform: translateY(0);
+}
+
+/* ================= CARDS ESTÁTICOS ("EM BREVE" SEM EFEITO DE SUBIR) ================= */
+.curso-card-aluno.card-estatico .curso-painel {
+    transform: translateY(0) !important;
+    background: rgba(15, 15, 15, 0.82) !important;
+}
+
+.curso-card-aluno.card-estatico .curso-detalhes {
+    opacity: 1 !important;
+}
+
+.curso-card-aluno.card-estatico:hover .curso-card-imagem {
+    transform: none !important;
+}
+
+.curso-cabecalho h2 {
+    color: #fff;
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    margin-bottom: 2px;
+}
+
+.curso-descricao {
+    margin-bottom: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.82rem;
+    line-height: 1.4;
+}
+
+.curso-compra {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 10px;
+    margin-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+/* ================= CARDS COMPACTOS ================= */
+.curso-card-aluno {
+    position: relative;
+    height: 320px; /* Reduzido de 480px para diminuir o tamanho dos cards */
+    width: 100%;
+    overflow: hidden;
+    border-radius: 16px;
+    background: #171717;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease;
+}
+
+.curso-card-aluno:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.curso-card-imagem {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.curso-card-aluno:not(.card-estatico):hover .curso-card-imagem {
+    transform: scale(1.03);
+}
+
+/* Painel com Efeito Hover Apenas para Cursos Ativos */
+.curso-painel {
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 18px;
+    background: linear-gradient(0deg, rgba(17, 11, 11, 0.96) 60%, rgba(17, 11, 11, 0.4) 100%);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    transition: transform 0.42s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.curso-card-aluno:not(.card-estatico) .curso-painel {
+    transform: translateY(calc(100% - 90px));
+}
+
+.curso-card-aluno:not(.card-estatico):hover .curso-painel {
+    transform: translateY(0);
+}
+
+.curso-detalhes {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-top: 8px;
+    opacity: 0;
+    transition: opacity 0.24s ease 0.08s;
+}
+
+.curso-card-aluno:not(.card-estatico):hover .curso-detalhes {
+    opacity: 1;
+}
+
+/* ================= CARDS ESTÁTICOS (CURSOS EM BREVE) ================= */
+.curso-card-aluno.card-estatico .curso-painel {
+    transform: translateY(0) !important;
+    background: rgba(15, 15, 15, 0.85) !important;
+}
+
+.curso-card-aluno.card-estatico .curso-detalhes {
+    opacity: 1 !important;
+}
+
+.curso-cabecalho {
+    flex: 0 0 auto;
+    position: relative;
+}
+
+.tag-status {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 4px 10px;
+    border-radius: 50px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.tag-bloqueado { background: rgba(0,0,0,0.6); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+.tag-degustacao { background: #27ae60; color: #fff; }
+.tag-completo { background: #27ae60; color: #fff; }
+.tag-breve { background: #222; color: #888; border: 1px solid #333; }
+
+.curso-cabecalho h2 {
+    color: #fff;
+    font-size: clamp(1.5rem, 2vw, 1.9rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+    margin-bottom: 4px;
+}
+
+.curso-detalhes {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+    flex-direction: column;
+    padding-top: 12px;
+    opacity: 0;
+    transition: opacity 0.24s ease 0.08s;
+}
+
+.curso-card-aluno:hover .curso-detalhes {
+    opacity: 1;
+}
+
+.curso-descricao {
+    margin-bottom: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.area-status-curso {
+    margin-bottom: 12px;
+}
+
+.texto-aviso-bloqueado {
+    font-size: 0.82rem;
+    color: #27ae60;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.barra-fundo {
+    width: 100%;
+    height: 6px;
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 0.4rem;
+}
+
+.barra-preenchida {
+    height: 100%;
+    background-color: #27ae60;
+    border-radius: 10px;
+}
+
+.texto-progresso {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #aaa;
+}
+
+/* Rodapé do Painel (Preço e Botão de Ação) */
+.curso-compra {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 14px;
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.curso-compra p {
+    display: grid;
+    gap: 1px;
+    min-width: max-content;
+}
+
+.curso-compra p span {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.curso-compra p strong {
+    color: #fff;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+}
+
+/* Botões */
+.btn-acao-custom {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-primario {
+    background: #ffffff;
+    color: #000000;
+}
+.btn-primario:hover { background: #dcdcdc; transform: translateY(-1px); }
+
+.btn-secundario {
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.btn-secundario:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+
+.btn-comprar {
+    background: #b33f30;
+    color: #ffffff;
+}
+.btn-comprar:hover {
+    background: #912e23;
+    transform: translateY(-1px);
+}
+
+.btn-detalhes {
+    background: rgba(255, 255, 255, 0.05);
+    color: #777;
+    cursor: not-allowed;
+    width: 100%;
+}

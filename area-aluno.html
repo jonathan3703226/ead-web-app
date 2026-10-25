@@ -1,83 +1,96 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-aluno-acesso="negado">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Área do Aluno - Nankim</title>
-    <link rel="stylesheet" href="./css/global.css">
-    <link rel="stylesheet" href="./css/area-aluno.css">
-    <link rel="stylesheet" href="./css/cookies.css">
-    <script src="./js/auth.js"></script>
+    
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Caveat:wght@500;600;700&family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/aluno.css">
+    <link rel="stylesheet" href="./css/checkout.css">
 </head>
 <body>
-    <div id="header-container"></div>
 
-    <div class="area-aluno-shell">
-        <main class="painel-aluno" inert>
-            <header class="boas-vindas">
-                <p class="painel-etiqueta">Sua jornada artística</p>
-                <h1>Seja bem-vindo(a), <span id="nome-aluno">Aluno</span></h1>
-                <p>Continue aprendendo no seu ritmo.</p>
-            </header>
-
-            <section class="meus-cursos" aria-labelledby="titulo-meus-cursos">
-                <div class="secao-cabecalho">
-                    <div>
-                        <p class="painel-etiqueta">Aprendizagem</p>
-                        <h2 id="titulo-meus-cursos">Meus Cursos</h2>
-                    </div>
-                    <a href="cursos.html">Explorar cursos</a>
+    <!-- ================= HEADER DO ALUNO LOGADO ================= -->
+    <header class="header-aluno">
+        <div class="header-aluno-container">
+            
+            <!-- Logo Nankim Animada -->
+            <a href="area-aluno.html" class="logo-aluno-wrapper">
+                <div class="logo-icone-wrapper">
+                    <img src="./assets/icons/logo.svg" alt="Nankim" class="logo-img-simbolo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'><circle cx=\'20\' cy=\'20\' r=\'18\' fill=\'%23b33f30\'/><text x=\'50%\' y=\'58%\' text-anchor=\'middle\' fill=\'white\' font-size=\'20\' font-family=\'Georgia\'>N</text></svg>'">
                 </div>
-
-                <div class="lista-meus-cursos" id="lista-meus-cursos"></div>
-                <div class="sem-cursos" id="sem-cursos" hidden>
-                    <h3>Você ainda não tem cursos matriculados</h3>
-                    <p>Escolha um curso para começar sua jornada artística. Depois da compra, as aulas e o progresso aparecerão aqui.</p>
-                    <a class="botao-comprar-curso" href="cursos.html">Conhecer cursos</a>
+                <div class="logo-texto-wrapper">
+                    <span class="logo-fixo">Nankim</span>
+                    <span class="logo-expansivel">Art School</span>
                 </div>
-            </section>
-
-            <section class="curso-ativo" aria-labelledby="titulo-aula" hidden>
-                <div class="aula-conteudo">
-                    <div class="secao-cabecalho">
-                        <div>
-                            <p class="painel-etiqueta">Continue de onde parou</p>
-                            <h2 id="titulo-aula">Sua última aula</h2>
-                        </div>
-                    </div>
-                    <div class="video-destaque" id="aula-atual">
-                        <span class="icone-play" aria-hidden="true">▶</span>
-                        <p id="nome-aula-atual">Módulo 1: A base de tudo</p>
-                        <small>O conteúdo de vídeo será disponibilizado nesta área.</small>
-                        <button class="marcar-concluida" id="marcar-concluida" type="button">Marcar aula como concluída</button>
-                    </div>
+            </a>
+            
+            <!-- Menu Dropdown do Usuário -->
+            <div class="perfil-dropdown">
+                <button class="btn-perfil" id="btn-menu-perfil" aria-expanded="false">
+                    <div class="avatar-aluno" id="avatar-iniciais">AL</div>
+                    <span id="nome-aluno-topo">Carregando...</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                
+                <div class="dropdown-menu" id="dropdown-perfil">
+                    <a href="area-aluno.html">Meus Cursos</a>
+                    <a href="#">Meu Perfil e Certificados</a>
+                    <div class="linha-divisoria"></div>
+                    <button type="button" id="btn-sair" class="btn-sair-conta">Sair da conta</button>
                 </div>
-
-                <aside class="trilha-progresso" aria-labelledby="titulo-trilha">
-                    <h2 id="titulo-trilha">Conteúdo do curso</h2>
-                    <ol class="lista-aulas" id="lista-aulas"></ol>
-                </aside>
-            </section>
-        </main>
-
-        <section class="acesso-restrito" aria-labelledby="titulo-acesso-restrito">
-            <div class="card-acesso-restrito">
-                <span class="icone-acesso-restrito" aria-hidden="true">✦</span>
-                <p class="painel-etiqueta">Área do Aluno</p>
-                <h1 id="titulo-acesso-restrito">Acesso Restrito</h1>
-                <p>Faça login para ver seus cursos, acompanhar seu progresso e continuar de onde parou.</p>
-                <button class="botao-login-restrito" type="button" data-modal="login">Faça o Login</button>
-                <p class="cadastro-restrito">Ainda não tem conta?
-                    <button type="button" data-modal="login" data-modal-mode="cadastro">ou Cadastre-se</button>
-                </p>
             </div>
-        </section>
+        </div>
+    </header>
+
+    <!-- ================= PAINEL DE CURSOS ================= -->
+    <main class="painel-aluno">
+        <div class="painel-conteudo-central">
+            
+            <section class="boas-vindas">
+                <h1 id="texto-boas-vindas">Olá!</h1>
+                <p>Seja bem-vindo(a) à sua central de estudos.</p>
+            </section>
+
+            <!-- SEÇÃO 1: CURSOS EM ANDAMENTO / MATRICULADOS -->
+            <section class="secao-categoria-cursos">
+                <h2 class="titulo-secao-cursos">Cursos em Andamento</h2>
+                <div class="grid-cursos-aluno" id="container-cursos-matriculados">
+                    <!-- Preenchido dinamicamente via JS -->
+                </div>
+            </section>
+
+            <!-- SEÇÃO 2: CATÁLOGO DE CURSOS DISPONÍVEIS -->
+            <section class="secao-categoria-cursos">
+                <h2 class="titulo-secao-cursos">Catálogo de Cursos</h2>
+                <div class="grid-cursos-aluno" id="container-cursos-catalogo">
+                    <!-- Preenchido dinamicamente via JS -->
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Modal de Checkout Direto (Sem re-digitar e-mail para usuários logados) -->
+    <div id="modal-checkout" class="modal" style="display:none;">
+        <div class="modal-content modal-checkout" role="dialog" aria-modal="true" aria-labelledby="checkout-titulo">
+            <button class="close-btn" type="button" data-close="checkout" aria-label="Fechar checkout">&times;</button>
+            <h2 id="checkout-titulo">Assinar Fundamentos do Desenho</h2>
+            <p class="subtitulo-modal" id="checkout-subtitulo">Preencha os dados abaixo.</p>
+            <div id="checkout-stage"></div>
+        </div>
     </div>
 
-    <div id="footer-container"></div>
+    <!-- Scripts -->
     <script src="./js/global.js"></script>
-    <script src="./js/login.js"></script>
-    <script src="./js/cookies.js"></script>
+    <script src="./js/checkout.js"></script>
     <script src="./js/area-aluno.js"></script>
 </body>
 </html>
