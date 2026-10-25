@@ -1,206 +1,519 @@
 .pagina-quem-somos {
-    --fundo-washi: #24394d;
-    --papel-washi: #e8ddc9;
-    --tinta-sumi: #1d2d3c;
-    --texto-tinta: #302c27;
-    --texto-suave: #4c4943;
-    --vermilion: #b33f30;
-    --azul-indigo: #304b68;
-    min-height: 70vh;
-    padding: 64px 6% 96px;
-    background-color: var(--fundo-washi);
-    background-image: linear-gradient(rgba(13, 24, 38, 0.58), rgba(13, 24, 38, 0.68)), url("../imagens/teste.jpg");
+    --tinta: #111111;
+    --vermelho: #b33f30;
+    --papel: #f7f7f5;
+    --texto: #252525;
+    --texto-suave: #666666;
+    color: var(--texto);
+    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+    overflow: hidden;
+}
+
+.pagina-quem-somos *,
+.pagina-quem-somos *::before,
+.pagina-quem-somos *::after {
+    box-sizing: border-box;
+}
+
+.hero-quem-somos {
+    position: relative;
+    display: flex;
+    min-height: min(760px, 88vh);
+    align-items: center;
+    padding: clamp(100px, 13vw, 170px) max(7%, calc((100% - 1200px) / 2));
+    color: #fff;
+    background-color: #111;
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.94) 0%, rgba(0, 0, 0, 0.72) 48%, rgba(0, 0, 0, 0.28) 100%), url("../imagens/sakura.jpg");
     background-position: center, center 42%;
     background-size: cover;
-    color: var(--texto-tinta);
 }
 
-.pagina-quem-somos,
-.pagina-quem-somos * {
-    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+.hero-conteudo {
+    position: relative;
+    z-index: 1;
+    width: min(760px, 100%);
 }
 
-.historia-nankim {
-    width: min(900px, 100%);
-    margin: 0 auto 76px;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
-    padding: clamp(28px, 4vw, 48px);
-    border: 1px solid rgba(48, 43, 35, 0.28);
-    border-radius: 10px;
-    background-color: var(--papel-washi);
-    background-image: radial-gradient(rgba(48, 43, 35, 0.11) 0.8px, transparent 0.8px), linear-gradient(112deg, rgba(255, 255, 255, 0.38), transparent 60%);
-    background-size: 8px 8px, 100% 100%;
-    box-shadow: 0 22px 58px rgba(6, 18, 29, 0.32);
+.etiqueta-secao {
+    display: inline-block;
+    margin-bottom: 16px;
+    color: var(--vermelho);
+    font-size: 0.73rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    line-height: 1.5;
+    text-transform: uppercase;
 }
 
-.cabecalho-historia {
-    max-width: 780px;
+.hero-quem-somos h1 {
+    max-width: 760px;
+    margin: 0;
+    color: #fff;
+    font-family: 'Noto Serif JP', Georgia, serif;
+    font-size: clamp(2.5rem, 6vw, 5.4rem);
+    font-weight: 700;
+    letter-spacing: -0.055em;
+    line-height: 1.08;
+}
+
+.hero-quem-somos h1 span {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.texto-hero {
+    min-height: 2.2em;
+    margin: 30px 0 28px;
+    color: #f0f0f0;
+    font-size: clamp(1rem, 2vw, 1.35rem);
+    line-height: 1.65;
+}
+
+.prefixo-digitacao {
+    margin-right: 8px;
+    color: var(--vermelho);
+    font-weight: 800;
+}
+
+.cursor-typing {
+    color: var(--vermelho);
+    animation: piscar-cursor 0.8s steps(2, start) infinite;
+}
+
+@keyframes piscar-cursor {
+    to { visibility: hidden; }
+}
+
+.botao-hero {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    gap: 14px;
+    padding: 0 20px;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 3px;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.botao-hero:hover,
+.botao-hero:focus-visible {
+    border-color: var(--vermelho);
+    background: var(--vermelho);
+}
+
+.hero-legenda {
+    position: absolute;
+    right: max(7%, calc((100% - 1200px) / 2));
+    bottom: 28px;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.container-quem-somos {
+    width: min(1160px, 100%);
     margin: 0 auto;
-    padding-bottom: 18px;
+    padding-right: 28px;
+    padding-left: 28px;
+}
+
+.secao-clara {
+    background: var(--papel);
+}
+
+.secao-biografia,
+.secao-origem {
+    padding: clamp(72px, 9vw, 120px) 0;
+}
+
+.cabecalho-secao {
+    max-width: 760px;
+    margin: 0 auto 54px;
     text-align: center;
 }
 
-.cabecalho-historia h1 {
-    margin: 0 0 12px;
-    color: var(--tinta-sumi);
+.cabecalho-secao h2,
+.texto-origem h2 {
+    margin: 0 0 14px;
+    color: var(--tinta);
     font-family: 'Noto Serif JP', Georgia, serif;
-    font-size: clamp(2.35rem, 4vw, 3.15rem);
+    font-size: clamp(2rem, 4vw, 3.4rem);
     font-weight: 700;
+    letter-spacing: -0.045em;
     line-height: 1.15;
+}
+
+.cabecalho-secao > p {
+    margin: 0;
+    color: var(--texto-suave);
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.grade-biografia {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: minmax(290px, auto) minmax(290px, auto);
+    gap: 24px;
+    align-items: stretch;
+    grid-auto-flow: row;
+}
+
+.cartao-biografia {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(28px, 4vw, 54px);
+    background: #fff;
+    border: 1px solid #e9e9e7;
+}
+
+.numero-editorial {
+    margin-bottom: 20px;
+    color: var(--vermelho);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.cartao-biografia h3,
+.texto-formacao h3 {
+    margin: 0 0 14px;
+    font-size: clamp(1.3rem, 2vw, 1.7rem);
+    font-weight: 700;
     letter-spacing: -0.035em;
-}
-
-.cabecalho-historia > p:last-child {
-    margin: 0;
-    color: var(--texto-suave);
-    font-size: 1.05rem;
-    line-height: 1.7;
-}
-
-.bloco-historia {
-    padding: clamp(22px, 2.6vw, 34px);
-    border: 1px solid rgba(32, 45, 58, 0.2);
-    border-radius: 8px;
-    background: #f8f2e7;
-}
-
-.bloco-historia h2 {
-    margin: 0 0 16px;
-    color: var(--tinta-sumi);
-    font-family: 'Noto Serif JP', Georgia, serif;
-    font-size: clamp(1.3rem, 1.8vw, 1.55rem);
     line-height: 1.3;
-    letter-spacing: -0.02em;
 }
 
-.bloco-historia p {
-    max-width: 72ch;
+.cartao-biografia p,
+.texto-formacao p,
+.texto-origem p {
     margin: 0;
     color: var(--texto-suave);
-    font-size: 1rem;
-    line-height: 1.75;
-    text-wrap: pretty;
+    font-size: 0.96rem;
+    line-height: 1.85;
 }
 
-.bloco-historia p + p {
-    margin-top: 1.1rem;
-}
-
-.bloco-historia ul {
-    display: grid;
-    gap: 9px;
+.imagem-biografia {
+    position: relative;
+    min-height: 290px;
     margin: 0;
-    padding-left: 1.35rem;
-    color: var(--texto-suave);
-    font-size: 1rem;
+    overflow: hidden;
+    background: #dededb;
+}
+
+.imagem-biografia img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+    object-fit: cover;
+    transition: transform 0.65s ease;
+}
+
+.imagem-biografia:hover img {
+    transform: scale(1.035);
+}
+
+.imagem-biografia figcaption {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 30px 18px 16px;
+    color: #fff;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.78));
+    font-size: 0.76rem;
+    line-height: 1.5;
+}
+
+.cartao-biografia-escuro {
+    color: #fff;
+    background: #151515;
+    border-color: #252525;
+}
+
+.cartao-biografia-escuro h3 {
+    color: #fff;
+}
+
+.cartao-biografia-escuro p {
+    color: #c5c5c5;
+}
+
+.cartao-descoberta {
+    grid-column: 1 / -1;
+    align-items: center;
+    text-align: center;
+}
+
+.secao-formacao {
+    padding: clamp(76px, 9vw, 120px) 0;
+    color: #fff;
+    background: #111;
+}
+
+.cabecalho-secao-escuro h2 {
+    color: #fff;
+}
+
+.cabecalho-secao-escuro > p {
+    color: #bcbcbc;
+}
+
+.texto-origem {
+    width: 100%;
+}
+
+.texto-origem h2 {
+    margin-bottom: 22px;
+}
+
+.texto-origem p + p {
+    margin-top: 14px;
+}
+
+.texto-origem blockquote {
+    margin: 28px 0 0;
+    padding-left: 18px;
+    border-left: 3px solid var(--vermelho);
+    color: #222;
+    font-family: 'Noto Serif JP', Georgia, serif;
+    font-size: 1.08rem;
+    font-style: italic;
     line-height: 1.7;
 }
 
-.origem-ideia {
-    border-left: 5px solid var(--vermilion);
-}
-
-.sobre-thiago {
-    padding-left: clamp(14px, 2vw, 22px);
-}
-
-.sobre-thiago h2 {
-    display: inline-block;
-    padding-top: 10px;
-    border-top: 4px solid var(--azul-indigo);
-}
-
-.sobre-thiago-layout {
+.galeria-formacao {
     display: grid;
-    grid-template-columns: 182px minmax(0, 1fr);
-    align-items: start;
-    gap: 18px;
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+    gap: clamp(28px, 5vw, 64px);
+    align-items: center;
 }
 
-.foto-thiago {
-    display: grid;
-    width: 182px;
-    aspect-ratio: 1;
-    place-items: center;
+.visual-formacao {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.imagem-formacao {
+    position: relative;
+    height: clamp(280px, 38vw, 470px);
     margin: 0;
-    border: 1px solid rgba(48, 43, 35, 0.2);
-    border-radius: 8px;
-    background: var(--azul-indigo);
-    box-shadow: 0 12px 30px rgba(6, 18, 29, 0.2);
+    overflow: hidden;
+    border-radius: 18px;
+    background: #1c1c1c;
 }
 
-.foto-thiago img {
+.imagem-formacao img {
     display: block;
-    width: 150px;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: #d7d0c2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.25s ease, transform 0.5s ease;
+}
+
+.imagem-formacao:hover img {
+    transform: scale(1.025);
+}
+
+.imagem-formacao figcaption {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 38px 18px 16px;
+    color: #fff;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.76));
+    font-size: 0.76rem;
+}
+
+.miniaturas-formacao {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.miniatura-formacao {
+    aspect-ratio: 4 / 3;
+    padding: 0;
+    overflow: hidden;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: #1c1c1c;
+    cursor: pointer;
+    opacity: 0.62;
+    transition: opacity 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.miniatura-formacao:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.miniatura-formacao.ativo {
+    border-color: var(--vermelho);
+    opacity: 1;
+}
+
+.miniatura-formacao img {
+    display: block;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
 
-@media (min-width: 1280px) {
-    .sobre-thiago-layout {
-        width: calc(100% + 230px);
-        margin-left: -230px;
-        grid-template-columns: 182px 48px minmax(0, 1fr);
-    }
-
-    .sobre-thiago {
-        grid-column: 3;
-    }
+.tag-formacao {
+    display: inline-flex;
+    min-height: 26px;
+    align-items: center;
+    margin-bottom: 24px;
+    padding: 4px 10px;
+    border: 1px solid rgba(219, 102, 83, 0.4);
+    border-radius: 30px;
+    color: #ef8a78;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
 }
 
-.especializacoes-thiago {
-    border-left: 5px solid var(--vermilion);
+.texto-formacao {
+    padding: clamp(24px, 4vw, 44px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px;
+    background: linear-gradient(145deg, #202020, #101010 75%);
 }
 
-.graduacoes-thiago {
-    border-left: 5px solid var(--azul-indigo);
+.texto-formacao h3 {
+    margin: 0 0 8px;
+    color: #fff;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    letter-spacing: -0.045em;
+    line-height: 1.2;
 }
 
-@media (max-width: 768px) {
-    .pagina-quem-somos {
-        padding: 48px 6% 72px;
-    }
-
-    .historia-nankim {
-        margin-bottom: 56px;
-        gap: 18px;
-        padding: 32px clamp(18px, 5vw, 32px);
-    }
-
-    .cabecalho-historia h1 {
-        font-size: clamp(2rem, 8vw, 2.6rem);
-    }
-
-    .bloco-historia h2 {
-        font-size: 1.3rem;
-    }
-
-    .bloco-historia {
-        padding: 24px 22px;
-    }
-
-    .sobre-thiago {
-        padding-left: 16px;
-    }
-
-    .bloco-historia p {
-        font-size: 1rem;
-        line-height: 1.75;
-    }
-
+.texto-formacao h4 {
+    margin: 0 0 20px;
+    color: #ef8a78;
+    font-size: 1.05rem;
+    font-weight: 600;
 }
 
-@media (max-width: 600px) {
-    .sobre-thiago-layout {
+.texto-formacao p {
+    min-height: 3.5em;
+    margin: 0;
+    color: #bcbcbc;
+    font-size: 0.96rem;
+    line-height: 1.7;
+}
+
+.revelar-scroll {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.revelar-scroll.visivel {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+    .galeria-formacao {
         grid-template-columns: 1fr;
-        justify-items: center;
     }
 
-    .foto-thiago {
-        padding-top: 0;
+    .imagem-formacao {
+        height: clamp(300px, 55vw, 480px);
+    }
+
+    .texto-formacao {
+        min-height: 250px;
+    }
+}
+
+@media (max-width: 640px) {
+    .hero-quem-somos {
+        min-height: 680px;
+        min-height: 82svh;
+        padding: 112px 7% 92px;
+        background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5)), url("../imagens/sakura.jpg");
+        background-position: center, center;
+    }
+
+    .hero-quem-somos h1 {
+        font-size: clamp(2.45rem, 12vw, 4.2rem);
+    }
+
+    .hero-legenda {
+        right: 7%;
+        bottom: 20px;
+        left: 7%;
+        font-size: 0.64rem;
+    }
+
+    .container-quem-somos {
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+
+    .cabecalho-secao {
+        margin-bottom: 36px;
+    }
+
+    .grade-biografia {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 16px;
+    }
+
+    .cartao-biografia {
+        min-height: 260px;
+    }
+
+    .imagem-biografia {
+        min-height: 280px;
+    }
+
+    .galeria-formacao {
+        gap: 18px;
+    }
+
+    .imagem-formacao {
+        height: 300px;
+    }
+
+    .miniaturas-formacao {
+        gap: 7px;
+    }
+
+    .texto-formacao {
+        min-height: 0;
+        padding: 26px 22px;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pagina-quem-somos *,
+    .pagina-quem-somos *::before,
+    .pagina-quem-somos *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .revelar-scroll {
+        opacity: 1;
+        transform: none;
     }
 }

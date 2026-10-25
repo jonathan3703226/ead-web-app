@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nankim Escola de Arte - Cursos</title>
+    <meta name="description" content="Conheça os cursos de desenho e ilustração da Nankim Escola de Arte.">
+    <title>Cursos | Nankim Escola de Arte</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/global.css">
     <link rel="stylesheet" href="./css/cursos.css">
     <link rel="stylesheet" href="./css/checkout.css">
@@ -15,88 +16,87 @@
 </head>
 
 <body>
-    <!-- O global.js injeta o menu dinamicamente aqui -->
+    <!-- O global.js injeta o cabeçalho e o rodapé compartilhados do site. -->
     <div id="header-container"></div>
 
-    <main class="pagina-curso">
-        <section class="hero-curso" aria-labelledby="titulo-curso">
-            <div class="video-curso video-em-breve" role="img" aria-label="Vídeo de apresentação do curso em breve">
-                <img src="./imagens/arte%201.jpg" alt="">
-                <span>Vídeo de apresentação em breve</span>
-            </div>
-
-            <div class="resumo-curso">
-                <p class="etiqueta-curso">Curso de desenho</p>
-                <h1 id="titulo-curso">Fundamentos do Desenho</h1>
-                <p class="descricao-curso">O ponto de partida para qualquer artista. Domine formas, perspectiva e luz com uma trilha prática e progressiva.</p>
-
-                <section class="card-valor" aria-labelledby="titulo-valor">
-                    <h2 id="titulo-valor">Invista na sua jornada</h2>
-                    <div class="opcao-valor">
-                        <p><strong>R$ 49,90</strong><span>à vista</span></p>
-                        <button class="botao-assinar" type="button" data-modal="checkout">Assinar</button>
-                    </div>
-                    <div class="opcao-valor">
-                        <p><strong>12x de R$ 4,99</strong></p>
-                        <button class="botao-assinar" type="button" data-modal="checkout">Assinar</button>
-                    </div>
-                </section>
-            </div>
-        </section>
-
-        <section class="ementa-curso" aria-labelledby="titulo-ementa">
-            <header class="cabecalho-ementa">
-                <p class="etiqueta-curso">Conteúdo do curso</p>
-                <h2 id="titulo-ementa">Ementa do Curso</h2>
-                <p>Fundamentos sólidos, da primeira linha ao projeto final.</p>
+    <main class="pagina-cursos">
+        <section class="catalogo-cursos" aria-labelledby="titulo-catalogo">
+            <header class="catalogo-cabecalho">
+                <p class="catalogo-eyebrow"><span aria-hidden="true">//</span> Nankim Escola de Arte</p>
+                <h1 id="titulo-catalogo">Desenhe seu <span>próximo passo.</span></h1>
+                <p class="catalogo-introducao">Aprenda com método, pratique com intenção e transforme ideias em arte.</p>
             </header>
-            <div class="grid-modulos">
-                <article class="card-modulo">
-                    <span class="numero-modulo">01</span>
-                    <div><h3>A base de tudo</h3><p>Linhas e formas primitivas</p></div>
-                </article>
-                <article class="card-modulo">
-                    <span class="numero-modulo">02</span>
-                    <div><h3>Desconstruindo objetos</h3><p>Observe e construa objetos complexos</p></div>
-                </article>
-                <article class="card-modulo">
-                    <span class="numero-modulo">03</span>
-                    <div><h3>Perspectiva</h3><p>Um, dois e três pontos de fuga</p></div>
-                </article>
-                <article class="card-modulo">
-                    <span class="numero-modulo">04</span>
-                    <div><h3>Teoria da Luz e Sombra</h3><p>Volume, iluminação e contraste</p></div>
-                </article>
-                <article class="card-modulo">
-                    <span class="numero-modulo">05</span>
-                    <div><h3>Renderização e Texturas</h3><p>Primeiros recursos de acabamento</p></div>
-                </article>
-                <article class="card-modulo modulo-final">
-                    <span class="numero-modulo">✦</span>
-                    <div><h3>Projeto Final</h3><p>Composição de cenário e objetos</p></div>
-                </article>
-            </div>
-        </section>
 
-        <section class="trilhas-futuras" aria-labelledby="titulo-trilhas-futuras">
-            <header class="cabecalho-trilhas">
-                <p class="etiqueta-curso">Continue aprendendo</p>
-                <h2 id="titulo-trilhas-futuras">Próximas Trilhas</h2>
-            </header>
-            <div class="grid-trilhas-futuras">
-                <article class="card-trilha-bloqueada">
-                    <span class="selo-bloqueado">Em breve</span>
-                    <h3>Intermediário: Anatomia Humana</h3>
+            <div class="cursos-grid">
+                <article class="curso-card">
+                    <img src="./imagens/Fundamentos%20do%20Desenho.jpg" alt="" class="curso-card-imagem">
+                    <div class="curso-painel">
+                        <header class="curso-cabecalho">
+                            <span class="curso-nivel">Básico</span>
+                            <h2>Fundamentos do Desenho</h2>
+                        </header>
+
+                        <div class="curso-detalhes">
+                            <p class="curso-descricao">O ponto de partida para qualquer artista. Domine formas, perspectiva e luz com uma trilha prática e progressiva.</p>
+
+                            <ul class="curso-metadados" aria-label="Informações do curso">
+                                <li>
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                                    26 horas
+                                </li>
+                                <li>
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"></path></svg>
+                                    Aulas práticas
+                                </li>
+                            </ul>
+
+                            <ul class="curso-tags" aria-label="Temas do curso">
+                                <li>Arte Tradicional</li>
+                                <li>Fundamentos</li>
+                            </ul>
+
+                            <footer class="curso-compra">
+                                <p><span>Investimento único</span><strong>R$ 49,90</strong></p>
+                                <button class="botao-assinar" type="button" data-modal="checkout">Assinar / Comprar</button>
+                            </footer>
+                        </div>
+                    </div>
                 </article>
-                <article class="card-trilha-bloqueada">
-                    <span class="selo-bloqueado">Em breve</span>
-                    <h3>Avançado:<br>Ilustração Digital</h3>
+
+                <article class="curso-card">
+                    <img src="./imagens/Intermedi%C3%A1rio%20Anatomia%20Humana.jpg" alt="" class="curso-card-imagem">
+                    <div class="curso-painel">
+                        <header class="curso-cabecalho">
+                            <span class="curso-nivel">Intermediário</span>
+                            <h2>Anatomia Humana</h2>
+                        </header>
+
+                        <div class="curso-detalhes curso-detalhes-breve">
+                            <p class="curso-descricao">Estude proporções, musculatura e movimento para desenhar figuras humanas com mais confiança.</p>
+                            <span class="curso-aviso">Em Breve no catálogo</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="curso-card">
+                    <img src="./imagens/Avan%C3%A7ado%20Ilustra%C3%A7%C3%A3o%20Digital.jpg" alt="" class="curso-card-imagem">
+                    <div class="curso-painel">
+                        <header class="curso-cabecalho">
+                            <span class="curso-nivel">Avançado</span>
+                            <h2>Ilustração Digital</h2>
+                        </header>
+
+                        <div class="curso-detalhes curso-detalhes-breve">
+                            <p class="curso-descricao">Desenvolva seu processo digital, da composição e cor até a finalização de uma ilustração autoral.</p>
+                            <span class="curso-aviso">Em Breve no catálogo</span>
+                        </div>
+                    </div>
                 </article>
             </div>
         </section>
     </main>
 
-    <!-- O global.js injeta o rodapé dinamicamente aqui -->
+    <!-- O global.js injeta o rodapé compartilhado do site. -->
     <div id="footer-container"></div>
 
     <div id="modal-checkout" class="modal">
@@ -108,11 +108,9 @@
         </div>
     </div>
 
-    <!-- Importação Modular de Scripts -->
     <script src="./js/global.js"></script>
     <script src="./js/login.js"></script>
     <script src="./js/termos.js"></script>
-    <!-- O script de cookies e checkout devem ser os últimos -->
     <script src="./js/cookies.js"></script>
     <script src="./js/checkout.js"></script>
 </body>
