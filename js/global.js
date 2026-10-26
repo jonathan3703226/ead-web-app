@@ -109,7 +109,7 @@ if (header) {
                                     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.501 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.377.55 9.377.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                                 </a>
                             </div>
-                            <p class="rodape-desc-escola">A Nankim é uma escola de artes que tem como principal objetivo contribuir com o desenvolvimento artístico, cultural e intelectual de todos aqueles que se reconhecem através da arte.</p>
+                            <p class="rodape-desc-escola">A Nankim é a escola de artes onde o seu sonho ganha traço. Desenvolvemos um ecossistema de ensino organizado para guiar você do primeiro esboço ao nível profissional.</p>
                         </div>
                     </div>
                     
