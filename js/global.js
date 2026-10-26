@@ -223,3 +223,54 @@ document.addEventListener('click', (event) => {
         }
     }
 });
+function injetarHeaderAluno() {
+    const containerHeader = document.getElementById('header-aluno-container');
+    if (!containerHeader) return;
+
+    // Logo alterada de <a> para <div> (elemento apenas visual)
+    containerHeader.innerHTML = `
+        <header class="header-aluno">
+            <div class="header-aluno-container">
+                <div class="logo-aluno-wrapper">
+                    <div class="logo-icone-wrapper">
+                        <img src="./assets/icons/logo.svg" alt="Nankim" class="logo-img-simbolo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 40 40\\'><circle cx=\\'20\\' cy=\\'20\\' r=\\'18\\' fill=\\'%23b33f30\\'/><text x=\\'50%\\' y=\\'58%\\' text-anchor=\'middle\\' fill=\'white\\' font-size=\'20\\' font-family=\'Georgia\\'>N</text></svg>'">
+                    </div>
+                    <div class="logo-texto-wrapper">
+                        <span class="logo-fixo">Nankim</span>
+                        <span class="logo-expansivel">Art School</span>
+                    </div>
+                </div>
+                
+                <div class="perfil-dropdown" style="position: relative;">
+                    <button class="btn-perfil" id="btn-menu-perfil" type="button" aria-expanded="false">
+                        <div class="avatar-aluno" id="avatar-iniciais">AL</div>
+                        <span id="nome-aluno-topo">Carregando...</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left: 4px;"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    
+                    <div class="dropdown-menu" id="dropdown-perfil" style="display: none;">
+                        <a href="area-aluno.html">Cursos</a>
+                        <a href="meu-perfil.html">Meu Perfil</a>
+                        <div class="linha-divisoria"></div>
+                        <button type="button" id="btn-sair" class="btn-sair-conta">Sair da conta</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+    `;
+
+    // Carrega nome e avatar da sessão
+    const sessaoData = sessionStorage.getItem('nankim_sessao');
+    if (sessaoData) {
+        try {
+            const usuarioSessao = JSON.parse(sessaoData);
+            const primeiroNome = usuarioSessao.nome ? usuarioSessao.nome.split(' ')[0] : 'Aluno';
+            
+            const elNome = document.getElementById('nome-aluno-topo');
+            const elAvatar = document.getElementById('avatar-iniciais');
+            
+            if (elNome) elNome.textContent = primeiroNome;
+            if (elAvatar) elAvatar.textContent = primeiroNome.charAt(0).toUpperCase();
+        } catch(e) {}
+    }
+}

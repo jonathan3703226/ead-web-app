@@ -35,8 +35,8 @@ function injetarModaisAutenticacao() {
                         </div>
 
                         <!-- Dica para acesso de Professor (Oculto por padrão) -->
-                        <div id="dica-acesso-professor" style="display: none; font-size: 0.8rem; color: #888888; background: #f5f5f5; padding: 0.6rem 0.8rem; border-radius: 8px; margin-bottom: 1rem;">
-                            💡 Acceso de teste: <strong>professor@nankim.com</strong> / senha: <strong>admin123</strong>
+                        <div id="dica-acesso-professor" style="display: none; font-size: 0.8rem; color: #888888; background: #1a1a1a; border: 1px solid #333; padding: 0.6rem 0.8rem; border-radius: 8px; margin-bottom: 1rem;">
+                            💡 Acesso de teste: <strong>professor@nankim.com</strong> / senha: <strong>admin123</strong>
                         </div>
 
                         <div class="login-acoes-auxiliares" id="container-esqueci-senha">
@@ -207,7 +207,7 @@ function configurarAutenticacao() {
         form.insertBefore(mensagem, form.firstChild);
     }
 
-    // 1. OUVINTE GLOBAL DE CLIQUES (Tabs Aluno/Professor, Esqueci a senha, etc.)
+    // 1. OUVINTE GLOBAL DE CLIQUES
     document.addEventListener('click', (e) => {
         const alvo = e.target instanceof Element ? e.target : null;
         if (!alvo) return;
@@ -497,7 +497,7 @@ function configurarAutenticacao() {
         });
     }
 
-    // 4. SUBMISSÃO DO LOGIN (Diferencia Aluno vs Professor)
+    // 4. SUBMISSÃO DO LOGIN
     if (formLogin) {
         formLogin.addEventListener('submit', (event) => {
             event.preventDefault();
@@ -516,10 +516,12 @@ function configurarAutenticacao() {
             if (tipoAcesso === 'professor') {
                 if (email === 'professor@nankim.com' && senha === 'admin123') {
                     try {
+                        // Guardamos 'tipo' e 'perfil' para total compatibilidade com area-professor.html
                         sessionStorage.setItem('nankim_sessao', JSON.stringify({
                             logado: true,
+                            tipo: 'professor',
                             perfil: 'professor',
-                            nome: 'Professor Nankim',
+                            nome: 'Thiago Nankim',
                             email: email
                         }));
                     } catch (error) {
@@ -544,6 +546,7 @@ function configurarAutenticacao() {
             try {
                 sessionStorage.setItem('nankim_sessao', JSON.stringify({
                     logado: true,
+                    tipo: 'aluno',
                     perfil: 'aluno',
                     nome: usuario.nome || email.split('@')[0],
                     email: usuario.email
