@@ -25,14 +25,64 @@ function fecharMenuConta() {
     if (opcoes) opcoes.hidden = true;
 }
 
-function abrirModal(modalId) {
-    const modal = document.getElementById(`modal-${modalId}`);
-    if (modal) modal.style.display = 'flex';
+const termosComponent = `
+<div id="modal-termos" class="modal" role="dialog" aria-modal="true" aria-labelledby="termos-titulo" aria-hidden="true">
+    <article class="modal-content modal-largo termos-card">
+        <button class="close-btn" type="button" data-close="termos" aria-label="Fechar termos">&times;</button>
+        <header class="termos-cabecalho">
+            <p class="termos-eyebrow">Nankim Escola de Arte</p>
+            <h2 id="termos-titulo">Termos de Uso e Política de Privacidade</h2>
+        </header>
+        <div class="conteudo-scroll" tabindex="0" aria-label="Conteúdo dos termos">
+            <section><h3>1. Aceitação dos Termos</h3><p>Ao acessar ou utilizar os serviços da Nankim Escola de Arte, você declara ter lido, compreendido e concordado com estes Termos de Uso e com esta política. Caso não concorde, não utilize a plataforma.</p></section>
+            <section><h3>2. Cadastro e Responsabilidades</h3><p>Você se compromete a fornecer informações verdadeiras, manter seus dados atualizados e proteger a confidencialidade da conta. Como este protótipo utiliza armazenamento local, não utilize dados reais sensíveis ou senhas reais.</p></section>
+            <section><h3>3. Propriedade Intelectual</h3><p>Vídeos, apostilas, imagens, metodologias e demais conteúdos são protegidos por direitos autorais e pertencem à Nankim ou a seus titulares. É proibida a cópia, redistribuição, gravação ou comercialização não autorizada.</p><p>As criações enviadas pelo aluno permanecem de sua autoria. Sua divulgação exige autorização prévia do titular.</p></section>
+            <section><h3>4. Dados pessoais tratados</h3><p>Em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018 – LGPD), podemos tratar dados de identificação e contato, como nome e e-mail, além de informações fornecidas em formulários, preferências de conta e registros necessários ao funcionamento.</p></section>
+            <section><h3>5. Finalidades, bases legais e compartilhamento</h3><p>Os dados podem ser utilizados para criar e administrar contas, prestar suporte, responder solicitações, demonstrar funcionalidades, cumprir obrigações legais, prevenir fraudes e melhorar a experiência. O compartilhamento ocorre somente com prestadores necessários, autoridades quando houver obrigação legal ou consentimento específico.</p></section>
+            <section><h3>6. Cookies e preferências</h3><p>Cookies necessários podem ser essenciais ao funcionamento. Recursos opcionais dependem das preferências escolhidas pelo usuário. As opções podem ser alteradas pelo botão de Preferências de Cookies disponível no rodapé.</p></section>
+            <section><h3>7. Armazenamento e segurança</h3><p>Neste protótipo, informações de demonstração são armazenadas localmente no navegador. A aplicação não oferece os controles de segurança de um ambiente de produção.</p></section>
+            <section><h3>8. Direitos do titular</h3><p>Nos termos da LGPD, você pode solicitar confirmação e acesso aos dados, correção, anonimização, portabilidade, eliminação, informação sobre compartilhamentos, revogação do consentimento e revisão de decisões automatizadas.</p></section>
+            <section><h3>9. Pagamentos, cancelamento e reembolso</h3><p>Esta versão demonstra o fluxo de matrícula e não processa cobranças. Em uma contratação real, valor, periodicidade, prazo, cancelamento e reembolso devem ser informados antes da confirmação da compra.</p></section>
+            <section><h3>10. Conduta e alterações</h3><p>Os usuários devem respeitar colegas, instrutores e participantes. Assédio, discriminação, pirataria ou uso fraudulento podem resultar em suspensão. Estes termos podem ser atualizados.</p></section>
+            <hr><p><small><em>Última atualização: 27 de outubro de 2026. Versão front-end para fins acadêmicos.</em></small></p>
+        </div>
+        <footer class="termos-acoes"><button type="button" class="termos-btn-concordar" data-agree-terms>Concordar e fechar</button></footer>
+    </article>
+</div>`;
+
+let elementoTermosAnterior = null;
+
+function atualizarBloqueioRolagemGlobal() {
+    const cookieAberto = document.getElementById('cookie-banner')?.style.display === 'flex';
+    const termosAberto = document.getElementById('modal-termos')?.style.display === 'flex';
+    document.body.classList.toggle('modal-aberto', Boolean(cookieAberto || termosAberto));
 }
 
-function fecharModal(modalId) {
+function injetarModalTermos() {
+    document.getElementById('modal-termos')?.remove();
+    document.body.insertAdjacentHTML('beforeend', termosComponent);
+}
+
+function abrirModal(modalId) {
     const modal = document.getElementById(`modal-${modalId}`);
-    if (modal) modal.style.display = 'none';
+    if (!modal) return;
+    if (modalId === 'termos') elementoTermosAnterior = document.activeElement;
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden', 'false');
+    atualizarBloqueioRolagemGlobal();
+    if (modalId === 'termos') modal.querySelector('.close-btn')?.focus();
+}
+
+function fecharModal(modalId, concordou = false) {
+    const modal = document.getElementById(`modal-${modalId}`);
+    if (!modal) return;
+    if (modalId === 'termos' && concordou) {
+        localStorage.setItem('nankim_terms_acceptance', JSON.stringify({ accepted: true, date: new Date().toISOString() }));
+    }
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+    atualizarBloqueioRolagemGlobal();
+    if (modalId === 'termos') elementoTermosAnterior?.focus();
 }
 
 function injetarMenuERodape() {
@@ -152,7 +202,7 @@ function injetarMenuERodape() {
                     <div class="rodape-inferior">
                         <p class="rodape-copyright">&copy; 2026 equipe rocket. Todos os direitos reservados.</p>
                         <div class="rodape-links-legais">
-                            <a href="politica-privacidade.html" class="link-magnetico">Política de uso e termos de privacidade</a>
+                            <button type="button" class="link-preferencias-cookies link-magnetico" data-modal="termos">Termos de Uso e Política de Privacidade</button>
                             <button type="button" class="link-preferencias-cookies link-magnetico" data-cookie-preferences>Preferências de Cookies</button>
                         </div>
                     </div>
@@ -197,6 +247,12 @@ document.addEventListener('click', (event) => {
         return;
     }
 
+    const botaoConcordarTermos = alvo.closest('[data-agree-terms]');
+    if (botaoConcordarTermos) {
+        fecharModal('termos', true);
+        return;
+    }
+
     const botaoAbrir = alvo.closest('[data-modal]');
     if (botaoAbrir) {
         event.preventDefault();
@@ -224,11 +280,38 @@ document.addEventListener('click', (event) => {
 
 document.addEventListener('mousedown', (event) => {
     if (event.target instanceof Element && event.target.classList.contains('modal')) {
-        event.target.style.display = 'none';
+        fecharModal(event.target.id.replace('modal-', ''));
     }
 });
 
-document.addEventListener('DOMContentLoaded', injetarMenuERodape);
+document.addEventListener('keydown', (event) => {
+    const modal = document.getElementById('modal-termos');
+    if (!modal || modal.style.display !== 'flex') return;
+
+    if (event.key === 'Escape') {
+        fecharModal('termos');
+        return;
+    }
+
+    if (event.key === 'Tab') {
+        const elementos = Array.from(modal.querySelectorAll('button:not([disabled]), [tabindex="0"]'));
+        if (!elementos.length) return;
+        const primeiro = elementos[0];
+        const ultimo = elementos[elementos.length - 1];
+        if (event.shiftKey && document.activeElement === primeiro) {
+            event.preventDefault();
+            ultimo.focus();
+        } else if (!event.shiftKey && document.activeElement === ultimo) {
+            event.preventDefault();
+            primeiro.focus();
+        }
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    injetarModalTermos();
+    injetarMenuERodape();
+});
 
 // Efeito de transição do Menu no Scroll
 window.addEventListener('scroll', () => {

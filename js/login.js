@@ -113,7 +113,7 @@ function injetarModaisAutenticacao() {
                         <div class="input-group checkbox-group">
                             <label class="label-termos">
                                 <input type="checkbox" id="cad-termos" required>
-                                <span>Li e aceito os <a href="politica-privacidade.html" target="_blank">Termos de Uso e Política de Privacidade</a></span>
+                                <span>Li e aceito os <button type="button" class="link-termos-modal" data-modal="termos">Termos de Uso e Política de Privacidade</button></span>
                             </label>
                             <small class="input-feedback"></small>
                         </div>
