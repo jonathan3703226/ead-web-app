@@ -1,83 +1,879 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-aluno-acesso="negado">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Área do Aluno - Nankim</title>
+    
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Caveat:wght@500;600;700&family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS Base e Checkout -->
+    <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/global.css">
-    <link rel="stylesheet" href="./css/area-aluno.css">
-    <link rel="stylesheet" href="./css/cookies.css">
-    <script src="./js/auth.js"></script>
+    <link rel="stylesheet" href="./css/checkout.css">
+
+    <!-- Estilos Inline da Área do Aluno -->
+    <style>
+        /* ==========================================================
+           HEADER E LOGO DO ALUNO
+           ========================================================== */
+        .header-aluno {
+            background-color: #000000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0.8rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-aluno-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Logo Enfeite (Sem link de clique) */
+        .logo-aluno-wrapper {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.75rem !important;
+            text-decoration: none;
+            cursor: default !important; /* Retira o ponteiro de clique */
+        }
+
+        .logo-icone-wrapper {
+            display: flex !important;
+            width: 38px;
+            height: 38px;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .logo-img-simbolo {
+            width: 54px;
+            height: 54px;
+            object-fit: contain;
+            filter: invert(1);
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .logo-aluno-wrapper:hover .logo-img-simbolo {
+            transform: rotate(360deg);
+        }
+
+        .logo-texto-wrapper {
+            display: inline-flex !important;
+            align-items: center !important;
+            white-space: nowrap;
+            line-height: 1;
+        }
+
+        .logo-fixo {
+            font-family: 'Audiowide', cursive;
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: #ffffff !important;
+        }
+
+        .logo-expansivel {
+            display: inline-flex !important;
+            align-items: center;
+            max-width: 0;
+            opacity: 0;
+            overflow: hidden;
+            font-family: 'Caveat', cursive;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #ffffff !important;
+            line-height: 1;
+            white-space: nowrap;
+            transition: max-width 0.45s cubic-bezier(0.76, 0, 0.24, 1), 
+                        opacity 0.35s ease, 
+                        padding-left 0.35s ease,
+                        padding-right 0.35s ease;
+        }
+
+        .logo-aluno-wrapper:hover .logo-expansivel {
+            max-width: 200px;
+            opacity: 1;
+            padding-left: 0.35rem;
+            padding-right: 0.5rem;
+        }
+
+        /* Dropdown de Perfil */
+        .perfil-dropdown { 
+            position: relative; 
+        }
+
+        .btn-perfil {
+            background: transparent;
+            color: #ffffff;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: opacity 0.2s ease;
+        }
+
+        .btn-perfil:hover { 
+            opacity: 0.8; 
+        }
+
+        .avatar-aluno {
+            width: 32px;
+            height: 32px;
+            background-color: #b33f30;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: #111111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            margin-top: 15px;
+            width: 240px;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
+            z-index: 200;
+        }
+
+        .dropdown-menu.show {
+            display: flex;
+            animation: abrirDropdown 0.2s ease forwards;
+        }
+
+        @keyframes abrirDropdown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-menu a, 
+        .dropdown-menu button {
+            padding: 1rem 1.2rem;
+            color: #d0d0d0;
+            text-align: left;
+            background: transparent;
+            border: none;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-menu a:hover, 
+        .dropdown-menu button:hover {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            padding-left: 1.5rem;
+        }
+
+        .linha-divisoria {
+            height: 1px;
+            background-color: #222;
+            margin: 0;
+        }
+
+        .btn-sair-conta { 
+            color: #ff5e5e !important; 
+        }
+
+        .btn-sair-conta:hover { 
+            background-color: rgba(255, 94, 94, 0.1) !important; 
+            color: #ff7575 !important; 
+        }
+
+        /* ==========================================================
+           PAINEL E ESTRUTURA DA PÁGINA
+           ========================================================== */
+        .painel-aluno {
+            background-color: #070707;
+            min-height: 100vh;
+            padding: 3.5rem 5%;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .painel-conteudo-central {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .boas-vindas {
+            margin-bottom: 3rem;
+        }
+
+        .boas-vindas h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.4rem;
+            letter-spacing: -1px;
+        }
+
+        .boas-vindas p {
+            color: #888;
+            font-size: 1.05rem;
+        }
+
+        .secao-categoria-cursos {
+            margin-bottom: 3.5rem;
+        }
+
+        .titulo-secao-cursos {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 0.75rem;
+        }
+
+        .grid-cursos-aluno {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* ==========================================================
+           CARD BASE DOS CURSOS
+           ========================================================== */
+        .curso-card-aluno {
+            position: relative;
+            height: 320px;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 16px;
+            background: #171717;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease;
+        }
+
+        .curso-card-aluno:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .curso-card-imagem {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: none !important;
+            transition: transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
+        }
+
+        .curso-card-aluno:not(.card-estatico):hover .curso-card-imagem {
+            transform: scale(1.03);
+        }
+
+        .curso-painel {
+            position: absolute;
+            z-index: 2;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            height: 100%;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 22px;
+            background: linear-gradient(0deg, rgba(17, 11, 11, 0.95) 45%, rgba(17, 11, 11, 0.1) 100%);
+            color: #fff;
+            transition: transform 0.42s cubic-bezier(0.2, 0.7, 0.2, 1);
+        }
+
+        .curso-card-aluno:not(.card-estatico) .curso-painel {
+            transform: translateY(calc(100% - 95px));
+        }
+
+        .curso-card-aluno:not(.card-estatico):hover .curso-painel {
+            transform: translateY(0);
+        }
+
+        .curso-cabecalho {
+            flex: 0 0 auto;
+        }
+
+        .curso-cabecalho h2 {
+            color: #ffffff !important;
+            font-size: clamp(1.4rem, 2vw, 1.8rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-top: 4px;
+            margin-bottom: 4px;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        .curso-detalhes {
+            display: flex;
+            min-height: 0;
+            flex: 1;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding-top: 8px;
+            opacity: 0;
+            transition: opacity 0.24s ease 0.08s;
+        }
+
+        .curso-card-aluno:not(.card-estatico):hover .curso-detalhes {
+            opacity: 1;
+        }
+
+        .curso-descricao {
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .tag-status {
+            display: inline-block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            margin-bottom: 6px;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .tag-bloqueado { background: rgba(0, 0, 0, 0.6); color: #fff; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .tag-degustacao { background: #27ae60; color: #fff; }
+        .tag-completo { background: #27ae60; color: #fff; }
+        .tag-breve { background: #222222; color: #ffffff; border: 1px solid #444444; }
+
+        .area-status-curso { margin-bottom: 12px; }
+
+        .texto-aviso-bloqueado {
+            font-size: 0.82rem;
+            color: #27ae60;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .barra-fundo {
+            width: 100%;
+            height: 6px;
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 0.4rem;
+        }
+
+        .barra-preenchida {
+            height: 100%;
+            background-color: #27ae60;
+            border-radius: 10px;
+        }
+
+        .texto-progresso {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #aaa;
+        }
+
+        .curso-compra {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding-top: 12px;
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .curso-compra p {
+            display: grid;
+            gap: 1px;
+            min-width: max-content;
+        }
+
+        .curso-compra p span {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .curso-compra p strong {
+            color: #fff;
+            font-size: 1.15rem;
+            letter-spacing: -0.02em;
+        }
+
+        .btn-acao-custom {
+            display: inline-flex;
+            min-height: 44px;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .btn-primario { background: #ffffff; color: #000000; }
+        .btn-primario:hover { background: #dcdcdc; transform: translateY(-1px); }
+        .btn-secundario { background: transparent; color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.3); }
+        .btn-secundario:hover { border-color: #fff; background: rgba(255, 255, 255, 0.08); }
+        .btn-comprar { background: #ffffff; color: #000000; font-weight: 700; border: none; }
+        .btn-comprar:hover { background: #e0e0e0; transform: translateY(-1px); }
+
+        .curso-card-aluno.card-estatico {
+            position: relative;
+            height: 320px;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 16px;
+        }
+
+        .curso-card-aluno.card-estatico .curso-painel {
+            position: absolute;
+            inset: auto 0 0 0;
+            height: 100px !important;
+            transform: none !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 18px 22px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(15, 15, 15, 0.95) 60%);
+        }
+
+        .curso-card-aluno.card-estatico:hover .curso-painel { transform: none !important; }
+        .curso-card-aluno.card-estatico .curso-detalhes { display: none !important; }
+
+        /* ==========================================================
+           RODAPÉ OFICIAL DA PLATAFORMA
+           ========================================================== */
+        .site-footer {
+            background-color: #000000;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 4rem 5% 2rem;
+            color: #888888;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .footer-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Audiowide', cursive;
+            color: #ffffff;
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-brand p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            max-width: 320px;
+        }
+
+        .footer-column h4 {
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.7rem;
+        }
+
+        .footer-column ul li a {
+            color: #888888;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            max-width: 1000px;
+            margin: 3rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div id="header-container"></div>
 
-    <div class="area-aluno-shell">
-        <main class="painel-aluno" inert>
-            <header class="boas-vindas">
-                <p class="painel-etiqueta">Sua jornada artística</p>
-                <h1>Seja bem-vindo(a), <span id="nome-aluno">Aluno</span></h1>
-                <p>Continue aprendendo no seu ritmo.</p>
-            </header>
-
-            <section class="meus-cursos" aria-labelledby="titulo-meus-cursos">
-                <div class="secao-cabecalho">
-                    <div>
-                        <p class="painel-etiqueta">Aprendizagem</p>
-                        <h2 id="titulo-meus-cursos">Meus Cursos</h2>
-                    </div>
-                    <a href="cursos.html">Explorar cursos</a>
+    <!-- ================= HEADER DO ALUNO LOGADO ================= -->
+    <header class="header-aluno">
+        <div class="header-aluno-container">
+            
+            <!-- Logo Nankim Apenas Visual (Div sem link) -->
+            <div class="logo-aluno-wrapper">
+                <div class="logo-icone-wrapper">
+                    <img src="./assets/icons/logo.svg" alt="Nankim" class="logo-img-simbolo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'><circle cx=\'20\' cy=\'20\' r=\'18\' fill=\'%23b33f30\'/><text x=\'50%\' y=\'58%\' text-anchor=\'middle\' fill=\'white\' font-size=\'20\' font-family=\'Georgia\'>N</text></svg>'">
                 </div>
-
-                <div class="lista-meus-cursos" id="lista-meus-cursos"></div>
-                <div class="sem-cursos" id="sem-cursos" hidden>
-                    <h3>Você ainda não tem cursos matriculados</h3>
-                    <p>Escolha um curso para começar sua jornada artística. Depois da compra, as aulas e o progresso aparecerão aqui.</p>
-                    <a class="botao-comprar-curso" href="cursos.html">Conhecer cursos</a>
+                <div class="logo-texto-wrapper">
+                    <span class="logo-fixo">Nankim</span>
+                    <span class="logo-expansivel">Art School</span>
                 </div>
-            </section>
-
-            <section class="curso-ativo" aria-labelledby="titulo-aula" hidden>
-                <div class="aula-conteudo">
-                    <div class="secao-cabecalho">
-                        <div>
-                            <p class="painel-etiqueta">Continue de onde parou</p>
-                            <h2 id="titulo-aula">Sua última aula</h2>
-                        </div>
-                    </div>
-                    <div class="video-destaque" id="aula-atual">
-                        <span class="icone-play" aria-hidden="true">▶</span>
-                        <p id="nome-aula-atual">Módulo 1: A base de tudo</p>
-                        <small>O conteúdo de vídeo será disponibilizado nesta área.</small>
-                        <button class="marcar-concluida" id="marcar-concluida" type="button">Marcar aula como concluída</button>
-                    </div>
-                </div>
-
-                <aside class="trilha-progresso" aria-labelledby="titulo-trilha">
-                    <h2 id="titulo-trilha">Conteúdo do curso</h2>
-                    <ol class="lista-aulas" id="lista-aulas"></ol>
-                </aside>
-            </section>
-        </main>
-
-        <section class="acesso-restrito" aria-labelledby="titulo-acesso-restrito">
-            <div class="card-acesso-restrito">
-                <span class="icone-acesso-restrito" aria-hidden="true">✦</span>
-                <p class="painel-etiqueta">Área do Aluno</p>
-                <h1 id="titulo-acesso-restrito">Acesso Restrito</h1>
-                <p>Faça login para ver seus cursos, acompanhar seu progresso e continuar de onde parou.</p>
-                <button class="botao-login-restrito" type="button" data-modal="login">Faça o Login</button>
-                <p class="cadastro-restrito">Ainda não tem conta?
-                    <button type="button" data-modal="login" data-modal-mode="cadastro">ou Cadastre-se</button>
-                </p>
             </div>
-        </section>
+            
+            <!-- Menu Dropdown do Usuário -->
+            <div class="perfil-dropdown">
+                <button class="btn-perfil" id="btn-menu-perfil" aria-expanded="false">
+                    <div class="avatar-aluno" id="avatar-iniciais">AL</div>
+                    <span id="nome-aluno-topo">Carregando...</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                
+                <div class="dropdown-menu" id="dropdown-perfil">
+                    <a href="area-aluno.html">Cursos</a>
+                    <a href="meu-perfil.html">Meu Perfil</a>
+                    <div class="linha-divisoria"></div>
+                    <button type="button" id="btn-sair" class="btn-sair-conta">Sair da conta</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= PAINEL DE CURSOS ================= -->
+    <main class="painel-aluno">
+        <div class="painel-conteudo-central">
+            
+            <section class="boas-vindas">
+                <h1 id="texto-boas-vindas">Olá!</h1>
+                <p>Seja bem-vindo(a) à sua central de estudos.</p>
+            </section>
+
+            <!-- SEÇÃO 1: CURSOS EM ANDAMENTO / MATRICULADOS -->
+            <section class="secao-categoria-cursos">
+                <h2 class="titulo-secao-cursos">Cursos em Andamento</h2>
+                <div class="grid-cursos-aluno" id="container-cursos-matriculados">
+                    <!-- Preenchido dinamicamente via JS -->
+                </div>
+            </section>
+
+            <!-- SEÇÃO 2: CATÁLOGO DE CURSOS DISPONÍVEIS -->
+            <section class="secao-categoria-cursos">
+                <h2 class="titulo-secao-cursos">Catálogo de Cursos</h2>
+                <div class="grid-cursos-aluno" id="container-cursos-catalogo">
+                    <!-- Preenchido dinamicamente via JS -->
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Modal de Checkout Direto -->
+    <div id="modal-checkout" class="modal" style="display:none;">
+        <div class="modal-content modal-checkout" role="dialog" aria-modal="true" aria-labelledby="checkout-titulo">
+            <button class="close-btn" type="button" data-close="checkout" aria-label="Fechar checkout">&times;</button>
+            <h2 id="checkout-titulo">Assinar Fundamentos do Desenho</h2>
+            <p class="subtitulo-modal" id="checkout-subtitulo">Preencha os dados abaixo.</p>
+            <div id="checkout-stage"></div>
+        </div>
     </div>
 
-    <div id="footer-container"></div>
+<div id="footer-container"></div>
+    </footer>
+
+    <!-- Scripts -->
     <script src="./js/global.js"></script>
-    <script src="./js/login.js"></script>
-    <script src="./js/cookies.js"></script>
-    <script src="./js/area-aluno.js"></script>
+    <script src="./js/checkout.js"></script>
+
+    <!-- Script Inline da Área do Aluno -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // 1. CARREGAR DADOS DO USUÁRIO E VERIFICAR LOGIN
+            const sessaoData = sessionStorage.getItem('nankim_sessao');
+            if (!sessaoData) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const usuarioSessao = JSON.parse(sessaoData);
+            const emailUsuario = usuarioSessao.email;
+
+            let dbUsuarios = JSON.parse(localStorage.getItem('nankim_db')) || [];
+            let usuarioAtual = dbUsuarios.find(u => u.email === emailUsuario);
+
+            if (!usuarioAtual) {
+                sessionStorage.removeItem('nankim_sessao');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // 2. PREENCHER HEADER E BOAS VINDAS
+            const primeiroNome = usuarioAtual.nome ? usuarioAtual.nome.split(' ')[0] : 'Aluno';
+            const inicial = primeiroNome.charAt(0).toUpperCase();
+            
+            document.getElementById('nome-aluno-topo').textContent = primeiroNome;
+            document.getElementById('avatar-iniciais').textContent = inicial;
+            
+            const textoBoasVindas = document.getElementById('texto-boas-vindas');
+            if (textoBoasVindas) {
+                textoBoasVindas.textContent = `Olá, ${primeiroNome}!`;
+            }
+
+            // 3. DROPDOWN MENU
+            const btnMenu = document.getElementById('btn-menu-perfil');
+            const dropdown = document.getElementById('dropdown-perfil');
+
+            if (btnMenu && dropdown) {
+                btnMenu.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    dropdown.classList.toggle('show');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!dropdown.contains(e.target) && e.target !== btnMenu) {
+                        dropdown.classList.remove('show');
+                    }
+                });
+            }
+
+            // 4. LOGOUT
+            const btnSair = document.getElementById('btn-sair');
+            if (btnSair) {
+                btnSair.addEventListener('click', () => {
+                    sessionStorage.removeItem('nankim_sessao');
+                    window.location.href = 'index.html';
+                });
+            }
+
+            // 5. RENDERIZAÇÃO DOS CURSOS
+            const containerMatriculados = document.getElementById('container-cursos-matriculados');
+            const containerCatalogo = document.getElementById('container-cursos-catalogo');
+
+            const listaCursosPlataforma = [
+                {
+                    id: 'fundamentos-desenho',
+                    titulo: 'Fundamentos do Desenho',
+                    descricao: 'O ponto de partida para qualquer artista. Domine formas, perspectiva e luz com uma trilha prática e progressiva.',
+                    imagem: '../assets/img/fundamentos-desenho.jpg'
+                },
+                {
+                    id: 'anatomia-humana',
+                    titulo: 'Anatomia Humana',
+                    descricao: 'Estude proporções, musculatura e movimento para desenhar figuras humanas com mais confiança.',
+                    imagem: '../assets/img/anatomia-humana.jpg',
+                    disponivel: false
+                },
+                {
+                    id: 'ilustracao-digital',
+                    titulo: 'Ilustração Digital',
+                    descricao: 'Desenvolva seu processo digital, da composição e cor até a finalização de uma ilustração autoral.',
+                    imagem: '../assets/img/ilustracao-digital.jpg',
+                    disponivel: false
+                }
+            ];
+
+            function renderizarCentralAlunos() {
+                containerMatriculados.innerHTML = '';
+                containerCatalogo.innerHTML = '';
+
+                listaCursosPlataforma.forEach(curso => {
+                    if (curso.id === 'fundamentos-desenho') {
+                        renderizarCursoFundamentos();
+                    } else {
+                        renderizarCursoFuturo(curso);
+                    }
+                });
+
+                document.querySelectorAll('[data-close="checkout"]').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const modalCheckout = document.getElementById('modal-checkout');
+                        if (modalCheckout) modalCheckout.style.display = 'none';
+                    });
+                });
+
+                document.querySelectorAll('.btn-abrir-checkout-direto').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if (typeof iniciarCheckoutLogado === 'function') {
+                            iniciarCheckoutLogado();
+                        } else {
+                            console.error('Função iniciarCheckoutLogado não foi encontrada.');
+                        }
+                    });
+                });
+
+                const btnLiberarMod1 = document.getElementById('btn-liberar-mod1');
+                if (btnLiberarMod1) {
+                    btnLiberarMod1.addEventListener('click', () => {
+                        usuarioAtual.modulo1_liberado = true;
+                        const db = JSON.parse(localStorage.getItem('nankim_db')) || [];
+                        const idx = db.findIndex(u => u.email === usuarioAtual.email);
+                        if (idx !== -1) {
+                            db[idx].modulo1_liberado = true;
+                            localStorage.setItem('nankim_db', JSON.stringify(db));
+                        }
+                        renderizarCentralAlunos();
+                    });
+                }
+            }
+
+            function renderizarCursoFuturo(curso) {
+                const htmlCard = `
+                    <article class="curso-card-aluno card-estatico">
+                        <img src="${curso.imagem}" alt="${curso.titulo}" class="curso-card-imagem">
+                        <div class="curso-painel">
+                            <header class="curso-cabecalho">
+                                <span class="tag-status tag-breve">Em breve</span>
+                                <h2>${curso.titulo}</h2>
+                            </header>
+                        </div>
+                    </article>
+                `;
+                containerCatalogo.innerHTML += htmlCard;
+            }
+
+            function renderizarCursoFundamentos() {
+                const matriculado = usuarioAtual.matriculado === true;
+                const degustacao = usuarioAtual.modulo1_liberado === true;
+
+                let tagHTML = '';
+                let progressoHTML = '';
+                let acoesHTML = '';
+                let filtroImg = 'grayscale(0%) opacity(1)';
+                const titulo = 'Fundamentos do Desenho';
+                const desc = 'O ponto de partida para qualquer artista. Domine formas, perspectiva e luz com uma trilha prática e progressiva.';
+                const imagem = '../assets/img/fundamentos-desenho.jpg';
+
+                if (matriculado) {
+                    tagHTML = `<span class="tag-status tag-completo">Curso Completo</span>`;
+                    progressoHTML = `
+                        <div class="barra-fundo"><div class="barra-preenchida" style="width: 0%;"></div></div>
+                        <span class="texto-progresso">0% concluído</span>
+                    `;
+                    acoesHTML = `<a href="sala-de-aula.html" class="btn-acao-custom btn-primario">Continuar Curso</a>`;
+                    containerMatriculados.innerHTML += criarCardExpandivelHTML(titulo, desc, imagem, tagHTML, progressoHTML, acoesHTML, filtroImg, false);
+                } else if (degustacao) {
+                    tagHTML = `<span class="tag-status tag-degustacao">Módulo 1 Liberado</span>`;
+                    progressoHTML = `<span class="texto-aviso-bloqueado">Aproveite sua aula experimental grátis.</span>`;
+                    acoesHTML = `
+                        <a href="sala-de-aula.html" class="btn-acao-custom btn-primario">Acessar Módulo 1</a>
+                        <button type="button" class="btn-acao-custom btn-comprar btn-abrir-checkout-direto">Assinar Curso Completo</button>
+                    `;
+                    containerMatriculados.innerHTML += criarCardExpandivelHTML(titulo, desc, imagem, tagHTML, progressoHTML, acoesHTML, filtroImg, true);
+                } else {
+                    tagHTML = `<span class="tag-status tag-bloqueado">🔒 Bloqueado</span>`;
+                    filtroImg = 'grayscale(100%) opacity(0.6)';
+                    progressoHTML = `
+                        <span class="texto-aviso-bloqueado" style="color: #e74c3c;">
+                            Você ainda não possui acesso a este curso.
+                        </span>
+                    `;
+                    acoesHTML = `
+                        <button type="button" class="btn-acao-custom btn-secundario" id="btn-liberar-mod1">Liberar Módulo 1 Grátis</button>
+                        <button type="button" class="btn-acao-custom btn-comprar btn-abrir-checkout-direto">Assinar Curso Completo</button>
+                    `;
+                    containerCatalogo.innerHTML += criarCardExpandivelHTML(titulo, desc, imagem, tagHTML, progressoHTML, acoesHTML, filtroImg, true);
+                }
+            }
+
+            function criarCardExpandivelHTML(titulo, descricao, imagem, tagHTML, progressoHTML, acoesHTML, filtroImg, mostrarPreco) {
+                const rodapePreco = mostrarPreco ? `
+                    <div class="curso-compra">
+                        <p><span>Investimento único</span><strong>R$ 49,90</strong></p>
+                        ${acoesHTML}
+                    </div>
+                ` : `
+                    <div class="curso-compra" style="justify-content: flex-start;">
+                        ${acoesHTML}
+                    </div>
+                `;
+
+                return `
+                    <article class="curso-card-aluno">
+                        <img src="${imagem}" alt="${titulo}" class="curso-card-imagem" style="filter: ${filtroImg};">
+                        <div class="curso-painel">
+                            <header class="curso-cabecalho">
+                                ${tagHTML}
+                                <h2>${titulo}</h2>
+                            </header>
+                            <div class="curso-detalhes">
+                                <p class="curso-descricao">${descricao}</p>
+                                <div class="area-status-curso">${progressoHTML}</div>
+                                ${rodapePreco}
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }
+
+            renderizarCentralAlunos();
+        });
+    </script>
 </body>
 </html>

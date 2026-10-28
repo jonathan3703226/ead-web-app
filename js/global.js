@@ -39,88 +39,53 @@ function injetarMenuERodape() {
     const header = document.getElementById('header-container');
     const footer = document.getElementById('footer-container');
 
-    if (header) {
-        header.innerHTML = `
-    <header class="menu-global">
-        <a class="logo" href="index.html" aria-label="Nankim Escola de Arte - início">
-            <div class="logo-icone-wrapper">
-                <img src="./assets/icons/logo.svg" alt="Selo Nankim" class="logo-img-simbolo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'><circle cx=\'20\' cy=\'20\' r=\'18\' fill=\'%23b33f30\'/><text x=\'50%\' y=\'58%\' text-anchor=\'middle\' fill=\'white\' font-size=\'20\' font-family=\'Georgia\'>N</text></svg>'">
-            </div>
-            <div class="logo-texto-wrapper">
-                <span class="logo-fixo">Nankim</span>
-                <span class="logo-expansivel">Art School</span>
-            </div>
-        </a>
+    // Substitua o trecho onde injeta o menu no global.js para manter sempre a vitrine padrão
+if (header) {
+    header.innerHTML = `
+<header class="menu-global">
+    <a class="logo" href="index.html" aria-label="Nankim Escola de Arte - início">
+        <div class="logo-icone-wrapper">
+            <img src="./assets/icons/logo.svg" alt="Selo Nankim" class="logo-img-simbolo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'><circle cx=\'20\' cy=\'20\' r=\'18\' fill=\'%23b33f30\'/><text x=\'50%\' y=\'58%\' text-anchor=\'middle\' fill=\'white\' font-size=\'20\' font-family=\'Georgia\'>N</text></svg>'">
+        </div>
+        <div class="logo-texto-wrapper">
+            <span class="logo-fixo">Nankim</span>
+            <span class="logo-expansivel">Art School</span>
+        </div>
+    </a>
 
-        <button class="btn-mobile" aria-label="Abrir menu" aria-expanded="false" type="button">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        <nav>
-            <a href="quem-somos.html" class="link-magnetico"><span class="dot-hover"></span>Quem Somos</a>
-            <a href="cursos.html" class="link-magnetico"><span class="dot-hover"></span>Cursos</a>
-            <a href="contato.html" class="link-magnetico"><span class="dot-hover"></span>Contato</a>
-            <button data-modal="login" class="btn-login link-magnetico">Login</button>
-        </nav>
-    </header>
+    <button class="btn-mobile" aria-label="Abrir menu" aria-expanded="false" type="button">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <nav>
+        <a href="quem-somos.html" class="link-magnetico"><span class="dot-hover"></span>Quem Somos</a>
+        <a href="cursos.html" class="link-magnetico"><span class="dot-hover"></span>Cursos</a>
+        <a href="contato.html" class="link-magnetico"><span class="dot-hover"></span>Contato</a>
+        <button data-modal="login" class="btn-login link-magnetico">Login</button>
+    </nav>
+</header>
 `;
-        const botaoMenu = header.querySelector('.btn-mobile');
-        const navegacao = header.querySelector('.menu-global nav');
-        const botaoLogin = navegacao.querySelector('.btn-login');
-        const paginaAtual = window.location.pathname.split('/').pop() || 'index.html';
-        const aluno = obterAlunoLogado();
 
-        if (aluno) {
-            const nome = aluno.nome.trim().split(/\s+/)[0];
-            const menuConta = document.createElement('div');
-            menuConta.className = 'menu-conta';
+    const botaoMenu = header.querySelector('.btn-mobile');
+    const navegacao = header.querySelector('.menu-global nav');
+    const paginaAtual = window.location.pathname.split('/').pop() || 'index.html';
 
-            const botaoConta = document.createElement('button');
-            botaoConta.className = 'btn-login usuario-menu link-magnetico';
-            botaoConta.type = 'button';
-            botaoConta.dataset.accountMenu = '';
-            botaoConta.setAttribute('aria-expanded', 'false');
-            botaoConta.setAttribute('aria-controls', 'menu-conta-opcoes');
-            botaoConta.setAttribute('aria-label', `Opções da conta de ${nome}`);
-            botaoConta.textContent = nome;
-
-            const opcoesConta = document.createElement('div');
-            opcoesConta.className = 'menu-conta-opcoes';
-            opcoesConta.id = 'menu-conta-opcoes';
-            opcoesConta.hidden = true;
-
-            const linkArea = document.createElement('a');
-            linkArea.href = 'area-aluno.html';
-            linkArea.textContent = 'Minha Área';
-
-            const botaoTrocarConta = document.createElement('button');
-            botaoTrocarConta.type = 'button';
-            botaoTrocarConta.dataset.modal = 'login';
-            botaoTrocarConta.dataset.accountSwitch = '';
-            botaoTrocarConta.textContent = 'Trocar de conta';
-
-            opcoesConta.append(linkArea, botaoTrocarConta);
-            menuConta.append(botaoConta, opcoesConta);
-            botaoLogin.replaceWith(menuConta);
+    navegacao.querySelectorAll('a[href]').forEach((link) => {
+        if (link.getAttribute('href') === paginaAtual) {
+            link.classList.add('pagina-ativa');
+            link.setAttribute('aria-current', 'page');
         }
+    });
 
-        navegacao.querySelectorAll('a[href]').forEach((link) => {
-            if (link.getAttribute('href') === paginaAtual) {
-                link.classList.add('pagina-ativa');
-                link.setAttribute('aria-current', 'page');
-            }
-        });
+    botaoMenu.addEventListener('click', () => {
+        const menuAberto = navegacao.classList.toggle('menu-aberto');
+        botaoMenu.setAttribute('aria-expanded', String(menuAberto));
+        botaoMenu.setAttribute('aria-label', menuAberto ? 'Fechar menu' : 'Abrir menu');
+    });
 
-        botaoMenu.addEventListener('click', () => {
-            const menuAberto = navegacao.classList.toggle('menu-aberto');
-            botaoMenu.setAttribute('aria-expanded', String(menuAberto));
-            botaoMenu.setAttribute('aria-label', menuAberto ? 'Fechar menu' : 'Abrir menu');
-        });
-
-        // Inicializa o efeito magnético nos itens do menu
-        aplicarEfeitoMagnetico();
-    }
+    aplicarEfeitoMagnetico();
+}
 
    if (footer) {
         footer.innerHTML = `
@@ -144,7 +109,7 @@ function injetarMenuERodape() {
                                     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.501 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.377.55 9.377.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                                 </a>
                             </div>
-                            <p class="rodape-desc-escola">A Nankim é uma escola de artes que tem como principal objetivo contribuir com o desenvolvimento artístico, cultural e intelectual de todos aqueles que se reconhecem através da arte.</p>
+                            <p class="rodape-desc-escola">A Nankim é a escola de artes onde o seu sonho ganha traço. Desenvolvemos um ecossistema de ensino organizado para guiar você do primeiro esboço ao nível profissional.</p>
                         </div>
                     </div>
                     
@@ -258,3 +223,54 @@ document.addEventListener('click', (event) => {
         }
     }
 });
+function injetarHeaderAluno() {
+    const containerHeader = document.getElementById('header-aluno-container');
+    if (!containerHeader) return;
+
+    // Logo alterada de <a> para <div> (elemento apenas visual)
+    containerHeader.innerHTML = `
+        <header class="header-aluno">
+            <div class="header-aluno-container">
+                <div class="logo-aluno-wrapper">
+                    <div class="logo-icone-wrapper">
+                        <img src="./assets/icons/logo.svg" alt="Nankim" class="logo-img-simbolo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 40 40\\'><circle cx=\\'20\\' cy=\\'20\\' r=\\'18\\' fill=\\'%23b33f30\\'/><text x=\\'50%\\' y=\\'58%\\' text-anchor=\'middle\\' fill=\'white\\' font-size=\'20\\' font-family=\'Georgia\\'>N</text></svg>'">
+                    </div>
+                    <div class="logo-texto-wrapper">
+                        <span class="logo-fixo">Nankim</span>
+                        <span class="logo-expansivel">Art School</span>
+                    </div>
+                </div>
+                
+                <div class="perfil-dropdown" style="position: relative;">
+                    <button class="btn-perfil" id="btn-menu-perfil" type="button" aria-expanded="false">
+                        <div class="avatar-aluno" id="avatar-iniciais">AL</div>
+                        <span id="nome-aluno-topo">Carregando...</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left: 4px;"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    
+                    <div class="dropdown-menu" id="dropdown-perfil" style="display: none;">
+                        <a href="area-aluno.html">Cursos</a>
+                        <a href="meu-perfil.html">Meu Perfil</a>
+                        <div class="linha-divisoria"></div>
+                        <button type="button" id="btn-sair" class="btn-sair-conta">Sair da conta</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+    `;
+
+    // Carrega nome e avatar da sessão
+    const sessaoData = sessionStorage.getItem('nankim_sessao');
+    if (sessaoData) {
+        try {
+            const usuarioSessao = JSON.parse(sessaoData);
+            const primeiroNome = usuarioSessao.nome ? usuarioSessao.nome.split(' ')[0] : 'Aluno';
+            
+            const elNome = document.getElementById('nome-aluno-topo');
+            const elAvatar = document.getElementById('avatar-iniciais');
+            
+            if (elNome) elNome.textContent = primeiroNome;
+            if (elAvatar) elAvatar.textContent = primeiroNome.charAt(0).toUpperCase();
+        } catch(e) {}
+    }
+}

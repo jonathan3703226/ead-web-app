@@ -626,7 +626,12 @@ function concluirCheckout(metodo) {
 
     // Redireciona direto para a Área do Aluno em 1.5s
     setTimeout(() => {
-        window.location.href = 'area-aluno.html';
+        // Se já estiver na área do aluno, recarrega a página para atualizar os cards
+        if (window.location.pathname.includes('area-aluno.html')) {
+            window.location.reload();
+        } else {
+            window.location.href = 'area-aluno.html';
+        }
     }, 1500);
 }
 
@@ -635,3 +640,32 @@ document.addEventListener('DOMContentLoaded', () => {
         botao.addEventListener('click', iniciarCheckout);
     });
 });
+// Função para ser chamada quando o usuário JÁ está logado (ex: dentro da Área do Aluno)
+function iniciarCheckoutLogado() {
+    const alunoSessao = sessionStorage.getItem('nankim_sessao');
+    if (!alunoSessao) {
+        window.location.href = 'index.html';
+        return;
+    }
+
+    const sessao = JSON.parse(alunoSessao);
+    const usuarios = obterUsuariosCheckout();
+    const usuario = usuarios.find(u => u.email.toLowerCase() === sessao.email.toLowerCase());
+
+    if (!usuario) {
+        alert('Sessão expirada. Faça login novamente.');
+        window.location.href = 'index.html';
+        return;
+    }
+
+    // Configura os dados globais com o aluno logado
+    usuarioCheckout = usuario;
+    emailCheckout = usuario.email.toLowerCase();
+
+    // Exibe o modal de checkout
+    const modal = document.getElementById('modal-checkout');
+    if (modal) modal.style.display = 'flex';
+
+    // Vai direto para os dados de pagamento
+    mostrarEtapaPagamento();
+}

@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sala de Aula | Nankim Art School</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Caveat:wght@700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        nankimDark: '#070707',
+                        nankimCard: '#121212',
+                        nankimBorder: '#222222',
+                        nankimRed: '#e50914',
+                        nankimGreen: '#27ae60',
+                        nankimGreenHover: '#219653'
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        audiowide: ['Audiowide', 'cursive'],
+                        caveat: ['Caveat', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #070707; }
+        ::-webkit-scrollbar-thumb { background: #222222; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #333333; }
+
+        /* Logo expand animation */
+        .logo-expansivel {
+            max-width: 0;
+            opacity: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: max-width 0.45s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.35s ease, padding 0.35s ease;
+        }
+        .logo-wrapper:hover .logo-expansivel {
+            max-width: 200px;
+            opacity: 1;
+            padding-left: 0.35rem;
+            padding-right: 0.5rem;
+        }
+        .logo-img {
+            filter: invert(1);
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .logo-wrapper:hover .logo-img {
+            transform: rotate(360deg);
+        }
+
+        /* YouTube Embed Wrapper */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            background-color: #000;
+            border-radius: 12px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Active Tab Styling */
+        .tab-btn.active {
+            color: #ffffff;
+            border-bottom: 2px solid #27ae60;
+            background-color: rgba(39, 174, 96, 0.05);
+        }
+
+        /* Accordion transition */
+        .accordion-content {
+            transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
+            max-height: 1000px;
+            overflow: hidden;
+        }
+        .accordion-content.collapsed {
+            max-height: 0;
+            opacity: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+    </style>
+</head>
+<body class="bg-nankimDark text-gray-100 font-sans min-h-screen flex flex-col antialiased">
+
+    <!-- HEADER DE NAVEGAÇÃO SUPERIOR -->
+    <header class="sticky top-0 z-50 bg-black/90 backdrop-blur-md border-b border-nankimBorder px-4 sm:px-8 py-3 shadow-2xl">
+        <div class="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-4">
+            
+            <!-- Esquerda: Logo Enfeite (Sem Ação) + Breadcrumb -->
+            <div class="flex items-center gap-4 sm:gap-6">
+                <div class="logo-wrapper inline-flex items-center gap-2 select-none cursor-default">
+                    <div class="w-9 h-9 flex items-center justify-center relative">
+                        <svg class="logo-img w-8 h-8" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="8"/>
+                            <path d="M32 70V30L68 70V30" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="inline-flex items-center text-white leading-none">
+                        <span class="font-audiowide text-xl tracking-wider">NANKIM</span>
+                        <span class="logo-expansivel font-caveat text-lg font-bold">Art School</span>
+                    </div>
+                </div>
+
+                <div class="h-5 w-[1px] bg-nankimBorder hidden sm:block"></div>
+
+                <!-- Breadcrumbs -->
+                <nav class="hidden md:flex items-center gap-2 text-xs sm:text-sm text-gray-400">
+                    <a href="area-aluno.html" class="hover:text-white transition-colors">Área do Aluno</a>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-600"></i>
+                    <span id="breadcrumb-curso" class="text-white font-semibold">Fundamentos do Desenho</span>
+                </nav>
+            </div>
+
+            <!-- Direita: Progresso Geral + Botão Voltar -->
+            <div class="flex items-center gap-4 sm:gap-8 ml-auto sm:ml-0">
+                <div class="flex items-center gap-3">
+                    <div class="flex flex-col items-end">
+                        <span class="text-xs text-gray-400 font-medium">Progresso Geral</span>
+                        <span id="header-percent-text" class="text-sm font-bold text-nankimGreen">0%</span>
+                    </div>
+                    <div class="w-24 sm:w-36 h-2.5 bg-zinc-800 rounded-full overflow-hidden border border-zinc-700/50">
+                        <div id="header-progress-bar" class="h-full bg-nankimGreen transition-all duration-500 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <button onclick="voltarParaAreaAluno(event)" class="inline-flex items-center gap-2 bg-zinc-800/80 hover:bg-zinc-700 text-gray-200 text-xs sm:text-sm font-semibold px-3 py-2 rounded-lg border border-zinc-700 transition-all cursor-pointer">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span class="hidden sm:inline">Voltar</span>
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="max-w-[1600px] w-full mx-auto p-4 sm:p-6 lg:p-8 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
+        
+        <!-- COLUNA ESQUERDA: VIDEO PLAYER + CONTEÚDO DA AULA -->
+        <section class="lg:col-span-8 flex flex-col gap-6">
+            
+            <div class="bg-black rounded-2xl p-2 sm:p-3 border border-nankimBorder shadow-2xl">
+                <div class="video-container">
+                    <iframe id="video-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <!-- Título da Aula & Painel de Ações Rápidas -->
+            <div class="bg-nankimCard rounded-xl p-5 sm:p-6 border border-nankimBorder flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-lg">
+                <div class="flex flex-col gap-1.5">
+                    <div class="flex items-center gap-2">
+                        <span id="aula-modulo-badge" class="bg-zinc-800 text-zinc-300 text-[10px] sm:text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md border border-zinc-700">Módulo 1</span>
+                        <span id="aula-duracao-badge" class="text-xs text-gray-400 font-medium"><i class="fa-regular fa-clock mr-1"></i>-- min</span>
+                    </div>
+                    <h1 id="aula-titulo" class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">Carregando aula...</h1>
+                </div>
+
+                <!-- Botões de Ação -->
+                <div class="flex flex-wrap items-center gap-3 pt-2 md:pt-0 border-t border-zinc-800 md:border-0">
+                    <button id="btn-concluir" onclick="toggleAulaConcluida()" class="flex-1 md:flex-none inline-flex items-center justify-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-lg border border-zinc-700 transition-all cursor-pointer">
+                        <i id="btn-concluir-icon" class="fa-regular fa-circle-check text-nankimGreen text-base"></i>
+                        <span id="btn-concluir-texto">Marcar como Concluída</span>
+                    </button>
+
+                    <div class="flex items-center gap-2 w-full md:w-auto">
+                        <button id="btn-anterior" onclick="navegarAula(-1)" class="flex-1 md:flex-none inline-flex items-center justify-center gap-1.5 bg-zinc-900 hover:bg-zinc-800 text-gray-300 text-xs sm:text-sm font-semibold px-3.5 py-2.5 rounded-lg border border-zinc-800 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+                            <i class="fa-solid fa-chevron-left text-xs"></i>
+                            <span>Anterior</span>
+                        </button>
+                        <button id="btn-proxima" onclick="navegarAula(1)" class="flex-1 md:flex-none inline-flex items-center justify-center gap-1.5 bg-zinc-900 hover:bg-zinc-800 text-gray-300 text-xs sm:text-sm font-semibold px-3.5 py-2.5 rounded-lg border border-zinc-800 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+                            <span>Próxima</span>
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABAS DINÂMICAS -->
+            <div class="bg-nankimCard rounded-xl border border-nankimBorder overflow-hidden shadow-lg flex flex-col">
+                <div class="flex border-b border-nankimBorder overflow-x-auto no-scrollbar bg-black/40">
+                    <button onclick="mudarAba('visao-geral')" id="tab-visao-geral" class="tab-btn active flex items-center gap-2 px-5 py-3.5 text-xs sm:text-sm font-bold text-gray-400 whitespace-nowrap transition-all border-b-2 border-transparent hover:text-white">
+                        <i class="fa-solid fa-book-open"></i> Visão Geral
+                    </button>
+                    <button onclick="mudarAba('atividades')" id="tab-atividades" class="tab-btn flex items-center gap-2 px-5 py-3.5 text-xs sm:text-sm font-bold text-gray-400 whitespace-nowrap transition-all border-b-2 border-transparent hover:text-white">
+                        <i class="fa-solid fa-pencil-ruler"></i> Exercícios
+                    </button>
+                    <button onclick="mudarAba('materiais')" id="tab-materiais" class="tab-btn flex items-center gap-2 px-5 py-3.5 text-xs sm:text-sm font-bold text-gray-400 whitespace-nowrap transition-all border-b-2 border-transparent hover:text-white">
+                        <i class="fa-solid fa-paperclip"></i> Materiais de Apoio
+                    </button>
+                    <button onclick="mudarAba('comentarios')" id="tab-comentarios" class="tab-btn flex items-center gap-2 px-5 py-3.5 text-xs sm:text-sm font-bold text-gray-400 whitespace-nowrap transition-all border-b-2 border-transparent hover:text-white">
+                        <i class="fa-solid fa-comments"></i> Dúvidas & Comentários
+                    </button>
+                </div>
+
+                <div class="p-5 sm:p-6 text-sm text-gray-300 leading-relaxed">
+                    <!-- Visão Geral -->
+                    <div id="conteudo-visao-geral" class="tab-content flex flex-col gap-4">
+                        <h3 class="text-base font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-nankimGreen"></i> Sobre esta aula
+                        </h3>
+                        <p id="aula-descricao" class="text-gray-300 text-sm sm:text-base">Carregando descrição da aula...</p>
+                        
+                        <div class="mt-4 p-4 rounded-lg bg-zinc-900/80 border border-zinc-800">
+                            <h4 class="text-xs font-bold text-nankimGreen uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                                <i class="fa-solid fa-lightbulb"></i> Dica do Professor
+                            </h4>
+                            <p id="aula-dica" class="text-xs sm:text-sm text-gray-400 italic">Mantenha a mão relaxada ao segurar o lápis.</p>
+                        </div>
+                    </div>
+
+                    <!-- Exercícios -->
+                    <div id="conteudo-atividades" class="tab-content hidden flex flex-col gap-4">
+                        <h3 class="text-base font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-nankimGreen"></i> Atividade Prática Proposta
+                        </h3>
+                        <p id="aula-exercicio-desc" class="text-gray-300">Carregando instruções do exercício...</p>
+                        <div class="bg-zinc-900/60 p-4 rounded-xl border border-zinc-800 flex flex-col gap-3">
+                            <h4 class="text-xs font-bold text-gray-300 uppercase tracking-wider">Checklist de Entrega:</h4>
+                            <ul id="aula-checklist" class="space-y-2 text-xs sm:text-sm text-gray-400"></ul>
+                        </div>
+                    </div>
+
+                    <!-- Materiais -->
+                    <div id="conteudo-materiais" class="tab-content hidden flex flex-col gap-4">
+                        <h3 class="text-base font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-download text-nankimGreen"></i> Arquivos & Referências
+                        </h3>
+                        <div id="aula-materiais-lista" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+                    </div>
+
+                    <!-- Comentários -->
+                    <div id="conteudo-comentarios" class="tab-content hidden flex flex-col gap-6">
+                        <div class="flex flex-col gap-3">
+                            <label for="input-comentario" class="text-xs font-bold uppercase text-gray-400">Deixe sua dúvida ou envie seu exercício</label>
+                            <textarea id="input-comentario" rows="3" placeholder="Escreva seu comentário para o professor..." class="w-full bg-zinc-900 text-white text-sm p-3 rounded-lg border border-zinc-800 focus:outline-none focus:border-nankimGreen resize-none placeholder-gray-600 transition-colors"></textarea>
+                            <div class="flex justify-end">
+                                <button onclick="adicionarComentario()" class="bg-nankimGreen hover:bg-nankimGreenHover text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-lg transition-all flex items-center gap-2 cursor-pointer">
+                                    <i class="fa-solid fa-paper-plane"></i> Publicar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-zinc-800 pt-4 flex flex-col gap-4">
+                            <h4 class="text-xs font-bold uppercase text-gray-400 tracking-wider">Comentários da Turma</h4>
+                            <div id="lista-comentarios" class="space-y-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COLUNA DIREITA: SIDEBAR DE MÓDULOS -->
+        <aside class="lg:col-span-4 flex flex-col gap-4">
+            <div class="bg-nankimCard rounded-xl border border-nankimBorder overflow-hidden shadow-2xl sticky top-20 flex flex-col max-h-[calc(100vh-100px)]">
+                <div class="p-4 sm:p-5 border-b border-nankimBorder bg-black/40 flex flex-col gap-3">
+                    <div class="flex items-center justify-between">
+                        <h2 class="font-extrabold text-white text-base flex items-center gap-2">
+                            <i class="fa-solid fa-layer-group text-nankimGreen"></i> Conteúdo do Curso
+                        </h2>
+                        <span id="aulas-concluidas-count" class="text-xs font-bold text-gray-400 bg-zinc-800 px-2.5 py-1 rounded-md">0/0 Aulas</span>
+                    </div>
+
+                    <div class="relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-500"></i>
+                        <input type="text" id="input-busca" oninput="filtrarAulas()" placeholder="Buscar aula ou assunto..." class="w-full bg-zinc-900/90 text-xs text-white pl-8 pr-3 py-2.5 rounded-lg border border-zinc-800 focus:outline-none focus:border-nankimGreen placeholder-gray-500 transition-colors">
+                    </div>
+                </div>
+
+                <div id="container-modulos" class="overflow-y-auto p-3 flex flex-col gap-3 flex-1"></div>
+            </div>
+        </aside>
+
+    </main>
+
+    <!-- CONTAINER ONDE O GLOBAL.JS INJETA O RODAPÉ DINÂMICO -->
+    <div id="footer-container"></div>
+
+    <!-- Script Global -->
+    <script src="./js/global.js"></script>
+
+    <!-- LOGICA JAVASCRIPT LOCAL -->
+    <script>
+        // 1. VERIFICAÇÃO OBRIGATÓRIA DE SESSÃO / BLOQUEIO DE SEGURANÇA
+        const sessaoAtiva = sessionStorage.getItem('nankim_sessao');
+        if (!sessaoAtiva) {
+            window.location.href = 'index.html';
+        }
+
+        const CURSO_DATA = {
+            id: 'fundamentos-desenho',
+            titulo: 'Fundamentos do Desenho',
+            modulos: [
+                {
+                    id: 'm1',
+                    titulo: 'Módulo 1: Traço, Forma e Controle',
+                    pago: false, // Grátis para degustação
+                    aulas: [
+                        {
+                            id: 'aula-1',
+                            titulo: '1. Postura, Empunhadura e Aquecimento de Linhas',
+                            duracao: '12 min',
+                            youtubeId: 'L_LUpnjgPso',
+                            descricao: 'Nesta aula introdutória, você aprenderá a postura correta para desenhar sem fadiga muscular, as diferentes empunhaduras de lápis e exercícios para soltar o traço.',
+                            dica: 'Não apoie o pulso firmemente no papel. Faça movimentos fluidos partindo do cotovelo e ombro.',
+                            exercicio: 'Desenhe 3 páginas completas de linhas paralelas, círculos concentricos e elipses.',
+                            checklist: ['Soltar o traço usando o ombro', 'Preencher 3 folhas de aquecimento', 'Fotografar para feedback'],
+                            materiais: [{ nome: 'Guia de Aquecimento (PDF)', tipo: 'pdf', url: '#' }]
+                        },
+                        {
+                            id: 'aula-2',
+                            titulo: '2. Desconstruindo o Mundo em Formas Básicas',
+                            duracao: '18 min',
+                            youtubeId: '7R08XyO8N_o',
+                            descricao: 'Aprenda a enxergar objetos complexos através das formas primárias: quadrado, círculo e triângulo.',
+                            dica: 'Ao olhar para qualquer objeto, pergunte-se: qual é a forma geométrica mais simples que o define?',
+                            exercicio: 'Escolha 5 objetos do seu cotidiano e desenhe apenas suas formas geométricas base.',
+                            checklist: ['Identificar formas estruturais', 'Manter traços leves', 'Não detalhar antes da hora'],
+                            materiais: [{ nome: 'E-book: A Geometria na Arte (PDF)', tipo: 'pdf', url: '#' }]
+                        },
+                        {
+                            id: 'aula-3',
+                            titulo: '3. Medição Relativa e Proporções',
+                            duracao: '15 min',
+                            youtubeId: 'e2On_m3rR48',
+                            descricao: 'Entenda como utilizar o próprio lápis como ferramenta de medição angular e proporcional.',
+                            dica: 'Mantenha o braço totalmente esticado ao medir com o lápis.',
+                            exercicio: 'Faça o desenho de um bodegão estático aplicando a técnica da medição.',
+                            checklist: ['Usar a medição de braço esticado', 'Verificar ângulos e alinhamentos'],
+                            materiais: [{ nome: 'Tabela de Proporções Básicas (PDF)', tipo: 'pdf', url: '#' }]
+                        }
+                    ]
+                },
+                {
+                    id: 'm2',
+                    titulo: 'Módulo 2: Volumetria, Luz e Sombra',
+                    pago: true, // Requer Matrícula Completa
+                    aulas: [
+                        {
+                            id: 'aula-4',
+                            titulo: '4. Transformando 2D em 3D: Cilíndros, Esferas e Cubos',
+                            duracao: '22 min',
+                            youtubeId: 'V3WmrQUEjk0',
+                            descricao: 'Aprenda a dar tridimensionalidade aos seus desenhos aplicando linhas de contorno cruzado.',
+                            dica: 'Linhas curvas envolvem a forma e revelam a orientação do objeto no espaço 3D.',
+                            exercicio: 'Desenhe uma composição com 1 cubo, 1 esfera e 1 cilindro sobrepostos.',
+                            checklist: ['Aplicar contornos cruzados', 'Garantir sobreposição correta'],
+                            materiais: [{ nome: 'Pack de Referências 3D (ZIP)', tipo: 'zip', url: '#' }]
+                        },
+                        {
+                            id: 'aula-5',
+                            titulo: '5. A Física da Luz: Terminologia e Degradê',
+                            duracao: '25 min',
+                            youtubeId: 'vM39giW4P1A',
+                            descricao: 'Entenda o comportamento da luz: luz direta, brilho máximo, sombra própria, penumbra e sombra projetada.',
+                            dica: 'A luz refletida NUNCA é mais clara do que a área diretamente iluminada.',
+                            exercicio: 'Desenhe uma esfera totalmente sombreada com lápis 2B e 6B.',
+                            checklist: ['Mapear a fonte de luz', 'Criar transição suave de degradê'],
+                            materiais: [{ nome: 'Guia Ilustrado de Luz (PDF)', tipo: 'pdf', url: '#' }]
+                        }
+                    ]
+                },
+                {
+                    id: 'm3',
+                    titulo: 'Módulo 3: Perspectiva e Espaço',
+                    pago: true, // Requer Matrícula Completa
+                    aulas: [
+                        {
+                            id: 'aula-6',
+                            titulo: '6. Perspectiva de 1 Ponto de Fuga',
+                            duracao: '20 min',
+                            youtubeId: 'xrAQToR_1vE',
+                            descricao: 'Domine a linha do horizonte e o ponto de fuga para criar cenários com profundidade realista.',
+                            dica: 'Todas as linhas convergentes se encontram no mesmo ponto de fuga.',
+                            exercicio: 'Desenhe um quarto ou corredor em perspectiva de 1 ponto de fuga.',
+                            checklist: ['Definir Linha do Horizonte', 'Convergir linhas de profundidade'],
+                            materiais: [{ nome: 'Grid de Perspectiva 1PF (PNG)', tipo: 'image', url: '#' }]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        let aulaAtualId = 'aula-1';
+        let aulasConcluidas = new Set();
+        let comentariosPorAula = {};
+        let usuarioMatriculado = false;
+
+        function verificarMatriculaUsuario() {
+            const sessao = sessionStorage.getItem('nankim_sessao');
+            if (sessao) {
+                const userObj = JSON.parse(sessao);
+                const db = JSON.parse(localStorage.getItem('nankim_db')) || [];
+                const usuario = db.find(u => u.email === userObj.email);
+                if (usuario && usuario.matriculado === true) {
+                    usuarioMatriculado = true;
+                }
+            }
+        }
+
+        function carregarEstado() {
+            verificarMatriculaUsuario();
+
+            const savedConcluidas = localStorage.getItem('nankim_aulas_concluidas');
+            if (savedConcluidas) {
+                try { aulasConcluidas = new Set(JSON.parse(savedConcluidas)); } catch (e) {}
+            }
+
+            const savedUltimaAula = localStorage.getItem('nankim_ultima_aula');
+            if (savedUltimaAula) { aulaAtualId = savedUltimaAula; }
+
+            const savedComentarios = localStorage.getItem('nankim_comentarios');
+            if (savedComentarios) {
+                try { comentariosPorAula = JSON.parse(savedComentarios); } catch (e) {}
+            } else {
+                comentariosPorAula = {
+                    'aula-1': [
+                        { autor: 'Marcos Silva', avatar: 'M', data: 'Há 2 dias', texto: 'Ajustando a posição do ombro a dor no pulso sumiu!' },
+                        { autor: 'Prof. Lucas (Nankim)', avatar: 'L', data: 'Há 1 dia', texto: 'Excelente Marcos! O controle deve vir do ombro.', oficial: true }
+                    ]
+                };
+            }
+        }
+
+        function salvarEstado() {
+            localStorage.setItem('nankim_aulas_concluidas', JSON.stringify(Array.from(aulasConcluidas)));
+            localStorage.setItem('nankim_ultima_aula', aulaAtualId);
+            localStorage.setItem('nankim_comentarios', JSON.stringify(comentariosPorAula));
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            carregarEstado();
+            renderizarSidebarModulos();
+            carregarAula(aulaAtualId);
+            atualizarProgressoGeral();
+        });
+
+        function obterAulaEModulo(idAula) {
+            for (const mod of CURSO_DATA.modulos) {
+                const aula = mod.aulas.find(a => a.id === idAula);
+                if (aula) return { aula, modulo: mod };
+            }
+            return null;
+        }
+
+        function carregarAula(idAula) {
+            const dados = obterAulaEModulo(idAula);
+            if (!dados) return;
+
+            const { aula, modulo } = dados;
+
+            if (modulo.pago && !usuarioMatriculado) {
+                alert('Este módulo é exclusivo para alunos matriculados no Curso Completo.');
+                return;
+            }
+
+            aulaAtualId = idAula;
+            salvarEstado();
+
+            const iframe = document.getElementById('video-iframe');
+            iframe.src = `https://www.youtube.com/embed/${aula.youtubeId}?autoplay=1&rel=0`;
+
+            document.getElementById('aula-titulo').innerText = aula.titulo;
+            document.getElementById('aula-modulo-badge').innerText = modulo.titulo.split(':')[0];
+            document.getElementById('aula-duracao-badge').innerHTML = `<i class="fa-regular fa-clock mr-1"></i>${aula.duracao}`;
+            document.getElementById('aula-descricao').innerText = aula.descricao;
+            document.getElementById('aula-dica').innerText = aula.dica;
+            document.getElementById('aula-exercicio-desc').innerText = aula.exercicio;
+
+            document.getElementById('aula-checklist').innerHTML = aula.checklist.map(item => `
+                <li class="flex items-center gap-2.5">
+                    <i class="fa-regular fa-circle-check text-nankimGreen"></i> ${item}
+                </li>
+            `).join('');
+
+            const materiaisContainer = document.getElementById('aula-materiais-lista');
+            if (aula.materiais && aula.materiais.length > 0) {
+                materiaisContainer.innerHTML = aula.materiais.map(mat => `
+                    <a href="${mat.url}" onclick="event.preventDefault(); alert('Download iniciado: ${mat.nome}');" class="flex items-center justify-between p-3 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-nankimGreen transition-all group">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid ${mat.tipo === 'pdf' ? 'fa-file-pdf text-red-500' : 'fa-file-image text-blue-500'} text-lg"></i>
+                            <span class="text-xs sm:text-sm font-semibold text-gray-200 group-hover:text-white">${mat.nome}</span>
+                        </div>
+                        <i class="fa-solid fa-download text-xs text-gray-500 group-hover:text-nankimGreen"></i>
+                    </a>
+                `).join('');
+            } else {
+                materiaisContainer.innerHTML = `<p class="text-xs text-gray-500 italic">Nenhum arquivo complementar para esta aula.</p>`;
+            }
+
+            atualizarBotaoConcluir();
+            atualizarBotoesNavegacao();
+            renderizarSidebarModulos();
+            renderizarComentarios();
+        }
+
+        function renderizarSidebarModulos(filtro = '') {
+            const container = document.getElementById('container-modulos');
+            container.innerHTML = '';
+            let totalAulas = 0;
+            const query = filtro.toLowerCase().trim();
+
+            CURSO_DATA.modulos.forEach((modulo) => {
+                totalAulas += modulo.aulas.length;
+
+                const estaBloqueado = modulo.pago && !usuarioMatriculado;
+                const aulasFiltradas = modulo.aulas.filter(a => 
+                    a.titulo.toLowerCase().includes(query) || a.descricao.toLowerCase().includes(query)
+                );
+
+                if (query !== '' && aulasFiltradas.length === 0) return;
+
+                const contemAulaAtiva = modulo.aulas.some(a => a.id === aulaAtualId);
+                const estaExpandido = query !== '' || contemAulaAtiva;
+
+                const moduloDiv = document.createElement('div');
+                moduloDiv.className = 'border border-zinc-800/80 rounded-xl overflow-hidden bg-zinc-900/40';
+
+                moduloDiv.innerHTML = `
+                    <button onclick="toggleModuloAccordion('${modulo.id}')" class="w-full flex items-center justify-between p-3.5 text-left bg-zinc-900/80 hover:bg-zinc-800/80 transition-colors">
+                        <div class="flex items-center gap-2.5">
+                            <i id="icon-chevron-${modulo.id}" class="fa-solid fa-chevron-right text-xs text-gray-400 transition-transform ${estaExpandido ? 'rotate-90' : ''}"></i>
+                            <span class="text-xs font-bold ${estaBloqueado ? 'text-gray-500' : 'text-gray-200'}">${modulo.titulo} ${estaBloqueado ? '🔒' : ''}</span>
+                        </div>
+                        <span class="text-[10px] font-bold text-gray-500 bg-black/40 px-2 py-0.5 rounded-full border border-zinc-800">
+                            ${estaBloqueado ? 'Bloqueado' : `${modulo.aulas.filter(a => aulasConcluidas.has(a.id)).length}/${modulo.aulas.length}`}
+                        </span>
+                    </button>
+                    <div id="content-${modulo.id}" class="accordion-content ${estaExpandido ? '' : 'collapsed'} divide-y divide-zinc-800/50 bg-black/30">
+                        ${estaBloqueado ? `
+                            <div class="p-4 text-center">
+                                <p class="text-xs text-gray-400 mb-2">Conteúdo exclusivo para assinantes do Curso Completo.</p>
+                                <a href="area-aluno.html" class="inline-block text-xs font-bold text-nankimGreen hover:underline">Assinar Agora por R$ 49,90</a>
+                            </div>
+                        ` : aulasFiltradas.map(aula => {
+                            const isAtiva = aula.id === aulaAtualId;
+                            const isConclvida = aulasConcluidas.has(aula.id);
+
+                            let statusIcon = '<i class="fa-regular fa-circle text-gray-600"></i>';
+                            if (isConclvida) {
+                                statusIcon = '<i class="fa-solid fa-circle-check text-nankimGreen"></i>';
+                            } else if (isAtiva) {
+                                statusIcon = '<i class="fa-solid fa-play text-red-500 text-[10px] animate-pulse"></i>';
+                            }
+
+                            return `
+                                <div onclick="carregarAula('${aula.id}')" class="p-3 flex items-center justify-between gap-3 cursor-pointer transition-all ${isAtiva ? 'bg-nankimGreen/10 border-l-4 border-nankimGreen pl-2.5' : 'hover:bg-zinc-900/60'}">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-4 flex items-center justify-center">${statusIcon}</div>
+                                        <div class="flex flex-col">
+                                            <span class="text-xs font-medium ${isAtiva ? 'text-white font-bold' : 'text-gray-300'} line-clamp-1">${aula.titulo}</span>
+                                            <span class="text-[10px] text-gray-500">${aula.duracao}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+
+                container.appendChild(moduloDiv);
+            });
+
+            document.getElementById('aulas-concluidas-count').innerText = `${aulasConcluidas.size}/${totalAulas} Aulas`;
+        }
+
+        function toggleModuloAccordion(modId) {
+            const content = document.getElementById(`content-${modId}`);
+            const chevron = document.getElementById(`icon-chevron-${modId}`);
+            if (content) {
+                content.classList.toggle('collapsed');
+                if (chevron) chevron.classList.toggle('rotate-90');
+            }
+        }
+
+        function filtrarAulas() {
+            renderizarSidebarModulos(document.getElementById('input-busca').value);
+        }
+
+        function todasAsAulasDisponiveis() {
+            const lista = [];
+            CURSO_DATA.modulos.forEach(m => {
+                if (!m.pago || usuarioMatriculado) {
+                    m.aulas.forEach(a => lista.push(a));
+                }
+            });
+            return lista;
+        }
+
+        function atualizarBotoesNavegacao() {
+            const lista = todasAsAulasDisponiveis();
+            const idx = lista.findIndex(a => a.id === aulaAtualId);
+            document.getElementById('btn-anterior').disabled = (idx <= 0);
+            document.getElementById('btn-proxima').disabled = (idx >= lista.length - 1 || idx === -1);
+        }
+
+        function navegarAula(direcao) {
+            const lista = todasAsAulasDisponiveis();
+            const idx = lista.findIndex(a => a.id === aulaAtualId);
+            const novoIdx = idx + direcao;
+
+            if (novoIdx >= 0 && novoIdx < lista.length) {
+                carregarAula(lista[novoIdx].id);
+            }
+        }
+
+        function toggleAulaConcluida() {
+            if (aulasConcluidas.has(aulaAtualId)) {
+                aulasConcluidas.delete(aulaAtualId);
+            } else {
+                aulasConcluidas.add(aulaAtualId);
+            }
+            salvarEstado();
+            atualizarBotaoConcluir();
+            atualizarProgressoGeral();
+            renderizarSidebarModulos();
+        }
+
+        function atualizarBotaoConcluir() {
+            const isConclvida = aulasConcluidas.has(aulaAtualId);
+            const btn = document.getElementById('btn-concluir');
+            const icon = document.getElementById('btn-concluir-icon');
+            const texto = document.getElementById('btn-concluir-texto');
+
+            if (isConclvida) {
+                btn.className = "flex-1 md:flex-none inline-flex items-center justify-center gap-2 bg-nankimGreen text-white font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-lg transition-all cursor-pointer shadow-md";
+                icon.className = "fa-solid fa-circle-check text-white text-base";
+                texto.innerText = "Aula Concluída";
+            } else {
+                btn.className = "flex-1 md:flex-none inline-flex items-center justify-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-lg border border-zinc-700 transition-all cursor-pointer";
+                icon.className = "fa-regular fa-circle text-nankimGreen text-base";
+                texto.innerText = "Marcar como Concluída";
+            }
+        }
+
+        function atualizarProgressoGeral() {
+            let totalAulas = 0;
+            CURSO_DATA.modulos.forEach(m => totalAulas += m.aulas.length);
+            const concluidasCount = aulasConcluidas.size;
+            const porcentagem = totalAulas > 0 ? Math.round((concluidasCount / totalAulas) * 100) : 0;
+
+            document.getElementById('header-percent-text').innerText = `${porcentagem}%`;
+            document.getElementById('header-progress-bar').style.width = `${porcentagem}%`;
+        }
+
+        function mudarAba(abaId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`conteudo-${abaId}`).classList.remove('hidden');
+            document.getElementById(`tab-${abaId}`).classList.add('active');
+        }
+
+        function renderizarComentarios() {
+            const container = document.getElementById('lista-comentarios');
+            const lista = comentariosPorAula[aulaAtualId] || [];
+
+            if (lista.length === 0) {
+                container.innerHTML = `<p class="text-xs text-gray-500 italic">Nenhum comentário publicado ainda nesta aula.</p>`;
+                return;
+            }
+
+            container.innerHTML = lista.map(c => `
+                <div class="flex gap-3 p-3.5 rounded-xl bg-zinc-900/70 border border-zinc-800/80">
+                    <div class="w-8 h-8 rounded-full ${c.oficial ? 'bg-nankimGreen text-white' : 'bg-zinc-700 text-gray-200'} font-bold flex items-center justify-center text-xs flex-shrink-0">
+                        ${c.avatar}
+                    </div>
+                    <div class="flex flex-col gap-1 w-full">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-bold text-white">${c.autor}</span>
+                                ${c.oficial ? '<span class="bg-nankimGreen/20 text-nankimGreen text-[9px] font-bold px-1.5 py-0.5 rounded border border-nankimGreen/30">Instrutor</span>' : ''}
+                            </div>
+                            <span class="text-[10px] text-gray-500">${c.data}</span>
+                        </div>
+                        <p class="text-xs sm:text-sm text-gray-300 mt-0.5">${c.texto}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function adicionarComentario() {
+            const txtInput = document.getElementById('input-comentario');
+            const texto = txtInput.value.trim();
+
+            if (!texto) return;
+
+            if (!comentariosPorAula[aulaAtualId]) {
+                comentariosPorAula[aulaAtualId] = [];
+            }
+
+            comentariosPorAula[aulaAtualId].unshift({
+                autor: 'Você (Aluno)',
+                avatar: 'A',
+                data: 'Agora mesmo',
+                texto: texto
+            });
+
+            salvarEstado();
+            txtInput.value = '';
+            renderizarComentarios();
+        }
+
+        function voltarParaAreaAluno(e) {
+            e.preventDefault();
+            window.location.href = 'area-aluno.html';
+        }
+    </script>
+</body>
+</html>
