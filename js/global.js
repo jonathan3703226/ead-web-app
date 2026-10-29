@@ -39,13 +39,21 @@ function injetarMenuERodape() {
     const header = document.getElementById('header-container');
     const footer = document.getElementById('footer-container');
 
-    // Substitua o trecho onde injeta o menu no global.js para manter sempre a vitrine padrão
-if (header) {
-    header.innerHTML = `
+    // Detecta se a página atual está na pasta /pages/
+    const estaEmPages = window.location.pathname.includes('/pages/');
+
+    // Prefixo para voltar à raiz (../) se estiver dentro de /pages/
+    const prefixoAssets = estaEmPages ? '../' : './';
+    // Prefixo para acessar páginas internas a partir da raiz (pages/)
+    const prefixoPages  = estaEmPages ? '' : 'pages/';
+
+    // 1. INJEÇÃO DO HEADER GLOBAL
+    if (header) {
+        header.innerHTML = `
 <header class="menu-global">
-    <a class="logo" href="index.html" aria-label="Nankim Escola de Arte - início">
+    <a class="logo" href="${prefixoAssets}index.html" aria-label="Nankim Escola de Arte - início">
         <div class="logo-icone-wrapper">
-            <img src="./assets/icons/logo.svg" alt="Selo Nankim" class="logo-img-simbolo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'><circle cx=\'20\' cy=\'20\' r=\'18\' fill=\'%23b33f30\'/><text x=\'50%\' y=\'58%\' text-anchor=\'middle\' fill=\'white\' font-size=\'20\' font-family=\'Georgia\'>N</text></svg>'">
+            <img src="${prefixoAssets}assets/icons/logo.svg" alt="Selo Nankim" class="logo-img-simbolo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 40 40\\'><circle cx=\\'20\\' cy=\\'20\\' r=\\'18\\' fill=\\'%23b33f30\\'/><text x=\\'50%\\' y=\\'58%\\' text-anchor=\\'middle\\' fill=\\'white\\' font-size=\\'20\\' font-family=\\'Georgia\\'>N</text></svg>'">
         </div>
         <div class="logo-texto-wrapper">
             <span class="logo-fixo">Nankim</span>
@@ -59,35 +67,38 @@ if (header) {
         <span></span>
     </button>
     <nav>
-        <a href="quem-somos.html" class="link-magnetico"><span class="dot-hover"></span>Quem Somos</a>
-        <a href="cursos.html" class="link-magnetico"><span class="dot-hover"></span>Cursos</a>
-        <a href="contato.html" class="link-magnetico"><span class="dot-hover"></span>Contato</a>
+        <a href="${prefixoPages}quem-somos.html" class="link-magnetico"><span class="dot-hover"></span>Quem Somos</a>
+        <a href="${prefixoPages}cursos.html" class="link-magnetico"><span class="dot-hover"></span>Cursos</a>
+        <a href="${prefixoPages}contato.html" class="link-magnetico"><span class="dot-hover"></span>Contato</a>
         <button data-modal="login" class="btn-login link-magnetico">Login</button>
     </nav>
 </header>
 `;
 
-    const botaoMenu = header.querySelector('.btn-mobile');
-    const navegacao = header.querySelector('.menu-global nav');
-    const paginaAtual = window.location.pathname.split('/').pop() || 'index.html';
+        const botaoMenu = header.querySelector('.btn-mobile');
+        const navegacao = header.querySelector('.menu-global nav');
+        const paginaAtual = window.location.pathname.split('/').pop() || 'index.html';
 
-    navegacao.querySelectorAll('a[href]').forEach((link) => {
-        if (link.getAttribute('href') === paginaAtual) {
-            link.classList.add('pagina-ativa');
-            link.setAttribute('aria-current', 'page');
+        navegacao.querySelectorAll('a[href]').forEach((link) => {
+            if (link.getAttribute('href').endsWith(paginaAtual)) {
+                link.classList.add('pagina-ativa');
+                link.setAttribute('aria-current', 'page');
+            }
+        });
+
+        if (botaoMenu && navegacao) {
+            botaoMenu.addEventListener('click', () => {
+                const menuAberto = navegacao.classList.toggle('menu-aberto');
+                botaoMenu.setAttribute('aria-expanded', String(menuAberto));
+                botaoMenu.setAttribute('aria-label', menuAberto ? 'Fechar menu' : 'Abrir menu');
+            });
         }
-    });
 
-    botaoMenu.addEventListener('click', () => {
-        const menuAberto = navegacao.classList.toggle('menu-aberto');
-        botaoMenu.setAttribute('aria-expanded', String(menuAberto));
-        botaoMenu.setAttribute('aria-label', menuAberto ? 'Fechar menu' : 'Abrir menu');
-    });
+        aplicarEfeitoMagnetico();
+    }
 
-    aplicarEfeitoMagnetico();
-}
-
-   if (footer) {
+    // 2. INJEÇÃO DO FOOTER GLOBAL
+    if (footer) {
         footer.innerHTML = `
             <footer class="rodape-global">
                 <div class="rodape-container">
@@ -117,7 +128,7 @@ if (header) {
                     <div class="rodape-inferior">
                         <p class="rodape-copyright">&copy; 2026 equipe rocket. Todos os direitos reservados.</p>
                         <div class="rodape-links-legais">
-                            <a href="politica-privacidade.html" class="link-magnetico">Política de uso e termos de privacidade</a>
+                            <a href="${prefixoPages}politica-privacidade.html" class="link-magnetico">Política de uso e termos de privacidade</a>
                             <button type="button" class="link-preferencias-cookies link-magnetico" data-cookie-preferences>Preferências de Cookies</button>
                         </div>
                     </div>
@@ -265,12 +276,12 @@ function injetarHeaderAluno() {
         try {
             const usuarioSessao = JSON.parse(sessaoData);
             const primeiroNome = usuarioSessao.nome ? usuarioSessao.nome.split(' ')[0] : 'Aluno';
-            
+
             const elNome = document.getElementById('nome-aluno-topo');
             const elAvatar = document.getElementById('avatar-iniciais');
-            
+
             if (elNome) elNome.textContent = primeiroNome;
             if (elAvatar) elAvatar.textContent = primeiroNome.charAt(0).toUpperCase();
-        } catch(e) {}
+        } catch (e) { }
     }
 }
