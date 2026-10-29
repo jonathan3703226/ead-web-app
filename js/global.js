@@ -25,80 +25,154 @@ function fecharMenuConta() {
     if (opcoes) opcoes.hidden = true;
 }
 
-function abrirModal(modalId) {
-    const modal = document.getElementById(`modal-${modalId}`);
-    if (modal) modal.style.display = 'flex';
+const termosComponent = `
+<div id="modal-termos" class="modal" role="dialog" aria-modal="true" aria-labelledby="termos-titulo" aria-hidden="true">
+    <article class="modal-content modal-largo termos-card">
+        <button class="close-btn" type="button" data-close="termos" aria-label="Fechar termos">&times;</button>
+        <header class="termos-cabecalho">
+            <p class="termos-eyebrow">Nankim Escola de Arte</p>
+            <h2 id="termos-titulo">Termos de Uso e Política de Privacidade</h2>
+        </header>
+        <div class="conteudo-scroll" tabindex="0" aria-label="Conteúdo dos termos">
+            <section><h3>1. Aceitação dos Termos</h3><p>Ao acessar ou utilizar os serviços da Nankim Escola de Arte, você declara ter lido, compreendido e concordado com estes Termos de Uso e com esta política. Caso não concorde, não utilize a plataforma.</p></section>
+            <section><h3>2. Cadastro e Responsabilidades</h3><p>Você se compromete a fornecer informações verdadeiras, manter seus dados atualizados e proteger a confidencialidade da conta. Como este protótipo utiliza armazenamento local, não utilize dados reais sensíveis ou senhas reais.</p></section>
+            <section><h3>3. Propriedade Intelectual</h3><p>Vídeos, apostilas, imagens, metodologias e demais conteúdos são protegidos por direitos autorais e pertencem à Nankim ou a seus titulares. É proibida a cópia, redistribuição, gravação ou comercialização não autorizada.</p><p>As criações enviadas pelo aluno permanecem de sua autoria. Sua divulgação exige autorização prévia do titular.</p></section>
+            <section><h3>4. Dados pessoais tratados</h3><p>Em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018 – LGPD), podemos tratar dados de identificação e contato, como nome e e-mail, além de informações fornecidas em formulários, preferências de conta e registros necessários ao funcionamento.</p></section>
+            <section><h3>5. Finalidades, bases legais e compartilhamento</h3><p>Os dados podem ser utilizados para criar e administrar contas, prestar suporte, responder solicitações, demonstrar funcionalidades, cumprir obrigações legais, prevenir fraudes e melhorar a experiência. O compartilhamento ocorre somente com prestadores necessários, autoridades quando houver obrigação legal ou consentimento específico.</p></section>
+            <section><h3>6. Cookies e preferências</h3><p>Cookies necessários podem ser essenciais ao funcionamento. Recursos opcionais dependem das preferências escolhidas pelo usuário. As opções podem ser alteradas pelo botão de Preferências de Cookies disponível no rodapé.</p></section>
+            <section><h3>7. Armazenamento e segurança</h3><p>Neste protótipo, informações de demonstração são armazenadas localmente no navegador. A aplicação não oferece os controles de segurança de um ambiente de produção.</p></section>
+            <section><h3>8. Direitos do titular</h3><p>Nos termos da LGPD, você pode solicitar confirmação e acesso aos dados, correção, anonimização, portabilidade, eliminação, informação sobre compartilhamentos, revogação do consentimento e revisão de decisões automatizadas.</p></section>
+            <section><h3>9. Pagamentos, cancelamento e reembolso</h3><p>Esta versão demonstra o fluxo de matrícula e não processa cobranças. Em uma contratação real, valor, periodicidade, prazo, cancelamento e reembolso devem ser informados antes da confirmação da compra.</p></section>
+            <section><h3>10. Conduta e alterações</h3><p>Os usuários devem respeitar colegas, instrutores e participantes. Assédio, discriminação, pirataria ou uso fraudulento podem resultar em suspensão. Estes termos podem ser atualizados.</p></section>
+            <hr><p><small><em>Última atualização: 27 de outubro de 2026. Versão front-end para fins acadêmicos.</em></small></p>
+        </div>
+        <footer class="termos-acoes"><button type="button" class="termos-btn-concordar" data-agree-terms>Concordar e fechar</button></footer>
+    </article>
+</div>`;
+
+let elementoTermosAnterior = null;
+
+function atualizarBloqueioRolagemGlobal() {
+    const cookieAberto = document.getElementById('cookie-banner')?.style.display === 'flex';
+    const termosAberto = document.getElementById('modal-termos')?.style.display === 'flex';
+    document.body.classList.toggle('modal-aberto', Boolean(cookieAberto || termosAberto));
 }
 
-function fecharModal(modalId) {
+function injetarModalTermos() {
+    document.getElementById('modal-termos')?.remove();
+    document.body.insertAdjacentHTML('beforeend', termosComponent);
+}
+
+function abrirModal(modalId) {
     const modal = document.getElementById(`modal-${modalId}`);
-    if (modal) modal.style.display = 'none';
+    if (!modal) return;
+    if (modalId === 'termos') elementoTermosAnterior = document.activeElement;
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden', 'false');
+    atualizarBloqueioRolagemGlobal();
+    if (modalId === 'termos') modal.querySelector('.close-btn')?.focus();
+}
+
+function fecharModal(modalId, concordou = false) {
+    const modal = document.getElementById(`modal-${modalId}`);
+    if (!modal) return;
+    if (modalId === 'termos' && concordou) {
+        localStorage.setItem('nankim_terms_acceptance', JSON.stringify({ accepted: true, date: new Date().toISOString() }));
+    }
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+    atualizarBloqueioRolagemGlobal();
+    if (modalId === 'termos') elementoTermosAnterior?.focus();
 }
 
 function injetarMenuERodape() {
     const header = document.getElementById('header-container');
     const footer = document.getElementById('footer-container');
 
-    // Detecta se a página atual está na pasta /pages/
-    const estaEmPages = window.location.pathname.includes('/pages/');
-
-    // Prefixo para voltar à raiz (../) se estiver dentro de /pages/
-    const prefixoAssets = estaEmPages ? '../' : './';
-    // Prefixo para acessar páginas internas a partir da raiz (pages/)
-    const prefixoPages  = estaEmPages ? '' : 'pages/';
-
-    // 1. INJEÇÃO DO HEADER GLOBAL
     if (header) {
         header.innerHTML = `
-<header class="menu-global">
-    <a class="logo" href="${prefixoAssets}index.html" aria-label="Nankim Escola de Arte - início">
-        <div class="logo-icone-wrapper">
-            <img src="${prefixoAssets}assets/icons/logo.svg" alt="Selo Nankim" class="logo-img-simbolo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 40 40\\'><circle cx=\\'20\\' cy=\\'20\\' r=\\'18\\' fill=\\'%23b33f30\\'/><text x=\\'50%\\' y=\\'58%\\' text-anchor=\\'middle\\' fill=\\'white\\' font-size=\\'20\\' font-family=\\'Georgia\\'>N</text></svg>'">
-        </div>
-        <div class="logo-texto-wrapper">
-            <span class="logo-fixo">Nankim</span>
-            <span class="logo-expansivel">Art School</span>
-        </div>
-    </a>
+    <header class="menu-global">
+        <a class="logo" href="index.html" aria-label="Nankim Escola de Arte - início">
+            <div class="logo-icone-wrapper">
+                <img src="./assets/icons/logo.svg" alt="Selo Nankim" class="logo-img-simbolo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'><circle cx=\'20\' cy=\'20\' r=\'18\' fill=\'%23b33f30\'/><text x=\'50%\' y=\'58%\' text-anchor=\'middle\' fill=\'white\' font-size=\'20\' font-family=\'Georgia\'>N</text></svg>'">
+            </div>
+            <div class="logo-texto-wrapper">
+                <span class="logo-fixo">Nankim</span>
+                <span class="logo-expansivel">Art School</span>
+            </div>
+        </a>
 
-    <button class="btn-mobile" aria-label="Abrir menu" aria-expanded="false" type="button">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-    <nav>
-        <a href="${prefixoPages}quem-somos.html" class="link-magnetico"><span class="dot-hover"></span>Quem Somos</a>
-        <a href="${prefixoPages}cursos.html" class="link-magnetico"><span class="dot-hover"></span>Cursos</a>
-        <a href="${prefixoPages}contato.html" class="link-magnetico"><span class="dot-hover"></span>Contato</a>
-        <button data-modal="login" class="btn-login link-magnetico">Login</button>
-    </nav>
-</header>
+        <button class="btn-mobile" aria-label="Abrir menu" aria-expanded="false" type="button">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav>
+            <a href="quem-somos.html" class="link-magnetico"><span class="dot-hover"></span>Quem Somos</a>
+            <a href="cursos.html" class="link-magnetico"><span class="dot-hover"></span>Cursos</a>
+            <a href="contato.html" class="link-magnetico"><span class="dot-hover"></span>Contato</a>
+            <button data-modal="login" class="btn-login link-magnetico">Login</button>
+        </nav>
+    </header>
 `;
-
         const botaoMenu = header.querySelector('.btn-mobile');
         const navegacao = header.querySelector('.menu-global nav');
+        const botaoLogin = navegacao.querySelector('.btn-login');
         const paginaAtual = window.location.pathname.split('/').pop() || 'index.html';
+        const aluno = obterAlunoLogado();
+
+        if (aluno) {
+            const nome = aluno.nome.trim().split(/\s+/)[0];
+            const menuConta = document.createElement('div');
+            menuConta.className = 'menu-conta';
+
+            const botaoConta = document.createElement('button');
+            botaoConta.className = 'btn-login usuario-menu link-magnetico';
+            botaoConta.type = 'button';
+            botaoConta.dataset.accountMenu = '';
+            botaoConta.setAttribute('aria-expanded', 'false');
+            botaoConta.setAttribute('aria-controls', 'menu-conta-opcoes');
+            botaoConta.setAttribute('aria-label', `Opções da conta de ${nome}`);
+            botaoConta.textContent = nome;
+
+            const opcoesConta = document.createElement('div');
+            opcoesConta.className = 'menu-conta-opcoes';
+            opcoesConta.id = 'menu-conta-opcoes';
+            opcoesConta.hidden = true;
+
+            const linkArea = document.createElement('a');
+            linkArea.href = 'area-aluno.html';
+            linkArea.textContent = 'Minha Área';
+
+            const botaoTrocarConta = document.createElement('button');
+            botaoTrocarConta.type = 'button';
+            botaoTrocarConta.dataset.modal = 'login';
+            botaoTrocarConta.dataset.accountSwitch = '';
+            botaoTrocarConta.textContent = 'Trocar de conta';
+
+            opcoesConta.append(linkArea, botaoTrocarConta);
+            menuConta.append(botaoConta, opcoesConta);
+            botaoLogin.replaceWith(menuConta);
+        }
 
         navegacao.querySelectorAll('a[href]').forEach((link) => {
-            if (link.getAttribute('href').endsWith(paginaAtual)) {
+            if (link.getAttribute('href') === paginaAtual) {
                 link.classList.add('pagina-ativa');
                 link.setAttribute('aria-current', 'page');
             }
         });
 
-        if (botaoMenu && navegacao) {
-            botaoMenu.addEventListener('click', () => {
-                const menuAberto = navegacao.classList.toggle('menu-aberto');
-                botaoMenu.setAttribute('aria-expanded', String(menuAberto));
-                botaoMenu.setAttribute('aria-label', menuAberto ? 'Fechar menu' : 'Abrir menu');
-            });
-        }
+        botaoMenu.addEventListener('click', () => {
+            const menuAberto = navegacao.classList.toggle('menu-aberto');
+            botaoMenu.setAttribute('aria-expanded', String(menuAberto));
+            botaoMenu.setAttribute('aria-label', menuAberto ? 'Fechar menu' : 'Abrir menu');
+        });
 
+        // Inicializa o efeito magnético nos itens do menu
         aplicarEfeitoMagnetico();
     }
 
-    // 2. INJEÇÃO DO FOOTER GLOBAL
-    if (footer) {
+   if (footer) {
         footer.innerHTML = `
             <footer class="rodape-global">
                 <div class="rodape-container">
@@ -120,7 +194,7 @@ function injetarMenuERodape() {
                                     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.501 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.377.55 9.377.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                                 </a>
                             </div>
-                            <p class="rodape-desc-escola">A Nankim é a escola de artes onde o seu sonho ganha traço. Desenvolvemos um ecossistema de ensino organizado para guiar você do primeiro esboço ao nível profissional.</p>
+                            <p class="rodape-desc-escola">A Nankim é uma escola de artes que tem como principal objetivo contribuir com o desenvolvimento artístico, cultural e intelectual de todos aqueles que se reconhecem através da arte.</p>
                         </div>
                     </div>
                     
@@ -128,7 +202,7 @@ function injetarMenuERodape() {
                     <div class="rodape-inferior">
                         <p class="rodape-copyright">&copy; 2026 equipe rocket. Todos os direitos reservados.</p>
                         <div class="rodape-links-legais">
-                            <a href="${prefixoPages}politica-privacidade.html" class="link-magnetico">Política de uso e termos de privacidade</a>
+                            <button type="button" class="link-preferencias-cookies link-magnetico" data-modal="termos">Termos de Uso e Política de Privacidade</button>
                             <button type="button" class="link-preferencias-cookies link-magnetico" data-cookie-preferences>Preferências de Cookies</button>
                         </div>
                     </div>
@@ -173,6 +247,12 @@ document.addEventListener('click', (event) => {
         return;
     }
 
+    const botaoConcordarTermos = alvo.closest('[data-agree-terms]');
+    if (botaoConcordarTermos) {
+        fecharModal('termos', true);
+        return;
+    }
+
     const botaoAbrir = alvo.closest('[data-modal]');
     if (botaoAbrir) {
         event.preventDefault();
@@ -200,11 +280,38 @@ document.addEventListener('click', (event) => {
 
 document.addEventListener('mousedown', (event) => {
     if (event.target instanceof Element && event.target.classList.contains('modal')) {
-        event.target.style.display = 'none';
+        fecharModal(event.target.id.replace('modal-', ''));
     }
 });
 
-document.addEventListener('DOMContentLoaded', injetarMenuERodape);
+document.addEventListener('keydown', (event) => {
+    const modal = document.getElementById('modal-termos');
+    if (!modal || modal.style.display !== 'flex') return;
+
+    if (event.key === 'Escape') {
+        fecharModal('termos');
+        return;
+    }
+
+    if (event.key === 'Tab') {
+        const elementos = Array.from(modal.querySelectorAll('button:not([disabled]), [tabindex="0"]'));
+        if (!elementos.length) return;
+        const primeiro = elementos[0];
+        const ultimo = elementos[elementos.length - 1];
+        if (event.shiftKey && document.activeElement === primeiro) {
+            event.preventDefault();
+            ultimo.focus();
+        } else if (!event.shiftKey && document.activeElement === ultimo) {
+            event.preventDefault();
+            primeiro.focus();
+        }
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    injetarModalTermos();
+    injetarMenuERodape();
+});
 
 // Efeito de transição do Menu no Scroll
 window.addEventListener('scroll', () => {
@@ -234,54 +341,3 @@ document.addEventListener('click', (event) => {
         }
     }
 });
-function injetarHeaderAluno() {
-    const containerHeader = document.getElementById('header-aluno-container');
-    if (!containerHeader) return;
-
-    // Logo alterada de <a> para <div> (elemento apenas visual)
-    containerHeader.innerHTML = `
-        <header class="header-aluno">
-            <div class="header-aluno-container">
-                <div class="logo-aluno-wrapper">
-                    <div class="logo-icone-wrapper">
-                        <img src="./assets/icons/logo.svg" alt="Nankim" class="logo-img-simbolo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 40 40\\'><circle cx=\\'20\\' cy=\\'20\\' r=\\'18\\' fill=\\'%23b33f30\\'/><text x=\\'50%\\' y=\\'58%\\' text-anchor=\'middle\\' fill=\'white\\' font-size=\'20\\' font-family=\'Georgia\\'>N</text></svg>'">
-                    </div>
-                    <div class="logo-texto-wrapper">
-                        <span class="logo-fixo">Nankim</span>
-                        <span class="logo-expansivel">Art School</span>
-                    </div>
-                </div>
-                
-                <div class="perfil-dropdown" style="position: relative;">
-                    <button class="btn-perfil" id="btn-menu-perfil" type="button" aria-expanded="false">
-                        <div class="avatar-aluno" id="avatar-iniciais">AL</div>
-                        <span id="nome-aluno-topo">Carregando...</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left: 4px;"><path d="M6 9l6 6 6-6"/></svg>
-                    </button>
-                    
-                    <div class="dropdown-menu" id="dropdown-perfil" style="display: none;">
-                        <a href="area-aluno.html">Cursos</a>
-                        <a href="meu-perfil.html">Meu Perfil</a>
-                        <div class="linha-divisoria"></div>
-                        <button type="button" id="btn-sair" class="btn-sair-conta">Sair da conta</button>
-                    </div>
-                </div>
-            </div>
-        </header>
-    `;
-
-    // Carrega nome e avatar da sessão
-    const sessaoData = sessionStorage.getItem('nankim_sessao');
-    if (sessaoData) {
-        try {
-            const usuarioSessao = JSON.parse(sessaoData);
-            const primeiroNome = usuarioSessao.nome ? usuarioSessao.nome.split(' ')[0] : 'Aluno';
-
-            const elNome = document.getElementById('nome-aluno-topo');
-            const elAvatar = document.getElementById('avatar-iniciais');
-
-            if (elNome) elNome.textContent = primeiroNome;
-            if (elAvatar) elAvatar.textContent = primeiroNome.charAt(0).toUpperCase();
-        } catch (e) { }
-    }
-}

@@ -1,24 +1,12 @@
 function injetarModaisAutenticacao() {
-    // Detecta se a página atual está na pasta /pages/ para os links internos dos modais
-    const estaEmPages = window.location.pathname.includes('/pages/');
-    const prefixoPages = estaEmPages ? '' : 'pages/';
-
-    // 1. Modal de Login com Abas (Aluno / Professor)
+    // 1. Modal de Login (Apenas E-mail e Senha)
     if (!document.getElementById('modal-login')) {
         document.body.insertAdjacentHTML('beforeend', `
             <div id="modal-login" class="modal">
                 <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="titulo-login">
                     <button class="close-btn" type="button" data-close="login" aria-label="Fechar">&times;</button>
-                    
-                    <!-- Seletor de Perfil (Aluno vs Professor) -->
-                    <div class="login-tabs-perfil">
-                        <button type="button" class="tab-perfil active" data-perfil="aluno">Sou Aluno</button>
-                        <button type="button" class="tab-perfil" data-perfil="professor">Sou Professor</button>
-                    </div>
-
                     <h2 id="titulo-login">Login - Área do Aluno</h2>
-                    
-                    <form id="form-login" novalidate data-tipo-acesso="aluno">
+                    <form id="form-login" novalidate>
                         <div class="input-group">
                             <label for="login-email">E-mail</label>
                             <input type="email" id="login-email" placeholder="seuemail@dominio.com" required autocomplete="email">
@@ -37,19 +25,11 @@ function injetarModaisAutenticacao() {
                             </div>
                             <small class="input-feedback"></small>
                         </div>
-
-                        <!-- Dica para acesso de Professor (Oculto por padrão) -->
-                        <div id="dica-acesso-professor" style="display: none; font-size: 0.8rem; color: #888888; background: #1a1a1a; border: 1px solid #333; padding: 0.6rem 0.8rem; border-radius: 8px; margin-bottom: 1rem;">
-                            💡 Acesso de teste: <strong>professor@nankim.com</strong> / senha: <strong>admin123</strong>
-                        </div>
-
-                        <div class="login-acoes-auxiliares" id="container-esqueci-senha">
+                        <div class="login-acoes-auxiliares">
                             <a href="#" id="link-esqueci-senha">Esqueceu sua senha?</a>
                         </div>
-
                         <button type="submit" id="btn-submit-login">Entrar na Plataforma</button>
-
-                        <p class="alternar-cadastro" id="container-alternar-cadastro">
+                        <p class="alternar-cadastro">
                             <span>Ainda não tem conta?</span> 
                             <button type="button" id="btn-alternar-para-cadastro">Cadastre-se</button>
                         </p>
@@ -68,6 +48,7 @@ function injetarModaisAutenticacao() {
                     <h2 id="titulo-cadastro">Crie sua conta Nankim</h2>
                     
                     <form id="form-cadastro" novalidate>
+                        
                         <div class="input-group">
                             <label for="cad-nome">Nome completo</label>
                             <input type="text" id="cad-nome" placeholder="Seu nome e sobrenome" required autocomplete="name">
@@ -132,7 +113,7 @@ function injetarModaisAutenticacao() {
                         <div class="input-group checkbox-group">
                             <label class="label-termos">
                                 <input type="checkbox" id="cad-termos" required>
-                                <span>Li e aceito os <a href="${prefixoPages}politica-privacidade.html" target="_blank">Termos de Uso e Política de Privacidade</a></span>
+                                <span>Li e aceito os <button type="button" class="link-termos-modal" data-modal="termos">Termos de Uso e Política de Privacidade</button></span>
                             </label>
                             <small class="input-feedback"></small>
                         </div>
@@ -162,9 +143,6 @@ function obterUsuarios() {
 }
 
 function configurarAutenticacao() {
-    const estaEmPages = window.location.pathname.includes('/pages/');
-    const prefixoPages = estaEmPages ? '' : 'pages/';
-
     const formLogin = document.getElementById('form-login');
     const formCadastro = document.getElementById('form-cadastro');
 
@@ -214,41 +192,10 @@ function configurarAutenticacao() {
         form.insertBefore(mensagem, form.firstChild);
     }
 
-    // 1. OUVINTE GLOBAL DE CLIQUES
+    // 1. OUVINTE GLOBAL DE CLIQUES (Esqueci a senha, troca de modais e fechar)
     document.addEventListener('click', (e) => {
         const alvo = e.target instanceof Element ? e.target : null;
         if (!alvo) return;
-
-        // Alternância de Abas (Sou Aluno vs Sou Professor)
-        const tabBtn = alvo.closest('.tab-perfil');
-        if (tabBtn) {
-            e.preventDefault();
-            document.querySelectorAll('.tab-perfil').forEach(t => t.classList.remove('active'));
-            tabBtn.classList.add('active');
-
-            const perfil = tabBtn.getAttribute('data-perfil');
-            const tituloLogin = document.getElementById('titulo-login');
-            const dicaProf = document.getElementById('dica-acesso-professor');
-            const containerEsqueci = document.getElementById('container-esqueci-senha');
-            const containerAlternarCad = document.getElementById('container-alternar-cadastro');
-
-            mostrarMensagemGeral(formLogin, '');
-
-            if (perfil === 'professor') {
-                formLogin.setAttribute('data-tipo-acesso', 'professor');
-                tituloLogin.textContent = 'Login - Área do Professor';
-                dicaProf.style.display = 'block';
-                containerEsqueci.style.display = 'none';
-                containerAlternarCad.style.display = 'none';
-            } else {
-                formLogin.setAttribute('data-tipo-acesso', 'aluno');
-                tituloLogin.textContent = 'Login - Área do Aluno';
-                dicaProf.style.display = 'none';
-                containerEsqueci.style.display = 'block';
-                containerAlternarCad.style.display = 'block';
-            }
-            return;
-        }
 
         // Clique em "Esqueceu sua senha?"
         const linkEsqueci = alvo.closest('#link-esqueci-senha');
@@ -510,37 +457,14 @@ function configurarAutenticacao() {
             event.preventDefault();
             mostrarMensagemGeral(formLogin, '');
 
-            const tipoAcesso = formLogin.getAttribute('data-tipo-acesso') || 'aluno';
             const email = document.getElementById('login-email').value.trim().toLowerCase();
             const senha = document.getElementById('login-senha').value;
 
             if (!regexEmail.test(email) || senha.length < 6) {
-                mostrarMensagemGeral(formLogin, 'Informe um e-mail válido e sua senha.');
+                mostrarMensagemGeral(formLogin, 'Informe um e-mail válido e a senha da sua conta.');
                 return;
             }
 
-            // A) LOGIN DE PROFESSOR
-            if (tipoAcesso === 'professor') {
-                if (email === 'professor@nankim.com' && senha === 'admin123') {
-                    try {
-                        sessionStorage.setItem('nankim_sessao', JSON.stringify({
-                            logado: true,
-                            tipo: 'professor',
-                            perfil: 'professor',
-                            nome: 'Thiago Nankim',
-                            email: email
-                        }));
-                    } catch (error) {
-                        console.error('Erro ao salvar sessão:', error);
-                    }
-                    window.location.href = `${prefixoPages}area-professor.html`;
-                } else {
-                    mostrarMensagemGeral(formLogin, 'Credenciais de professor incorretas.');
-                }
-                return;
-            }
-
-            // B) LOGIN DE ALUNO
             const usuarios = obterUsuarios();
             const usuario = usuarios.find((c) => c.email.toLowerCase() === email);
 
@@ -552,8 +476,6 @@ function configurarAutenticacao() {
             try {
                 sessionStorage.setItem('nankim_sessao', JSON.stringify({
                     logado: true,
-                    tipo: 'aluno',
-                    perfil: 'aluno',
                     nome: usuario.nome || email.split('@')[0],
                     email: usuario.email
                 }));
@@ -561,7 +483,7 @@ function configurarAutenticacao() {
                 console.error('Erro ao iniciar sessão:', error);
             }
 
-            window.location.href = `${prefixoPages}area-aluno.html`;
+            window.location.href = 'area-aluno.html';
         });
     }
 }
