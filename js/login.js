@@ -1,4 +1,8 @@
 function injetarModaisAutenticacao() {
+    // Detecta se a página atual está na pasta /pages/ para os links internos dos modais
+    const estaEmPages = window.location.pathname.includes('/pages/');
+    const prefixoPages = estaEmPages ? '' : 'pages/';
+
     // 1. Modal de Login com Abas (Aluno / Professor)
     if (!document.getElementById('modal-login')) {
         document.body.insertAdjacentHTML('beforeend', `
@@ -128,7 +132,7 @@ function injetarModaisAutenticacao() {
                         <div class="input-group checkbox-group">
                             <label class="label-termos">
                                 <input type="checkbox" id="cad-termos" required>
-                                <span>Li e aceito os <a href="politica-privacidade.html" target="_blank">Termos de Uso e Política de Privacidade</a></span>
+                                <span>Li e aceito os <a href="${prefixoPages}politica-privacidade.html" target="_blank">Termos de Uso e Política de Privacidade</a></span>
                             </label>
                             <small class="input-feedback"></small>
                         </div>
@@ -158,6 +162,9 @@ function obterUsuarios() {
 }
 
 function configurarAutenticacao() {
+    const estaEmPages = window.location.pathname.includes('/pages/');
+    const prefixoPages = estaEmPages ? '' : 'pages/';
+
     const formLogin = document.getElementById('form-login');
     const formCadastro = document.getElementById('form-cadastro');
 
@@ -516,7 +523,6 @@ function configurarAutenticacao() {
             if (tipoAcesso === 'professor') {
                 if (email === 'professor@nankim.com' && senha === 'admin123') {
                     try {
-                        // Guardamos 'tipo' e 'perfil' para total compatibilidade com area-professor.html
                         sessionStorage.setItem('nankim_sessao', JSON.stringify({
                             logado: true,
                             tipo: 'professor',
@@ -527,7 +533,7 @@ function configurarAutenticacao() {
                     } catch (error) {
                         console.error('Erro ao salvar sessão:', error);
                     }
-                    window.location.href = 'area-professor.html';
+                    window.location.href = `${prefixoPages}area-professor.html`;
                 } else {
                     mostrarMensagemGeral(formLogin, 'Credenciais de professor incorretas.');
                 }
@@ -555,7 +561,7 @@ function configurarAutenticacao() {
                 console.error('Erro ao iniciar sessão:', error);
             }
 
-            window.location.href = 'area-aluno.html';
+            window.location.href = `${prefixoPages}area-aluno.html`;
         });
     }
 }
