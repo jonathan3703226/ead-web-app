@@ -1,15 +1,24 @@
-/* ==========================================================
-   SISTEMA DE TEMA (CLARO E ESCURO) - SOMENTE NO MENU POR ENQUANTO
-   ========================================================== */
+/* ==========================================================================
+   NANKIM ESCOLA DE ARTE - SCRIPT GLOBAL UNIFICADO
+   Contém: Gerenciamento de Tema, Controle de Modais, Injeção de Menu/Rodapé e Eventos
+   ========================================================================== */
 
-function obterTemaPreferido() {
-    const temaSalvo = localStorage.getItem('nankim_tema');
-    if (temaSalvo) return temaSalvo;
+/* --------------------------------------------------------------------------
+   1. GERENCIAMENTO DE TEMA (DIRETO DO NAVEGADOR / SISTEMA)
+   -------------------------------------------------------------------------- */
+
+// Detecta se o sistema/navegador está em modo escuro no momento
+function obterTemaDoNavegador() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
 function aplicarTema(tema) {
-    document.documentElement.setAttribute('data-theme', tema);
+    if (tema === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+    }
+    
     const btnTema = document.getElementById('btn-toggle-tema');
     if (btnTema) {
         btnTema.setAttribute('aria-label', tema === 'dark' ? 'Mudar para modo claro' : 'Mudar para modo escuro');
@@ -19,25 +28,20 @@ function aplicarTema(tema) {
 function alternarTema() {
     const temaAtual = document.documentElement.getAttribute('data-theme');
     const novoTema = temaAtual === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('nankim_tema', novoTema);
     aplicarTema(novoTema);
 }
 
-// Aplica o tema preferido imediatamente no carregamento
-aplicarTema(obterTemaPreferido());
+// 1. Sempre que a página abre, aplica diretamente o tema atual do navegador
+aplicarTema(obterTemaDoNavegador());
 
-// Escuta a mudança de tema do próprio navegador em tempo real
+// 2. Se o usuário alterar o tema do sistema/navegador enquanto a página estiver aberta
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    if (!localStorage.getItem('nankim_tema')) {
-        aplicarTema(e.matches ? 'dark' : 'light');
-    }
+    aplicarTema(e.matches ? 'dark' : 'light');
 });
 
-
-/* ==========================================================
-   FUNÇÕES GLOBAIS DE SESSÃO E MODAIS
-   ========================================================== */
-
+/* --------------------------------------------------------------------------
+   2. GERENCIAMENTO DE SESSÃO E MODAIS
+   -------------------------------------------------------------------------- */
 function obterAlunoLogado() {
     try {
         const sessao = JSON.parse(sessionStorage.getItem('nankim_sessao') || 'null');
@@ -76,10 +80,31 @@ function fecharModal(modalId) {
 }
 
 
-/* ==========================================================
-   INJEÇÃO DO MENU GLOBAL E RODAPÉ
-   ========================================================== */
+/* --------------------------------------------------------------------------
+   3. EFEITOS VISUAIS E INTERAÇÕES
+   -------------------------------------------------------------------------- */
+function aplicarEfeitoMagnetico() {
+    const elementos = document.querySelectorAll('.link-magnetico, .logo-magnetico');
 
+    elementos.forEach((el) => {
+        el.addEventListener('mousemove', (e) => {
+            const rect = el.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+
+            el.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
+        });
+
+        el.addEventListener('mouseleave', () => {
+            el.style.transform = 'translate(0px, 0px)';
+        });
+    });
+}
+
+
+/* --------------------------------------------------------------------------
+   4. INJEÇÃO DINÂMICA DO MENU E RODAPÉ
+   -------------------------------------------------------------------------- */
 function injetarMenuERodape() {
     const header = document.getElementById('header-container');
     const footer = document.getElementById('footer-container');
@@ -107,7 +132,6 @@ function injetarMenuERodape() {
         <a href="cursos.html" class="link-magnetico"><span class="dot-hover"></span>Cursos</a>
         <a href="contato.html" class="link-magnetico"><span class="dot-hover"></span>Contato</a>
         
-        <!-- Botão Bonito de Alternância de Tema -->
         <button id="btn-toggle-tema" class="btn-toggle-tema link-magnetico" type="button" aria-label="Alternar Tema">
             <span class="icone-sol">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
@@ -139,7 +163,6 @@ function injetarMenuERodape() {
             botaoMenu.setAttribute('aria-label', menuAberto ? 'Fechar menu' : 'Abrir menu');
         });
 
-        // Conecta a ação de clique do botão do tema
         const btnTema = document.getElementById('btn-toggle-tema');
         if (btnTema) {
             btnTema.addEventListener('click', alternarTema);
@@ -189,28 +212,43 @@ function injetarMenuERodape() {
     }
 }
 
-function aplicarEfeitoMagnetico() {
-    const elementos = document.querySelectorAll('.link-magnetico, .logo-magnetico');
 
-    elementos.forEach((el) => {
-        el.addEventListener('mousemove', (e) => {
-            const rect = el.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
+/* --------------------------------------------------------------------------
+   5. OUVINTES DE EVENTOS (LISTENERS)
+   -------------------------------------------------------------------------- */
 
-            el.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
-        });
+// Injeta os componentes assim que o DOM estiver carregado
+document.addEventListener('DOMContentLoaded', injetarMenuERodape);
 
-        el.addEventListener('mouseleave', () => {
-            el.style.transform = 'translate(0px, 0px)';
-        });
-    });
-}
+// Adiciona classe 'scrolled' no menu ao rolar a página
+window.addEventListener('scroll', () => {
+    const nav = document.querySelector('.menu-global');
+    if (nav) {
+        if (window.scrollY > 50) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    }
+});
 
+// Suporte para modais, menus dropdown e clique na logo
 document.addEventListener('click', (event) => {
     const alvo = event.target instanceof Element ? event.target : null;
     if (!alvo) return;
 
+    // Rola suavemente até o topo ao clicar na Logo estando na Home
+    const logoLink = alvo.closest('.menu-global .logo');
+    if (logoLink) {
+        const caminhoAtual = window.location.pathname.split('/').pop() || 'index.html';
+        if (caminhoAtual === 'index.html' || caminhoAtual === '') {
+            event.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+        }
+    }
+
+    // Menu da Conta
     const botaoConta = alvo.closest('[data-account-menu]');
     if (botaoConta) {
         const aberto = botaoConta.getAttribute('aria-expanded') === 'true';
@@ -220,6 +258,7 @@ document.addEventListener('click', (event) => {
         return;
     }
 
+    // Abertura de Modais
     const botaoAbrir = alvo.closest('[data-modal]');
     if (botaoAbrir) {
         event.preventDefault();
@@ -234,6 +273,7 @@ document.addEventListener('click', (event) => {
         return;
     }
 
+    // Fechamento de Modais
     const botaoFechar = alvo.closest('[data-close]');
     if (botaoFechar) {
         fecharModal(botaoFechar.getAttribute('data-close'));
@@ -245,37 +285,9 @@ document.addEventListener('click', (event) => {
     }
 });
 
+// Fechar modal ao clicar na área do backdrop (fora do conteúdo)
 document.addEventListener('mousedown', (event) => {
     if (event.target instanceof Element && event.target.classList.contains('modal')) {
         event.target.style.display = 'none';
-    }
-});
-
-document.addEventListener('DOMContentLoaded', injetarMenuERodape);
-
-window.addEventListener('scroll', () => {
-    const nav = document.querySelector('.menu-global');
-    if (nav) {
-        if (window.scrollY > 50) {
-            nav.classList.add('scrolled');
-        } else {
-            nav.classList.remove('scrolled');
-        }
-    }
-});
-
-document.addEventListener('click', (event) => {
-    const logoLink = event.target.closest('.menu-global .logo');
-
-    if (logoLink) {
-        const caminhoAtual = window.location.pathname.split('/').pop() || 'index.html';
-
-        if (caminhoAtual === 'index.html' || caminhoAtual === '') {
-            event.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
     }
 });
