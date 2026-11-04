@@ -1,3 +1,43 @@
+/* ==========================================================
+   SISTEMA DE TEMA (CLARO E ESCURO) - SOMENTE NO MENU POR ENQUANTO
+   ========================================================== */
+
+function obterTemaPreferido() {
+    const temaSalvo = localStorage.getItem('nankim_tema');
+    if (temaSalvo) return temaSalvo;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function aplicarTema(tema) {
+    document.documentElement.setAttribute('data-theme', tema);
+    const btnTema = document.getElementById('btn-toggle-tema');
+    if (btnTema) {
+        btnTema.setAttribute('aria-label', tema === 'dark' ? 'Mudar para modo claro' : 'Mudar para modo escuro');
+    }
+}
+
+function alternarTema() {
+    const temaAtual = document.documentElement.getAttribute('data-theme');
+    const novoTema = temaAtual === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('nankim_tema', novoTema);
+    aplicarTema(novoTema);
+}
+
+// Aplica o tema preferido imediatamente no carregamento
+aplicarTema(obterTemaPreferido());
+
+// Escuta a mudança de tema do próprio navegador em tempo real
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (!localStorage.getItem('nankim_tema')) {
+        aplicarTema(e.matches ? 'dark' : 'light');
+    }
+});
+
+
+/* ==========================================================
+   FUNÇÕES GLOBAIS DE SESSÃO E MODAIS
+   ========================================================== */
+
 function obterAlunoLogado() {
     try {
         const sessao = JSON.parse(sessionStorage.getItem('nankim_sessao') || 'null');
@@ -35,17 +75,21 @@ function fecharModal(modalId) {
     if (modal) modal.style.display = 'none';
 }
 
+
+/* ==========================================================
+   INJEÇÃO DO MENU GLOBAL E RODAPÉ
+   ========================================================== */
+
 function injetarMenuERodape() {
     const header = document.getElementById('header-container');
     const footer = document.getElementById('footer-container');
 
-    // Substitua o trecho onde injeta o menu no global.js para manter sempre a vitrine padrão
-if (header) {
-    header.innerHTML = `
+    if (header) {
+        header.innerHTML = `
 <header class="menu-global">
     <a class="logo" href="index.html" aria-label="Nankim Escola de Arte - início">
         <div class="logo-icone-wrapper">
-            <img src="./assets/icons/logo.svg" alt="Selo Nankim" class="logo-img-simbolo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'><circle cx=\'20\' cy=\'20\' r=\'18\' fill=\'%23b33f30\'/><text x=\'50%\' y=\'58%\' text-anchor=\'middle\' fill=\'white\' font-size=\'20\' font-family=\'Georgia\'>N</text></svg>'">
+            <img src="./assets/icons/logo.svg" alt="Selo Nankim" class="logo-img-simbolo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 40 40\\'><circle cx=\\'20\\' cy=\\'20\\' r=\\'18\\' fill=\\'%23b33f30\\'/><text x=\\'50%\\' y=\\'58%\\' text-anchor=\\'middle\\' fill=\\'white\\' font-size=\\'20\\' font-family=\\'Georgia\\'>N</text></svg>'">
         </div>
         <div class="logo-texto-wrapper">
             <span class="logo-fixo">Nankim</span>
@@ -62,38 +106,54 @@ if (header) {
         <a href="quem-somos.html" class="link-magnetico"><span class="dot-hover"></span>Quem Somos</a>
         <a href="cursos.html" class="link-magnetico"><span class="dot-hover"></span>Cursos</a>
         <a href="contato.html" class="link-magnetico"><span class="dot-hover"></span>Contato</a>
+        
+        <!-- Botão Bonito de Alternância de Tema -->
+        <button id="btn-toggle-tema" class="btn-toggle-tema link-magnetico" type="button" aria-label="Alternar Tema">
+            <span class="icone-sol">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </span>
+            <span class="icone-lua">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </span>
+        </button>
+
         <button data-modal="login" class="btn-login link-magnetico">Login</button>
     </nav>
 </header>
 `;
 
-    const botaoMenu = header.querySelector('.btn-mobile');
-    const navegacao = header.querySelector('.menu-global nav');
-    const paginaAtual = window.location.pathname.split('/').pop() || 'index.html';
+        const botaoMenu = header.querySelector('.btn-mobile');
+        const navegacao = header.querySelector('.menu-global nav');
+        const paginaAtual = window.location.pathname.split('/').pop() || 'index.html';
 
-    navegacao.querySelectorAll('a[href]').forEach((link) => {
-        if (link.getAttribute('href') === paginaAtual) {
-            link.classList.add('pagina-ativa');
-            link.setAttribute('aria-current', 'page');
+        navegacao.querySelectorAll('a[href]').forEach((link) => {
+            if (link.getAttribute('href') === paginaAtual) {
+                link.classList.add('pagina-ativa');
+                link.setAttribute('aria-current', 'page');
+            }
+        });
+
+        botaoMenu.addEventListener('click', () => {
+            const menuAberto = navegacao.classList.toggle('menu-aberto');
+            botaoMenu.setAttribute('aria-expanded', String(menuAberto));
+            botaoMenu.setAttribute('aria-label', menuAberto ? 'Fechar menu' : 'Abrir menu');
+        });
+
+        // Conecta a ação de clique do botão do tema
+        const btnTema = document.getElementById('btn-toggle-tema');
+        if (btnTema) {
+            btnTema.addEventListener('click', alternarTema);
         }
-    });
 
-    botaoMenu.addEventListener('click', () => {
-        const menuAberto = navegacao.classList.toggle('menu-aberto');
-        botaoMenu.setAttribute('aria-expanded', String(menuAberto));
-        botaoMenu.setAttribute('aria-label', menuAberto ? 'Fechar menu' : 'Abrir menu');
-    });
+        aplicarEfeitoMagnetico();
+    }
 
-    aplicarEfeitoMagnetico();
-}
-
-   if (footer) {
+    if (footer) {
         footer.innerHTML = `
             <footer class="rodape-global">
                 <div class="rodape-container">
                     
                     <div class="rodape-superior">
-                        <!-- Canto Direito: Redes Sociais com Efeito Magnético e Descrição -->
                         <div class="rodape-col-dir">
                             <div class="rodape-sociais">
                                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="link-magnetico" aria-label="Instagram">
@@ -113,7 +173,6 @@ if (header) {
                         </div>
                     </div>
                     
-                    <!-- Linha Inferior: Copyright e Links Legais -->
                     <div class="rodape-inferior">
                         <p class="rodape-copyright">&copy; 2026 equipe rocket. Todos os direitos reservados.</p>
                         <div class="rodape-links-legais">
@@ -130,7 +189,6 @@ if (header) {
     }
 }
 
-// Funções para Efeito Magnético do Cursor
 function aplicarEfeitoMagnetico() {
     const elementos = document.querySelectorAll('.link-magnetico, .logo-magnetico');
 
@@ -195,7 +253,6 @@ document.addEventListener('mousedown', (event) => {
 
 document.addEventListener('DOMContentLoaded', injetarMenuERodape);
 
-// Efeito de transição do Menu no Scroll
 window.addEventListener('scroll', () => {
     const nav = document.querySelector('.menu-global');
     if (nav) {
@@ -207,7 +264,6 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Rolagem suave ao clicar na logo estando na Home
 document.addEventListener('click', (event) => {
     const logoLink = event.target.closest('.menu-global .logo');
 
@@ -223,54 +279,3 @@ document.addEventListener('click', (event) => {
         }
     }
 });
-function injetarHeaderAluno() {
-    const containerHeader = document.getElementById('header-aluno-container');
-    if (!containerHeader) return;
-
-    // Logo alterada de <a> para <div> (elemento apenas visual)
-    containerHeader.innerHTML = `
-        <header class="header-aluno">
-            <div class="header-aluno-container">
-                <div class="logo-aluno-wrapper">
-                    <div class="logo-icone-wrapper">
-                        <img src="./assets/icons/logo.svg" alt="Nankim" class="logo-img-simbolo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 40 40\\'><circle cx=\\'20\\' cy=\\'20\\' r=\\'18\\' fill=\\'%23b33f30\\'/><text x=\\'50%\\' y=\\'58%\\' text-anchor=\'middle\\' fill=\'white\\' font-size=\'20\\' font-family=\'Georgia\\'>N</text></svg>'">
-                    </div>
-                    <div class="logo-texto-wrapper">
-                        <span class="logo-fixo">Nankim</span>
-                        <span class="logo-expansivel">Art School</span>
-                    </div>
-                </div>
-                
-                <div class="perfil-dropdown" style="position: relative;">
-                    <button class="btn-perfil" id="btn-menu-perfil" type="button" aria-expanded="false">
-                        <div class="avatar-aluno" id="avatar-iniciais">AL</div>
-                        <span id="nome-aluno-topo">Carregando...</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left: 4px;"><path d="M6 9l6 6 6-6"/></svg>
-                    </button>
-                    
-                    <div class="dropdown-menu" id="dropdown-perfil" style="display: none;">
-                        <a href="area-aluno.html">Cursos</a>
-                        <a href="meu-perfil.html">Meu Perfil</a>
-                        <div class="linha-divisoria"></div>
-                        <button type="button" id="btn-sair" class="btn-sair-conta">Sair da conta</button>
-                    </div>
-                </div>
-            </div>
-        </header>
-    `;
-
-    // Carrega nome e avatar da sessão
-    const sessaoData = sessionStorage.getItem('nankim_sessao');
-    if (sessaoData) {
-        try {
-            const usuarioSessao = JSON.parse(sessaoData);
-            const primeiroNome = usuarioSessao.nome ? usuarioSessao.nome.split(' ')[0] : 'Aluno';
-            
-            const elNome = document.getElementById('nome-aluno-topo');
-            const elAvatar = document.getElementById('avatar-iniciais');
-            
-            if (elNome) elNome.textContent = primeiroNome;
-            if (elAvatar) elAvatar.textContent = primeiroNome.charAt(0).toUpperCase();
-        } catch(e) {}
-    }
-}
