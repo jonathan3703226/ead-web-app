@@ -4,40 +4,49 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. GERENCIAMENTO DE TEMA (DIRETO DO NAVEGADOR / SISTEMA)
+   1. GERENCIAMENTO DE TEMA (ESTILO COOKIES / LOCAL STORAGE)
    -------------------------------------------------------------------------- */
 
-// Detecta se o sistema/navegador está em modo escuro no momento
-function obterTemaDoNavegador() {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+// 1. Obtém o tema: se já existir salvo usa ele, se for a 1ª vez salva o do navegador
+function obterOuInicializarTema() {
+    let temaSalvo = localStorage.getItem('nankim_tema');
+
+    if (!temaSalvo) {
+        // Primeira visita: detecta o tema do navegador e grava no localStorage
+        const sistemaEstaEmModoEscuro = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        temaSalvo = sistemaEstaEmModoEscuro ? 'dark' : 'light';
+        localStorage.setItem('nankim_tema', temaSalvo);
+    }
+
+    return temaSalvo;
 }
 
+// 2. Aplica o atributo no HTML e atualiza o estado do botão
 function aplicarTema(tema) {
     if (tema === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
     } else {
         document.documentElement.removeAttribute('data-theme');
     }
-    
+
     const btnTema = document.getElementById('btn-toggle-tema');
     if (btnTema) {
         btnTema.setAttribute('aria-label', tema === 'dark' ? 'Mudar para modo claro' : 'Mudar para modo escuro');
     }
 }
 
+// 3. Alterna o tema no clique do botão e atualiza o localStorage
 function alternarTema() {
-    const temaAtual = document.documentElement.getAttribute('data-theme');
+    const temaAtual = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
     const novoTema = temaAtual === 'dark' ? 'light' : 'dark';
+
+    localStorage.setItem('nankim_tema', novoTema);
     aplicarTema(novoTema);
 }
 
-// 1. Sempre que a página abre, aplica diretamente o tema atual do navegador
-aplicarTema(obterTemaDoNavegador());
+// Inicialização imediata ao carregar o script
+aplicarTema(obterOuInicializarTema());
 
-// 2. Se o usuário alterar o tema do sistema/navegador enquanto a página estiver aberta
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    aplicarTema(e.matches ? 'dark' : 'light');
-});
 
 /* --------------------------------------------------------------------------
    2. GERENCIAMENTO DE SESSÃO E MODAIS
