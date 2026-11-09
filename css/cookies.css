@@ -7,7 +7,7 @@
     bottom: 24px !important;
     left: 0 !important;
     right: 0 !important;
-    z-index: 99999 !important;
+    z-index: 999999 !important;
     display: flex !important;
     justify-content: center !important;
     align-items: flex-end !important;
@@ -19,25 +19,27 @@
     display: none !important;
 }
 
-/* O card principal que abraça todo o conteúdo */
+/* Card Principal */
 .cookie-card {
     pointer-events: auto !important;
+    position: relative !important;
+    z-index: 1000000 !important;
     width: min(640px, 100%) !important;
     max-height: 85vh !important;
     overflow-y: auto !important;
     padding: 1.8rem 2rem !important;
     border-radius: 20px !important;
-    background-color: var(--menu-bg, #ffffff) !important;
-    color: var(--menu-texto, #111111) !important;
-    border: 1px solid rgba(128, 128, 128, 0.25) !important;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3) !important;
-    backdrop-filter: blur(12px) !important;
+    background-color: #ffffff !important;
+    color: #111111 !important;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35) !important;
+    font-family: 'Montserrat', sans-serif !important;
     animation: cookieSubir 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* Ajuste no modo escuro nativo */
+/* Modo Escuro */
 :root[data-theme="dark"] .cookie-card {
-    background-color: #1a1a1a !important;
+    background-color: #181818 !important;
     color: #ffffff !important;
     border-color: rgba(255, 255, 255, 0.15) !important;
 }
@@ -45,7 +47,6 @@
 .cookie-texto h2 {
     margin: 0 0 0.5rem !important;
     color: inherit !important;
-    font-family: 'Montserrat', sans-serif !important;
     font-size: 1.25rem !important;
     font-weight: 800 !important;
 }
@@ -56,7 +57,6 @@
     opacity: 0.85 !important;
     font-size: 0.92rem !important;
     line-height: 1.55 !important;
-    font-family: 'Montserrat', sans-serif !important;
 }
 
 .cookie-botoes {
@@ -76,29 +76,30 @@
     border-radius: 50px !important;
     cursor: pointer !important;
     transition: all 0.25s ease !important;
+    pointer-events: auto !important;
 }
 
-/* Botão Aceitar Todos (Destaque Vermelho Nankim) */
-#btn-aceitar-cookies {
-    background-color: #b33f30 !important;
+/* Botão Rejeitar (Estilo Destaque Âmbar/Dourado) */
+#btn-rejeitar {
+    background-color: var(--cor-destaque, #f39c12) !important;
     color: #ffffff !important;
-    border: 1px solid #b33f30 !important;
+    border: 1px solid var(--cor-destaque, #f39c12) !important;
 }
 
-#btn-aceitar-cookies:hover {
-    background-color: #963225 !important;
-    border-color: #963225 !important;
+#btn-rejeitar:hover {
+    background-color: var(--cor-destaque-hover, #d35400) !important;
+    border-color: var(--cor-destaque-hover, #d35400) !important;
     transform: translateY(-2px) !important;
 }
 
-/* Botões Secundários */
-.cookie-botoes .btn-outline {
+/* Botão Aceitar Todos (Estilo Neutro/Outline) */
+#btn-aceitar-cookies {
     background: transparent !important;
     border: 1px solid rgba(128, 128, 128, 0.4) !important;
     color: inherit !important;
 }
 
-.cookie-botoes .btn-outline:hover {
+#btn-aceitar-cookies:hover {
     border-color: currentColor !important;
     background-color: rgba(128, 128, 128, 0.12) !important;
 }
@@ -132,7 +133,7 @@
     height: 18px !important;
     flex: 0 0 18px !important;
     margin-top: 2px !important;
-    accent-color: #b33f30 !important;
+    accent-color: var(--cor-destaque, #f39c12) !important;
     cursor: pointer !important;
 }
 
@@ -142,7 +143,6 @@
     font-size: 0.85rem !important;
     line-height: 1.45 !important;
     cursor: pointer !important;
-    font-family: 'Montserrat', sans-serif !important;
 }
 
 .cookie-opcao label strong {
@@ -154,9 +154,9 @@
 #btn-salvar-pref {
     width: 100% !important;
     margin-top: 0.5rem !important;
-    background-color: var(--menu-texto, #111111) !important;
-    color: var(--menu-bg, #ffffff) !important;
-    border: 1px solid var(--menu-texto, #111111) !important;
+    background-color: #111111 !important;
+    color: #ffffff !important;
+    border: 1px solid #111111 !important;
 }
 
 :root[data-theme="dark"] #btn-salvar-pref {
@@ -173,10 +173,6 @@
     .cookie-modal-avancado {
         bottom: 12px !important;
         padding: 0 10px !important;
-    }
-
-    .cookie-card {
-        padding: 1.2rem 1.4rem !important;
     }
 
     .cookie-botoes {

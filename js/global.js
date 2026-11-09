@@ -1,18 +1,15 @@
 /* ==========================================================================
    NANKIM ESCOLA DE ARTE - SCRIPT GLOBAL UNIFICADO
-   Contém: Gerenciamento de Tema, Controle de Modais, Injeção de Menu/Rodapé e Eventos
+   Contém: Gerenciamento de Tema, Controle de Sessão/Modais Gerais e Menus
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. GERENCIAMENTO DE TEMA (ESTILO COOKIES / LOCAL STORAGE)
+   1. GERENCIAMENTO DE TEMA (DARK / LIGHT)
    -------------------------------------------------------------------------- */
-
-// 1. Obtém o tema: se já existir salvo usa ele, se for a 1ª vez salva o do navegador
 function obterOuInicializarTema() {
     let temaSalvo = localStorage.getItem('nankim_tema');
 
     if (!temaSalvo) {
-        // Primeira visita: detecta o tema do navegador e grava no localStorage
         const sistemaEstaEmModoEscuro = window.matchMedia('(prefers-color-scheme: dark)').matches;
         temaSalvo = sistemaEstaEmModoEscuro ? 'dark' : 'light';
         localStorage.setItem('nankim_tema', temaSalvo);
@@ -21,7 +18,6 @@ function obterOuInicializarTema() {
     return temaSalvo;
 }
 
-// 2. Aplica o atributo no HTML e atualiza o estado do botão
 function aplicarTema(tema) {
     if (tema === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
@@ -35,7 +31,6 @@ function aplicarTema(tema) {
     }
 }
 
-// 3. Alterna o tema no clique do botão e atualiza o localStorage
 function alternarTema() {
     const temaAtual = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
     const novoTema = temaAtual === 'dark' ? 'light' : 'dark';
@@ -44,12 +39,12 @@ function alternarTema() {
     aplicarTema(novoTema);
 }
 
-// Inicialização imediata ao carregar o script
+// Aplicação imediata do tema para evitar oscilação de cor ao carregar a página
 aplicarTema(obterOuInicializarTema());
 
 
 /* --------------------------------------------------------------------------
-   2. GERENCIAMENTO DE SESSÃO E MODAIS
+   2. GERENCIAMENTO DE SESSÃO E MODAIS GERAIS
    -------------------------------------------------------------------------- */
 function obterAlunoLogado() {
     try {
@@ -79,11 +74,13 @@ function fecharMenuConta() {
 }
 
 function abrirModal(modalId) {
+    if (modalId === 'termos') return; // O termos.js trata o modal dele sozinho
     const modal = document.getElementById(`modal-${modalId}`);
     if (modal) modal.style.display = 'flex';
 }
 
 function fecharModal(modalId) {
+    if (modalId === 'termos') return;
     const modal = document.getElementById(`modal-${modalId}`);
     if (modal) modal.style.display = 'none';
 }
@@ -186,6 +183,7 @@ function injetarMenuERodape() {
                 <div class="rodape-container">
                     
                     <div class="rodape-superior">
+                        <!-- Canto Direito: Redes Sociais com Efeito Magnético e Descrição -->
                         <div class="rodape-col-dir">
                             <div class="rodape-sociais">
                                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="link-magnetico" aria-label="Instagram">
@@ -205,10 +203,15 @@ function injetarMenuERodape() {
                         </div>
                     </div>
                     
+                    <!-- Linha Inferior: Copyright, Links Legais e Suporte -->
                     <div class="rodape-inferior">
                         <p class="rodape-copyright">&copy; 2026 equipe rocket. Todos os direitos reservados.</p>
                         <div class="rodape-links-legais">
-                            <a href="politica-privacidade.html" class="link-magnetico">Política de uso e termos de privacidade</a>
+                            <a href="contato.html" class="link-preferencias-cookies link-magnetico" style="display: inline-flex; align-items: center; gap: 5px;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                Reportar Erro / Suporte
+                            </a>
+                            <button type="button" class="link-preferencias-cookies link-magnetico" data-modal="termos">Termos de Uso e Política de Privacidade</button>
                             <button type="button" class="link-preferencias-cookies link-magnetico" data-cookie-preferences>Preferências de Cookies</button>
                         </div>
                     </div>
@@ -225,11 +228,8 @@ function injetarMenuERodape() {
 /* --------------------------------------------------------------------------
    5. OUVINTES DE EVENTOS (LISTENERS)
    -------------------------------------------------------------------------- */
-
-// Injeta os componentes assim que o DOM estiver carregado
 document.addEventListener('DOMContentLoaded', injetarMenuERodape);
 
-// Adiciona classe 'scrolled' no menu ao rolar a página
 window.addEventListener('scroll', () => {
     const nav = document.querySelector('.menu-global');
     if (nav) {
@@ -241,7 +241,6 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Suporte para modais, menus dropdown e clique na logo
 document.addEventListener('click', (event) => {
     const alvo = event.target instanceof Element ? event.target : null;
     if (!alvo) return;
@@ -267,9 +266,9 @@ document.addEventListener('click', (event) => {
         return;
     }
 
-    // Abertura de Modais
+    // Abertura de Modais Genéricos (como login)
     const botaoAbrir = alvo.closest('[data-modal]');
-    if (botaoAbrir) {
+    if (botaoAbrir && botaoAbrir.getAttribute('data-modal') !== 'termos') {
         event.preventDefault();
         if (botaoAbrir.hasAttribute('data-account-switch')) {
             fecharMenuConta();
@@ -282,9 +281,9 @@ document.addEventListener('click', (event) => {
         return;
     }
 
-    // Fechamento de Modais
+    // Fechamento de Modais Genéricos
     const botaoFechar = alvo.closest('[data-close]');
-    if (botaoFechar) {
+    if (botaoFechar && botaoFechar.getAttribute('data-close') !== 'termos') {
         fecharModal(botaoFechar.getAttribute('data-close'));
         return;
     }
@@ -294,9 +293,8 @@ document.addEventListener('click', (event) => {
     }
 });
 
-// Fechar modal ao clicar na área do backdrop (fora do conteúdo)
 document.addEventListener('mousedown', (event) => {
-    if (event.target instanceof Element && event.target.classList.contains('modal')) {
+    if (event.target instanceof Element && event.target.classList.contains('modal') && event.target.id !== 'modal-termos') {
         event.target.style.display = 'none';
     }
 });

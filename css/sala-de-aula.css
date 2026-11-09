@@ -1,27 +1,27 @@
 /* ==========================================================================
-   ESTILOS ESPECÍFICOS DA SALA DE AULA (NANKIM ART SCHOOL)
+   NANKIM ESCOLA DE ARTE - SALA DE AULA
    ========================================================================== */
 
-/* Barra de Rolagem Personalizada */
-::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+/* Custom Scrollbar */
+::-webkit-scrollbar { 
+    width: 6px; 
+    height: 6px; 
 }
 
-::-webkit-scrollbar-track {
-    background: #070707;
+::-webkit-scrollbar-track { 
+    background: #070707; 
 }
 
-::-webkit-scrollbar-thumb {
-    background: #222222;
-    border-radius: 4px;
+::-webkit-scrollbar-thumb { 
+    background: #222222; 
+    border-radius: 4px; 
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: #333333;
+::-webkit-scrollbar-thumb:hover { 
+    background: #333333; 
 }
 
-/* Animação Expansível da Logo no Header */
+/* Logo expand animation */
 .logo-expansivel {
     max-width: 0;
     opacity: 0;
@@ -46,10 +46,10 @@
     transform: rotate(360deg);
 }
 
-/* Encapsulamento de Vídeo Proporcional 16:9 */
+/* YouTube Embed Wrapper */
 .video-container {
     position: relative;
-    padding-bottom: 56.25%; /* Proporção 16:9 */
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
     height: 0;
     overflow: hidden;
     background-color: #000;
@@ -65,14 +65,14 @@
     border: 0;
 }
 
-/* Estilização da Aba Ativa */
+/* Active Tab Styling */
 .tab-btn.active {
     color: #ffffff;
-    border-bottom: 2px solid #27ae60;
-    background-color: rgba(39, 174, 96, 0.05);
+    border-bottom: 2px solid var(--cor-destaque, #f39c12);
+    background-color: rgba(243, 156, 18, 0.08);
 }
 
-/* Transições Suaves do Accordion de Módulos */
+/* Accordion transition */
 .accordion-content {
     transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
     max-height: 1000px;

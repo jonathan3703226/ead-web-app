@@ -237,14 +237,14 @@ body {
 }
 
 .prefixo-barra {
-    color: #b33f30;
+    color: var(--cor-destaque);
     margin-right: 6px;
     font-weight: 800;
 }
 
 .cursor-typing {
     display: inline-block;
-    color: #b33f30;
+    color: var(--cor-destaque);
     font-weight: 700;
     animation: piscarCursor 0.8s infinite;
 }
@@ -337,89 +337,122 @@ body {
 
 .destaque-vermelho-slogan,
 .destaque-vermelho {
-    color: #b33f30;
+    color: var(--cor-destaque);
     display: inline-block;
 }
 
-/* --- Seção 2: Problemas do Autodidata (Clean & Premium) --- */
+/* --- Seção 2: Problemas do Autodidata (Trilha Ajustada & Limpa) --- */
 .secao-pilares-clean {
-    padding: 2rem 0 5rem;
+    padding: 3rem 0 5rem;
     width: 100%;
 }
 
-.grid-pilares-modernos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2.5rem;
-}
-
-.card-pilar-moderno {
-    background: var(--home-bg-card-claro, #0d0d0d);
-    border: 1px solid var(--home-borda-suave, rgba(255, 255, 255, 0.1));
-    border-radius: 24px;
-    padding: 2.8rem 2.2rem 2.4rem;
+.trilha-obstaculos-wrapper {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2.2rem;
+    margin-top: 3rem;
+    padding: 1rem 0;
+    max-width: 950px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Linha-guia centralizada de ponta a ponta */
+.linha-trilha-guia {
+    position: absolute;
+    top: 20px;
+    bottom: 20px;
+    left: 50%;
+    width: 2px;
+    background: linear-gradient(180deg, rgba(179, 63, 48, 0.15) 0%, rgba(179, 63, 48, 0.6) 50%, rgba(179, 63, 48, 0.15) 100%);
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Base dos Cards da Trilha */
+.card-trilha {
     position: relative;
-    overflow: hidden;
+    z-index: 2;
+    width: min(480px, 85%);
+    background: var(--home-bg-card-claro, #ffffff);
+    border: 1px solid var(--home-borda-suave, rgba(0, 0, 0, 0.1));
+    border-radius: 20px;
+    padding: 1.8rem 2.2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(10px);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* Detalhe sutil de linha em destaque no topo do card ao passar o mouse */
-.card-pilar-moderno::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, #b33f30, transparent);
-    opacity: 0.4;
-    transition: opacity 0.4s ease;
-}
-
-.card-pilar-moderno:hover {
-    transform: translateY(-8px);
+.card-trilha:hover {
+    transform: translateY(-4px) scale(1.01);
     border-color: rgba(179, 63, 48, 0.5);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 35px rgba(179, 63, 48, 0.15);
 }
 
-.card-pilar-moderno:hover::before {
-    opacity: 1;
+/* Bolinhas Vermelhas (Marcadores alinhados na linha central) */
+.marcador-ponto {
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    background-color: var(--cor-destaque);
+    border-radius: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 0 10px rgba(179, 63, 48, 0.7);
+    z-index: 3;
 }
 
-/* Numeração Estilizada */
-.pilar-numero {
+/* Posições intercaladas */
+.card-esquerda {
+    align-self: flex-start;
+}
+.card-esquerda .marcador-ponto {
+    right: -30px;
+}
+
+.card-centro {
+    align-self: center;
+}
+.card-centro .marcador-ponto {
+    left: -30px;
+}
+
+.card-direita {
+    align-self: flex-end;
+}
+.card-direita .marcador-ponto {
+    left: -30px;
+}
+
+/* Card central em Destaque Nankim com leitura perfeita */
+.card-trilha.destaque-nankim {
+    border: 1px solid rgba(179, 63, 48, 0.4) !important;
+    background: var(--home-bg-card-claro, #ffffff);
+    box-shadow: 0 12px 35px rgba(179, 63, 48, 0.12);
+}
+
+/* No Dark Mode o card central ganha um brilho sutil sem escurecer o texto */
+:root[data-theme="dark"] .card-trilha.destaque-nankim {
+    background: #111111;
+    border-color: rgba(179, 63, 48, 0.5) !important;
+    box-shadow: 0 12px 35px rgba(179, 63, 48, 0.25);
+}
+
+.texto-card-trilha {
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 900;
-    color: #b33f30;
-    letter-spacing: 2px;
-    opacity: 0.9;
-    margin-bottom: 0.2rem;
-}
-
-.titulo-pilar-moderno {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: var(--home-texto-escuro, #ffffff);
-    margin: 0;
-    line-height: 1.35;
-}
-
-.texto-pilar-moderno {
-    font-size: 0.96rem;
-    color: var(--home-texto-suave, #b0b0b0);
-    line-height: 1.65;
+    font-size: clamp(0.98rem, 1.3vw, 1.1rem);
+    font-weight: 600;
+    line-height: 1.6;
+    color: var(--home-texto-escuro);
     margin: 0;
 }
 
 .fechamento-frase-impacto {
     text-align: center;
-    margin-top: 3.5rem;
+    margin-top: 4rem;
 }
 
 .destaque-frase-fechamento {
@@ -428,6 +461,66 @@ body {
     color: var(--home-secao-escura-texto);
 }
 
+/* Ajustes de Responsividade */
+@media (max-width: 850px) {
+    .linha-trilha-guia,
+    .marcador-ponto {
+        display: none !important;
+    }
+
+    .trilha-obstaculos-wrapper {
+        gap: 1.2rem;
+    }
+
+    .card-trilha {
+        width: 100% !important;
+        align-self: center !important;
+    }
+}
+/* --- Divisor Visual & Respiro entre Seção 2 e 3 --- */
+.fechamento-frase-impacto {
+    text-align: center;
+    margin-top: 4.5rem;
+    margin-bottom: 2rem;
+}
+
+.divisor-secao-glow {
+    width: min(300px, 60%);
+    height: 1px;
+    margin: 4rem auto 2rem;
+    background: linear-gradient(90deg, transparent 0%, rgba(179, 63, 48, 0.6) 50%, transparent 100%);
+    position: relative;
+}
+
+.divisor-secao-glow::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    background-color: var(--cor-destaque);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(179, 63, 48, 0.8);
+}
+
+.secao-vitrine-cursos {
+    width: 100%;
+    padding-top: 4rem; /* Espaçamento para separar do bloco acima */
+}
+
+/* Eyebrow de Solução para destacar a mudança de assunto */
+.eyebrow-transicao-solucao {
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--cor-destaque);
+    letter-spacing: 2px;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+}
 /* --- Seção 3: Vitrine de Etapas --- */
 .secao-vitrine-cursos {
     width: 100%;
@@ -792,7 +885,7 @@ body {
     border-radius: 50%;
     background-size: cover;
     background-position: center;
-    border: 2px solid #b33f30;
+    border: 2px solid var(--cor-destaque);
     flex-shrink: 0;
     box-shadow: 0 4px 12px rgba(179, 63, 48, 0.18);
 }
@@ -813,7 +906,7 @@ body {
 .depo-cargo {
     font-size: 0.88rem;
     font-weight: 700;
-    color: #b33f30;
+    color: var(--cor-destaque);
     line-height: 1.2;
 }
 
@@ -959,8 +1052,8 @@ body {
 
 .thumb-item.ativo {
     opacity: 1 !important;
-    border-color: #b33f30 !important;
-    box-shadow: 0 4px 12px rgba(179, 63, 48, 0.4) !important;
+    border-color: var(--cor-destaque) !important;
+    box-shadow: 0 4px 12px rgba(243, 156, 18, 0.4) !important;
 }
 
 .card-texto-proposito {
@@ -977,7 +1070,7 @@ body {
     font-size: 4rem;
     line-height: 1;
     font-family: 'Caveat', cursive, Georgia, serif;
-    color: #b33f30;
+    color: var(--cor-destaque);
     display: block;
     margin-bottom: -1.5rem;
 }
@@ -1007,7 +1100,7 @@ body {
 .linha-decorativa-vermelha {
     width: 32px;
     height: 3px;
-    background-color: #b33f30;
+    background-color: var(--cor-destaque);
     border-radius: 2px;
 }
 
@@ -1048,7 +1141,7 @@ body {
 }
 
 .faq-pergunta:hover {
-    color: #b33f30;
+    color: var(--cor-destaque);
 }
 
 .faq-resposta p {
@@ -1286,4 +1379,58 @@ body {
         height: auto;
         transform: none !important;
     }
+}
+/* ==========================================================================
+   APLICAÇÃO DA NOVA COR DE DESTAQUE (AMARELO ÂMBAR) NA HOME
+   ========================================================================== */
+
+/* Textos e Elementos de Destaque */
+.prefixo-barra,
+.cursor-typing,
+.destaque-vermelho,
+.destaque-vermelho-slogan,
+.eyebrow-transicao-solucao,
+.pilar-numero {
+    color: var(--cor-destaque) !important;
+}
+
+/* Caixa com Glow do Slogan */
+.box-slogan-glow {
+    background: rgba(var(--cor-destaque-rgb), 0.06) !important;
+    border: 1px solid rgba(var(--cor-destaque-rgb), 0.3) !important;
+    box-shadow: 0 10px 30px rgba(var(--cor-destaque-rgb), 0.1) !important;
+}
+
+.box-slogan-glow:hover {
+    border-color: rgba(var(--cor-destaque-rgb), 0.6) !important;
+}
+
+/* Seção 2: Linha Guia e Marcadores */
+.linha-trilha-guia {
+    background: linear-gradient(180deg, rgba(var(--cor-destaque-rgb), 0.15) 0%, rgba(var(--cor-destaque-rgb), 0.6) 50%, rgba(var(--cor-destaque-rgb), 0.15) 100%) !important;
+}
+
+.marcador-ponto {
+    background-color: var(--cor-destaque) !important;
+    box-shadow: 0 0 12px rgba(var(--cor-destaque-rgb), 0.8) !important;
+}
+
+.card-trilha:hover {
+    border-color: rgba(var(--cor-destaque-rgb), 0.6) !important;
+    box-shadow: 0 15px 35px rgba(var(--cor-destaque-rgb), 0.18) !important;
+}
+
+.card-trilha.destaque-nankim {
+    border: 1px solid rgba(var(--cor-destaque-rgb), 0.45) !important;
+    box-shadow: 0 12px 35px rgba(var(--cor-destaque-rgb), 0.15) !important;
+}
+
+/* Divisor de Transição entre Seções */
+.divisor-secao-glow {
+    background: linear-gradient(90deg, transparent 0%, rgba(var(--cor-destaque-rgb), 0.6) 50%, transparent 100%) !important;
+}
+
+.divisor-secao-glow::after {
+    background-color: var(--cor-destaque) !important;
+    box-shadow: 0 0 10px rgba(var(--cor-destaque-rgb), 0.8) !important;
 }
