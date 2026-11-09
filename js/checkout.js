@@ -181,7 +181,7 @@ function mostrarEtapaCadastroCheckout() {
             <div class="input-group checkbox-group">
                 <label class="label-termos">
                     <input type="checkbox" id="check-termos" required>
-                    <span>Li e concordo com os <a href="politica-privacidade.html" target="_blank">Termos de Uso e Políticas de Privacidade</a></span>
+                    <span>Li e concordo com os <button type="button" class="link-termos-modal" data-modal="termos">Termos de Uso e Políticas de Privacidade</button></span>
                 </label>
                 <small class="input-feedback"></small>
             </div>
