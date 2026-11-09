@@ -59,7 +59,7 @@ function atualizarBloqueioRolagemGlobal() {
 }
 
 function injetarModalTermos() {
-    document.getElementById('modal-termos')?.remove();
+    if (document.getElementById('modal-termos')) return;
     document.body.insertAdjacentHTML('beforeend', termosComponent);
 }
 
