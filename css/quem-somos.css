@@ -23,7 +23,7 @@
     padding: clamp(100px, 13vw, 170px) max(7%, calc((100% - 1200px) / 2));
     color: #fff;
     background-color: #111;
-    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.94) 0%, rgba(0, 0, 0, 0.72) 48%, rgba(0, 0, 0, 0.28) 100%), url("../imagens/sakura.jpg");
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.94) 0%, rgba(0, 0, 0, 0.72) 48%, rgba(0, 0, 0, 0.28) 100%), url("../assets/img/sakura.jpg");
     background-position: center, center 42%;
     background-size: cover;
 }
@@ -445,7 +445,7 @@
         min-height: 680px;
         min-height: 82svh;
         padding: 112px 7% 92px;
-        background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5)), url("../imagens/sakura.jpg");
+        background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5)), url("../assets/img/sakura1.jpeg");
         background-position: center, center;
     }
 

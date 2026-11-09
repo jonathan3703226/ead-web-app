@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil - Nankim Art School</title>
+    
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Caveat:wght@500;600;700&family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS Base -->
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/global.css">
+
+    <!-- Estilos Inline do Meu Perfil -->
+    <style>
+        body {
+            background-color: #070707;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* Header do Aluno */
+        .header-aluno {
+            background-color: #000000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0.8rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-aluno-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .logo-aluno-wrapper {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.75rem !important;
+            text-decoration: none;
+            cursor: default !important;
+        }
+
+        .logo-icone-wrapper {
+            display: flex !important;
+            width: 38px;
+            height: 38px;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .logo-img-simbolo {
+            width: 54px;
+            height: 54px;
+            object-fit: contain;
+            filter: invert(1);
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .logo-aluno-wrapper:hover .logo-img-simbolo {
+            transform: rotate(360deg);
+        }
+
+        .logo-texto-wrapper {
+            display: inline-flex !important;
+            align-items: center !important;
+            white-space: nowrap;
+            line-height: 1;
+        }
+
+        .logo-fixo {
+            font-family: 'Audiowide', cursive;
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: #ffffff !important;
+        }
+
+        .logo-expansivel {
+            display: inline-flex !important;
+            align-items: center;
+            max-width: 0;
+            opacity: 0;
+            overflow: hidden;
+            font-family: 'Caveat', cursive;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #ffffff !important;
+            line-height: 1;
+            white-space: nowrap;
+            transition: max-width 0.45s cubic-bezier(0.76, 0, 0.24, 1), 
+                        opacity 0.35s ease, 
+                        padding-left 0.35s ease,
+                        padding-right 0.35s ease;
+        }
+
+        .logo-aluno-wrapper:hover .logo-expansivel {
+            max-width: 200px;
+            opacity: 1;
+            padding-left: 0.35rem;
+            padding-right: 0.5rem;
+        }
+
+        .perfil-dropdown { position: relative; }
+
+        .btn-perfil {
+            background: transparent;
+            color: #ffffff;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: opacity 0.2s ease;
+        }
+
+        .btn-perfil:hover { opacity: 0.8; }
+
+        .avatar-aluno {
+            width: 32px;
+            height: 32px;
+            background-color: #b33f30;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: #111111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            margin-top: 15px;
+            width: 240px;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
+            z-index: 200;
+        }
+
+        .dropdown-menu.show {
+            display: flex;
+            animation: abrirDropdown 0.2s ease forwards;
+        }
+
+        @keyframes abrirDropdown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-menu a, .dropdown-menu button {
+            padding: 1rem 1.2rem;
+            color: #d0d0d0;
+            text-align: left;
+            background: transparent;
+            border: none;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-menu a:hover, .dropdown-menu button:hover {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            padding-left: 1.5rem;
+        }
+
+        .linha-divisoria { height: 1px; background-color: #222; margin: 0; }
+        .btn-sair-conta { color: #ff5e5e !important; }
+
+        /* Conteúdo do Perfil */
+        .container-perfil {
+            max-width: 900px;
+            margin: 3.5rem auto;
+            padding: 0 5%;
+        }
+
+        .titulo-pagina {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+
+        .subtitulo-pagina {
+            color: #888;
+            font-size: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .secao-card-perfil {
+            background: #111111;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .titulo-secao-card {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .grid-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .campo-full { grid-column: span 2; }
+
+        .grupo-input {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .grupo-input label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .grupo-input input,
+        .grupo-input select {
+            background: #1a1a1a;
+            border: 1px solid #333 !important;
+            border-radius: 10px;
+            padding: 0.9rem 1.1rem;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: none !important;
+            outline: none !important;
+        }
+
+        .grupo-input input:focus,
+        .grupo-input select:focus {
+            border-color: #ffffff !important;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1) !important;
+        }
+
+        .grupo-input.erro input { border-color: #ff5e5e !important; }
+        .grupo-input.sucesso input { border-color: #2ecc71 !important; }
+
+        .input-feedback {
+            font-size: 0.75rem;
+            color: #ff5e5e;
+            min-height: 16px;
+            display: block;
+        }
+
+        .grupo-input select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+        }
+
+        .grupo-input select option {
+            background-color: #111;
+            color: #fff;
+        }
+
+        .senha-requisitos {
+            grid-column: span 2;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.6rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1rem 1.2rem;
+            border-radius: 10px;
+            margin-top: 0.5rem;
+        }
+
+        .req-item {
+            font-size: 0.78rem;
+            color: #ff5e5e;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .req-item.valido { color: #2ecc71; }
+
+        .btn-salvar {
+            background: #ffffff;
+            color: #000000;
+            font-weight: 800;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            margin-top: 1rem;
+        }
+
+        .btn-salvar:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .lista-certificados {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .item-certificado {
+            background: #181818;
+            border: 1px solid #2a2a2a;
+            border-radius: 14px;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-cert h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .info-cert p {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .btn-ver-cert {
+            background: transparent;
+            color: #27ae60;
+            border: 1px solid #27ae60;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-ver-cert:hover {
+            background: #27ae60;
+            color: #fff;
+        }
+
+        .alerta-sucesso {
+            background: rgba(39, 174, 96, 0.15);
+            border: 1px solid #27ae60;
+            color: #2ecc71;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+
+        .modal-cert-conteudo {
+            background: #fff;
+            color: #000;
+            padding: 3rem;
+            border-radius: 16px;
+            max-width: 700px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            border: 8px solid #111;
+        }
+
+        @media (max-width: 650px) {
+            .grid-form { grid-template-columns: 1fr; }
+            .campo-full, .senha-requisitos { grid-column: span 1; }
+            .senha-requisitos { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= HEADER DO ALUNO LOGADO ================= -->
+    <header class="header-aluno">
+        <div class="header-aluno-container">
+            
+            <!-- Logo Nankim Apenas Visual -->
+            <div class="logo-aluno-wrapper">
+                <div class="logo-icone-wrapper">
+                    <img src="./assets/icons/logo.svg" alt="Nankim" class="logo-img-simbolo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'><circle cx=\'20\' cy=\'20\' r=\'18\' fill=\'%23b33f30\'/><text x=\'50%\' y=\'58%\' text-anchor=\'middle\' fill=\'white\' font-size=\'20\' font-family=\'Georgia\'>N</text></svg>'">
+                </div>
+                <div class="logo-texto-wrapper">
+                    <span class="logo-fixo">Nankim</span>
+                    <span class="logo-expansivel">Art School</span>
+                </div>
+            </div>
+            
+            <!-- Menu Dropdown -->
+            <div class="perfil-dropdown">
+                <button class="btn-perfil" id="btn-menu-perfil" aria-expanded="false">
+                    <div class="avatar-aluno" id="avatar-iniciais">AL</div>
+                    <span id="nome-aluno-topo">Carregando...</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                
+                <div class="dropdown-menu" id="dropdown-perfil">
+                    <a href="area-aluno.html">Cursos</a>
+                    <a href="meu-perfil.html">Meu Perfil</a>
+                    <div class="linha-divisoria"></div>
+                    <button type="button" id="btn-sair" class="btn-sair-conta">Sair da conta</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="container-perfil">
+        <h1 class="titulo-pagina">Meu Perfil</h1>
+        <p class="subtitulo-pagina">Gerencie seus dados cadastrais, segurança e visualize seus certificados.</p>
+
+        <div id="msg-alerta-sucesso" class="alerta-sucesso">✓ Alterações salvas com sucesso!</div>
+
+        <!-- 1. DADOS PESSOAIS E ENDEREÇO -->
+        <section class="secao-card-perfil">
+            <h2 class="titulo-secao-card">👤 Dados Pessoais e Endereço</h2>
+            <form id="form-dados-pessoais" novalidate>
+                <div class="grid-form">
+                    <div class="grupo-input campo-full">
+                        <label for="input-nome">Nome Completo</label>
+                        <input type="text" id="input-nome" required>
+                        <small class="input-feedback"></small>
+                    </div>
+                    <div class="grupo-input">
+                        <label for="input-email">E-mail de Acesso</label>
+                        <input type="email" id="input-email" required>
+                        <small class="input-feedback"></small>
+                    </div>
+                    <div class="grupo-input">
+                        <label for="input-telefone">WhatsApp / Celular</label>
+                        <input type="tel" id="input-telefone" placeholder="(00) 90000-0000" maxlength="15">
+                        <small class="input-feedback"></small>
+                    </div>
+                    <div class="grupo-input">
+                        <label for="input-cpf">CPF</label>
+                        <input type="text" id="input-cpf" placeholder="000.000.000-00" maxlength="14">
+                        <small class="input-feedback"></small>
+                    </div>
+                    <div class="grupo-input">
+                        <label for="input-cep">CEP</label>
+                        <input type="text" id="input-cep" placeholder="00000-000" maxlength="9">
+                        <small class="input-feedback"></small>
+                    </div>
+                    <div class="grupo-input campo-full">
+                        <label for="input-endereco">Endereço Completo</label>
+                        <input type="text" id="input-endereco" placeholder="Rua, número, complemento, bairro">
+                        <small class="input-feedback"></small>
+                    </div>
+                    <div class="grupo-input">
+                        <label for="input-cidade">Cidade</label>
+                        <input type="text" id="input-cidade" placeholder="Sua cidade">
+                        <small class="input-feedback"></small>
+                    </div>
+                    <div class="grupo-input">
+                        <label for="select-uf">Estado (UF)</label>
+                        <select id="select-uf">
+                            <option value="">Selecione o Estado</option>
+                            <option value="AC">Acre (AC)</option>
+                            <option value="AL">Alagoas (AL)</option>
+                            <option value="AP">Amapá (AP)</option>
+                            <option value="AM">Amazonas (AM)</option>
+                            <option value="BA">Bahia (BA)</option>
+                            <option value="CE">Ceará (CE)</option>
+                            <option value="DF">Distrito Federal (DF)</option>
+                            <option value="ES">Espírito Santo (ES)</option>
+                            <option value="GO">Goiás (GO)</option>
+                            <option value="MA">Maranhão (MA)</option>
+                            <option value="MT">Mato Grosso (MT)</option>
+                            <option value="MS">Mato Grosso do Sul (MS)</option>
+                            <option value="MG">Minas Gerais (MG)</option>
+                            <option value="PA">Pará (PA)</option>
+                            <option value="PB">Paraíba (PB)</option>
+                            <option value="PR">Paraná (PR)</option>
+                            <option value="PE">Pernambuco (PE)</option>
+                            <option value="PI">Piauí (PI)</option>
+                            <option value="RJ">Rio de Janeiro (RJ)</option>
+                            <option value="RN">Rio Grande do Norte (RN)</option>
+                            <option value="RS">Rio Grande do Sul (RS)</option>
+                            <option value="RO">Rondônia (RO)</option>
+                            <option value="RR">Roraima (RR)</option>
+                            <option value="SC">Santa Catarina (SC)</option>
+                            <option value="SP">São Paulo (SP)</option>
+                            <option value="SE">Sergipe (SE)</option>
+                            <option value="TO">Tocantins (TO)</option>
+                        </select>
+                        <small class="input-feedback"></small>
+                    </div>
+                </div>
+                <button type="submit" class="btn-salvar">Salvar Dados Pessoais</button>
+            </form>
+        </section>
+
+        <!-- 2. ALTERAÇÃO DE SENHA -->
+        <section class="secao-card-perfil">
+            <h2 class="titulo-secao-card">🔒 Alterar Senha</h2>
+            <form id="form-alterar-senha" novalidate>
+                <div class="grid-form">
+                    <div class="grupo-input campo-full">
+                        <label for="input-senha-atual">Senha Atual</label>
+                        <input type="password" id="input-senha-atual" required placeholder="Sua senha atual">
+                        <small class="input-feedback"></small>
+                    </div>
+                    <div class="grupo-input">
+                        <label for="input-nova-senha">Nova Senha</label>
+                        <input type="password" id="input-nova-senha" required placeholder="Digite a nova senha">
+                        <small class="input-feedback"></small>
+                    </div>
+                    <div class="grupo-input">
+                        <label for="input-confirm-nova-senha">Confirme a Nova Senha</label>
+                        <input type="password" id="input-confirm-nova-senha" required placeholder="Repita a nova senha">
+                        <small class="input-feedback"></small>
+                    </div>
+
+                    <div class="senha-requisitos">
+                        <span id="req-minimo" class="req-item">✖ Mínimo de 8 caracteres</span>
+                        <span id="req-maiuscula" class="req-item">✖ Pelo menos 1 letra maiúscula</span>
+                        <span id="req-numero" class="req-item">✖ Pelo menos 1 número</span>
+                        <span id="req-simbolo" class="req-item">✖ Pelo menos 1 caractere especial (!@#$)</span>
+                        <span id="req-coincide" class="req-item" style="grid-column: span 2;">✖ As senhas coincidem</span>
+                    </div>
+                </div>
+                <button type="submit" class="btn-salvar">Atualizar Senha</button>
+            </form>
+        </section>
+
+        <!-- 3. MEUS CERTIFICADOS -->
+        <section class="secao-card-perfil">
+            <h2 class="titulo-secao-card">🎓 Meus Certificados</h2>
+            <div class="lista-certificados" id="container-certificados">
+                <!-- Preenchido via JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Visualizador de Certificado -->
+    <div id="modal-certificado" class="modal" style="display:none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 999; justify-content: center; align-items: center;">
+        <div class="modal-cert-conteudo">
+            <span id="fechar-cert" style="position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer;">&times;</span>
+            <h1 style="font-family: 'Audiowide', cursive; color: #b33f30; margin-bottom: 1rem;">NANKIM ART SCHOOL</h1>
+            <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem;">CERTIFICADO DE CONCLUSÃO</h2>
+            <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">
+                Certificamos que <strong id="cert-nome-aluno" style="text-decoration: underline;">Nome do Aluno</strong> concluiu com êxito o curso de <strong id="cert-nome-curso">Fundamentos do Desenho</strong> com carga horária de 40 horas.
+            </p>
+            <div style="display: flex; justify-content: space-around; margin-top: 3rem; border-top: 1px solid #ccc; padding-top: 1.5rem;">
+                <div>
+                    <p style="font-weight: 800;">Thiago Nankim</p>
+                    <small style="color: #666;">Instrutor Responsável</small>
+                </div>
+                <div>
+                    <p style="font-weight: 800;" id="cert-data">25/10/2026</p>
+                    <small style="color: #666;">Data de Emissão</small>
+                </div>
+            </div>
+            <button onclick="window.print()" style="margin-top: 2rem; padding: 0.8rem 1.8rem; background: #000; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 700;">Imprimir / Salvar PDF</button>
+        </div>
+    </div>
+
+    <!-- Container onde seu script injeta o rodapé dinâmico -->
+    <div id="footer-container"></div>
+
+    <!-- Scripts Globais -->
+    <script src="./js/global.js"></script>
+
+    <!-- Script Inline do Meu Perfil -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. CARREGAR DADOS DO USUÁRIO LOGADO
+            const sessaoData = sessionStorage.getItem('nankim_sessao');
+            if (!sessaoData) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const usuarioSessao = JSON.parse(sessaoData);
+            let dbUsuarios = JSON.parse(localStorage.getItem('nankim_db')) || [];
+            let usuarioAtual = dbUsuarios.find(u => u.email === usuarioSessao.email);
+
+            if (!usuarioAtual) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Preenche o Header
+            const primeiroNome = usuarioAtual.nome ? usuarioAtual.nome.split(' ')[0] : 'Aluno';
+            document.getElementById('nome-aluno-topo').textContent = primeiroNome;
+            document.getElementById('avatar-iniciais').textContent = primeiroNome.charAt(0).toUpperCase();
+
+            // Toggle Dropdown Menu
+            const btnMenu = document.getElementById('btn-menu-perfil');
+            const dropdown = document.getElementById('dropdown-perfil');
+            if (btnMenu && dropdown) {
+                btnMenu.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    dropdown.classList.toggle('show');
+                });
+                document.addEventListener('click', (e) => {
+                    if (!dropdown.contains(e.target) && e.target !== btnMenu) {
+                        dropdown.classList.remove('show');
+                    }
+                });
+            }
+
+            // Logout
+            const btnSair = document.getElementById('btn-sair');
+            if (btnSair) {
+                btnSair.addEventListener('click', () => {
+                    sessionStorage.removeItem('nankim_sessao');
+                    window.location.href = 'index.html';
+                });
+            }
+
+            // Helper de erro
+            function definirErroCampo(inputEl, mensagem) {
+                if (!inputEl) return;
+                const grupo = inputEl.closest('.grupo-input');
+                if (!grupo) return;
+
+                let feedback = grupo.querySelector('.input-feedback');
+                if (!feedback) {
+                    feedback = document.createElement('small');
+                    feedback.className = 'input-feedback';
+                    grupo.appendChild(feedback);
+                }
+
+                if (mensagem) {
+                    grupo.classList.add('erro');
+                    grupo.classList.remove('sucesso');
+                    feedback.textContent = mensagem;
+                } else {
+                    grupo.classList.remove('erro');
+                    grupo.classList.add('sucesso');
+                    feedback.textContent = '';
+                }
+            }
+
+            // 2. MÁSCARAS E VALIDAÇÕES EM TEMPO REAL
+            const inputEmail = document.getElementById('input-email');
+            const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            inputEmail.addEventListener('input', () => {
+                const val = inputEmail.value.trim().toLowerCase();
+                if (!regexEmail.test(val)) {
+                    definirErroCampo(inputEmail, 'Informe um e-mail válido.');
+                } else {
+                    definirErroCampo(inputEmail, '');
+                }
+            });
+
+            const inputTelefone = document.getElementById('input-telefone');
+            inputTelefone.addEventListener('input', (e) => {
+                let val = e.target.value.replace(/\D/g, '');
+                if (val.length > 11) val = val.slice(0, 11);
+
+                if (val.length > 6) {
+                    val = `(${val.slice(0, 2)}) ${val.slice(2, 7)}-${val.slice(7)}`;
+                } else if (val.length > 2) {
+                    val = `(${val.slice(0, 2)}) ${val.slice(2)}`;
+                } else if (val.length > 0) {
+                    val = `(${val}`;
+                }
+                e.target.value = val;
+
+                const digitos = val.replace(/\D/g, '');
+                if (digitos.length > 0 && digitos.length < 11) {
+                    definirErroCampo(inputTelefone, 'Informe DDD + 9 dígitos.');
+                } else {
+                    definirErroCampo(inputTelefone, '');
+                }
+            });
+
+            const inputCpf = document.getElementById('input-cpf');
+            inputCpf.addEventListener('input', (e) => {
+                let val = e.target.value.replace(/\D/g, '');
+                if (val.length > 11) val = val.slice(0, 11);
+
+                if (val.length > 9) {
+                    val = `${val.slice(0, 3)}.${val.slice(3, 6)}.${val.slice(6, 9)}-${val.slice(9)}`;
+                } else if (val.length > 6) {
+                    val = `${val.slice(0, 3)}.${val.slice(3, 6)}.${val.slice(6)}`;
+                } else if (val.length > 3) {
+                    val = `${val.slice(0, 3)}.${val.slice(3)}`;
+                }
+                e.target.value = val;
+
+                const digitos = val.replace(/\D/g, '');
+                if (digitos.length > 0 && digitos.length < 11) {
+                    definirErroCampo(inputCpf, 'CPF deve conter 11 dígitos.');
+                } else {
+                    definirErroCampo(inputCpf, '');
+                }
+            });
+
+            const inputCep = document.getElementById('input-cep');
+            inputCep.addEventListener('input', (e) => {
+                let v = e.target.value.replace(/\D/g, '');
+                if (v.length > 8) v = v.slice(0, 8);
+                if (v.length > 5) v = `${v.slice(0, 5)}-${v.slice(5)}`;
+                e.target.value = v;
+            });
+
+            // 3. PREENCHER DADOS DO FORMULÁRIO
+            document.getElementById('input-nome').value = usuarioAtual.nome || '';
+            inputEmail.value = usuarioAtual.email || '';
+            inputTelefone.value = usuarioAtual.telefone || '';
+            inputCpf.value = usuarioAtual.cpf || '';
+            inputCep.value = usuarioAtual.cep || '';
+            document.getElementById('input-endereco').value = usuarioAtual.endereco || '';
+            document.getElementById('input-cidade').value = usuarioAtual.cidade || '';
+            document.getElementById('select-uf').value = usuarioAtual.uf || '';
+
+            inputTelefone.dispatchEvent(new Event('input'));
+            inputCpf.dispatchEvent(new Event('input'));
+
+            function mostrarAlerta() {
+                const alerta = document.getElementById('msg-alerta-sucesso');
+                alerta.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setTimeout(() => alerta.style.display = 'none', 4000);
+            }
+
+            // SUBMIT DADOS PESSOAIS
+            document.getElementById('form-dados-pessoais').addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                inputEmail.dispatchEvent(new Event('input'));
+                inputTelefone.dispatchEvent(new Event('input'));
+                inputCpf.dispatchEvent(new Event('input'));
+
+                if (document.querySelectorAll('#form-dados-pessoais .grupo-input.erro').length > 0) {
+                    alert('Corrija os campos destacados em vermelho antes de salvar.');
+                    return;
+                }
+
+                const emailAntigo = usuarioAtual.email;
+                const novoEmail = inputEmail.value.trim().toLowerCase();
+
+                usuarioAtual.nome = document.getElementById('input-nome').value.trim();
+                usuarioAtual.email = novoEmail;
+                usuarioAtual.telefone = inputTelefone.value.trim();
+                usuarioAtual.cpf = inputCpf.value.trim();
+                usuarioAtual.cep = inputCep.value.trim();
+                usuarioAtual.endereco = document.getElementById('input-endereco').value.trim();
+                usuarioAtual.cidade = document.getElementById('input-cidade').value.trim();
+                usuarioAtual.uf = document.getElementById('select-uf').value;
+
+                const idx = dbUsuarios.findIndex(u => u.email === emailAntigo);
+                if (idx !== -1) {
+                    dbUsuarios[idx] = usuarioAtual;
+                    localStorage.setItem('nankim_db', JSON.stringify(dbUsuarios));
+                }
+
+                usuarioSessao.email = novoEmail;
+                usuarioSessao.nome = usuarioAtual.nome;
+                sessionStorage.setItem('nankim_sessao', JSON.stringify(usuarioSessao));
+
+                mostrarAlerta();
+            });
+
+            // 4. VALIDAÇÃO DE SENHA
+            const inputSenhaNova = document.getElementById('input-nova-senha');
+            const inputConfirmNova = document.getElementById('input-confirm-nova-senha');
+
+            function atualizarReq(id, valido, texto) {
+                const el = document.getElementById(id);
+                if (!el) return;
+                if (valido) {
+                    el.classList.add('valido');
+                    el.textContent = `✔ ${texto}`;
+                } else {
+                    el.classList.remove('valido');
+                    el.textContent = `✖ ${texto}`;
+                }
+            }
+
+            function checarRegrasSenha() {
+                const val = inputSenhaNova.value;
+                const conf = inputConfirmNova.value;
+
+                const temMin = val.length >= 8;
+                const temMai = /[A-Z]/.test(val);
+                const temNum = /[0-9]/.test(val);
+                const temSim = /[^A-Za-z0-9]/.test(val);
+                const coincidem = val !== '' && val === conf;
+
+                atualizarReq('req-minimo', temMin, 'Mínimo de 8 caracteres');
+                atualizarReq('req-maiuscula', temMai, 'Pelo menos 1 letra maiúscula');
+                atualizarReq('req-numero', temNum, 'Pelo menos 1 número');
+                atualizarReq('req-simbolo', temSim, 'Pelo menos 1 caractere especial (!@#$)');
+                atualizarReq('req-coincide', coincidem, 'As senhas coincidem');
+
+                return temMin && temMai && temNum && temSim && coincidem;
+            }
+
+            inputSenhaNova.addEventListener('input', checarRegrasSenha);
+            inputConfirmNova.addEventListener('input', checarRegrasSenha);
+
+            document.getElementById('form-alterar-senha').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const senhaAtual = document.getElementById('input-senha-atual').value;
+
+                if (senhaAtual !== usuarioAtual.senha) {
+                    definirErroCampo(document.getElementById('input-senha-atual'), 'Sua senha atual está incorreta!');
+                    return;
+                } else {
+                    definirErroCampo(document.getElementById('input-senha-atual'), '');
+                }
+
+                if (!checarRegrasSenha()) {
+                    alert('A nova senha não atende a todos os requisitos listados.');
+                    return;
+                }
+
+                usuarioAtual.senha = inputSenhaNova.value;
+                const idx = dbUsuarios.findIndex(u => u.email === usuarioAtual.email);
+                if (idx !== -1) {
+                    dbUsuarios[idx] = usuarioAtual;
+                    localStorage.setItem('nankim_db', JSON.stringify(dbUsuarios));
+                }
+
+                document.getElementById('form-alterar-senha').reset();
+                checarRegrasSenha();
+                mostrarAlerta();
+            });
+
+            // 5. RENDERIZAR CERTIFICADOS
+            const containerCert = document.getElementById('container-certificados');
+            const modalCert = document.getElementById('modal-certificado');
+            const fecharCert = document.getElementById('fechar-cert');
+
+            if (usuarioAtual.matriculado || usuarioAtual.modulo1_liberado) {
+                containerCert.innerHTML = `
+                    <div class="item-certificado">
+                        <div class="info-cert">
+                            <h3>Fundamentos do Desenho</h3>
+                            <p>Carga horária: 40 horas • Concluído</p>
+                        </div>
+                        <button class="btn-ver-cert" id="btn-abrir-cert">Visualizar Certificado</button>
+                    </div>
+                `;
+
+                document.getElementById('btn-abrir-cert').addEventListener('click', () => {
+                    document.getElementById('cert-nome-aluno').textContent = usuarioAtual.nome;
+                    modalCert.style.display = 'flex';
+                });
+            } else {
+                containerCert.innerHTML = `
+                    <p style="color: #777; font-size: 0.9rem;">Você ainda não possui certificados emitidos. Conclua um curso completo para liberar seu certificado.</p>
+                `;
+            }
+
+            fecharCert.addEventListener('click', () => modalCert.style.display = 'none');
+        });
+    </script>
+</body>
+</html>

@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
             subtitulo: "Escola Revolution",
             descricao: "Curso de Concept Art com Victor Hamatchuck.",
             tag: "Formação complementar",
-            imagem: "./imagens/conceitual.png",
+            imagem: "./assets/img/conceitual.png",
             legenda: "Concept Art · Escola Revolution"
         },
         {
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
             subtitulo: "OZI",
             descricao: "Curso de Modelagem 3D e Animação.",
             tag: "Formação complementar",
-            imagem: "./imagens/modelagem%203d.jpg",
+            imagem: "./assets/img/modelagem-3d.jpg",
             legenda: "3D e animação · OZI"
         },
         {
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
             subtitulo: "UDF",
             descricao: "Graduação em Design Gráfico.",
             tag: "Graduação",
-            imagem: "./imagens/foto%20formatura.png",
+            imagem: "./assets/img/formatura.png",
             legenda: "Design gráfico · UDF"
         },
         {
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
             subtitulo: "Arte e edição",
             descricao: "Edição de vídeo no Studio Online.",
             tag: "Cursos complementares",
-            imagem: "./imagens/edi%C3%A7%C3%A3o%20de%20v%C3%ADdeo.jpg",
+            imagem: "./assets/img/edicao-de-video.jpg",
             legenda: "Edição de vídeo · Studio Online"
         }
     ];

@@ -870,3 +870,31 @@ form button[type="submit"]:hover:not(:disabled) {
     from { width: 0%; }
     to { width: 100%; }
 }
+
+/* Abas de Perfil (Aluno / Professor) no Modal de Login */
+.login-tabs-perfil {
+    display: flex;
+    background-color: #f1f5f9;
+    padding: 4px;
+    border-radius: 50px;
+    margin-bottom: 1.2rem;
+}
+
+.tab-perfil {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 0.65rem 1rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #64748b;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab-perfil.active {
+    background-color: #000000;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
