@@ -59,7 +59,7 @@
     font-size: 0.8rem !important;
     text-transform: uppercase !important;
     letter-spacing: 1.5px !important;
-    color: #b33f30 !important;
+    color: var(--cor-destaque) !important;
     font-weight: 700 !important;
     margin: 0 0 6px 0 !important;
 }
@@ -84,12 +84,12 @@
 #modal-termos .conteudo-scroll section h3 {
     font-size: 1rem !important;
     margin: 0 0 0.4rem 0 !important;
-    color: #b33f30 !important;
+    color: var(--cor-destaque) !important;
     font-weight: 700 !important;
 }
 
 :root[data-theme="dark"] #modal-termos .conteudo-scroll section h3 {
-    color: #e56b5b !important;
+    color: var(--cor-destaque-hover) !important;
 }
 
 #modal-termos .conteudo-scroll section p {
@@ -116,7 +116,7 @@
 }
 
 #modal-termos .termos-btn-concordar {
-    background-color: #b33f30 !important;
+    background-color: var(--cor-destaque) !important;
     color: #ffffff !important;
     border: none !important;
     padding: 0.85rem 2rem !important;
@@ -128,7 +128,7 @@
 }
 
 #modal-termos .termos-btn-concordar:hover {
-    background-color: #963225 !important;
+    background-color: var(--cor-destaque-hover) !important;
     transform: translateY(-2px) !important;
     box-shadow: 0 6px 15px rgba(179, 63, 48, 0.3) !important;
 }
@@ -157,10 +157,25 @@
 
 #modal-termos .close-btn:hover {
     background: rgba(179, 63, 48, 0.15) !important;
-    color: #b33f30 !important;
+    color: var(--cor-destaque) !important;
 }
 
 @keyframes termosEntrada {
     from { transform: translateY(20px) scale(0.97); opacity: 0; }
     to { transform: translateY(0) scale(1); opacity: 1; }
+}
+/* Atualização de Cor do Modal para Âmbar */
+#modal-termos .termos-eyebrow,
+#modal-termos .conteudo-scroll section h3 {
+    color: var(--cor-destaque) !important;
+}
+
+#modal-termos .termos-btn-concordar {
+    background-color: var(--cor-destaque) !important;
+    color: #ffffff !important;
+}
+
+#modal-termos .termos-btn-concordar:hover {
+    background-color: var(--cor-destaque-hover) !important;
+    box-shadow: 0 6px 15px rgba(var(--cor-destaque-rgb), 0.35) !important;
 }

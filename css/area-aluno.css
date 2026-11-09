@@ -1,6 +1,8 @@
-/* ==========================================================
-   HEADER E LOGO DO ALUNO
-   ========================================================== */
+/* ==========================================================================
+   NANKIM ESCOLA DE ARTE - ÁREA DO ALUNO
+   ========================================================================== */
+
+/* --- HEADER E LOGO DO ALUNO --- */
 .header-aluno {
     background-color: #000000;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -19,7 +21,7 @@
     margin: 0 auto;
 }
 
-/* Logo Enfeite */
+/* Logo Enfeite (Sem link de clique) */
 .logo-aluno-wrapper {
     display: inline-flex !important;
     align-items: center !important;
@@ -116,7 +118,7 @@
 .avatar-aluno {
     width: 32px;
     height: 32px;
-    background-color: #b33f30;
+    background-color: var(--cor-destaque, #f39c12);
     color: #fff;
     border-radius: 50%;
     display: flex;
@@ -190,9 +192,7 @@
     color: #ff7575 !important; 
 }
 
-/* ==========================================================
-   PAINEL E ESTRUTURA DA PÁGINA
-   ========================================================== */
+/* --- PAINEL E ESTRUTURA DA PÁGINA --- */
 .painel-aluno {
     background-color: #070707;
     min-height: 100vh;
@@ -245,9 +245,7 @@
     gap: 2rem;
 }
 
-/* ==========================================================
-   CARD BASE DOS CURSOS
-   ========================================================== */
+/* --- CARD BASE DOS CURSOS --- */
 .curso-card-aluno {
     position: relative;
     height: 320px;
@@ -467,3 +465,129 @@
 
 .curso-card-aluno.card-estatico:hover .curso-painel { transform: none !important; }
 .curso-card-aluno.card-estatico .curso-detalhes { display: none !important; }
+
+/* --- RODAPÉ OFICIAL DA PLATAFORMA --- */
+/* Correção de layout do container do rodapé dinâmico */
+#footer-container {
+    width: 100%;
+    margin-top: auto;
+}
+
+.footer-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+}
+
+.footer-brand h3 {
+    font-family: 'Audiowide', cursive;
+    color: #ffffff;
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+}
+
+.footer-brand p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    max-width: 320px;
+}
+
+.footer-column h4 {
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 0.7rem;
+}
+
+.footer-column ul li a {
+    color: #888888;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.footer-column ul li a:hover {
+    color: #ffffff;
+}
+
+.footer-bottom {
+    max-width: 1000px;
+    margin: 3rem auto 0;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+.secao-progresso-curso {
+    margin-top: 2.5rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    background: #101010;
+}
+
+.resumo-progresso-curso {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    color: #fff;
+}
+
+.trilha-aulas-progresso {
+    display: grid;
+    gap: 0.5rem;
+    margin: 1.25rem 0;
+    padding-left: 1.5rem;
+}
+
+.trilha-aulas-progresso button {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background: #181818;
+    color: #ddd;
+    text-align: left;
+    cursor: pointer;
+}
+
+.trilha-aulas-progresso button.aula-atual {
+    border-color: var(--cor-destaque, #f39c12);
+    color: #fff;
+}
+
+.trilha-aulas-progresso button.aula-concluida {
+    border-color: #557a56;
+    color: #c9e6ca;
+}
+
+.secao-progresso-curso[hidden] {
+    display: none;
+}

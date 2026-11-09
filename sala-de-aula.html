@@ -4,16 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sala de Aula | Nankim Art School</title>
-    <link rel="stylesheet" href="./css/reset.css">
+    
+    <!-- CSS Base e Específicos -->
+   <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/variaveis.css">
     <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/rodape.css"> <!-- Adicione esta linha -->
     <link rel="stylesheet" href="./css/termos.css">
     <link rel="stylesheet" href="./css/cookies.css">
+    <link rel="stylesheet" href="./css/sala-de-aula.css">
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Caveat:wght@700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -25,9 +33,9 @@
                         nankimDark: '#070707',
                         nankimCard: '#121212',
                         nankimBorder: '#222222',
-                        nankimRed: '#e50914',
-                        nankimGreen: '#27ae60',
-                        nankimGreenHover: '#219653'
+                        nankimRed: '#f39c12',
+                        nankimGreen: '#f39c12',
+                        nankimGreenHover: '#d35400'
                     },
                     fontFamily: {
                         sans: ['Montserrat', 'sans-serif'],
@@ -38,74 +46,6 @@
             }
         }
     </script>
-
-    <style>
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #070707; }
-        ::-webkit-scrollbar-thumb { background: #222222; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #333333; }
-
-        /* Logo expand animation */
-        .logo-expansivel {
-            max-width: 0;
-            opacity: 0;
-            overflow: hidden;
-            white-space: nowrap;
-            transition: max-width 0.45s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.35s ease, padding 0.35s ease;
-        }
-        .logo-wrapper:hover .logo-expansivel {
-            max-width: 200px;
-            opacity: 1;
-            padding-left: 0.35rem;
-            padding-right: 0.5rem;
-        }
-        .logo-img {
-            filter: invert(1);
-            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .logo-wrapper:hover .logo-img {
-            transform: rotate(360deg);
-        }
-
-        /* YouTube Embed Wrapper */
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-            overflow: hidden;
-            background-color: #000;
-            border-radius: 12px;
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
-        /* Active Tab Styling */
-        .tab-btn.active {
-            color: #ffffff;
-            border-bottom: 2px solid #27ae60;
-            background-color: rgba(39, 174, 96, 0.05);
-        }
-
-        /* Accordion transition */
-        .accordion-content {
-            transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
-            max-height: 1000px;
-            overflow: hidden;
-        }
-        .accordion-content.collapsed {
-            max-height: 0;
-            opacity: 0;
-            padding-top: 0;
-            padding-bottom: 0;
-        }
-    </style>
 </head>
 <body class="bg-nankimDark text-gray-100 font-sans min-h-screen flex flex-col antialiased">
 
@@ -320,7 +260,7 @@
                 {
                     id: 'm1',
                     titulo: 'Módulo 1: Traço, Forma e Controle',
-                    pago: false, // Grátis para degustação
+                    pago: false,
                     aulas: [
                         {
                             id: 'aula-1',
@@ -360,7 +300,7 @@
                 {
                     id: 'm2',
                     titulo: 'Módulo 2: Volumetria, Luz e Sombra',
-                    pago: true, // Requer Matrícula Completa
+                    pago: true,
                     aulas: [
                         {
                             id: 'aula-4',
@@ -389,7 +329,7 @@
                 {
                     id: 'm3',
                     titulo: 'Módulo 3: Perspectiva e Espaço',
-                    pago: true, // Requer Matrícula Completa
+                    pago: true,
                     aulas: [
                         {
                             id: 'aula-6',
@@ -566,7 +506,7 @@
                             if (isConclvida) {
                                 statusIcon = '<i class="fa-solid fa-circle-check text-nankimGreen"></i>';
                             } else if (isAtiva) {
-                                statusIcon = '<i class="fa-solid fa-play text-red-500 text-[10px] animate-pulse"></i>';
+                                statusIcon = '<i class="fa-solid fa-play text-amber-500 text-[10px] animate-pulse"></i>';
                             }
 
                             return `

@@ -1,170 +1,180 @@
-/* ================= RODAPÉ ================= */
+/* ================= RODAPÉ GLOBAL NANKIM ================= */
 .rodape-global {
-    background-color: var(--menu-bg);
-    color: var(--menu-texto);
-    padding: 5rem 5% 2.5rem;
-    font-family: 'Montserrat', sans-serif;
-    position: relative;
-    z-index: 10;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: var(--menu-bg, #070707) !important;
+    color: var(--menu-texto, #ffffff) !important;
+    padding: 5rem 5% 2.5rem !important;
+    font-family: 'Montserrat', sans-serif !important;
+    position: relative !important;
+    z-index: 10 !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    margin-top: auto !important;
+    transition: background-color 0.3s ease, color 0.3s ease !important;
 }
 
 .rodape-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 4rem;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4rem !important;
 }
 
 .rodape-superior {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 2rem;
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: flex-start !important;
+    flex-wrap: wrap !important;
+    gap: 2rem !important;
 }
 
 .logo-rodape-estatica {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.85rem;
-    color: var(--menu-texto) !important;
-    user-select: none;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.85rem !important;
+    color: var(--menu-texto, #ffffff) !important;
+    user-select: none !important;
 }
 
 .logo-rodape-icone {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    object-fit: contain;
-    display: block;
-    transition: filter 0.3s ease;
+    width: 52px !important;
+    height: 52px !important;
+    border-radius: 50% !important;
+    object-fit: contain !important;
+    display: block !important;
+    transition: filter 0.3s ease !important;
 }
 
 /* Inverte o ícone da logo no rodapé apenas no modo escuro */
 :root[data-theme="dark"] .logo-rodape-icone {
-    filter: invert(1);
+    filter: invert(1) !important;
 }
 
 .logo-fixo-rodape {
-    font-family: 'Audiowide', cursive;
-    font-size: 1.6rem;
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    color: var(--menu-texto) !important;
+    font-family: 'Audiowide', cursive !important;
+    font-size: 1.6rem !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.02em !important;
+    color: var(--menu-texto, #ffffff) !important;
 }
 
 .logo-sub-rodape {
-    font-family: 'Caveat', cursive;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--menu-texto) !important;
-    padding-left: 0.35rem;
+    font-family: 'Caveat', cursive !important;
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    color: var(--menu-texto, #ffffff) !important;
+    padding-left: 0.35rem !important;
 }
 
 .rodape-col-dir {
-    max-width: 480px;
-    text-align: right;
+    max-width: 480px !important;
+    text-align: right !important;
 }
 
 .rodape-sociais {
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.8rem;
-    margin-bottom: 1.2rem;
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 0.8rem !important;
+    margin-bottom: 1.2rem !important;
 }
 
 .rodape-sociais a {
-    color: var(--menu-texto) !important;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background-color: rgba(128, 128, 128, 0.15);
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+    color: var(--menu-texto, #ffffff) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 50% !important;
+    background-color: rgba(128, 128, 128, 0.15) !important;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+.rodape-sociais a svg {
+    display: block !important;
+    width: 22px !important;
+    height: 22px !important;
 }
 
 .rodape-sociais a:hover {
-    background-color: var(--menu-texto);
-    color: var(--menu-bg) !important;
+    background-color: var(--menu-texto, #ffffff) !important;
+    color: var(--menu-bg, #000000) !important;
 }
 
 .rodape-desc-escola {
-    font-size: 0.92rem;
-    color: var(--menu-texto);
-    opacity: 0.7;
-    line-height: 1.6;
+    font-size: 0.92rem !important;
+    color: var(--menu-texto, #ffffff) !important;
+    opacity: 0.7 !important;
+    line-height: 1.6 !important;
 }
 
 .rodape-inferior {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    border-top: 1px solid rgba(128, 128, 128, 0.2);
-    padding-top: 2rem;
-    font-size: 0.85rem;
-    color: var(--menu-texto);
-    opacity: 0.8;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 1.5rem !important;
+    border-top: 1px solid rgba(128, 128, 128, 0.2) !important;
+    padding-top: 2rem !important;
+    font-size: 0.85rem !important;
+    color: var(--menu-texto, #ffffff) !important;
+    opacity: 0.8 !important;
 }
 
 .rodape-copyright {
-    margin: 0;
+    margin: 0 !important;
 }
 
 .rodape-links-legais {
-    display: flex;
-    gap: 1.8rem;
-    flex-wrap: wrap;
+    display: flex !important;
+    gap: 1.8rem !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
 }
 
 .rodape-links-legais a, 
 .rodape-links-legais button {
-    color: var(--menu-texto) !important;
-    text-decoration: none;
-    font: inherit;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    opacity: 0.7;
-    transition: color 0.3s ease, opacity 0.3s ease, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+    color: var(--menu-texto, #ffffff) !important;
+    text-decoration: none !important;
+    font: inherit !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    opacity: 0.7 !important;
+    transition: color 0.3s ease, opacity 0.3s ease, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 
 .rodape-links-legais a:hover, 
 .rodape-links-legais button:hover {
-    opacity: 1;
-    text-decoration: underline;
-    text-underline-offset: 3px;
+    opacity: 1 !important;
+    text-decoration: underline !important;
+    text-underline-offset: 3px !important;
 }
 
 @media (max-width: 850px) {
     .rodape-superior {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
     }
     
     .rodape-col-dir {
-        text-align: center;
+        text-align: center !important;
     }
     
     .rodape-sociais {
-        justify-content: center;
+        justify-content: center !important;
     }
 
     .rodape-inferior {
-        flex-direction: column-reverse;
-        justify-content: center;
-        text-align: center;
-        gap: 1rem;
+        flex-direction: column-reverse !important;
+        justify-content: center !important;
+        text-align: center !important;
+        gap: 1rem !important;
     }
     
     .rodape-links-legais {
-        justify-content: center;
+        justify-content: center !important;
     }
 }

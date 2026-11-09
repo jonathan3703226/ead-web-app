@@ -55,7 +55,7 @@
     border-radius: 10px;
 }
 .modal-content::-webkit-scrollbar-thumb:hover {
-    background: #b33f30;
+    background: var(--cor-destaque);
 }
 
 .close-btn {
