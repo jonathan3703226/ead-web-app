@@ -1,0 +1,177 @@
+/* ==========================================================================
+   MODAL DE REPORTAR ERRO - ESTILOS ISOLADOS
+   ========================================================================== */
+
+.modal-reportar-overlay-fix {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: rgba(0, 0, 0, 0.75) !important;
+    z-index: 999999 !important;
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+    backdrop-filter: blur(5px) !important;
+    padding: 1.5rem !important;
+    box-sizing: border-box !important;
+}
+
+.modal-reportar-card-fix {
+    background-color: #ffffff !important;
+    color: #2b2b2b !important;
+    width: 100% !important;
+    max-width: 460px !important; /* Tamanho compacto correto */
+    border-radius: 24px !important;
+    padding: 2.2rem 2rem !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35) !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+}
+
+.btn-fechar-x-report {
+    position: absolute !important;
+    top: 1rem !important;
+    right: 1.2rem !important;
+    background: none !important;
+    border: none !important;
+    font-size: 1.8rem !important;
+    line-height: 1 !important;
+    color: #888888 !important;
+    cursor: pointer !important;
+}
+
+.btn-fechar-x-report:hover {
+    color: #111111 !important;
+}
+
+.titulo-reportar-fix {
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 1.4rem !important;
+    font-weight: 800 !important;
+    color: #111111 !important;
+    margin: 0 0 0.3rem 0 !important;
+}
+
+.subtitulo-reportar-fix {
+    font-size: 0.88rem !important;
+    color: #666666 !important;
+    line-height: 1.4 !important;
+    margin: 0 0 1.2rem 0 !important;
+}
+
+.grupo-opcoes-erro {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.opcao-erro-card {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 0.7rem 0.9rem !important;
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 12px !important;
+    cursor: pointer !important;
+    background-color: #f9f9f9 !important;
+}
+
+.opcao-erro-card input[type="radio"] {
+    accent-color: var(--cor-destaque, #f39c12) !important;
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.opcao-erro-label {
+    font-size: 0.88rem !important;
+    font-weight: 600 !important;
+    color: #333333 !important;
+}
+
+.campo-texto-erro {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.3rem !important;
+    margin-bottom: 1.2rem !important;
+}
+
+.label-textarea {
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    color: #555555 !important;
+}
+
+.campo-texto-erro textarea {
+    width: 100% !important;
+    padding: 0.75rem !important;
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 10px !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 0.85rem !important;
+    color: #2b2b2b !important;
+    resize: vertical !important;
+    box-sizing: border-box !important;
+    background-color: #fafafa !important;
+}
+
+.btn-enviar-report {
+    width: 100% !important;
+    background-color: #111111 !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 0.9rem !important;
+    border-radius: 50px !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 0.92rem !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+}
+
+/* Confirmação */
+.reportar-sucesso-wrapper {
+    text-align: center !important;
+    padding: 0.8rem 0 0.4rem !important;
+}
+
+.icone-check-sucesso {
+    width: 52px !important;
+    height: 52px !important;
+    background-color: rgba(46, 204, 113, 0.15) !important;
+    color: #2ecc71 !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.7rem !important;
+    font-weight: 900 !important;
+    margin: 0 auto 1rem !important;
+}
+
+.titulo-sucesso-report {
+    font-size: 1.3rem !important;
+    font-weight: 800 !important;
+    color: #111111 !important;
+    margin-bottom: 0.4rem !important;
+}
+
+.texto-sucesso-report {
+    font-size: 0.88rem !important;
+    color: #666666 !important;
+    line-height: 1.4 !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.btn-fechar-sucesso {
+    background-color: #111111 !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 0.8rem 2.2rem !important;
+    border-radius: 50px !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 0.88rem !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+}

@@ -23,13 +23,14 @@
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/termos.css">
     <link rel="stylesheet" href="css/cookies.css">
-
+    <link rel="stylesheet" href="css/reportar.css">
 
     <!-- Scripts Globais da Aplicação -->
     <script src="./js/global.js"></script>
     <script src="./js/login.js"></script>
-    <script src="../js/cookies.js"></script>
+    <script src="./js/cookies.js"></script>
     <script src="./js/termos.js"></script>
+    <script src="./js/reportar.js"></script>
 </head>
 
 <body>
@@ -52,6 +53,7 @@
                     </h2>
                 </div>
 
+                <!-- Vídeo Limpo -->
                 <div class="container-video-showreel">
                     <video id="video-showreel-header" autoplay loop muted playsinline
                         poster="./imagens/banner-caneta.jpg">
@@ -59,19 +61,6 @@
                         Seu navegador não suporta a exibição de vídeos.
                     </video>
                     <div class="overlay-video"></div>
-                    <div class="texto-sobre-video">
-                        <p>Aqui transformamos a vontade em evolução real <br>através de uma jornada estruturada,
-                            organizada e sem rodeios.</p>
-                    </div>
-                </div>
-
-                <!-- Slogan em Destaque -->
-                <div class="trava-slogan-container revelar-scroll">
-                    <div class="box-slogan-glow">
-                        <h2 class="trava-slogan-texto">
-                            Nankim <span class="destaque-vermelho-slogan">— Onde o seu sonho ganha traço.</span>
-                        </h2>
-                    </div>
                 </div>
             </div>
         </section>
@@ -79,11 +68,11 @@
         <!-- Bloco Escuro Centralizado -->
         <div class="cuberto-dark-section">
 
-            <!-- Seção 2: Problemas do Autodidata (Layout em Trilha Assimétrica) -->
+            <!-- Seção 2: Diagnóstico -->
             <section class="secao-pilares-clean">
                 <div class="container-vitrine">
                     <div class="cabecalho-vitrine revelar-scroll">
-                        <h2 class="titulo-destaque-vitrine">Por que é tão difícil aprender arte sozinho?</h2>
+                        <h2 class="titulo-destaque-vitrine">O que ninguém conta sobre aprender arte sozinho.</h2>
                     </div>
 
                     <!-- Container com visual de trilha sequencial -->
@@ -117,21 +106,32 @@
                         </p>
                     </div>
 
-                    <!-- Divisor Visual de Seção (Linha de Transição) -->
+                    <!-- Divisor Visual de Seção -->
                     <div class="divisor-secao-glow"></div>
                 </div>
             </section>
 
-            <!-- Seção 3: Vitrine de Etapas (Trilha de Formação) -->
+           <!-- Seção 3: Vitrine de Etapas -->
             <section class="secao-vitrine-cursos" id="cursos">
                 <div class="container-vitrine">
-                    <div class="cabecalho-vitrine revelar-scroll">
-                        <span class="eyebrow-transicao-solucao">// A SOLUÇÃO NANKIM</span>
-                        <h2 class="titulo-destaque-vitrine">Uma jornada progressiva: do primeiro esboço ao mercado</h2>
-                        <p class="subtitulo-detalhe-vitrine">Conheça a estrutura modular desenhada para garantir seu
-                            desenvolvimento sem lacunas.</p>
+                    
+                    <!-- 1. Slogan Maior, Centralizado e com Destaque -->
+                    <div class="trava-slogan-container slogan-posicao-topo revelar-scroll">
+                        <div class="box-slogan-glow box-slogan-maior">
+                            <h3 class="trava-slogan-texto slogan-texto-destaque">
+                                <span class="marca-nankim-gold">Nankim</span> <span class="destaque-vermelho-slogan">— Onde o seu sonho ganha traço.</span>
+                            </h3>
+                        </div>
                     </div>
 
+                    <!-- 2. Subtítulo Centralizado -->
+                    <div class="cabecalho-vitrine revelar-scroll">
+                        <p class="subtitulo-detalhe-vitrine destaque-frase-fechamento">
+                            Aqui transformamos a vontade em <span class="destaque-vermelho">evolução real</span> através de uma jornada estruturada e sem rodeios.
+                        </p>
+                    </div>
+
+                    <!-- 3. Quadros com Textos Curtos e Diretos -->
                     <div class="grid-cards-cursos">
                         <article class="card-curso card-disponivel card-com-video">
                             <video class="video-bg-card" loop muted playsinline preload="metadata">
@@ -147,12 +147,10 @@
                                 </div>
                                 <div class="corpo-card-curso">
                                     <h3 class="nome-curso">Fundamentos do Desenho</h3>
-                                    <p class="descricao-curso">A base indispensável. Domine a estrutura de formas,
-                                        perspectiva, luz e sombreamento antes de avançar para técnicas complexas.</p>
+                                    <p class="descricao-curso">Formas, estrutura, luz e sombra. A base essencial para desenhar com segurança.</p>
                                 </div>
                                 <div class="footer-card-curso">
-                                    <a href="./cursos.html" class="btn-card-cta link-magnetico">Conhecer a Etapa
-                                        Piloto</a>
+                                    <a href="./cursos.html" class="btn-card-cta link-magnetico">Conhecer a Etapa Piloto</a>
                                 </div>
                             </div>
                         </article>
@@ -169,8 +167,7 @@
                                 </div>
                                 <div class="corpo-card-curso">
                                     <h3 class="nome-curso">Anatomia Humana & Dinâmica</h3>
-                                    <p class="descricao-curso">Proporções, musculatura e gestual para dar vida e
-                                        movimento às suas criações com precisão técnica.</p>
+                                    <p class="descricao-curso">Proporções, musculatura e movimento para dar vida às suas criações.</p>
                                 </div>
                                 <div class="footer-card-curso">
                                     <button class="btn-card-bloqueado" disabled>Em breve no catálogo</button>
@@ -190,8 +187,7 @@
                                 </div>
                                 <div class="corpo-card-curso">
                                     <h3 class="nome-curso">Especialização Profissional</h3>
-                                    <p class="descricao-curso">Fluxos de trabalho completos, aplicação de cor e
-                                        acabamento profissional voltados para o mercado criativo.</p>
+                                    <p class="descricao-curso">Pintura digital, cor e acabamento de alto nível voltados para o mercado.</p>
                                 </div>
                                 <div class="footer-card-curso">
                                     <button class="btn-card-bloqueado" disabled>Em breve no catálogo</button>
@@ -199,51 +195,56 @@
                             </div>
                         </article>
                     </div>
+
                 </div>
             </section>
 
-            <!-- Seção 4: Degustação Gratuita (Módulo Piloto) -->
-            <section class="secao-degustacao">
-                <div class="degustacao-container">
-                    <div class="degustacao-card-destaque">
-                        <div class="borda-luz-vermelha"></div>
-                        <div class="degustacao-card-conteudo-inner">
-                            <div class="degustacao-selo-wrapper">
-                                <div class="degustacao-circulo-giratorio"></div>
-                                <div class="degustacao-texto-pulsante">
-                                    <span class="selo-sub-top">MÓDULO 1</span>
-                                    <span class="selo-destaque selo-vermelho">100% GRÁTIS</span>
-                                </div>
+           <!-- Seção 4: Degustação Gratuita (Módulo Piloto) -->
+        <section class="secao-degustacao">
+            <div class="degustacao-container">
+                <div class="degustacao-card-destaque">
+                    <div class="borda-luz-vermelha"></div>
+                    <div class="degustacao-card-conteudo-inner">
+                        <div class="degustacao-selo-wrapper">
+                            <div class="degustacao-circulo-giratorio"></div>
+                            <div class="degustacao-texto-pulsante">
+                                <span class="selo-sub-top">MÓDULO 1</span>
+                                <span class="selo-destaque selo-vermelho">100% GRÁTIS</span>
                             </div>
-                            <div class="degustacao-conteudo">
-                                <h2 class="degustacao-titulo">Experimente o método Nankim antes de decidir.</h2>
-                                <p class="degustacao-descricao">Acesse gratuitamente as primeiras aulas da Etapa de
-                                    Fundamentos. Veja como uma estrutura de ensino organizada transforma sua percepção e
-                                    prática no desenho logo no primeiro contato.</p>
-                                <ul class="degustacao-beneficios">
-                                    <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#27ae60"
-                                            stroke-width="2.5">
-                                            <polyline points="20 6 9 17 4 12"></polyline>
-                                        </svg> Acesso ao Módulo 1 da etapa piloto</li>
-                                    <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#27ae60"
-                                            stroke-width="2.5">
-                                            <polyline points="20 6 9 17 4 12"></polyline>
-                                        </svg> Aulas focadas no método sequencial</li>
-                                    <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#27ae60"
-                                            stroke-width="2.5">
-                                            <polyline points="20 6 9 17 4 12"></polyline>
-                                        </svg> Experimentação sem compromisso</li>
-                                </ul>
-                                <button type="button" class="btn-degustacao-cta link-magnetico"
-                                    data-modal="cadastro">Experimentar Módulo Gratuito</button>
-                            </div>
+                        </div>
+                        <div class="degustacao-conteudo">
+                            <h2 class="degustacao-titulo">Experimente o método Nankim antes de decidir.</h2>
+                            
+                            <ul class="degustacao-beneficios">
+                                <li>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--cor-destaque)" stroke-width="2.5">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg> 
+                                    Acesse gratuitamente as primeiras aulas da Etapa de Fundamentos.
+                                </li>
+                                <li>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--cor-destaque)" stroke-width="2.5">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg> 
+                                    Veja como uma estrutura de ensino organizada transforma sua percepção.
+                                </li>
+                                <li>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--cor-destaque)" stroke-width="2.5">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg> 
+                                    Prática no desenho logo no primeiro contato.
+                                </li>
+                            </ul>
+                            
+                            <!-- Classe link-magnetico restaurada -->
+                            <button type="button" class="btn-degustacao-cta link-magnetico" data-modal="cadastro">Experimentar Módulo Gratuito</button>
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
 
-        <!-- Seção 5: Depoimentos (Casos de Sucesso Reais) -->
+        <!-- Seção 5: Depoimentos -->
         <section class="cuberto-light-section" id="depoimentos">
             <div class="container-vitrine">
                 <div class="cabecalho-vitrine-claro revelar-scroll">
@@ -324,7 +325,7 @@
                 <div class="grid-missao revelar-scroll">
                     <div class="coluna-galeria-missao">
                         <div class="moldura-foto-destaque">
-                            <img id="foto-missao-principal" src="./assets/img/ensino/ensino1.jpeg"
+                            <img id="foto-missao-principal" src="./assets/img/ensino1.jpeg"
                                 alt="Thiago ensinando arte para crianças na igreja">
                             <div class="overlay-gradiente-foto"></div>
                             <span class="badge-foto-legenda">Aulas Voluntárias na Igreja ✦</span>
@@ -371,7 +372,7 @@
             </div>
         </section>
 
-        <!-- Seção 7: FAQ (Dúvidas Frequentes) -->
+        <!-- Seção 7: FAQ -->
         <section class="cuberto-dark-footer-section" id="faq">
             <div class="container-vitrine">
                 <div class="cabecalho-vitrine revelar-scroll">
@@ -425,7 +426,6 @@
 
     <!-- Injeção dinâmica do rodapé global -->
     <div id="footer-container"></div>
-
 
     <!-- Script Exclusivo da Home -->
     <script src="./js/home.js"></script>

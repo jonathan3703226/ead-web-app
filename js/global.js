@@ -1,6 +1,7 @@
 /* ==========================================================================
    NANKIM ESCOLA DE ARTE - SCRIPT GLOBAL UNIFICADO
-   Contém: Gerenciamento de Tema, Controle de Sessão/Modais Gerais e Menus
+   Contém: Gerenciamento de Tema, Controle de Sessão/Modais Gerais, Menus
+   e Gestão do Modal de Reportar Erro/Suporte
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -76,23 +77,46 @@ function fecharMenuConta() {
 function abrirModal(modalId) {
     if (modalId === 'termos') return; // O termos.js trata o modal dele sozinho
     const modal = document.getElementById(`modal-${modalId}`);
-    if (modal) modal.style.display = 'flex';
+    if (modal) {
+        modal.style.display = 'flex';
+        modal.classList.add('ativo');
+        modal.setAttribute('aria-hidden', 'false');
+
+        // Reseta visual se for o modal de reportar erro
+        if (modalId === 'reportar-erro') {
+            const formWrapper = document.getElementById('reportar-erro-form-wrapper');
+            const sucessoWrapper = document.getElementById('reportar-erro-sucesso');
+            const form = document.getElementById('form-reportar-erro');
+
+            if (formWrapper) formWrapper.style.display = 'block';
+            if (sucessoWrapper) sucessoWrapper.style.display = 'none';
+            if (form) form.reset();
+        }
+    }
 }
 
 function fecharModal(modalId) {
     if (modalId === 'termos') return;
     const modal = document.getElementById(`modal-${modalId}`);
-    if (modal) modal.style.display = 'none';
+    if (modal) {
+        modal.style.display = 'none';
+        modal.classList.remove('ativo');
+        modal.setAttribute('aria-hidden', 'true');
+    }
 }
 
 
 /* --------------------------------------------------------------------------
-   3. EFEITOS VISUAIS E INTERAÇÕES
+   3. EFEITOS VISUAIS E INTERAÇÕES (LINK MAGNÉTICO CORRIGIDO)
    -------------------------------------------------------------------------- */
 function aplicarEfeitoMagnetico() {
     const elementos = document.querySelectorAll('.link-magnetico, .logo-magnetico');
 
     elementos.forEach((el) => {
+        // Evita duplicar listeners
+        if (el.getAttribute('data-magnetico-ativo')) return;
+        el.setAttribute('data-magnetico-ativo', 'true');
+
         el.addEventListener('mousemove', (e) => {
             const rect = el.getBoundingClientRect();
             const x = e.clientX - rect.left - rect.width / 2;
@@ -173,8 +197,6 @@ function injetarMenuERodape() {
         if (btnTema) {
             btnTema.addEventListener('click', alternarTema);
         }
-
-        aplicarEfeitoMagnetico();
     }
 
     if (footer) {
@@ -203,14 +225,14 @@ function injetarMenuERodape() {
                         </div>
                     </div>
                     
-                    <!-- Linha Inferior: Copyright, Links Legais e Suporte -->
+                    <!-- Linha Inferior: Botão de Reportar Erro Atualizado para Abrir o Modal -->
                     <div class="rodape-inferior">
                         <p class="rodape-copyright">&copy; 2026 equipe rocket. Todos os direitos reservados.</p>
                         <div class="rodape-links-legais">
-                            <a href="contato.html" class="link-preferencias-cookies link-magnetico" style="display: inline-flex; align-items: center; gap: 5px;">
+                            <button type="button" class="link-preferencias-cookies link-magnetico" data-modal="reportar-erro" style="display: inline-flex; align-items: center; gap: 5px; background: none; border: none; cursor: pointer;">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                                 Reportar Erro / Suporte
-                            </a>
+                            </button>
                             <button type="button" class="link-preferencias-cookies link-magnetico" data-modal="termos">Termos de Uso e Política de Privacidade</button>
                             <button type="button" class="link-preferencias-cookies link-magnetico" data-cookie-preferences>Preferências de Cookies</button>
                         </div>
@@ -219,16 +241,20 @@ function injetarMenuERodape() {
                 </div>
             </footer>
         `;
-
-        aplicarEfeitoMagnetico();
     }
+
+    // Aplica o efeito magnético a todos os elementos injetados
+    aplicarEfeitoMagnetico();
 }
 
 
 /* --------------------------------------------------------------------------
-   5. OUVINTES DE EVENTOS (LISTENERS)
+   5. OUVINTES DE EVENTOS (LISTENERS GLOBAIS)
    -------------------------------------------------------------------------- */
-document.addEventListener('DOMContentLoaded', injetarMenuERodape);
+document.addEventListener('DOMContentLoaded', () => {
+    injetarMenuERodape();
+    aplicarEfeitoMagnetico();
+});
 
 window.addEventListener('scroll', () => {
     const nav = document.querySelector('.menu-global');
@@ -241,6 +267,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
+// Manipulador Único de Cliques Globais
 document.addEventListener('click', (event) => {
     const alvo = event.target instanceof Element ? event.target : null;
     if (!alvo) return;
@@ -266,14 +293,17 @@ document.addEventListener('click', (event) => {
         return;
     }
 
-    // Abertura de Modais Genéricos (como login)
+    // Abertura de Modais Genéricos (Login, Cadastro, Reportar Erro, etc)
     const botaoAbrir = alvo.closest('[data-modal]');
     if (botaoAbrir && botaoAbrir.getAttribute('data-modal') !== 'termos') {
         event.preventDefault();
         if (botaoAbrir.hasAttribute('data-account-switch')) {
             fecharMenuConta();
         }
-        abrirModal(botaoAbrir.getAttribute('data-modal'));
+
+        const modalId = botaoAbrir.getAttribute('data-modal');
+        abrirModal(modalId);
+
         if (botaoAbrir.getAttribute('data-aba') === 'cadastro') {
             const btnAlternar = document.querySelector('#modal-login .alternar-cadastro button, #modal-login [data-trocar-aba="cadastro"]');
             if (btnAlternar) btnAlternar.click();
@@ -281,11 +311,23 @@ document.addEventListener('click', (event) => {
         return;
     }
 
-    // Fechamento de Modais Genéricos
-    const botaoFechar = alvo.closest('[data-close]');
-    if (botaoFechar && botaoFechar.getAttribute('data-close') !== 'termos') {
-        fecharModal(botaoFechar.getAttribute('data-close'));
-        return;
+    // Fechamento de Modais (por atributo data-close ou data-fechar-modal)
+    const botaoFechar = alvo.closest('[data-close], [data-fechar-modal]');
+    if (botaoFechar) {
+        const attrClose = botaoFechar.getAttribute('data-close');
+        if (attrClose && attrClose !== 'termos') {
+            fecharModal(attrClose);
+            return;
+        }
+
+        // Fechamento genérico encontrando a overlay pai
+        const modalPai = botaoFechar.closest('.modal, .modal-overlay');
+        if (modalPai && modalPai.id !== 'modal-termos') {
+            modalPai.style.display = 'none';
+            modalPai.classList.remove('ativo');
+            modalPai.setAttribute('aria-hidden', 'true');
+            return;
+        }
     }
 
     if (!alvo.closest('.menu-conta')) {
@@ -293,8 +335,26 @@ document.addEventListener('click', (event) => {
     }
 });
 
+// Fechamento ao clicar na área externa (Overlay) dos modais
 document.addEventListener('mousedown', (event) => {
-    if (event.target instanceof Element && event.target.classList.contains('modal') && event.target.id !== 'modal-termos') {
+    if (event.target instanceof Element && (event.target.classList.contains('modal') || event.target.classList.contains('modal-overlay')) && event.target.id !== 'modal-termos') {
         event.target.style.display = 'none';
+        event.target.classList.remove('ativo');
+        event.target.setAttribute('aria-hidden', 'true');
+    }
+});
+
+// Simulação de Envio do Formulário de Reportar Erro
+document.addEventListener('submit', (e) => {
+    if (e.target && e.target.id === 'form-reportar-erro') {
+        e.preventDefault();
+
+        const formWrapper = document.getElementById('reportar-erro-form-wrapper');
+        const sucessoWrapper = document.getElementById('reportar-erro-sucesso');
+
+        if (formWrapper && sucessoWrapper) {
+            formWrapper.style.display = 'none';
+            sucessoWrapper.style.display = 'block';
+        }
     }
 });
