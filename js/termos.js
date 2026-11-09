@@ -2,147 +2,6 @@
    NANKIM ESCOLA DE ARTE - MODAL DE TERMOS E PRIVACIDADE (LGPD)
    ========================================================================== */
 
-const termosStyles = `
-<style id="termos-styles">
-    /* Modal de Termos Base */
-    #modal-termos.modal {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        background-color: rgba(0, 0, 0, 0.65) !important;
-        backdrop-filter: blur(4px) !important;
-        z-index: 99999 !important;
-        display: none;
-        align-items: center !important;
-        justify-content: center !important;
-        padding: 20px !important;
-        box-sizing: border-box !important;
-    }
-
-    .termos-card {
-        position: relative !important;
-        background-color: #ffffff !important;
-        color: #111111 !important;
-        width: min(720px, 100%) !important;
-        max-height: 85vh !important;
-        border-radius: 20px !important;
-        padding: 2rem !important;
-        display: flex !important;
-        flex-direction: column !important;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3) !important;
-        border: 1px solid rgba(0, 0, 0, 0.1) !important;
-        font-family: 'Montserrat', sans-serif !important;
-        animation: termosEntrada 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    }
-
-    /* Suporte ao Modo Escuro */
-    :root[data-theme="dark"] .termos-card {
-        background-color: #181818 !important;
-        color: #ffffff !important;
-        border-color: rgba(255, 255, 255, 0.12) !important;
-    }
-
-    .termos-cabecalho {
-        margin-bottom: 1.2rem !important;
-        padding-bottom: 0.8rem !important;
-        border-bottom: 1px solid rgba(128, 128, 128, 0.2) !important;
-    }
-
-    .termos-eyebrow {
-        font-size: 0.8rem !important;
-        text-transform: uppercase !important;
-        letter-spacing: 1.5px !important;
-        color: #b33f30 !important;
-        font-weight: 700 !important;
-        margin: 0 0 4px 0 !important;
-    }
-
-    .termos-cabecalho h2 {
-        margin: 0 !important;
-        font-size: 1.4rem !important;
-        font-weight: 800 !important;
-        color: inherit !important;
-    }
-
-    .conteudo-scroll {
-        overflow-y: auto !important;
-        flex: 1 !important;
-        padding-right: 12px !important;
-        margin-bottom: 1.5rem !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 1.2rem !important;
-    }
-
-    .conteudo-scroll section h3 {
-        font-size: 1rem !important;
-        margin: 0 0 0.4rem 0 !important;
-        color: inherit !important;
-        font-weight: 700 !important;
-    }
-
-    .conteudo-scroll section p {
-        font-size: 0.88rem !important;
-        line-height: 1.6 !important;
-        margin: 0 0 0.5rem 0 !important;
-        opacity: 0.85 !important;
-        color: inherit !important;
-    }
-
-    .conteudo-scroll hr {
-        border: none !important;
-        border-top: 1px solid rgba(128, 128, 128, 0.2) !important;
-        margin: 1rem 0 0.5rem 0 !important;
-    }
-
-    .termos-acoes {
-        display: flex !important;
-        justify-content: flex-end !important;
-    }
-
-    .termos-btn-concordar {
-        background-color: #b33f30 !important;
-        color: #ffffff !important;
-        border: none !important;
-        padding: 0.8rem 1.8rem !important;
-        border-radius: 50px !important;
-        font-weight: 700 !important;
-        font-size: 0.9rem !important;
-        cursor: pointer !important;
-        transition: all 0.2s ease !important;
-    }
-
-    .termos-btn-concordar:hover {
-        background-color: #963225 !important;
-        transform: translateY(-2px) !important;
-    }
-
-    .termos-card .close-btn {
-        position: absolute !important;
-        top: 1.2rem !important;
-        right: 1.4rem !important;
-        background: transparent !important;
-        border: none !important;
-        font-size: 1.8rem !important;
-        cursor: pointer !important;
-        color: inherit !important;
-        opacity: 0.6 !important;
-        line-height: 1 !important;
-    }
-
-    .termos-card .close-btn:hover {
-        opacity: 1 !important;
-    }
-
-    @keyframes termosEntrada {
-        from { transform: scale(0.95); opacity: 0; }
-        to { transform: scale(1); opacity: 1; }
-    }
-</style>
-`;
-
 const termosComponent = `
 <div id="modal-termos" class="modal" role="dialog" aria-modal="true" aria-labelledby="termos-titulo" aria-hidden="true">
     <article class="modal-content modal-largo termos-card">
@@ -174,18 +33,17 @@ const termosComponent = `
 let elementoTermosAnterior = null;
 
 function injetarEInicializarTermos() {
-    if (!document.getElementById('termos-styles')) {
-        document.head.insertAdjacentHTML('beforeend', termosStyles);
-    }
-    if (!document.getElementById('modal-termos')) {
-        document.body.insertAdjacentHTML('beforeend', termosComponent);
-    }
+    const modaisAntigos = document.querySelectorAll('#modal-termos');
+    modaisAntigos.forEach(el => el.remove());
+    document.body.insertAdjacentHTML('beforeend', termosComponent);
 }
 
 function abrirModalTermos() {
-    injetarEInicializarTermos();
-    const modal = document.getElementById('modal-termos');
-    if (!modal) return;
+    let modal = document.getElementById('modal-termos');
+    if (!modal) {
+        injetarEInicializarTermos();
+        modal = document.getElementById('modal-termos');
+    }
     
     elementoTermosAnterior = document.activeElement;
     modal.style.display = 'flex';
@@ -211,7 +69,7 @@ function fecharModalTermos(concordou = false) {
     if (elementoTermosAnterior) elementoTermosAnterior.focus();
 }
 
-// Ouvintes globais para o modal de Termos
+// Ouvintes globais
 document.addEventListener('click', (event) => {
     const alvo = event.target instanceof Element ? event.target : null;
     if (!alvo) return;
@@ -239,4 +97,8 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-document.addEventListener('DOMContentLoaded', injetarEInicializarTermos);
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', injetarEInicializarTermos);
+} else {
+    injetarEInicializarTermos();
+}
