@@ -1,12 +1,31 @@
 .pagina-quem-somos {
-    --tinta: #111111;
+    --tinta: #2b2b2b;
     --vermelho: #b33f30;
-    --papel: #f7f7f5;
+    --papel: #f4f4f4;
     --texto: #252525;
     --texto-suave: #666666;
+    --cartao: #ffffff;
+    --cartao-borda: #e9e9e7;
+    --cartao-contraste: #252525;
+    --secao-formacao-fundo: #2b2b2b;
+    --texto-citacao: #222222;
+    background: var(--papel);
     color: var(--texto);
     font-family: 'Montserrat', 'Segoe UI', sans-serif;
     overflow: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+:root[data-theme="dark"] .pagina-quem-somos {
+    --tinta: #f1f1f1;
+    --papel: #262626;
+    --texto: #eeeeee;
+    --texto-suave: #bcbcbc;
+    --cartao: #303030;
+    --cartao-borda: #424242;
+    --cartao-contraste: #383838;
+    --secao-formacao-fundo: #303030;
+    --texto-citacao: #e0e0e0;
 }
 
 .pagina-quem-somos *,
@@ -123,6 +142,7 @@
 
 .secao-clara {
     background: var(--papel);
+    transition: background-color 0.3s ease;
 }
 
 .secao-biografia,
@@ -168,8 +188,9 @@
     flex-direction: column;
     justify-content: center;
     padding: clamp(28px, 4vw, 54px);
-    background: #fff;
-    border: 1px solid #e9e9e7;
+    background: var(--cartao);
+    border: 1px solid var(--cartao-borda);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .numero-editorial {
@@ -234,8 +255,8 @@
 
 .cartao-biografia-escuro {
     color: #fff;
-    background: #151515;
-    border-color: #252525;
+    background: var(--cartao-contraste);
+    border-color: var(--cartao-borda);
 }
 
 .cartao-biografia-escuro h3 {
@@ -255,7 +276,8 @@
 .secao-formacao {
     padding: clamp(76px, 9vw, 120px) 0;
     color: #fff;
-    background: #111;
+    background: var(--secao-formacao-fundo);
+    transition: background-color 0.3s ease;
 }
 
 .cabecalho-secao-escuro h2 {
@@ -282,7 +304,7 @@
     margin: 28px 0 0;
     padding-left: 18px;
     border-left: 3px solid var(--vermelho);
-    color: #222;
+    color: var(--texto-citacao);
     font-family: 'Noto Serif JP', Georgia, serif;
     font-size: 1.08rem;
     font-style: italic;
@@ -389,7 +411,7 @@
     padding: clamp(24px, 4vw, 44px);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 18px;
-    background: linear-gradient(145deg, #202020, #101010 75%);
+    background: linear-gradient(145deg, #353535, #292929 75%);
 }
 
 .texto-formacao h3 {

@@ -4,13 +4,13 @@
 
 /* --- HEADER E LOGO DO ALUNO --- */
 .header-aluno {
-    background-color: #000000;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: var(--painel-header);
+    border-bottom: 1px solid var(--painel-borda-suave);
     padding: 0.8rem 5%;
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--painel-sombra-header);
 }
 
 .header-aluno-container {
@@ -44,7 +44,7 @@
     width: 54px;
     height: 54px;
     object-fit: contain;
-    filter: invert(1);
+    filter: var(--painel-filtro-logo);
     transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -63,7 +63,7 @@
     font-family: 'Audiowide', cursive;
     font-size: 1.6rem;
     font-weight: 400;
-    color: #ffffff !important;
+    color: var(--painel-texto) !important;
 }
 
 .logo-expansivel {
@@ -75,7 +75,7 @@
     font-family: 'Caveat', cursive;
     font-size: 1.05rem;
     font-weight: 700;
-    color: #ffffff !important;
+    color: var(--painel-texto) !important;
     line-height: 1;
     white-space: nowrap;
     transition: max-width 0.45s cubic-bezier(0.76, 0, 0.24, 1), 
@@ -98,7 +98,7 @@
 
 .btn-perfil {
     background: transparent;
-    color: #ffffff;
+    color: var(--painel-texto);
     border: none;
     display: flex;
     align-items: center;
@@ -134,14 +134,14 @@
     position: absolute;
     top: 100%;
     right: 0;
-    background-color: #111111;
-    border: 1px solid #222;
+    background-color: var(--painel-superficie);
+    border: 1px solid var(--painel-borda);
     border-radius: 12px;
     margin-top: 15px;
     width: 240px;
     flex-direction: column;
     overflow: hidden;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
+    box-shadow: var(--painel-sombra-menu);
     z-index: 200;
 }
 
@@ -158,7 +158,7 @@
 .dropdown-menu a, 
 .dropdown-menu button {
     padding: 1rem 1.2rem;
-    color: #d0d0d0;
+    color: var(--painel-texto-menu);
     text-align: left;
     background: transparent;
     border: none;
@@ -172,14 +172,14 @@
 
 .dropdown-menu a:hover, 
 .dropdown-menu button:hover {
-    background-color: #1a1a1a;
-    color: #ffffff;
+    background-color: var(--painel-hover);
+    color: var(--painel-texto);
     padding-left: 1.5rem;
 }
 
 .linha-divisoria {
     height: 1px;
-    background-color: #222;
+    background-color: var(--painel-borda);
     margin: 0;
 }
 
@@ -194,10 +194,10 @@
 
 /* --- PAINEL E ESTRUTURA DA PÁGINA --- */
 .painel-aluno {
-    background-color: #070707;
+    background-color: var(--painel-fundo);
     min-height: 100vh;
     padding: 3.5rem 5%;
-    color: #ffffff;
+    color: var(--painel-texto);
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -218,7 +218,7 @@
 }
 
 .boas-vindas p {
-    color: #888;
+    color: var(--painel-texto-secundario);
     font-size: 1.05rem;
 }
 
@@ -229,13 +229,13 @@
 .titulo-secao-cursos {
     font-size: 1.25rem;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--painel-texto);
     margin-bottom: 1.5rem;
     letter-spacing: -0.3px;
     display: flex;
     align-items: center;
     gap: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--painel-borda-suave);
     padding-bottom: 0.75rem;
 }
 
@@ -252,16 +252,16 @@
     width: 100%;
     overflow: hidden;
     border-radius: 16px;
-    background: #171717;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--painel-superficie-alt);
+    box-shadow: var(--painel-sombra-card);
+    border: 1px solid var(--painel-borda-suave);
     transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease;
 }
 
 .curso-card-aluno:hover {
     transform: translateY(-4px);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
-    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: var(--painel-sombra-card-hover);
+    border-color: var(--painel-borda-forte);
 }
 
 .curso-card-imagem {
@@ -547,9 +547,9 @@
 .secao-progresso-curso {
     margin-top: 2.5rem;
     padding: clamp(1.25rem, 3vw, 2rem);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid var(--painel-borda);
     border-radius: 16px;
-    background: #101010;
+    background: var(--painel-superficie);
 }
 
 .resumo-progresso-curso {
@@ -557,7 +557,7 @@
     justify-content: space-between;
     gap: 1rem;
     margin-bottom: 0.75rem;
-    color: #fff;
+    color: var(--painel-texto);
 }
 
 .trilha-aulas-progresso {
@@ -570,24 +570,30 @@
 .trilha-aulas-progresso button {
     width: 100%;
     padding: 0.7rem 0.9rem;
-    border: 1px solid #333;
+    border: 1px solid var(--painel-borda-forte);
     border-radius: 8px;
-    background: #181818;
-    color: #ddd;
+    background: var(--painel-superficie-alt);
+    color: var(--painel-texto-menu);
     text-align: left;
     cursor: pointer;
 }
 
 .trilha-aulas-progresso button.aula-atual {
     border-color: var(--cor-destaque, #f39c12);
-    color: #fff;
+    color: var(--painel-texto);
 }
 
 .trilha-aulas-progresso button.aula-concluida {
     border-color: #557a56;
-    color: #c9e6ca;
+    color: var(--painel-texto-concluido);
 }
 
 .secao-progresso-curso[hidden] {
     display: none;
+}
+
+.acoes-header-aluno {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }

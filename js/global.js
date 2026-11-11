@@ -29,6 +29,7 @@ function aplicarTema(tema) {
     const btnTema = document.getElementById('btn-toggle-tema');
     if (btnTema) {
         btnTema.setAttribute('aria-label', tema === 'dark' ? 'Mudar para modo claro' : 'Mudar para modo escuro');
+        btnTema.setAttribute('aria-pressed', String(tema === 'dark'));
     }
 }
 
@@ -193,10 +194,6 @@ function injetarMenuERodape() {
             botaoMenu.setAttribute('aria-label', menuAberto ? 'Fechar menu' : 'Abrir menu');
         });
 
-        const btnTema = document.getElementById('btn-toggle-tema');
-        if (btnTema) {
-            btnTema.addEventListener('click', alternarTema);
-        }
     }
 
     if (footer) {
@@ -253,6 +250,7 @@ function injetarMenuERodape() {
    -------------------------------------------------------------------------- */
 document.addEventListener('DOMContentLoaded', () => {
     injetarMenuERodape();
+    aplicarTema(obterOuInicializarTema());
     aplicarEfeitoMagnetico();
 });
 
@@ -271,6 +269,11 @@ window.addEventListener('scroll', () => {
 document.addEventListener('click', (event) => {
     const alvo = event.target instanceof Element ? event.target : null;
     if (!alvo) return;
+
+    if (alvo.closest('#btn-toggle-tema')) {
+        alternarTema();
+        return;
+    }
 
     // Rola suavemente até o topo ao clicar na Logo estando na Home
     const logoLink = alvo.closest('.menu-global .logo');

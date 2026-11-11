@@ -9,16 +9,16 @@
 }
 
 ::-webkit-scrollbar-track { 
-    background: #070707; 
+    background: var(--painel-fundo);
 }
 
 ::-webkit-scrollbar-thumb { 
-    background: #222222; 
+    background: var(--painel-borda);
     border-radius: 4px; 
 }
 
 ::-webkit-scrollbar-thumb:hover { 
-    background: #333333; 
+    background: var(--painel-borda-forte);
 }
 
 /* Logo expand animation */
@@ -84,4 +84,58 @@
     opacity: 0;
     padding-top: 0;
     padding-bottom: 0;
+}
+
+:root:not([data-theme="dark"]) .sala-de-aula {
+    background: var(--painel-fundo);
+    color: var(--painel-texto);
+}
+
+:root:not([data-theme="dark"]) .sala-de-aula > header {
+    background: rgba(255, 255, 255, 0.96);
+    border-color: var(--painel-borda);
+}
+
+:root:not([data-theme="dark"]) .sala-de-aula [class~="bg-nankimCard"],
+:root:not([data-theme="dark"]) .sala-de-aula [class*="bg-zinc-"] {
+    background-color: var(--painel-superficie-alt);
+}
+
+:root:not([data-theme="dark"]) .sala-de-aula [class~="border-nankimBorder"],
+:root:not([data-theme="dark"]) .sala-de-aula [class*="border-zinc-"] {
+    border-color: var(--painel-borda);
+}
+
+:root:not([data-theme="dark"]) .sala-de-aula [class~="text-white"],
+:root:not([data-theme="dark"]) .sala-de-aula [class~="text-gray-100"],
+:root:not([data-theme="dark"]) .sala-de-aula [class~="text-gray-200"],
+:root:not([data-theme="dark"]) .sala-de-aula [class~="text-gray-300"],
+:root:not([data-theme="dark"]) .sala-de-aula [class~="text-gray-400"],
+:root:not([data-theme="dark"]) .sala-de-aula [class~="text-gray-500"],
+:root:not([data-theme="dark"]) .sala-de-aula [class~="text-gray-600"],
+:root:not([data-theme="dark"]) .sala-de-aula [class*="text-zinc-"] {
+    color: var(--painel-texto);
+}
+
+:root:not([data-theme="dark"]) .sala-de-aula [class*="hover:bg-zinc-"]:hover {
+    background-color: var(--painel-borda);
+}
+
+:root:not([data-theme="dark"]) .sala-de-aula [class~="hover:text-white"]:hover {
+    color: var(--painel-texto);
+}
+
+:root:not([data-theme="dark"]) .sala-de-aula [class~="bg-black/40"] {
+    background-color: #edf0f3;
+}
+
+:root:not([data-theme="dark"]) .sala-de-aula textarea,
+:root:not([data-theme="dark"]) .sala-de-aula input {
+    background: var(--painel-campo);
+    border-color: var(--painel-borda-forte);
+    color: var(--painel-texto);
+}
+
+:root:not([data-theme="dark"]) .tab-btn.active {
+    color: var(--painel-texto);
 }

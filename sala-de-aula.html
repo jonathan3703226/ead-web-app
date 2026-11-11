@@ -47,7 +47,7 @@
         }
     </script>
 </head>
-<body class="bg-nankimDark text-gray-100 font-sans min-h-screen flex flex-col antialiased">
+<body class="sala-de-aula bg-nankimDark text-gray-100 font-sans min-h-screen flex flex-col antialiased">
 
     <!-- HEADER DE NAVEGAÇÃO SUPERIOR -->
     <header class="sticky top-0 z-50 bg-black/90 backdrop-blur-md border-b border-nankimBorder px-4 sm:px-8 py-3 shadow-2xl">
@@ -80,6 +80,15 @@
 
             <!-- Direita: Progresso Geral + Botão Voltar -->
             <div class="flex items-center gap-4 sm:gap-8 ml-auto sm:ml-0">
+                <button id="btn-toggle-tema" class="btn-toggle-tema" type="button" aria-label="Alternar tema" title="Alternar tema">
+                    <span class="icone-sol" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                    </span>
+                    <span class="icone-lua" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </span>
+                </button>
+
                 <div class="flex items-center gap-3">
                     <div class="flex flex-col items-end">
                         <span class="text-xs text-gray-400 font-medium">Progresso Geral</span>
@@ -244,6 +253,7 @@
     <!-- Script Global -->
     <script src="./js/global.js"></script>
     <script src="./js/cookies.js"></script>
+    <script src="./js/termos.js"></script>
 
     <!-- LOGICA JAVASCRIPT LOCAL -->
     <script>

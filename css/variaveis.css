@@ -16,6 +16,25 @@
     --menu-bg: #ffffff;
     --menu-texto: #000000;
     --menu-scrolled-bg: rgba(255, 255, 255, 0.98);
+
+    --painel-fundo: #f5f6f8;
+    --painel-header: #ffffff;
+    --painel-superficie: #ffffff;
+    --painel-superficie-alt: #f8f9fb;
+    --painel-campo: #ffffff;
+    --painel-texto: #242424;
+    --painel-texto-secundario: #626873;
+    --painel-texto-menu: #333333;
+    --painel-texto-concluido: #27632b;
+    --painel-borda: #e1e5ea;
+    --painel-borda-forte: #d8dde4;
+    --painel-borda-suave: #edf0f3;
+    --painel-hover: #f2f4f7;
+    --painel-sombra-header: 0 8px 24px rgba(20, 30, 45, 0.08);
+    --painel-sombra-menu: 0 15px 40px rgba(20, 30, 45, 0.16);
+    --painel-sombra-card: 0 10px 25px rgba(20, 30, 45, 0.08);
+    --painel-sombra-card-hover: 0 18px 40px rgba(20, 30, 45, 0.18);
+    --painel-filtro-logo: none;
 }
 
 :root[data-theme="dark"] {
@@ -27,9 +46,62 @@
     /* --- Variáveis do Menu no Dark Mode --- */
     --bg-menu: #2b2b2b;
     --texto-menu: #ffffff;
-    --menu-bg: #000000;
+    --menu-bg: #2b2b2b;
     --menu-texto: #ffffff;
-    --menu-scrolled-bg: rgba(0, 0, 0, 0.98);
+    --menu-scrolled-bg: rgba(43, 43, 43, 0.98);
+
+    --painel-fundo: #070707;
+    --painel-header: #000000;
+    --painel-superficie: #111111;
+    --painel-superficie-alt: #181818;
+    --painel-campo: #0d0d0d;
+    --painel-texto: #ffffff;
+    --painel-texto-secundario: #888888;
+    --painel-texto-menu: #d0d0d0;
+    --painel-texto-concluido: #c9e6ca;
+    --painel-borda: #222222;
+    --painel-borda-forte: #333333;
+    --painel-borda-suave: rgba(255, 255, 255, 0.08);
+    --painel-hover: #1a1a1a;
+    --painel-sombra-header: 0 10px 30px rgba(0, 0, 0, 0.5);
+    --painel-sombra-menu: 0 15px 40px rgba(0, 0, 0, 0.9);
+    --painel-sombra-card: 0 10px 25px rgba(0, 0, 0, 0.3);
+    --painel-sombra-card-hover: 0 18px 40px rgba(0, 0, 0, 0.5);
+    --painel-filtro-logo: invert(1);
+}
+
+.btn-toggle-tema {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--painel-borda-forte);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--painel-texto);
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-toggle-tema:hover {
+    background: rgba(128, 128, 128, 0.15);
+    transform: translateY(-1px);
+}
+
+.btn-toggle-tema svg {
+    width: 19px;
+    height: 19px;
+}
+
+:root[data-theme="dark"] .btn-toggle-tema .icone-sol,
+:root:not([data-theme="dark"]) .btn-toggle-tema .icone-lua {
+    display: inline-flex;
+}
+
+:root[data-theme="dark"] .btn-toggle-tema .icone-lua,
+:root:not([data-theme="dark"]) .btn-toggle-tema .icone-sol {
+    display: none;
 }
 
 /* Inverte o SVG do ícone no modo escuro se necessário */

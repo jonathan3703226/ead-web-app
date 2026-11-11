@@ -36,19 +36,30 @@
                 </div>
             </div>
             
-            <!-- Menu Dropdown do Usuário -->
-            <div class="perfil-dropdown">
-                <button class="btn-perfil" id="btn-menu-perfil" aria-expanded="false">
-                    <div class="avatar-aluno" id="avatar-iniciais">AL</div>
-                    <span id="nome-aluno-topo">Carregando...</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+            <div class="acoes-header-aluno">
+                <button class="btn-toggle-tema" id="btn-toggle-tema" type="button" aria-label="Mudar para modo escuro" title="Alternar tema">
+                    <span class="icone-sol" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                    </span>
+                    <span class="icone-lua" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </span>
                 </button>
-                
-                <div class="dropdown-menu" id="dropdown-perfil">
-                    <a href="area-aluno.html">Cursos</a>
-                    <a href="meu-perfil.html">Meu Perfil</a>
-                    <div class="linha-divisoria"></div>
-                    <button type="button" id="btn-sair" class="btn-sair-conta">Sair da conta</button>
+
+                <!-- Menu Dropdown do Usuário -->
+                <div class="perfil-dropdown">
+                    <button class="btn-perfil" id="btn-menu-perfil" aria-expanded="false">
+                        <div class="avatar-aluno" id="avatar-iniciais">AL</div>
+                        <span id="nome-aluno-topo">Carregando...</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+
+                    <div class="dropdown-menu" id="dropdown-perfil">
+                        <a href="area-aluno.html">Cursos</a>
+                        <a href="meu-perfil.html">Meu Perfil</a>
+                        <div class="linha-divisoria"></div>
+                        <button type="button" id="btn-sair" class="btn-sair-conta">Sair da conta</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -113,6 +124,7 @@
     <script src="./js/global.js"></script>
     <script src="./js/checkout.js"></script>
     <script src="./js/cookies.js"></script>
+    <script src="./js/termos.js"></script>
 
     <!-- Script da Área do Aluno -->
     <script>

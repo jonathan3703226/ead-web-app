@@ -26,6 +26,7 @@
     z-index: 1000000 !important;
     width: min(640px, 100%) !important;
     max-height: 85vh !important;
+    max-height: min(85vh, calc(100vh - 3rem)) !important;
     overflow-y: auto !important;
     padding: 1.8rem 2rem !important;
     border-radius: 20px !important;
@@ -35,6 +36,23 @@
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35) !important;
     font-family: 'Montserrat', sans-serif !important;
     animation: cookieSubir 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.cookie-card::-webkit-scrollbar {
+    width: 6px;
+}
+
+.cookie-card::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.cookie-card::-webkit-scrollbar-thumb {
+    background: #e0e0e0;
+    border-radius: 10px;
+}
+
+.cookie-card::-webkit-scrollbar-thumb:hover {
+    background: var(--cor-destaque);
 }
 
 /* Modo Escuro */

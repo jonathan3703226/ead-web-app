@@ -1,8 +1,28 @@
 .pagina-contato {
+	--contato-fundo: #f4f4f4;
+	--contato-texto: #2b2b2b;
+	--contato-texto-secundario: #555555;
+	--contato-texto-link: #111111;
+	--contato-campo: #ffffff;
+	--contato-campo-borda: #dddddd;
+	--contato-placeholder: #777777;
+	--contato-botao: #2b2b2b;
+	background: var(--contato-fundo);
 	padding-top: 68px;
-	background: #ffffff;
-	color: #000000;
+	color: var(--contato-texto);
 	font-family: 'Montserrat', 'Segoe UI', sans-serif;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+:root[data-theme="dark"] .pagina-contato {
+	--contato-fundo: #262626;
+	--contato-texto: #eeeeee;
+	--contato-texto-secundario: #bcbcbc;
+	--contato-texto-link: #f1f1f1;
+	--contato-campo: #353535;
+	--contato-campo-borda: #4a4a4a;
+	--contato-placeholder: #b0b0b0;
+	--contato-botao: #3a3a3a;
 }
 
 .menu-global nav a[href="contato.html"].pagina-ativa {
@@ -90,7 +110,7 @@
 
 .contato-sobretitulo {
 	margin-bottom: 14px;
-	color: #555555;
+	color: var(--contato-texto-secundario);
 }
 
 .contato-informacoes h2 {
@@ -114,14 +134,14 @@
 .contato-texto-apoio,
 .contato-atendimento {
 	max-width: 460px;
-	color: #555555;
+	color: var(--contato-texto-secundario);
 	font-size: 1rem;
 	line-height: 1.75;
 }
 
 .contato-atendimento {
 	margin-top: 22px;
-	color: #222222;
+	color: var(--contato-texto);
 	font-weight: 700;
 }
 
@@ -136,7 +156,7 @@
 	display: grid;
 	width: fit-content;
 	gap: 3px;
-	color: #111111;
+	color: var(--contato-texto-link);
 	font-size: 0.98rem;
 	overflow-wrap: anywhere;
 	transition: color 0.2s ease;
@@ -147,7 +167,7 @@
 }
 
 .contato-canal-rotulo {
-	color: #777777;
+	color: var(--contato-texto-secundario);
 	font-size: 0.76rem;
 	font-weight: 700;
 	letter-spacing: 0.08em;
@@ -167,13 +187,13 @@
 }
 
 .form-contato .input-group label {
-	color: #111111;
+	color: var(--contato-texto);
 	font-size: 0.88rem;
 	font-weight: 700;
 }
 
 .form-contato .input-group label span {
-	color: #777777;
+	color: var(--contato-texto-secundario);
 	font-weight: 400;
 }
 
@@ -181,10 +201,10 @@
 .form-contato textarea {
 	width: 100%;
 	padding: 14px 16px;
-	border: 1px solid transparent;
+	border: 1px solid var(--contato-campo-borda);
 	border-radius: 8px;
-	background: #f4f4f5;
-	color: #111111;
+	background: var(--contato-campo);
+	color: var(--contato-texto);
 	font-family: inherit;
 	font-size: 0.95rem;
 	transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
@@ -192,7 +212,7 @@
 
 .form-contato .input-group input::placeholder,
 .form-contato textarea::placeholder {
-	color: #888888;
+	color: var(--contato-placeholder);
 	opacity: 1;
 }
 
@@ -200,7 +220,7 @@
 .form-contato textarea:focus {
 	border-color: #b52d24;
 	outline: none;
-	background: #ffffff;
+	background: var(--contato-campo);
 	box-shadow: 0 0 0 3px rgba(199, 53, 43, 0.12);
 }
 
@@ -217,7 +237,7 @@
 	padding: 13px 22px;
 	border: 0;
 	border-radius: 8px;
-	background: #000000;
+	background: var(--contato-botao);
 	color: #ffffff;
 	font-family: inherit;
 	font-size: 0.95rem;
@@ -238,7 +258,7 @@
 
 .contato-feedback {
 	min-height: 1.5em;
-	color: #555555;
+	color: var(--contato-texto-secundario);
 	font-size: 0.88rem;
 }
 

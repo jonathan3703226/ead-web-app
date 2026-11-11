@@ -3,21 +3,21 @@
    ========================================================================== */
 
 body {
-    background-color: #070707;
-    color: #ffffff;
+    background-color: var(--painel-fundo);
+    color: var(--painel-texto);
     font-family: 'Montserrat', sans-serif;
     min-height: 100vh;
 }
 
 /* Header do Professor */
 .header-professor {
-    background-color: #000000;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: var(--painel-header);
+    border-bottom: 1px solid var(--painel-borda-suave);
     padding: 0.8rem 5%;
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--painel-sombra-header);
 }
 
 .header-container {
@@ -47,7 +47,7 @@ body {
 .logo-img {
     width: 54px;
     height: 54px;
-    filter: invert(1);
+    filter: var(--painel-filtro-logo);
     transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -58,7 +58,7 @@ body {
 .logo-texto {
     font-family: 'Audiowide', cursive;
     font-size: 1.6rem;
-    color: #ffffff;
+    color: var(--painel-texto);
 }
 
 .badge-prof {
@@ -80,7 +80,7 @@ body {
 
 .btn-perfil {
     background: transparent;
-    color: #ffffff;
+    color: var(--painel-texto);
     border: none;
     display: flex;
     align-items: center;
@@ -110,14 +110,14 @@ body {
     position: absolute;
     top: 100%;
     right: 0;
-    background-color: #111111;
-    border: 1px solid #222;
+    background-color: var(--painel-superficie);
+    border: 1px solid var(--painel-borda);
     border-radius: 12px;
     margin-top: 15px;
     width: 220px;
     flex-direction: column;
     overflow: hidden;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
+    box-shadow: var(--painel-sombra-menu);
     z-index: 200;
 }
 
@@ -128,7 +128,7 @@ body {
 .dropdown-menu a, 
 .dropdown-menu button {
     padding: 1rem 1.2rem;
-    color: #d0d0d0;
+    color: var(--painel-texto-menu);
     text-align: left;
     background: transparent;
     border: none;
@@ -141,13 +141,13 @@ body {
 
 .dropdown-menu a:hover, 
 .dropdown-menu button:hover {
-    background-color: #1a1a1a;
-    color: #ffffff;
+    background-color: var(--painel-hover);
+    color: var(--painel-texto);
 }
 
 .linha-divisoria-prof {
     height: 1px;
-    background: #222;
+    background: var(--painel-borda);
     margin: 0;
 }
 
@@ -178,7 +178,7 @@ body {
 }
 
 .boas-vindas p {
-    color: #888;
+    color: var(--painel-texto-secundario);
     font-size: 0.95rem;
 }
 
@@ -213,15 +213,15 @@ body {
 }
 
 .card-stat {
-    background: #111111;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--painel-superficie);
+    border: 1px solid var(--painel-borda-suave);
     border-radius: 16px;
     padding: 1.5rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--painel-sombra-card);
 }
 
 .card-stat span {
-    color: #888888;
+    color: var(--painel-texto-secundario);
     font-size: 0.8rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -232,13 +232,13 @@ body {
     font-size: 2rem;
     font-weight: 800;
     margin-top: 0.4rem;
-    color: #ffffff;
+    color: var(--painel-texto);
 }
 
 /* Seções do Painel */
 .secao-painel {
-    background: #111111;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--painel-superficie);
+    border: 1px solid var(--painel-borda-suave);
     border-radius: 20px;
     padding: 2rem;
     margin-bottom: 2.5rem;
@@ -249,7 +249,7 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--painel-borda-suave);
     padding-bottom: 0.8rem;
 }
 
@@ -271,17 +271,17 @@ body {
 }
 
 .tabela-cursos th {
-    color: #888888;
+    color: var(--painel-texto-secundario);
     font-weight: 700;
     text-transform: uppercase;
     font-size: 0.75rem;
     padding: 1rem;
-    border-bottom: 1px solid #222;
+    border-bottom: 1px solid var(--painel-borda);
 }
 
 .tabela-cursos td {
     padding: 1.2rem 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid var(--painel-borda-suave);
     vertical-align: middle;
 }
 
@@ -306,9 +306,9 @@ body {
 }
 
 .btn-acao-tb {
-    background: #1a1a1a;
-    color: #ffffff;
-    border: 1px solid #333;
+    background: var(--painel-hover);
+    color: var(--painel-texto);
+    border: 1px solid var(--painel-borda-forte);
     padding: 0.4rem 0.8rem;
     border-radius: 6px;
     font-size: 0.8rem;
@@ -319,7 +319,7 @@ body {
 }
 
 .btn-acao-tb:hover {
-    background: #333333;
+    background: var(--painel-borda-forte);
 }
 
 /* Lista de Dúvidas dos Alunos */
@@ -330,8 +330,8 @@ body {
 }
 
 .item-duvida {
-    background: #181818;
-    border: 1px solid #282828;
+    background: var(--painel-superficie-alt);
+    border: 1px solid var(--painel-borda-forte);
     border-radius: 12px;
     padding: 1.2rem;
 }
@@ -345,7 +345,7 @@ body {
 .duvida-aluno {
     font-weight: 700;
     font-size: 0.9rem;
-    color: #ffffff;
+    color: var(--painel-texto);
 }
 
 .duvida-curso {
@@ -355,7 +355,7 @@ body {
 
 .duvida-texto {
     font-size: 0.88rem;
-    color: #ccc;
+    color: var(--painel-texto-menu);
     margin-bottom: 1rem;
     line-height: 1.5;
 }
@@ -367,11 +367,11 @@ body {
 
 .form-resposta input {
     flex: 1;
-    background: #0d0d0d;
-    border: 1px solid #333;
+    background: var(--painel-campo);
+    border: 1px solid var(--painel-borda-forte);
     border-radius: 8px;
     padding: 0.6rem 1rem;
-    color: #fff;
+    color: var(--painel-texto);
     font-size: 0.85rem;
     outline: none;
 }
@@ -404,8 +404,8 @@ body {
 }
 
 .modal-conteudo {
-    background: #111111;
-    border: 1px solid #333;
+    background: var(--painel-superficie);
+    border: 1px solid var(--painel-borda-forte);
     border-radius: 20px;
     max-width: 600px;
     width: 100%;
@@ -429,18 +429,18 @@ body {
 .grupo-campo label {
     font-size: 0.8rem;
     font-weight: 700;
-    color: #aaa;
+    color: var(--painel-texto-secundario);
     text-transform: uppercase;
 }
 
 .grupo-campo input, 
 .grupo-campo textarea, 
 .grupo-campo select {
-    background: #1a1a1a;
-    border: 1px solid #333;
+    background: var(--painel-campo);
+    border: 1px solid var(--painel-borda-forte);
     border-radius: 8px;
     padding: 0.8rem;
-    color: #fff;
+    color: var(--painel-texto);
     font-family: 'Montserrat', sans-serif;
     outline: none;
 }
@@ -452,4 +452,10 @@ body {
     font-size: 1.8rem;
     cursor: pointer;
     color: #888;
+}
+
+.acoes-header-professor {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }

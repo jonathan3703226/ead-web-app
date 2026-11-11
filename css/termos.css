@@ -25,7 +25,7 @@
     background-color: #ffffff !important;
     color: #111111 !important;
     width: min(720px, 100%) !important;
-    max-height: 85vh !important;
+    max-height: min(85vh, calc(100vh - 3rem)) !important;
     border-radius: 20px !important;
     padding: 2.2rem 2.4rem !important;
     display: flex !important;
@@ -79,6 +79,23 @@
     display: flex !important;
     flex-direction: column !important;
     gap: 1.2rem !important;
+}
+
+#modal-termos .conteudo-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+#modal-termos .conteudo-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#modal-termos .conteudo-scroll::-webkit-scrollbar-thumb {
+    background: #e0e0e0;
+    border-radius: 10px;
+}
+
+#modal-termos .conteudo-scroll::-webkit-scrollbar-thumb:hover {
+    background: var(--cor-destaque);
 }
 
 #modal-termos .conteudo-scroll section h3 {
