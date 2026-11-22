@@ -4,107 +4,501 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Conheça os cursos de desenho e ilustração da Nankim Escola de Arte.">
-    <title>Cursos | Nankim Escola de Arte</title>
+    <meta name="description" content="Conheça a trilha de cursos da Nankim Escola de Arte e todos os detalhes de Fundamentos do Desenho.">
+    <title>Nankim Escola de Arte | Cursos</title>
+
+    <!-- Conexão Prévia Google Fonts (Padrão Home e Quem Somos) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="./css/reset.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Estilos Globais e Específicos -->
     <link rel="stylesheet" href="css/reset.css">
-<link rel="stylesheet" href="css/variaveis.css">
-<link rel="stylesheet" href="css/menu.css">
-<link rel="stylesheet" href="css/rodape.css">
-<link rel="stylesheet" href="css/modais.css">
-<link rel="stylesheet" href="css/formularios.css">
+    <link rel="stylesheet" href="css/variaveis.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/rodape.css">
+    <link rel="stylesheet" href="css/modais.css">
+    <link rel="stylesheet" href="css/formularios.css">
     <link rel="stylesheet" href="./css/cursos.css">
     <link rel="stylesheet" href="./css/checkout.css">
     <link rel="stylesheet" href="./css/cookies.css">
     <link rel="stylesheet" href="./css/termos.css">
+    <link rel="stylesheet" href="./css/reportar.css">
 </head>
 
 <body>
-    <!-- O global.js injeta o cabeçalho e o rodapé compartilhados do site. -->
+    <!-- O global.js injeta o cabeçalho compartilhado do site. -->
     <div id="header-container"></div>
 
     <main class="pagina-cursos">
-        <section class="catalogo-cursos" aria-labelledby="titulo-catalogo">
-            <header class="catalogo-cabecalho">
-                <p class="catalogo-eyebrow"><span aria-hidden="true">//</span> Nankim Escola de Arte</p>
-                <h1 id="titulo-catalogo">Desenhe seu <span>próximo passo.</span></h1>
-                <p class="catalogo-introducao">Aprenda com método, pratique com intenção e transforme ideias em arte.</p>
-            </header>
 
-            <div class="cursos-grid">
-                <article class="curso-card">
-                    <img src="./assets/img/fundamentos-desenho.jpg" alt="" class="curso-card-imagem">
-                    <div class="curso-painel">
-                        <header class="curso-cabecalho">
-                            <span class="curso-nivel">Básico</span>
-                            <h2>Fundamentos do Desenho</h2>
-                        </header>
+        <!-- Seção 1: Topo Limpo com Subtítulo Principal e Vitrine das 3 Etapas -->
+        <section class="secao-trilha-topo" aria-label="Trilha de Formação Nankim">
+            <div class="container-cursos">
+                <header class="cabecalho-topo-cursos">
+                    <h1 class="subtitulo-hero-cursos">
+                        <span class="prefixo-barra">//</span> Uma formação dividida em <span class="texto-fluxo-dourado">três etapas progressivas</span> — do traço inicial no papel até a ilustração autoral.
+                    </h1>
+                </header>
 
-                        <div class="curso-detalhes">
-                            <p class="curso-descricao">O ponto de partida para qualquer artista. Domine formas, perspectiva e luz com uma trilha prática e progressiva.</p>
+                <!-- Vitrine das 3 Etapas (Cards Ricos com Vídeo/Capa + Numeração + Ação) -->
+                <div class="grid-etapas-trilha revelar-scroll">
 
-                            <ul class="curso-metadados" aria-label="Informações do curso">
-                                <li>
-                                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
-                                    26 horas
-                                </li>
-                                <li>
-                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"></path></svg>
-                                    Aulas práticas
-                                </li>
-                            </ul>
+                    <!-- Etapa 01 -->
+                    <article class="card-etapa-vitrine card-etapa-ativa card-com-video">
+                        <video class="video-bg-etapa" loop muted playsinline preload="metadata" poster="./assets/img/fundamentos-desenho.jpg">
+                            <source src="./assets/video/video-fundamento.mp4" type="video/mp4">
+                        </video>
+                        <div class="overlay-etapa-vitrine"></div>
+                        <span class="numero-etapa-bg" aria-hidden="true">01</span>
 
-                            <ul class="curso-tags" aria-label="Temas do curso">
-                                <li>Arte Tradicional</li>
-                                <li>Fundamentos</li>
-                            </ul>
+                        <div class="conteudo-etapa-vitrine">
+                            <div class="topo-card-etapa">
+                                <span class="badge-etapa-status disponivel">
+                                    <span class="ponto-verde"></span> DISPONÍVEL AGORA
+                                </span>
+                                <span class="nivel-etapa">Etapa 01 · Básico</span>
+                            </div>
 
-                            <footer class="curso-compra">
-                                <p><span>Investimento único</span><strong>R$ 49,90</strong></p>
-                                <button class="botao-assinar" type="button" data-modal="checkout">Assinar / Comprar</button>
-                            </footer>
+                            <div class="corpo-card-etapa">
+                                <h2>Fundamentos do Desenho</h2>
+                                <p>Traço, estrutura, perspectiva, luz, sombra e finalização em 16 módulos completos com 237 aulas práticas.</p>
+                            </div>
+
+                            <div class="rodape-card-etapa">
+                                <a href="#curso-fundamentos" class="btn-etapa-vitrine">Explorar ementa completa</a>
+                            </div>
                         </div>
-                    </div>
-                </article>
+                    </article>
 
-                <article class="curso-card">
-                    <img src="./assets/img/anatomia-humana.jpg" alt="" class="curso-card-imagem">
-                    <div class="curso-painel">
-                        <header class="curso-cabecalho">
-                            <span class="curso-nivel">Intermediário</span>
-                            <h2>Anatomia Humana</h2>
-                        </header>
+                    <!-- Etapa 02 -->
+                    <article class="card-etapa-vitrine card-com-video">
+                        <video class="video-bg-etapa" loop muted playsinline preload="metadata" poster="./assets/img/anatomia-humana.jpg">
+                            <source src="./assets/video/video-anatomia.mp4" type="video/mp4">
+                        </video>
+                        <div class="overlay-etapa-vitrine"></div>
+                        <span class="numero-etapa-bg" aria-hidden="true">02</span>
 
-                        <div class="curso-detalhes curso-detalhes-breve">
-                            <p class="curso-descricao">Estude proporções, musculatura e movimento para desenhar figuras humanas com mais confiança.</p>
-                            <span class="curso-aviso">Em Breve no catálogo</span>
+                        <div class="conteudo-etapa-vitrine">
+                            <div class="topo-card-etapa">
+                                <span class="badge-etapa-status em-breve">🔒 EM BREVE</span>
+                                <span class="nivel-etapa">Etapa 02 · Intermediário</span>
+                            </div>
+
+                            <div class="corpo-card-etapa">
+                                <h2>Anatomia Humana</h2>
+                                <p>Proporções, estrutura óssea, musculatura e movimento para figuras expressivas e dinâmicas.</p>
+                            </div>
+
+                            <div class="rodape-card-etapa">
+                                <a href="#proximos-cursos" class="btn-etapa-secundario">Em produção · Ver prévia</a>
+                            </div>
                         </div>
-                    </div>
-                </article>
+                    </article>
 
-                <article class="curso-card">
-                    <img src="./assets/img/ilustracao-digital.jpg" alt="" class="curso-card-imagem">
-                    <div class="curso-painel">
-                        <header class="curso-cabecalho">
-                            <span class="curso-nivel">Avançado</span>
-                            <h2>Ilustração Digital</h2>
-                        </header>
+                    <!-- Etapa 03 -->
+                    <article class="card-etapa-vitrine card-com-video">
+                        <video class="video-bg-etapa" loop muted playsinline preload="metadata" poster="./assets/img/ilustracao-digital.jpg">
+                            <source src="./assets/video/video-digital.mp4" type="video/mp4">
+                        </video>
+                        <div class="overlay-etapa-vitrine"></div>
+                        <span class="numero-etapa-bg" aria-hidden="true">03</span>
 
-                        <div class="curso-detalhes curso-detalhes-breve">
-                            <p class="curso-descricao">Desenvolva seu processo digital, da composição e cor até a finalização de uma ilustração autoral.</p>
-                            <span class="curso-aviso">Em Breve no catálogo</span>
+                        <div class="conteudo-etapa-vitrine">
+                            <div class="topo-card-etapa">
+                                <span class="badge-etapa-status em-breve">🔒 EM BREVE</span>
+                                <span class="nivel-etapa">Etapa 03 · Avançado</span>
+                            </div>
+
+                            <div class="corpo-card-etapa">
+                                <h2>Ilustração Digital</h2>
+                                <p>Composição, teoria das cores e finalização profissional no fluxo digital para portfólio.</p>
+                            </div>
+
+                            <div class="rodape-card-etapa">
+                                <a href="#proximos-cursos" class="btn-etapa-secundario">Em produção · Ver prévia</a>
+                            </div>
                         </div>
-                    </div>
-                </article>
+                    </article>
+
+                </div>
             </div>
         </section>
+
+        <!-- Seção 2: Bloco Escuro Curvo — Raio-X Completo do Curso Disponível -->
+        <section class="bloco-escuro-curvo secao-detalhes-curso" id="curso-fundamentos" aria-labelledby="titulo-fundamentos">
+            <div class="container-cursos">
+
+                <header class="cabecalho-curso-destaque revelar-scroll">
+                    <span class="selo-etapa-destaque">ETAPA 01 · CURSO DISPONÍVEL</span>
+                    <h2 id="titulo-fundamentos" class="titulo-animado-cursos">
+                        Fundamentos do <span class="texto-fluxo-dourado sublinhado-traco">Desenho</span>
+                    </h2>
+                    <p class="descricao-principal-curso">Formação completa da Nankim Escola de Arte: 16 módulos progressivos que levam você dos primeiros exercícios de traço até cenários, arte-final em nanquim e preparação para o mercado.</p>
+
+                    <!-- Barra de Métricas do Curso -->
+                    <div class="barra-metricas-curso">
+                        <div class="item-metrica">
+                            <strong>~38 horas</strong>
+                            <span>de aulas práticas</span>
+                        </div>
+                        <div class="item-metrica">
+                            <strong>16 módulos</strong>
+                            <span>do básico à arte-final</span>
+                        </div>
+                        <div class="item-metrica">
+                            <strong>237 aulas</strong>
+                            <span>incluindo encontros extras</span>
+                        </div>
+                        <div class="item-metrica">
+                            <strong>Certificado</strong>
+                            <span>digital incluso</span>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Layout em 2 Colunas: Conteúdo Programático à Esquerda + Checkout Fixo à Direita -->
+                <div class="layout-vendas-curso">
+
+                    <!-- Coluna Esquerda: Conteúdo Programático e Detalhes -->
+                    <div class="coluna-conteudo-curso">
+
+                        <!-- Bloco: O que você vai dominar -->
+                        <div class="bloco-info-curso revelar-scroll">
+                            <h3 class="subtitulo-bloco-curso">O que você vai dominar</h3>
+                            <div class="grid-aprendizado">
+                                <div class="card-aprendizado">
+                                    <span class="numero-pilar-curso">01</span>
+                                    <h4>Traço, rosto e expressões</h4>
+                                    <p>Treinamento motor, esboço, construção de cabeça em todos os ângulos, idades e expressões faciais.</p>
+                                </div>
+                                <div class="card-aprendizado">
+                                    <span class="numero-pilar-curso">02</span>
+                                    <h4>Corpo, animais e personagens</h4>
+                                    <p>Estrutura corporal, movimento, dobras de tecidos, anatomia animal, criaturas e estilo chibi.</p>
+                                </div>
+                                <div class="card-aprendizado">
+                                    <span class="numero-pilar-curso">03</span>
+                                    <h4>Perspectiva e cenários</h4>
+                                    <p>1, 2 e 3 pontos de fuga aplicados a veículos, objetos, arquitetura, natureza e cenários completos.</p>
+                                </div>
+                                <div class="card-aprendizado">
+                                    <span class="numero-pilar-curso">04</span>
+                                    <h4>Luz, sombra e arte-final</h4>
+                                    <p>Graduação de grafite, texturas, finalização com caneta nanquim, esferográfica e portfólio.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bloco: Grade Curricular Completa (16 Módulos) -->
+                        <div class="bloco-info-curso revelar-scroll">
+                            <div class="cabecalho-grade">
+                                <h3 class="subtitulo-bloco-curso">Grade curricular completa</h3>
+                                <span class="resumo-carga">16 módulos · 237 aulas · ~38h totais</span>
+                            </div>
+
+                            <div class="lista-modulos-acordeao">
+                                <div class="item-modulo aberto">
+                                    <button class="btn-modulo-header" type="button" aria-expanded="true">
+                                        <div class="info-modulo-titulo">
+                                            <span class="tag-modulo">Módulos I a III · 46 aulas · ~8h 25m</span>
+                                            <h4>Traço, Esboço, Cabeça e Expressões</h4>
+                                        </div>
+                                        <div class="meta-modulo-direita">
+                                            <span class="badge-degustacao-modulo">Módulo I Grátis</span>
+                                            <span class="icone-seta-modulo" aria-hidden="true">+</span>
+                                        </div>
+                                    </button>
+                                    <div class="conteudo-modulo">
+                                        <ul>
+                                            <li><strong>Módulo I — Cabeça Masculina e Feminina (16 aulas):</strong> Treinamento de traço (Partes 01 e 02), esboço, olhos, nariz, boca, orelha, cabelo e rosto de frente e perfil (liberado na degustação)</li>
+                                            <li><strong>Módulo II — Cabeça: Expressões Faciais e Idade (20 aulas):</strong> Rosto de meio perfil, olhando para cima e para baixo, expressões faciais, rosto adulto, idoso e infantil</li>
+                                            <li><strong>Módulo III — Cabeça: Sentimentos (10 aulas):</strong> Estilo de personagem e expressões de alegria, tristeza, tédio, raiva, susto, malvado, bonzinho e nojo</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="item-modulo">
+                                    <button class="btn-modulo-header" type="button" aria-expanded="false">
+                                        <div class="info-modulo-titulo">
+                                            <span class="tag-modulo">Módulos IV e V · 26 aulas · ~4h 15m</span>
+                                            <h4>Corpo Masculino e Feminino (Partes I e II)</h4>
+                                        </div>
+                                        <div class="meta-modulo-direita">
+                                            <span class="duracao-modulo">26 aulas</span>
+                                            <span class="icone-seta-modulo" aria-hidden="true">+</span>
+                                        </div>
+                                    </button>
+                                    <div class="conteudo-modulo">
+                                        <ul>
+                                            <li><strong>Módulo IV — Corpo Masculino e Feminino Parte I (10 aulas):</strong> Construção de frente, perfil e meio perfil, mãos, pés e braços</li>
+                                            <li><strong>Módulo V — Corpo Masculino e Feminino Parte II (16 aulas):</strong> Pernas, tronco de frente e costas, biotipos variados, simplificação e corpo humano em movimento</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="item-modulo">
+                                    <button class="btn-modulo-header" type="button" aria-expanded="false">
+                                        <div class="info-modulo-titulo">
+                                            <span class="tag-modulo">Módulos VI e VII · 35 aulas · ~5h 25m</span>
+                                            <h4>Desenhando Animais Introdução (Partes I e II)</h4>
+                                        </div>
+                                        <div class="meta-modulo-direita">
+                                            <span class="duracao-modulo">35 aulas</span>
+                                            <span class="icone-seta-modulo" aria-hidden="true">+</span>
+                                        </div>
+                                    </button>
+                                    <div class="conteudo-modulo">
+                                        <ul>
+                                            <li><strong>Módulo VI — Desenhando Animais Introdução (20 aulas):</strong> Estrutura e proporção de cavalos, cachorros, gatos, asas, águias, tubarões e lagartos</li>
+                                            <li><strong>Módulo VII — Desenhando Animais Introdução II (15 aulas):</strong> Dinossauros, elefantes, girafas, coelhos, pinguins, tucanos, polvos, tartarugas, pandas e estilos</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="item-modulo">
+                                    <button class="btn-modulo-header" type="button" aria-expanded="false">
+                                        <div class="info-modulo-titulo">
+                                            <span class="tag-modulo">Módulos VIII a XI · 52 aulas · ~7h 30m</span>
+                                            <h4>Criação de Personagens e Estilo Chibi</h4>
+                                        </div>
+                                        <div class="meta-modulo-direita">
+                                            <span class="duracao-modulo">52 aulas</span>
+                                            <span class="icone-seta-modulo" aria-hidden="true">+</span>
+                                        </div>
+                                    </button>
+                                    <div class="conteudo-modulo">
+                                        <ul>
+                                            <li><strong>Módulo VIII — Criação de Personagens I (19 aulas):</strong> Dobras de tecidos, roupas, pesquisa de referências, ficha de perfil e monstros</li>
+                                            <li><strong>Módulo IX — Criação de Personagens II (14 aulas):</strong> Robôs, androide, quimeras, fadas, sereias, dragões, zumbis, centauro, demônios e alien</li>
+                                            <li><strong>Módulos X e XI — Chibis I e II (19 aulas):</strong> Estrutura chibi, expressões, mãos/pés, cabelos, contornos, animais e personagens em ação</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="item-modulo">
+                                    <button class="btn-modulo-header" type="button" aria-expanded="false">
+                                        <div class="info-modulo-titulo">
+                                            <span class="tag-modulo">Módulos XII e XIII · 39 aulas · ~5h 55m</span>
+                                            <h4>Perspectiva e Cenários (Partes I e II)</h4>
+                                        </div>
+                                        <div class="meta-modulo-direita">
+                                            <span class="duracao-modulo">39 aulas</span>
+                                            <span class="icone-seta-modulo" aria-hidden="true">+</span>
+                                        </div>
+                                    </button>
+                                    <div class="conteudo-modulo">
+                                        <ul>
+                                            <li><strong>Módulo XII — Perspectiva e Cenários (19 aulas):</strong> 1, 2 e 3 pontos de fuga, objetos em perspectiva, carros, avião, moto e armas</li>
+                                            <li><strong>Módulo XIII — Perspectiva e Cenário II (20 aulas):</strong> Plantas, floresta, cidade, deserto, cidade alienígena, cenário medieval e personagens em perspectiva</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="item-modulo">
+                                    <button class="btn-modulo-header" type="button" aria-expanded="false">
+                                        <div class="info-modulo-titulo">
+                                            <span class="tag-modulo">Módulos XIV a XVI · 39 aulas · ~5h 50m</span>
+                                            <h4>Arte-Final, Revisão e Mercado de Trabalho</h4>
+                                        </div>
+                                        <div class="meta-modulo-direita">
+                                            <span class="duracao-modulo">39 aulas</span>
+                                            <span class="icone-seta-modulo" aria-hidden="true">+</span>
+                                        </div>
+                                    </button>
+                                    <div class="conteudo-modulo">
+                                        <ul>
+                                            <li><strong>Módulo XIV — Arte Final (20 aulas):</strong> Finalização com caneta nanquim e esferográfica, tipos de lápis, texturas e luz e sombra em objetos, personagens e cenários</li>
+                                            <li><strong>Módulo XV — Revisão dos Conteúdos (10 aulas):</strong> Prática guiada revisando corpo, ação, personagens, animais, cenários, luz/sombra e colorização</li>
+                                            <li><strong>Módulo XVI — Trabalho, Arte Final e Mercado de Trabalho (9 aulas):</strong> Encontros de mentoria sobre hábitos de estudo, erros comuns, portfólio, desenho digital e mercado</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bloco: Materiais Necessários -->
+                        <div class="bloco-info-curso revelar-scroll">
+                            <h3 class="subtitulo-bloco-curso">Materiais necessários</h3>
+                            <p class="texto-materiais">Você não precisa investir caro para começar. Todo o curso foi estruturado para materiais simples e acessíveis:</p>
+                            <ul class="lista-materiais-simples">
+                                <li>Bloco de papel sulfite ou Canson A4 (120g a 180g)</li>
+                                <li>Lápis grafite HB, 2B e 6B</li>
+                                <li>Caneta nanquim ou esferográfica preta (para arte-final)</li>
+                                <li>Borracha macia e apontador comum</li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <!-- Coluna Direita: Card de Compra Sticky (Checkout) -->
+                    <aside class="coluna-checkout-sticky">
+                        <div class="card-checkout-curso">
+                            <div class="capa-checkout-wrapper">
+                                <img src="./assets/img/fundamentos-desenho.jpg" alt="Fundamentos do Desenho - Nankim Escola de Arte">
+                                <div class="overlay-capa-checkout"></div>
+                                <span class="tag-capa-curso">Arte Tradicional · Fundamentos</span>
+                            </div>
+
+                            <div class="corpo-card-checkout">
+                                <div class="preco-box-checkout">
+                                    <span class="label-investimento">Investimento único</span>
+                                    <strong class="valor-curso">R$ 49,90</strong>
+                                    <span class="detalhe-pagamento">Acesso imediato após confirmação</span>
+                                </div>
+
+                                <button class="botao-assinar botao-assinar-principal" type="button" data-modal="checkout">
+                                    Matricular agora
+                                </button>
+
+                                <button class="botao-degustacao-secundario" type="button" data-modal="cadastro" id="btn-testar-gratis-curso">
+                                    Testar Módulo I gratuitamente
+                                </button>
+
+                                <ul class="lista-beneficios-checkout">
+                                    <li>~38 horas distribuídas em 16 módulos (237 aulas)</li>
+                                    <li>Aulas curtas e objetivas (média de 10 min)</li>
+                                    <li>Encontros extras de mentoria e mercado de trabalho</li>
+                                    <li>Certificado digital de conclusão Nankim</li>
+                                    <li>Acesso pelo computador, tablet ou celular</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </aside>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 3: Bloco Claro Curvo — Próximas Etapas & FAQ Completa -->
+        <section class="bloco-claro-curvo secao-proximos-cursos" id="proximos-cursos" aria-labelledby="titulo-proximas-etapas">
+            <div class="container-cursos">
+
+                <header class="cabecalho-secao-clara revelar-scroll">
+                    <h2 id="titulo-proximas-etapas" class="titulo-claro-cursos">Próximas etapas da formação</h2>
+                    <p class="subtitulo-claro-cursos">Novos módulos avançados estão em produção e serão liberados em breve na plataforma.</p>
+                </header>
+
+                <!-- Cards das Próximas Etapas -->
+                <div class="grid-futuros-cursos revelar-scroll">
+                    <article class="card-futuro-curso">
+                        <div class="imagem-futuro-wrapper">
+                            <img src="./assets/img/anatomia-humana.jpg" alt="Anatomia Humana - Em breve" loading="lazy">
+                            <div class="overlay-imagem-futuro"></div>
+                            <span class="badge-futuro">EM BREVE · ETAPA 02</span>
+                        </div>
+                        <div class="conteudo-futuro-curso">
+                            <span class="nivel-futuro">Nível Intermediário · Em produção</span>
+                            <h3>Anatomia Humana</h3>
+                            <p>Estude proporções, estrutura esquelética, grupos musculares, expressões faciais e gestual para desenhar figuras humanas com naturalidade e movimento.</p>
+                            <span class="aviso-indisponivel-sutil">Turma ainda não disponível para matrícula</span>
+                        </div>
+                    </article>
+
+                    <article class="card-futuro-curso">
+                        <div class="imagem-futuro-wrapper">
+                            <img src="./assets/img/ilustracao-digital.jpg" alt="Ilustração Digital - Em breve" loading="lazy">
+                            <div class="overlay-imagem-futuro"></div>
+                            <span class="badge-futuro">EM BREVE · ETAPA 03</span>
+                        </div>
+                        <div class="conteudo-futuro-curso">
+                            <span class="nivel-futuro">Nível Avançado · Em produção</span>
+                            <h3>Ilustração Digital</h3>
+                            <p>Transfira toda a sua base tradicional para o ambiente digital: fluxo de camadas, pincéis, teoria das cores, atmosfera e acabamento de portfólio.</p>
+                            <span class="aviso-indisponivel-sutil">Turma ainda não disponível para matrícula</span>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- FAQ Completa Centralizada na Página de Cursos -->
+                <div class="bloco-faq-cursos revelar-scroll">
+                    <header class="cabecalho-faq-cursos">
+                        <h3 class="titulo-faq-cursos">Perguntas Frequentes</h3>
+                        <p class="subtitulo-faq-cursos">Tire todas as suas dúvidas sobre a metodologia, acesso, pagamentos e funcionamento da Nankim.</p>
+                    </header>
+
+                    <div class="lista-faq-cursos">
+                        <div class="item-faq-curso">
+                            <button class="btn-faq-curso" type="button" aria-expanded="false">
+                                <span>Preciso já saber desenhar ou ter "dom" para começar?</span>
+                                <span class="icone-faq" aria-hidden="true">+</span>
+                            </button>
+                            <div class="resposta-faq-curso">
+                                <p>Não. Na Nankim acreditamos que desenhar é técnica, observação e prática guiada. O curso Fundamentos do Desenho foi estruturado do zero absoluto, desde exercícios de treinamento de traço e esboço até perspectiva, luz e sombra e arte-final.</p>
+                            </div>
+                        </div>
+
+                        <div class="item-faq-curso">
+                            <button class="btn-faq-curso" type="button" aria-expanded="false">
+                                <span>Como funciona a degustação gratuita do Módulo I?</span>
+                                <span class="icone-faq" aria-hidden="true">+</span>
+                            </button>
+                            <div class="resposta-faq-curso">
+                                <p>Basta criar sua conta gratuita clicando em "Testar Módulo I gratuitamente". Você terá acesso imediato às 16 aulas do Módulo I (Cabeça Masculina e Feminina, incluindo treinamento de traço e esboço) para conhecer a didática do Thiago na prática antes de se matricular.</p>
+                            </div>
+                        </div>
+
+                        <div class="item-faq-curso">
+                            <button class="btn-faq-curso" type="button" aria-expanded="false">
+                                <span>O valor de R$ 49,90 é mensalidade ou pagamento único?</span>
+                                <span class="icone-faq" aria-hidden="true">+</span>
+                            </button>
+                            <div class="resposta-faq-curso">
+                                <p>É um investimento único de R$ 49,90 — sem mensalidades, assinaturas recorrentes ou taxas extras. Após a confirmação, todos os 16 módulos completos (237 aulas) ficam liberados na sua conta.</p>
+                            </div>
+                        </div>
+
+                        <div class="item-faq-curso">
+                            <button class="btn-faq-curso" type="button" aria-expanded="false">
+                                <span>Qual a duração das aulas e como estudo no meu ritmo?</span>
+                                <span class="icone-faq" aria-hidden="true">+</span>
+                            </button>
+                            <div class="resposta-faq-curso">
+                                <p>O curso conta com cerca de 38 horas distribuídas em 16 módulos e 237 aulas curtas e objetivas (com média de 10 minutos cada), permitindo que você assista, pause e pratique os exercícios no seu próprio tempo.</p>
+                            </div>
+                        </div>
+
+                        <div class="item-faq-curso">
+                            <button class="btn-faq-curso" type="button" aria-expanded="false">
+                                <span>Preciso comprar materiais caros ou mesa digitalizadora?</span>
+                                <span class="icone-faq" aria-hidden="true">+</span>
+                            </button>
+                            <div class="resposta-faq-curso">
+                                <p>De forma alguma. Todo o curso de Fundamentos do Desenho é feito no papel tradicional utilizando papel sulfite ou bloco Canson A4, lápis grafite (HB, 2B e 6B), borracha macia, apontador e caneta nanquim ou esferográfica para os módulos de arte-final.</p>
+                            </div>
+                        </div>
+
+                        <div class="item-faq-curso">
+                            <button class="btn-faq-curso" type="button" aria-expanded="false">
+                                <span>O curso oferece certificado e suporte para dúvidas?</span>
+                                <span class="icone-faq" aria-hidden="true">+</span>
+                            </button>
+                            <div class="resposta-faq-curso">
+                                <p>Sim. Ao concluir os módulos você recebe o certificado digital da Nankim Escola de Arte, além de contar com canal de suporte na plataforma para tirar dúvidas sobre os exercícios práticos.</p>
+                            </div>
+                        </div>
+
+                        <div class="item-faq-curso">
+                            <button class="btn-faq-curso" type="button" aria-expanded="false">
+                                <span>Quando os cursos de Anatomia Humana e Ilustração Digital estarão disponíveis?</span>
+                                <span class="icone-faq" aria-hidden="true">+</span>
+                            </button>
+                            <div class="resposta-faq-curso">
+                                <p>As etapas 02 (Anatomia Humana) e 03 (Ilustração Digital) estão atualmente em fase de produção e gravação. Assim que forem lançadas, ficarão disponíveis diretamente no catálogo da plataforma para quem quiser dar o próximo passo na trilha.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
     </main>
 
     <!-- O global.js injeta o rodapé compartilhado do site. -->
     <div id="footer-container"></div>
 
+    <!-- Modal de Checkout -->
     <div id="modal-checkout" class="modal">
         <div class="modal-content modal-checkout" role="dialog" aria-modal="true" aria-labelledby="checkout-titulo">
             <button class="close-btn" type="button" data-close="checkout" aria-label="Fechar checkout">&times;</button>
@@ -118,7 +512,9 @@
     <script src="./js/login.js"></script>
     <script src="./js/cookies.js"></script>
     <script src="./js/termos.js"></script>
+    <script src="./js/reportar.js"></script>
     <script src="./js/checkout.js"></script>
+    <script src="./js/cursos.js"></script>
 </body>
 
 </html>

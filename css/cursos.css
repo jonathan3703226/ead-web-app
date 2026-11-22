@@ -1,368 +1,1149 @@
-/* Catálogo: fundo de papel, títulos de alto contraste e vermelho terroso. */
+/* ==========================================================================
+   CURSOS.CSS - Nankim Escola de Arte
+   Padrão Visual: Home & Quem Somos (Alternância Claro/Escuro, Curvas 40px, Vitrine)
+   ========================================================================== */
+
+:root {
+    --cursos-bg-principal: #ffffff;
+    --cursos-texto-escuro: #2b2b2b;
+    --cursos-texto-suave: #555555;
+    --cursos-bg-card-claro: #f4f4f4;
+    --cursos-borda-suave: #e0e0e0;
+
+    --cursos-secao-escura-bg: #2b2b2b;
+    --cursos-secao-escura-texto: #ffffff;
+    --cursos-bg-card-escuro: #1a1a1a;
+    --cursos-texto-cinza-escuro: #cccccc;
+    --cursos-borda-escura: rgba(255, 255, 255, 0.12);
+}
+
+:root[data-theme="dark"] {
+    --cursos-bg-principal: #000000;
+    --cursos-texto-escuro: #ffffff;
+    --cursos-texto-suave: #a0a0a0;
+    --cursos-bg-card-claro: #0d0d0d;
+    --cursos-borda-suave: #222222;
+
+    --cursos-secao-escura-bg: #1a1a1a;
+    --cursos-secao-escura-texto: #ffffff;
+    --cursos-bg-card-escuro: #111111;
+    --cursos-texto-cinza-escuro: #cccccc;
+    --cursos-borda-escura: rgba(255, 255, 255, 0.12);
+}
+
 .pagina-cursos {
-    --cursos-papel: #f4f4f4;
-    --cursos-tinta: #2b2b2b;
-    --cursos-texto-suave: #5d5a56;
-    --cursos-vermelho: #a83d30;
-    --cursos-painel: #292929;
-    min-height: 100vh;
-    padding: 132px 6% 96px;
-    background: var(--cursos-papel);
-    color: var(--cursos-tinta);
-    font-family: 'Segoe UI', Arial, sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--cursos-bg-principal);
+    color: var(--cursos-texto-escuro);
+    overflow-x: hidden;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-:root[data-theme="dark"] .pagina-cursos {
-    --cursos-papel: #262626;
-    --cursos-tinta: #eeeeee;
-    --cursos-texto-suave: #bcbcbc;
-    --cursos-painel: #363636;
-}
-
-.catalogo-cursos {
-    width: min(1220px, 100%);
+.container-cursos {
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 0 4%;
 }
 
-.catalogo-cabecalho {
-    max-width: 760px;
-    margin: 0 auto 52px;
+/* ==========================================================================
+   SEÇÃO 1: TOPO COM EFEITO DE PINCELADA (CLIP-PATH) + VITRINE DAS 3 ETAPAS
+   ========================================================================== */
+.secao-trilha-topo {
+    padding: 9rem 0 7rem;
+    background-color: var(--cursos-bg-principal);
+    transition: background-color 0.3s ease;
+}
+
+.cabecalho-topo-cursos {
     text-align: center;
+    max-width: 880px;
+    margin: 0 auto 4rem;
 }
 
-.catalogo-eyebrow {
-    margin-bottom: 14px;
-    color: var(--cursos-vermelho);
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+/* Subtítulo Principal sem título acima — efeito de abertura horizontal (pincelada) */
+.subtitulo-hero-cursos {
+    font-size: clamp(1.35rem, 2.5vw, 2rem);
+    font-weight: 600;
+    line-height: 1.55;
+    letter-spacing: -0.4px;
+    color: var(--cursos-texto-escuro);
+    margin: 0;
+    clip-path: inset(0 100% 0 0);
+    animation: pinceladaHorizontalCursos 1.35s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
 }
 
-.catalogo-eyebrow span {
-    margin-right: 5px;
+.prefixo-barra {
+    color: var(--cor-destaque, #f39c12);
+    font-weight: 900;
+    margin-right: 8px;
 }
 
-.catalogo-cabecalho h1 {
-    margin-bottom: 16px;
-    color: var(--cursos-tinta);
-    font-size: clamp(2.3rem, 6vw, 4.8rem);
-    font-weight: 800;
-    letter-spacing: -0.065em;
-    line-height: 1.02;
+@keyframes pinceladaHorizontalCursos {
+    0% {
+        clip-path: inset(0 100% 0 0);
+        transform: translateX(-14px);
+    }
+    100% {
+        clip-path: inset(0 0% 0 0);
+        transform: translateX(0);
+    }
 }
 
-.catalogo-cabecalho h1 span {
-    color: var(--cursos-vermelho);
-}
-
-.catalogo-introducao {
-    max-width: 570px;
-    margin: 0 auto;
-    color: var(--cursos-texto-suave);
-    font-size: clamp(0.95rem, 2vw, 1.1rem);
-    line-height: 1.7;
-}
-
-/* Grid mobile-first: uma coluna no celular, mais colunas conforme o espaço. */
-.cursos-grid {
+/* Grid das 3 Etapas — Cards Ricos Estilo Vitrine da Home */
+.grid-etapas-trilha {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
 }
 
-.curso-card {
+.card-etapa-vitrine {
     position: relative;
-    height: 510px;
-    min-width: 0;
+    border-radius: 26px;
     overflow: hidden;
-    isolation: isolate;
-    border-radius: 16px;
-    background: var(--cursos-painel);
-    box-shadow: 0 16px 38px rgb(0 0 0 / 15%);
-    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease;
+    background-color: #0b0b0b;
+    border: 1px solid rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.35);
+    min-height: 390px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.14);
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.45s ease;
 }
 
-.curso-card-imagem {
+.card-etapa-vitrine.card-etapa-ativa {
+    border: 2px solid var(--cor-destaque, #f39c12);
+    box-shadow: 0 20px 45px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.22);
+}
+
+.card-etapa-vitrine:hover {
+    transform: translateY(-8px);
+    border-color: var(--cor-destaque, #f39c12);
+    box-shadow: 0 24px 50px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.26);
+}
+
+.video-bg-etapa {
     position: absolute;
-    z-index: -1;
     inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.curso-card::after {
-    position: absolute;
-    z-index: -1;
-    inset: 0;
-    background: linear-gradient(180deg, rgb(0 0 0 / 4%) 15%, rgb(0 0 0 / 72%) 100%);
-    content: "";
-}
-
-/* O cabeçalho fica sempre visível; os detalhes começam comprimidos abaixo dele. */
-.curso-painel {
-    position: absolute;
     z-index: 1;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    opacity: 0.48;
+    transition: opacity 0.45s ease, transform 0.6s ease;
+}
+
+.card-etapa-vitrine:hover .video-bg-etapa {
+    opacity: 0.85;
+    transform: scale(1.06);
+}
+
+.overlay-etapa-vitrine {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(180deg, rgba(10, 10, 10, 0.45) 0%, rgba(10, 10, 10, 0.82) 55%, rgba(8, 8, 8, 0.96) 100%);
+    transition: background 0.4s ease;
+}
+
+.card-etapa-vitrine:hover .overlay-etapa-vitrine {
+    background: linear-gradient(180deg, rgba(10, 10, 10, 0.3) 0%, rgba(10, 10, 10, 0.75) 55%, rgba(8, 8, 8, 0.92) 100%);
+}
+
+/* Número gigante em marca d'água no fundo do card */
+.numero-etapa-bg {
+    position: absolute;
+    top: 0.6rem;
+    right: 1.2rem;
+    z-index: 2;
+    font-size: 5.5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.06);
+    pointer-events: none;
+    user-select: none;
+    transition: color 0.4s ease, transform 0.4s ease;
+}
+
+.card-etapa-vitrine:hover .numero-etapa-bg {
+    color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.16);
+    transform: scale(1.05);
+}
+
+.conteudo-etapa-vitrine {
+    position: relative;
+    z-index: 3;
+    padding: 2.1rem 1.9rem;
     display: flex;
-    height: 84%;
     flex-direction: column;
-    padding: 22px;
-    transform: translateY(calc(100% - 126px));
-    border-top: 1px solid rgb(255 255 255 / 14%);
-    background: var(--cursos-painel);
-    color: #fff;
-    transition: transform 0.42s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.curso-cabecalho {
-    flex: 0 0 auto;
-}
-
-.curso-nivel {
-    display: inline-block;
-    margin-bottom: 8px;
-    color: #ee9b8e;
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-}
-
-.curso-cabecalho h2 {
-    max-width: 340px;
-    color: #fff;
-    font-size: clamp(1.55rem, 2.4vw, 2rem);
-    font-weight: 750;
-    letter-spacing: -0.045em;
-    line-height: 1.12;
-}
-
-.curso-detalhes {
-    display: flex;
-    min-height: 0;
+    justify-content: space-between;
+    height: 100%;
     flex: 1;
-    flex-direction: column;
-    padding-top: 15px;
-    opacity: 0;
-    transition: opacity 0.24s ease 0.08s;
 }
 
-.curso-descricao {
-    margin-bottom: 14px;
-    color: rgb(255 255 255 / 79%);
-    font-size: 0.85rem;
-    line-height: 1.6;
-}
-
-.curso-metadados {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 9px 16px;
-    margin-bottom: 15px;
-    color: rgb(255 255 255 / 88%);
-    font-size: 0.76rem;
-}
-
-.curso-metadados li {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-}
-
-.curso-metadados svg {
-    width: 16px;
-    height: 16px;
-    flex: 0 0 16px;
-    fill: none;
-    stroke: #ee9b8e;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 1.7;
-}
-
-.curso-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: auto;
-    padding-bottom: 14px;
-}
-
-.curso-tags li {
-    padding: 5px 10px;
-    border: 1px solid rgb(255 255 255 / 27%);
-    border-radius: 999px;
-    color: rgb(255 255 255 / 89%);
-    font-size: 0.7rem;
-}
-
-/* A ação de compra usa o modal de checkout que já existe no projeto. */
-.curso-compra {
+.topo-card-etapa {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    padding-top: 14px;
-    border-top: 1px solid rgb(255 255 255 / 19%);
+    gap: 0.5rem;
+    margin-bottom: 2.2rem;
+    flex-wrap: wrap;
 }
 
-.curso-compra p {
-    display: grid;
-    gap: 1px;
-    min-width: max-content;
-}
-
-.curso-compra p span {
-    color: rgb(255 255 255 / 70%);
-    font-size: 0.68rem;
-}
-
-.curso-compra p strong {
-    color: #fff;
-    font-size: 1.12rem;
-    letter-spacing: -0.02em;
-}
-
-.botao-assinar {
+.badge-etapa-status {
     display: inline-flex;
-    min-height: 44px;
     align-items: center;
-    justify-content: center;
-    padding: 10px 14px;
-    border-radius: 6px;
-    background: var(--cursos-vermelho);
-    color: #fff;
+    gap: 0.45rem;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    padding: 0.36rem 0.8rem;
+    border-radius: 999px;
+    backdrop-filter: blur(6px);
+}
+
+.badge-etapa-status.disponivel {
+    background-color: rgba(46, 204, 113, 0.22);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.45);
+}
+
+.ponto-verde {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #2ecc71;
+    box-shadow: 0 0 8px #2ecc71;
+}
+
+.badge-etapa-status.em-breve {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: #d4d4d4;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.nivel-etapa {
     font-size: 0.78rem;
     font-weight: 700;
-    text-align: center;
-    transition: background-color 0.2s ease, transform 0.2s ease;
+    color: var(--cor-destaque, #f39c12);
+    letter-spacing: 0.03em;
 }
 
-.botao-assinar:hover {
-    transform: translateY(-2px);
-    background: #862e24;
-}
-
-.curso-aviso {
-    width: fit-content;
+.corpo-card-etapa {
     margin-top: auto;
-    padding: 9px 13px;
-    border: 1px solid rgb(238 155 142 / 45%);
+    margin-bottom: 1.6rem;
+}
+
+.corpo-card-etapa h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.65rem;
+    line-height: 1.22;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.75);
+}
+
+.corpo-card-etapa p {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.84);
+    margin: 0;
+}
+
+.btn-etapa-vitrine {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0.85rem 1.4rem;
+    border-radius: 50px;
+    background-color: #ffffff;
+    color: #2b2b2b;
+    border: 1px solid #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-etapa-vitrine:hover {
+    background-color: var(--cor-destaque, #f39c12);
+    color: #111111;
+    border-color: var(--cor-destaque, #f39c12);
+}
+
+.btn-etapa-secundario {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0.85rem 1.4rem;
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #d8d8d8;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-etapa-secundario:hover {
+    background-color: rgba(255, 255, 255, 0.16);
+    border-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.6);
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   SEÇÃO 2: BLOCO ESCURO CURVO - RAIO-X COMPLETO DO CURSO
+   ========================================================================== */
+.bloco-escuro-curvo {
+    background-color: var(--cursos-secao-escura-bg);
+    color: var(--cursos-secao-escura-texto);
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    margin-top: -30px;
+    padding: 6rem 0 8.5rem;
+    position: relative;
+    z-index: 5;
+    box-shadow: 0 -30px 0 0 var(--cursos-bg-principal);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cabecalho-curso-destaque {
+    text-align: center;
+    max-width: 850px;
+    margin: 0 auto 4rem;
+}
+
+.selo-etapa-destaque {
+    display: inline-block;
+    background-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.16);
+    border: 1px solid rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.45);
+    color: var(--cor-destaque, #f39c12);
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    padding: 0.42rem 1rem;
     border-radius: 999px;
-    background: rgb(168 61 48 / 20%);
-    color: #f1b3a9;
+    margin-bottom: 1.2rem;
+}
+
+.titulo-animado-cursos {
+    font-size: clamp(2.2rem, 4.3vw, 3.5rem);
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+    margin-bottom: 1.2rem;
+}
+
+.texto-fluxo-dourado {
+    background: linear-gradient(
+        110deg,
+        var(--cor-destaque, #f39c12) 0%,
+        #ffe082 25%,
+        var(--cor-destaque, #f39c12) 50%,
+        #ffb300 75%,
+        var(--cor-destaque, #f39c12) 100%
+    );
+    background-size: 250% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: brilhoContinuoTextoCursos 3.5s linear infinite, pulsoNeonSuaveCursos 3s ease-in-out infinite;
+    display: inline-block;
+    position: relative;
+}
+
+.sublinhado-traco::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 4px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, transparent, var(--cor-destaque, #f39c12), #ffe082, var(--cor-destaque, #f39c12), transparent);
+    background-size: 200% 100%;
+    animation: deslizarTracoLuzCursos 2.5s linear infinite;
+    box-shadow: 0 0 12px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.7);
+}
+
+.descricao-principal-curso {
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--cursos-texto-cinza-escuro);
+    margin-bottom: 2.5rem;
+}
+
+/* Barra de Métricas */
+.barra-metricas-curso {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    background-color: var(--cursos-bg-card-escuro);
+    border: 1px solid var(--cursos-borda-escura);
+    border-radius: 22px;
+    padding: 1.5rem 1.2rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+}
+
+.item-metrica {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0.4rem;
+    border-right: 1px solid var(--cursos-borda-escura);
+}
+
+.item-metrica:last-child {
+    border-right: none;
+}
+
+.item-metrica strong {
+    font-size: 1.28rem;
+    font-weight: 800;
+    color: var(--cor-destaque, #f39c12);
+    margin-bottom: 0.25rem;
+}
+
+.item-metrica span {
+    font-size: 0.84rem;
+    color: var(--cursos-texto-cinza-escuro);
+}
+
+/* Layout 2 Colunas: Conteúdo + Checkout Sticky */
+.layout-vendas-curso {
+    display: grid;
+    grid-template-columns: 1.45fr 0.95fr;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+.coluna-conteudo-curso {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.bloco-info-curso {
+    background-color: var(--cursos-bg-card-escuro);
+    border: 1px solid var(--cursos-borda-escura);
+    border-radius: 26px;
+    padding: 2.4rem;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.subtitulo-bloco-curso {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+}
+
+/* Grid O que você vai dominar */
+.grid-aprendizado {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+}
+
+.card-aprendizado {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--cursos-borda-escura);
+    border-radius: 20px;
+    padding: 1.5rem;
+    transition: border-color 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+}
+
+.card-aprendizado:hover {
+    border-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.55);
+    background-color: rgba(255, 255, 255, 0.05);
+    transform: translateY(-3px);
+}
+
+.numero-pilar-curso {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: var(--cor-destaque, #f39c12);
+    background-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.14);
+    border: 1px solid rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.3);
+    padding: 0.22rem 0.65rem;
+    border-radius: 999px;
+    margin-bottom: 0.75rem;
+}
+
+.card-aprendizado h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.card-aprendizado p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--cursos-texto-cinza-escuro);
+    margin: 0;
+}
+
+/* Acordeão de Módulos */
+.cabecalho-grade {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.4rem;
+}
+
+.cabecalho-grade .subtitulo-bloco-curso {
+    margin-bottom: 0;
+}
+
+.resumo-carga {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--cor-destaque, #f39c12);
+}
+
+.lista-modulos-acordeao {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.item-modulo {
+    border: 1px solid var(--cursos-borda-escura);
+    border-radius: 18px;
+    background-color: rgba(255, 255, 255, 0.02);
+    overflow: hidden;
+    transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.item-modulo.aberto {
+    border-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.55);
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+.btn-modulo-header {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: inherit;
+    padding: 1.25rem 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.tag-modulo {
+    display: block;
     font-size: 0.76rem;
     font-weight: 700;
+    color: var(--cor-destaque, #f39c12);
+    margin-bottom: 0.25rem;
 }
 
-/* O conteúdo só expande enquanto há hover; o foco mantém suporte por teclado. */
-.curso-card:hover .curso-painel,
-.curso-card:focus-within .curso-painel {
-    transform: translateY(0);
+.info-modulo-titulo h4 {
+    font-size: 1.04rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
 }
 
-.curso-card:hover,
-.curso-card:focus-within {
-    z-index: 2;
+.meta-modulo-direita {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex-shrink: 0;
+}
+
+.badge-degustacao-modulo {
+    background-color: rgba(46, 204, 113, 0.16);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.35);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+}
+
+.duracao-modulo {
+    font-size: 0.82rem;
+    color: var(--cursos-texto-cinza-escuro);
+}
+
+.icone-seta-modulo {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--cor-destaque, #f39c12);
+    transition: transform 0.25s ease;
+    line-height: 1;
+}
+
+.item-modulo.aberto .icone-seta-modulo {
+    transform: rotate(45deg);
+}
+
+.conteudo-modulo {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+    padding: 0 1.4rem;
+}
+
+.item-modulo.aberto .conteudo-modulo {
+    max-height: 500px;
+    padding-bottom: 1.35rem;
+}
+
+.conteudo-modulo ul {
+    border-top: 1px solid var(--cursos-borda-escura);
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    list-style: none;
+    margin: 0;
+}
+
+.conteudo-modulo li {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--cursos-texto-cinza-escuro);
+    padding-left: 1rem;
+    position: relative;
+}
+
+.conteudo-modulo li::before {
+    content: "•";
+    color: var(--cor-destaque, #f39c12);
+    position: absolute;
+    left: 0;
+    font-weight: 800;
+}
+
+.conteudo-modulo li strong {
+    color: #ffffff;
+}
+
+/* Lista de Materiais */
+.texto-materiais {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--cursos-texto-cinza-escuro);
+    margin-bottom: 1.2rem;
+}
+
+.lista-materiais-simples {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.lista-materiais-simples li {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--cursos-borda-escura);
+    border-radius: 14px;
+    padding: 0.9rem 1.05rem;
+    font-size: 0.9rem;
+    color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.lista-materiais-simples li::before {
+    content: "✓";
+    color: var(--cor-destaque, #f39c12);
+    font-weight: 800;
+}
+
+/* Card Checkout Sticky */
+.coluna-checkout-sticky {
+    position: sticky;
+    top: 6.5rem;
+}
+
+.card-checkout-curso {
+    background-color: var(--cursos-bg-card-escuro);
+    border: 2px solid var(--cor-destaque, #f39c12);
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.45);
+}
+
+.capa-checkout-wrapper {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+}
+
+.capa-checkout-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.card-checkout-curso:hover .capa-checkout-wrapper img {
+    transform: scale(1.04);
+}
+
+.overlay-capa-checkout {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(17, 17, 17, 0.85) 100%);
+    pointer-events: none;
+}
+
+.tag-capa-curso {
+    position: absolute;
+    bottom: 0.95rem;
+    left: 1rem;
+    background-color: rgba(17, 17, 17, 0.88);
+    backdrop-filter: blur(6px);
+    color: var(--cor-destaque, #f39c12);
+    font-size: 0.74rem;
+    font-weight: 700;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.35);
+}
+
+.corpo-card-checkout {
+    padding: 2rem;
+}
+
+.preco-box-checkout {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+}
+
+.label-investimento {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--cursos-texto-cinza-escuro);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.valor-curso {
+    font-size: 2.6rem;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1.1;
+    margin: 0.25rem 0;
+}
+
+.detalhe-pagamento {
+    font-size: 0.85rem;
+    color: #2ecc71;
+    font-weight: 600;
+}
+
+.botao-assinar-principal {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border: 1px solid var(--cor-destaque, #f39c12);
+    border-radius: 50px;
+    background-color: var(--cor-destaque, #f39c12);
+    color: #111111;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease;
+    margin-bottom: 0.8rem;
+}
+
+.botao-assinar-principal:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+    box-shadow: 0 10px 25px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.35);
+}
+
+.botao-degustacao-secundario {
+    width: 100%;
+    padding: 0.9rem 1.4rem;
+    border-radius: 50px;
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
+    color: #2b2b2b;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    margin-bottom: 1.5rem;
+}
+
+.botao-degustacao-secundario:hover {
+    background-color: #2b2b2b;
+    color: #ffffff;
+    border-color: #ffffff;
+}
+
+.lista-beneficios-checkout {
+    border-top: 1px solid var(--cursos-borda-escura);
+    padding-top: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    list-style: none;
+    margin: 0;
+}
+
+.lista-beneficios-checkout li {
+    font-size: 0.88rem;
+    color: var(--cursos-texto-cinza-escuro);
+    padding-left: 1.35rem;
+    position: relative;
+    line-height: 1.45;
+}
+
+.lista-beneficios-checkout li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--cor-destaque, #f39c12);
+    font-weight: 800;
+}
+
+/* ==========================================================================
+   SEÇÃO 3: BLOCO CLARO CURVO - PRÓXIMAS ETAPAS & FAQ
+   ========================================================================== */
+.bloco-claro-curvo {
+    background-color: var(--cursos-bg-principal);
+    color: var(--cursos-texto-escuro);
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    margin-top: -40px;
+    padding: 6rem 0 7rem;
+    position: relative;
+    z-index: 6;
+    box-shadow: 0 -30px 0 0 var(--cursos-secao-escura-bg);
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cabecalho-secao-clara {
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto 3.5rem;
+}
+
+.titulo-claro-cursos {
+    font-size: clamp(2rem, 3.8vw, 3rem);
+    font-weight: 800;
+    color: var(--cursos-texto-escuro);
+    letter-spacing: -1.2px;
+    line-height: 1.15;
+    margin-bottom: 0.9rem;
+}
+
+.subtitulo-claro-cursos {
+    font-size: clamp(1.02rem, 1.7vw, 1.25rem);
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--cursos-texto-suave);
+}
+
+/* Grid Próximas Etapas */
+.grid-futuros-cursos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-bottom: 5.5rem;
+}
+
+.card-futuro-curso {
+    background-color: var(--cursos-bg-card-claro);
+    border: 1px solid var(--cursos-borda-suave);
+    border-radius: 26px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease, background-color 0.3s ease;
+}
+
+.card-futuro-curso:hover {
     transform: translateY(-6px);
-    box-shadow: 0 26px 56px rgb(0 0 0 / 22%);
+    border-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.55);
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.09);
 }
 
-.curso-card:hover .curso-detalhes,
-.curso-card:focus-within .curso-detalhes {
+.imagem-futuro-wrapper {
+    position: relative;
+    height: 240px;
+    overflow: hidden;
+}
+
+.imagem-futuro-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.88);
+    transition: transform 0.55s ease;
+}
+
+.card-futuro-curso:hover .imagem-futuro-wrapper img {
+    transform: scale(1.05);
+}
+
+.overlay-imagem-futuro {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, transparent 50%, rgba(0, 0, 0, 0.45) 100%);
+    pointer-events: none;
+}
+
+.badge-futuro {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background-color: rgba(17, 17, 17, 0.85);
+    backdrop-filter: blur(6px);
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+}
+
+.conteudo-futuro-curso {
+    padding: 2.1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.nivel-futuro {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--cor-destaque, #f39c12);
+    margin-bottom: 0.45rem;
+}
+
+.conteudo-futuro-curso h3 {
+    font-size: 1.48rem;
+    font-weight: 800;
+    color: var(--cursos-texto-escuro);
+    margin-bottom: 0.75rem;
+}
+
+.conteudo-futuro-curso p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--cursos-texto-suave);
+    margin-bottom: 1.3rem;
+}
+
+.aviso-indisponivel-sutil {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--cursos-borda-suave);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--cursos-texto-suave);
+}
+
+.aviso-indisponivel-sutil::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--cor-destaque, #f39c12);
+    opacity: 0.75;
+}
+
+/* FAQ Centralizada */
+.bloco-faq-cursos {
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.cabecalho-faq-cursos {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.titulo-faq-cursos {
+    font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+    font-weight: 800;
+    color: var(--cursos-texto-escuro);
+    letter-spacing: -1px;
+    margin-bottom: 0.65rem;
+}
+
+.subtitulo-faq-cursos {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--cursos-texto-suave);
+}
+
+.lista-faq-cursos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.95rem;
+}
+
+.item-faq-curso {
+    background-color: var(--cursos-bg-card-claro);
+    border: 1px solid var(--cursos-borda-suave);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.3s ease;
+}
+
+.item-faq-curso.aberto {
+    border-color: var(--cor-destaque, #f39c12);
+    box-shadow: 0 12px 28px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.12);
+}
+
+.btn-faq-curso {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 1.35rem 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    text-align: left;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--cursos-texto-escuro);
+    cursor: pointer;
+}
+
+.icone-faq {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--cor-destaque, #f39c12);
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+}
+
+.item-faq-curso.aberto .icone-faq {
+    transform: rotate(45deg);
+}
+
+.resposta-faq-curso {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+    padding: 0 1.6rem;
+}
+
+.item-faq-curso.aberto .resposta-faq-curso {
+    max-height: 280px;
+    padding-bottom: 1.4rem;
+}
+
+.resposta-faq-curso p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--cursos-texto-suave);
+    border-top: 1px solid var(--cursos-borda-suave);
+    padding-top: 1rem;
+    margin: 0;
+}
+
+/* ==========================================================================
+   ANIMAÇÕES DE REVELAÇÃO SCROLL & KEYFRAMES
+   ========================================================================== */
+.revelar-scroll {
+    opacity: 0;
+    transform: translateY(35px) scale(0.97);
+    filter: blur(6px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 1s cubic-bezier(0.16, 1, 0.3, 1),
+        filter 1s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform, filter;
+}
+
+.revelar-scroll.visivel {
     opacity: 1;
-    transition-delay: 0.12s;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
 }
 
-.curso-card:hover .curso-card-imagem,
-.curso-card:focus-within .curso-card-imagem {
-    transform: scale(1.045);
+@keyframes brilhoContinuoTextoCursos {
+    0% { background-position: 0% center; }
+    100% { background-position: 250% center; }
 }
 
-.botao-assinar:focus-visible {
-    outline: 3px solid #f4b0a5;
-    outline-offset: 4px;
+@keyframes pulsoNeonSuaveCursos {
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.35)); }
+    50% { filter: drop-shadow(0 0 18px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.75)); }
 }
 
-@media (min-width: 640px) {
-    .pagina-cursos {
-        padding-right: 5%;
-        padding-left: 5%;
-    }
-
-    .cursos-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+@keyframes deslizarTracoLuzCursos {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
 }
 
-@media (min-width: 1024px) {
-    .cursos-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-}
-
-/* Touch não possui hover persistente; exiba os detalhes para manter o conteúdo acessível. */
-@media (hover: none) {
-    .curso-painel {
-        transform: translateY(0);
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+@media (max-width: 992px) {
+    .grid-etapas-trilha {
+        grid-template-columns: 1fr;
     }
 
-    .curso-detalhes {
-        opacity: 1;
+    .card-etapa-vitrine {
+        min-height: 320px;
     }
 
-    .curso-card-imagem {
-        transform: scale(1.025);
-    }
-}
-
-@media (max-width: 639px) {
-    .pagina-cursos {
-        padding: 112px 20px 64px;
+    .layout-vendas-curso {
+        grid-template-columns: 1fr;
     }
 
-    .catalogo-cabecalho {
-        margin-bottom: 34px;
-        text-align: left;
+    .coluna-checkout-sticky {
+        position: static;
     }
 
-    .catalogo-introducao {
-        margin-left: 0;
+    .barra-metricas-curso {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .curso-card {
-        height: 500px;
-        border-radius: 13px;
-    }
-
-    .curso-painel {
-        height: 84%;
-        padding: 20px;
-        transform: translateY(calc(100% - 120px));
-    }
-
-    .curso-compra {
-        gap: 8px;
-    }
-
-    .botao-assinar {
-        padding-right: 11px;
-        padding-left: 11px;
-        font-size: 0.73rem;
+    .item-metrica:nth-child(2) {
+        border-right: none;
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .curso-card-imagem,
-    .curso-painel,
-    .curso-detalhes,
-    .botao-assinar {
-        transition-duration: 0.01ms;
+@media (max-width: 680px) {
+    .grid-aprendizado,
+    .lista-materiais-simples,
+    .grid-futuros-cursos {
+        grid-template-columns: 1fr;
+    }
+
+    .bloco-info-curso {
+        padding: 1.6rem;
     }
 }

@@ -1,311 +1,594 @@
-.pagina-contato {
-	--contato-fundo: #f4f4f4;
-	--contato-texto: #2b2b2b;
-	--contato-texto-secundario: #555555;
-	--contato-texto-link: #111111;
-	--contato-campo: #ffffff;
-	--contato-campo-borda: #dddddd;
-	--contato-placeholder: #777777;
-	--contato-botao: #2b2b2b;
-	background: var(--contato-fundo);
-	padding-top: 68px;
-	color: var(--contato-texto);
-	font-family: 'Montserrat', 'Segoe UI', sans-serif;
-	transition: background-color 0.3s ease, color 0.3s ease;
+/* ==========================================================================
+   CONTATO.CSS - Nankim Escola de Arte
+   Padrão Visual: Home, Quem Somos & Cursos + Validação Instantânea e Modal
+   ========================================================================== */
+
+:root {
+    --contato-bg-principal: #ffffff;
+    --contato-texto-escuro: #2b2b2b;
+    --contato-texto-suave: #555555;
+
+    --contato-secao-escura-bg: #2b2b2b;
+    --contato-secao-escura-texto: #ffffff;
+    --contato-bg-card-escuro: #1a1a1a;
+    --contato-texto-cinza-escuro: #cccccc;
+    --contato-borda-escura: rgba(255, 255, 255, 0.12);
+    --contato-campo-bg: #111111;
+
+    /* Cores de Validação Instantânea */
+    --cor-campo-erro: #e74c3c;
+    --cor-campo-valido: #2ecc71;
 }
 
-:root[data-theme="dark"] .pagina-contato {
-	--contato-fundo: #262626;
-	--contato-texto: #eeeeee;
-	--contato-texto-secundario: #bcbcbc;
-	--contato-texto-link: #f1f1f1;
-	--contato-campo: #353535;
-	--contato-campo-borda: #4a4a4a;
-	--contato-placeholder: #b0b0b0;
-	--contato-botao: #3a3a3a;
+:root[data-theme="dark"] {
+    --contato-bg-principal: #000000;
+    --contato-texto-escuro: #ffffff;
+    --contato-texto-suave: #a0a0a0;
+
+    --contato-secao-escura-bg: #1a1a1a;
+    --contato-secao-escura-texto: #ffffff;
+    --contato-bg-card-escuro: #111111;
+    --contato-texto-cinza-escuro: #cccccc;
+    --contato-borda-escura: rgba(255, 255, 255, 0.12);
+    --contato-campo-bg: #080808;
+}
+
+.pagina-contato {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--contato-bg-principal);
+    color: var(--contato-texto-escuro);
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container-contato {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 4%;
 }
 
 .menu-global nav a[href="contato.html"].pagina-ativa {
-	font-weight: 700;
+    font-weight: 700;
 }
 
 .menu-global nav a[href="contato.html"].pagina-ativa .dot-hover {
-	background-color: #c7352b;
+    background-color: var(--cor-destaque, #f39c12);
 }
 
-/* Banner */
-.contato-hero {
-	position: relative;
-	display: grid;
-	min-height: 280px;
-	place-items: center;
-	overflow: hidden;
-	background: #171717;
-	color: #ffffff;
+/* ==========================================================================
+   SEÇÃO 1: TOPO LIMPO (SUBTÍTULO PRINCIPAL COM REVELAÇÃO SUAVE)
+   ========================================================================== */
+.secao-topo-contato {
+    padding: 9rem 0 5.5rem;
+    background-color: var(--contato-bg-principal);
+    transition: background-color 0.3s ease;
 }
 
-.contato-hero-imagem,
-.contato-hero-overlay {
-	position: absolute;
-	inset: 0;
-	width: 100%;
-	height: 100%;
+.cabecalho-topo-contato {
+    text-align: center;
+    max-width: 860px;
+    margin: 0 auto;
 }
 
-.contato-hero-imagem {
-	object-fit: cover;
-	object-position: center 48%;
+.subtitulo-hero-contato {
+    font-size: clamp(1.35rem, 2.5vw, 2rem);
+    font-weight: 600;
+    line-height: 1.55;
+    letter-spacing: -0.4px;
+    color: var(--contato-texto-escuro);
+    margin: 0;
+    opacity: 0;
+    animation: revelarSubtituloTopo 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
 }
 
-.contato-hero-overlay {
-	background: linear-gradient(90deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.48));
+.prefixo-barra {
+    color: var(--cor-destaque, #f39c12);
+    font-weight: 900;
+    margin-right: 8px;
 }
 
-.contato-hero-conteudo {
-	position: relative;
-	z-index: 1;
-	padding: 32px 20px;
-	text-align: center;
+.linha-luminosa-topo {
+    width: 0;
+    max-width: 140px;
+    height: 3px;
+    margin: 1.8rem auto 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, var(--cor-destaque, #f39c12), #ffe082, var(--cor-destaque, #f39c12), transparent);
+    box-shadow: 0 0 14px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.65);
+    animation: expandirLinhaTopo 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
 }
 
-.contato-hero-etiqueta,
-.contato-sobretitulo {
-	margin-bottom: 12px;
-	font-size: 0.78rem;
-	font-weight: 700;
-	letter-spacing: 0.13em;
-	text-transform: uppercase;
+@keyframes revelarSubtituloTopo {
+    from {
+        opacity: 0;
+        transform: translateY(26px) scale(0.98);
+        filter: blur(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0px);
+    }
 }
 
-.contato-hero-etiqueta span,
-.contato-sobretitulo span {
-	margin-right: 7px;
-	color: #c7352b;
-	font-weight: 900;
+@keyframes expandirLinhaTopo {
+    from {
+        width: 0;
+        opacity: 0;
+    }
+    to {
+        width: 140px;
+        opacity: 1;
+    }
 }
-
-.contato-hero h1 {
-	font-size: clamp(2.7rem, 8vw, 5.25rem);
-	font-weight: 900;
-	letter-spacing: 0.08em;
-	line-height: 1;
-	text-transform: uppercase;
-}
-
-/* Conteúdo principal: atendimento e formulário */
-.contato-principal {
-	padding: 64px 6%;
+/* ==========================================================================
+   SEÇÃO 2: BLOCO ESCURO CURVO (40PX) — CANAIS & FORMULÁRIO
+   ========================================================================== */
+.bloco-escuro-curvo {
+    background-color: var(--contato-secao-escura-bg);
+    color: var(--contato-secao-escura-texto);
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    margin-top: -30px;
+    padding: 6rem 0 8rem;
+    position: relative;
+    z-index: 5;
+    box-shadow: 0 -30px 0 0 var(--contato-bg-principal);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .contato-layout {
-	display: grid;
-	width: min(1100px, 100%);
-	margin: 0 auto;
-	gap: 44px;
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: 4rem;
+    align-items: center;
 }
 
-.contato-informacoes {
-	align-self: center;
+.selo-atendimento-contato {
+    display: inline-block;
+    background-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.16);
+    border: 1px solid rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.45);
+    color: var(--cor-destaque, #f39c12);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    padding: 0.4rem 0.95rem;
+    border-radius: 999px;
+    margin-bottom: 1.2rem;
 }
 
-.contato-sobretitulo {
-	margin-bottom: 14px;
-	color: var(--contato-texto-secundario);
+.titulo-animado-contato {
+    font-size: clamp(2.1rem, 4vw, 3.1rem);
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1.15;
+    letter-spacing: -1.3px;
+    margin-bottom: 1.3rem;
 }
 
-.contato-informacoes h2 {
-	max-width: 440px;
-	margin-bottom: 18px;
-	font-size: clamp(1.9rem, 5vw, 2.7rem);
-	font-weight: 800;
-	letter-spacing: -0.045em;
-	line-height: 1.12;
+.texto-fluxo-dourado {
+    background: linear-gradient(
+        110deg,
+        var(--cor-destaque, #f39c12) 0%,
+        #ffe082 25%,
+        var(--cor-destaque, #f39c12) 50%,
+        #ffb300 75%,
+        var(--cor-destaque, #f39c12) 100%
+    );
+    background-size: 250% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: brilhoContinuoTextoContato 3.5s linear infinite, pulsoNeonSuaveContato 3s ease-in-out infinite;
+    display: inline-block;
+    position: relative;
 }
 
-.contato-informacoes h2::after {
-	display: block;
-	width: 54px;
-	height: 4px;
-	margin-top: 22px;
-	background: #c7352b;
-	content: "";
+.sublinhado-traco::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 4px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, transparent, var(--cor-destaque, #f39c12), #ffe082, var(--cor-destaque, #f39c12), transparent);
+    background-size: 200% 100%;
+    animation: deslizarTracoLuzContato 2.5s linear infinite;
+    box-shadow: 0 0 12px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.7);
 }
 
-.contato-texto-apoio,
-.contato-atendimento {
-	max-width: 460px;
-	color: var(--contato-texto-secundario);
-	font-size: 1rem;
-	line-height: 1.75;
+.contato-texto-apoio {
+    font-size: 1.02rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--contato-texto-cinza-escuro);
+    margin-bottom: 2.2rem;
+    max-width: 480px;
 }
 
-.contato-atendimento {
-	margin-top: 22px;
-	color: var(--contato-texto);
-	font-weight: 700;
-}
-
+/* Cards de Canais */
 .contato-canais {
-	display: grid;
-	gap: 18px;
-	margin-top: 22px;
-	font-style: normal;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    font-style: normal;
 }
 
-.contato-canais a {
-	display: grid;
-	width: fit-content;
-	gap: 3px;
-	color: var(--contato-texto-link);
-	font-size: 0.98rem;
-	overflow-wrap: anywhere;
-	transition: color 0.2s ease;
+.card-canal-contato {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    background-color: var(--contato-bg-card-escuro);
+    border: 1px solid var(--contato-borda-escura);
+    border-radius: 20px;
+    padding: 1.25rem 1.5rem;
+    text-decoration: none;
+    color: #ffffff;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.contato-canais a:hover {
-	color: #b52d24;
+.card-canal-contato:hover {
+    transform: translateY(-4px);
+    border-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.6);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+}
+
+.icone-canal-contato {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.14);
+    border: 1px solid rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.35);
+    color: var(--cor-destaque, #f39c12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.info-canal-contato {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
 }
 
 .contato-canal-rotulo {
-	color: var(--contato-texto-secundario);
-	font-size: 0.76rem;
-	font-weight: 700;
-	letter-spacing: 0.08em;
-	text-transform: uppercase;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cor-destaque, #f39c12);
+}
+
+.info-canal-contato strong {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
+    overflow-wrap: anywhere;
+}
+
+/* ==========================================================================
+   CARD DO FORMULÁRIO & VALIDAÇÃO INSTANTÂNEA (VERMELHO / VERDE)
+   ========================================================================== */
+.card-formulario-contato {
+    background-color: var(--contato-bg-card-escuro);
+    border: 1px solid var(--contato-borda-escura);
+    border-radius: 28px;
+    padding: 2.6rem 2.4rem;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.32);
 }
 
 .form-contato {
-	display: flex;
-	flex-direction: column;
-	gap: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
 }
 
 .form-contato .input-group {
-	display: flex;
-	flex-direction: column;
-	gap: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
 }
 
 .form-contato .input-group label {
-	color: var(--contato-texto);
-	font-size: 0.88rem;
-	font-weight: 700;
+    color: #ffffff;
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition: color 0.25s ease;
 }
 
 .form-contato .input-group label span {
-	color: var(--contato-texto-secundario);
-	font-weight: 400;
+    color: var(--contato-texto-cinza-escuro);
+    font-weight: 400;
+    font-size: 0.82rem;
 }
 
 .form-contato .input-group input,
 .form-contato textarea {
-	width: 100%;
-	padding: 14px 16px;
-	border: 1px solid var(--contato-campo-borda);
-	border-radius: 8px;
-	background: var(--contato-campo);
-	color: var(--contato-texto);
-	font-family: inherit;
-	font-size: 0.95rem;
-	transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+    padding: 0.95rem 1.15rem;
+    border: 2px solid var(--contato-borda-escura);
+    border-radius: 14px;
+    background-color: var(--contato-campo-bg);
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
 }
 
 .form-contato .input-group input::placeholder,
 .form-contato textarea::placeholder {
-	color: var(--contato-placeholder);
-	opacity: 1;
+    color: #777777;
+    opacity: 1;
 }
 
-.form-contato .input-group input:focus,
-.form-contato textarea:focus {
-	border-color: #b52d24;
-	outline: none;
-	background: var(--contato-campo);
-	box-shadow: 0 0 0 3px rgba(199, 53, 43, 0.12);
+/* Estado Inválido (Vermelho imediato ao clicar/digitar enquanto não válido) */
+.form-contato .input-group.campo-invalido input,
+.form-contato .input-group.campo-invalido textarea {
+    border-color: var(--cor-campo-erro) !important;
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.22) !important;
+}
+
+.form-contato .input-group.campo-invalido label {
+    color: #ff7675;
+}
+
+/* Estado Válido (Verde assim que a informação é válida) */
+.form-contato .input-group.campo-valido input,
+.form-contato .input-group.campo-valido textarea {
+    border-color: var(--cor-campo-valido) !important;
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2) !important;
+}
+
+.form-contato .input-group.campo-valido label {
+    color: var(--cor-campo-valido);
+}
+
+.mensagem-erro-campo {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #ff7675;
+    min-height: 1.1em;
+    line-height: 1.3;
 }
 
 .form-contato textarea {
-	min-height: 142px;
-	resize: vertical;
+    min-height: 135px;
+    resize: vertical;
 }
 
 .contato-botao-enviar {
-	display: inline-flex;
-	min-height: 52px;
-	align-items: center;
-	justify-content: center;
-	padding: 13px 22px;
-	border: 0;
-	border-radius: 8px;
-	background: var(--contato-botao);
-	color: #ffffff;
-	font-family: inherit;
-	font-size: 0.95rem;
-	font-weight: 700;
-	cursor: pointer;
-	transition: background-color 0.2s ease, transform 0.2s ease;
+    width: 100%;
+    min-height: 54px;
+    padding: 1rem 2rem;
+    border: 1px solid var(--cor-destaque, #f39c12);
+    border-radius: 50px;
+    background-color: var(--cor-destaque, #f39c12);
+    color: #111111;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    margin-top: 0.4rem;
+    transition: transform 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease;
 }
 
 .contato-botao-enviar:hover {
-	transform: translateY(-1px);
-	background: #b52d24;
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+    box-shadow: 0 10px 25px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.35);
 }
 
-.contato-botao-enviar:focus-visible {
-	outline: 3px solid rgba(199, 53, 43, 0.45);
-	outline-offset: 3px;
+/* ==========================================================================
+   MODAL DE CONFIRMAÇÃO DE ENVIO
+   ========================================================================== */
+.modal-contato-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.contato-feedback {
-	min-height: 1.5em;
-	color: var(--contato-texto-secundario);
-	font-size: 0.88rem;
+.modal-contato-overlay[hidden] {
+    display: none;
 }
 
-@media (min-width: 769px) {
-	.contato-layout {
-		grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-		align-items: center;
-		gap: clamp(48px, 8vw, 110px);
-	}
-
-	.contato-hero {
-		min-height: 360px;
-	}
-
-	.contato-principal {
-		padding-top: 88px;
-		padding-bottom: 96px;
-	}
+.modal-contato-overlay.ativo {
+    opacity: 1;
+    visibility: visible;
 }
 
-@media (min-width: 769px) and (max-width: 900px) {
-	.pagina-contato {
-		padding-top: 112px;
-	}
+.modal-contato-box {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    background: linear-gradient(145deg, #1e1e1e 0%, #111111 100%);
+    border: 2px solid var(--cor-destaque, #f39c12);
+    border-radius: 28px;
+    padding: 2.8rem 2.2rem 2.4rem;
+    text-align: center;
+    color: #ffffff;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+    transform: translateY(20px) scale(0.95);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (max-width: 768px) {
-	.contato-principal {
-		padding: 48px 6%;
-	}
-
-	.contato-layout {
-		gap: 36px;
-	}
-
-	.contato-hero {
-		min-height: 260px;
-	}
-
-	.contato-botao-enviar {
-		width: 100%;
-	}
+.modal-contato-overlay.ativo .modal-contato-box {
+    transform: translateY(0) scale(1);
 }
 
-@media (prefers-reduced-motion: reduce) {
-	.contato-canais a,
-	.contato-botao-enviar {
-		transition: none;
-	}
+.btn-fechar-modal-contato {
+    position: absolute;
+    top: 1.1rem;
+    right: 1.25rem;
+    background: transparent;
+    border: none;
+    color: #aaaaaa;
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-fechar-modal-contato:hover {
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+.ilustracao-sucesso-contato {
+    position: relative;
+    width: 88px;
+    height: 88px;
+    margin: 0 auto 1.4rem;
+    border-radius: 50%;
+    background-color: rgba(46, 204, 113, 0.14);
+    border: 2px solid #2ecc71;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2ecc71;
+    box-shadow: 0 0 25px rgba(46, 204, 113, 0.35);
+}
+
+.anel-pulso-sucesso {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px dashed rgba(46, 204, 113, 0.45);
+    animation: girarAnelSucesso 14s linear infinite;
+}
+
+.tag-modal-sucesso {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+    color: #2ecc71;
+    background-color: rgba(46, 204, 113, 0.14);
+    border: 1px solid rgba(46, 204, 113, 0.35);
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    margin-bottom: 0.9rem;
+}
+
+.modal-contato-box h3 {
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+}
+
+.modal-contato-box p {
+    font-size: 0.96rem;
+    font-weight: 400;
+    line-height: 1.65;
+    color: #cccccc;
+    margin-bottom: 1.8rem;
+}
+
+.modal-contato-box p strong {
+    color: var(--cor-destaque, #f39c12);
+}
+
+.btn-ok-modal-contato {
+    width: 100%;
+    padding: 0.95rem 1.8rem;
+    border-radius: 50px;
+    border: 1px solid var(--cor-destaque, #f39c12);
+    background-color: var(--cor-destaque, #f39c12);
+    color: #111111;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.btn-ok-modal-contato:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+}
+
+/* ==========================================================================
+   ANIMAÇÕES DE REVELAÇÃO SCROLL & KEYFRAMES
+   ========================================================================== */
+.revelar-scroll {
+    opacity: 0;
+    transform: translateY(35px) scale(0.97);
+    filter: blur(6px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 1s cubic-bezier(0.16, 1, 0.3, 1),
+        filter 1s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform, filter;
+}
+
+.revelar-scroll.visivel {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+}
+
+@keyframes piscarCursorContato {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes brilhoContinuoTextoContato {
+    0% { background-position: 0% center; }
+    100% { background-position: 250% center; }
+}
+
+@keyframes pulsoNeonSuaveContato {
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.35)); }
+    50% { filter: drop-shadow(0 0 18px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.75)); }
+}
+
+@keyframes deslizarTracoLuzContato {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+@keyframes girarAnelSucesso {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+@media (max-width: 960px) {
+    .contato-layout {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .contato-texto-apoio {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .secao-topo-contato {
+        padding: 7.5rem 0 4.5rem;
+    }
+
+    .bloco-escuro-curvo {
+        padding: 4.5rem 0 6rem;
+    }
+
+    .card-formulario-contato {
+        padding: 1.8rem 1.4rem;
+    }
 }

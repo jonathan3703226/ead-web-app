@@ -1,24 +1,44 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const textoDigitado = document.getElementById("texto-digitado-quem-somos");
-    const frase = "Toda grande história começa com um primeiro traço.";
     const reduzirMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (textoDigitado) {
+    // 1. Efeito de Digitação em Loop Contínuo (igual ao da Home)
+    const elementoTexto = document.getElementById("texto-digitado-quem-somos");
+    if (elementoTexto) {
+        const textoCompleto = "Nascida da paixão pelo desenho, construída para guiar sua evolução.";
+
         if (reduzirMovimento) {
-            textoDigitado.textContent = frase;
+            elementoTexto.textContent = textoCompleto;
         } else {
-            let indice = 0;
-            const digitar = () => {
-                textoDigitado.textContent = frase.slice(0, indice);
-                indice += 1;
-                if (indice <= frase.length) {
-                    window.setTimeout(digitar, 42);
+            let index = 0;
+            let apagando = false;
+            const velocidadeDigitacao = 35;
+            const velocidadeApagar = 20;
+            const pausaAposEscrever = 4000;
+
+            function efeitoDigitacaoLoop() {
+                if (!apagando && index < textoCompleto.length) {
+                    elementoTexto.textContent += textoCompleto.charAt(index);
+                    index++;
+                    setTimeout(efeitoDigitacaoLoop, velocidadeDigitacao);
+                } else if (!apagando && index === textoCompleto.length) {
+                    setTimeout(() => {
+                        apagando = true;
+                        efeitoDigitacaoLoop();
+                    }, pausaAposEscrever);
+                } else if (apagando && index > 0) {
+                    elementoTexto.textContent = textoCompleto.substring(0, index - 1);
+                    index--;
+                    setTimeout(efeitoDigitacaoLoop, velocidadeApagar);
+                } else if (apagando && index === 0) {
+                    apagando = false;
+                    setTimeout(efeitoDigitacaoLoop, 500);
                 }
-            };
-            digitar();
+            }
+            efeitoDigitacaoLoop();
         }
     }
 
+    // 2. Revelação Suave no Scroll
     const elementosRevelar = document.querySelectorAll(".pagina-quem-somos .revelar-scroll");
     if ("IntersectionObserver" in window && !reduzirMovimento) {
         const observador = new IntersectionObserver((entradas, observer) => {
@@ -35,6 +55,53 @@ document.addEventListener("DOMContentLoaded", () => {
         elementosRevelar.forEach((elemento) => elemento.classList.add("visivel"));
     }
 
+    // 3. Física de Parallax para o Grid em Losango (5 Colunas)
+    const colunasLosango = [];
+    for (let i = 1; i <= 5; i++) {
+        colunasLosango[i] = document.getElementById("losango-col" + i);
+    }
+    const secaoLosango = document.querySelector(".grid-losango-wrapper");
+
+    if (secaoLosango && !reduzirMovimento) {
+        let deslocamentoAnimado = 0;
+
+        const velocidadesLosango = {
+            1: -0.09, // Ponta esquerda sobe devagar
+            2: 0.06,  // Intermediária desce suave
+            3: 0.00,  // Centro (Thiago) fixado
+            4: 0.06,  // Intermediária desce suave
+            5: -0.09  // Ponta direita sobe devagar
+        };
+
+        function animarLosango() {
+            if (window.innerWidth > 1024) {
+                const rect = secaoLosango.getBoundingClientRect();
+                const centroTela = window.innerHeight / 2;
+                const centroSecao = rect.top + rect.height / 2;
+                const distanciaRelativa = centroTela - centroSecao;
+
+                deslocamentoAnimado += (distanciaRelativa - deslocamentoAnimado) * 0.06;
+
+                for (let i = 1; i <= 5; i++) {
+                    if (colunasLosango[i]) {
+                        const deslocamento = deslocamentoAnimado * velocidadesLosango[i];
+                        colunasLosango[i].style.transform = `translateY(${deslocamento}px)`;
+                    }
+                }
+            } else {
+                for (let i = 1; i <= 5; i++) {
+                    if (colunasLosango[i]) {
+                        colunasLosango[i].style.transform = "none";
+                    }
+                }
+            }
+            requestAnimationFrame(animarLosango);
+        }
+
+        animarLosango();
+    }
+
+    // 4. Galeria Interativa de Formações
     const formacoes = [
         {
             titulo: "Concept art",
@@ -69,6 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
             legenda: "Edição de vídeo · Studio Online"
         }
     ];
+
     const imagemFormacao = document.getElementById("imagem-formacao-principal");
     const legendaFormacao = document.getElementById("legenda-imagem-formacao");
     const tituloFormacao = document.getElementById("titulo-formacao-destaque");

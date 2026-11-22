@@ -1,90 +1,176 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Conheça a história de Thiago Silva Costa e a origem da escola Nankim.">
-    <title>Quem Somos - Nankim</title>
+    <meta name="description" content="Conheça a história da Nankim Escola de Arte e a trajetória de Thiago Silva Costa.">
+    <title>Nankim Escola de Arte | Quem Somos</title>
+
+    <!-- Conexão Prévia Google Fonts (Padrão Home) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Noto+Serif+JP:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Estilos Globais e Específicos -->
     <link rel="stylesheet" href="css/reset.css">
-<link rel="stylesheet" href="css/variaveis.css">
-<link rel="stylesheet" href="css/menu.css">
-<link rel="stylesheet" href="css/rodape.css">
-<link rel="stylesheet" href="css/modais.css">
-<link rel="stylesheet" href="css/formularios.css">
+    <link rel="stylesheet" href="css/variaveis.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/rodape.css">
+    <link rel="stylesheet" href="css/modais.css">
+    <link rel="stylesheet" href="css/formularios.css">
     <link rel="stylesheet" href="./css/quem-somos.css">
     <link rel="stylesheet" href="./css/cookies.css">
     <link rel="stylesheet" href="./css/termos.css">
+    <link rel="stylesheet" href="./css/reportar.css">
 </head>
+
 <body>
+    <!-- Injeção dinâmica do menu global -->
     <div id="header-container"></div>
 
     <main class="pagina-quem-somos">
-        <section class="hero-quem-somos" aria-labelledby="titulo-quem-somos">
-            <div class="hero-conteudo">
-                <span class="etiqueta-secao">A arte por trás da Nankim</span>
-                <h1 id="titulo-quem-somos">A paciência do traço <span>e a força de uma ideia.</span></h1>
-                <p class="texto-hero">
-                    <span class="prefixo-digitacao">//</span>
-                    <span id="texto-digitado-quem-somos"></span><span class="cursor-typing" aria-hidden="true">|</span>
-                </p>
-                <a class="botao-hero" href="#historia-thiago">Conheça nossa história <span aria-hidden="true">↓</span></a>
-            </div>
-            <span class="hero-legenda">Thiago Silva Costa · Fundador e artista</span>
-        </section>
 
-        <section class="secao-biografia secao-clara" id="historia-thiago" aria-labelledby="titulo-historia">
-            <div class="container-quem-somos">
-                <header class="cabecalho-secao revelar-scroll">
-                    <span class="etiqueta-secao">Uma trajetória feita à mão</span>
-                    <h2 id="titulo-historia">Sobre Thiago Silva Costa</h2>
-                    <p>Uma história de curiosidade, aprendizado e dedicação ao desenho.</p>
+        <!-- Bloco Unificado da Escola (Seções 1 e 2 no mesmo fundo) -->
+        <div class="bloco-escola-unificado">
+
+            <!-- Seção 1: Nossa Essência & A Origem do Nome -->
+            <section class="secao-essencia-topo" aria-labelledby="texto-digitado-quem-somos">
+                <div class="container-qs">
+                    <div class="grid-essencia revelar-scroll">
+                        <div class="coluna-texto-essencia">
+                            <h1 class="titulo-essencia-digitado">
+                                <span class="prefixo-barra">//</span>
+                                <span id="texto-digitado-quem-somos"></span><span class="cursor-typing" aria-hidden="true">|</span>
+                            </h1>
+                            <p>A <strong>Nankim Escola de Arte</strong> nasceu para acabar com a frustração de quem tenta aprender a desenhar sozinho em meio a conteúdos soltos na internet. Aqui, desenhar não é dom: é método, paciência e prática guiada.</p>
+                            <p><strong>Por que Nankim?</strong> No início da sua jornada artística, Thiago era fascinado pela caneta nanquim — na época um artigo raro e de luxo. De tanto dizer que teria a sua, ganhou dos amigos o apelido de <em>“Nanquim”</em>. O apelido virou assinatura e hoje dá nome à nossa escola: símbolo de persistência e realização.</p>
+                        </div>
+
+                        <aside class="coluna-citacao-essencia">
+                            <div class="card-citacao-nankim">
+                                <span class="aspas-destaque">“</span>
+                                <blockquote>Sempre que olho para minhas canetas, lembro de cada passo dessa trajetória — e do quanto um caminho bem estruturado faz diferença.</blockquote>
+                                <div class="autor-citacao">
+                                    <span class="linha-destaque-qs"></span>
+                                    <div>
+                                        <strong>Thiago Silva Costa</strong>
+                                        <span>Fundador da Nankim</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+
+                    <div class="divisor-secao-glow"></div>
+                </div>
+            </section>
+
+            <!-- Seção 2: Como Ensinamos (Mesmo fundo da Seção 1) -->
+            <section class="secao-pilares-qs" aria-labelledby="titulo-pilares">
+                <div class="container-qs">
+                    <header class="cabecalho-secao-qs revelar-scroll">
+                        <h2 id="titulo-pilares" class="titulo-animado-qs">
+                            O jeito <span class="texto-fluxo-dourado sublinhado-traco">Nankim</span> de ensinar
+                        </h2>
+                    </header>
+
+                    <div class="grid-pilares-qs revelar-scroll">
+                        <article class="card-pilar-qs">
+                            <h3>Base antes da pressa</h3>
+                            <p>Dominar formas, luz, sombra e perspectiva antes de partir para técnicas avançadas.</p>
+                        </article>
+
+                        <article class="card-pilar-qs destaque-borda-qs">
+                            <h3>Didática acessível</h3>
+                            <p>Explicações visuais e diretas, validadas desde o ensino infantil até a preparação para o mercado.</p>
+                        </article>
+
+                        <article class="card-pilar-qs">
+                            <h3>Evolução guiada</h3>
+                            <p>Um roteiro em etapas onde cada módulo prepara você para o próximo nível com segurança.</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Seção 3: O Fundador & Mentor (Bloco Escuro Curvo) -->
+        <section class="bloco-escuro-curvo secao-fundador-qs" id="fundador-thiago" aria-label="Sobre o Fundador Thiago Silva Costa">
+            <div class="container-losango-amplo">
+
+                <!-- Grid em Losango (5 Colunas com Parallax e suas artes) -->
+                <div class="grid-losango-wrapper">
+                    <!-- Coluna 1 (Ponta Esquerda) -->
+                    <div class="col-losango col-ponta" id="losango-col1">
+                        <img class="img-losango img-m" src="./assets/img/arte22.jpg" alt="Obra artística Nankim" loading="lazy">
+                        <img class="img-losango img-g" src="./assets/img/arte1.jpg" alt="Obra artística Nankim" loading="lazy">
+                    </div>
+
+                    <!-- Coluna 2 (Intermediária Esquerda) -->
+                    <div class="col-losango col-media" id="losango-col2">
+                        <img class="img-losango img-g" src="./assets/img/arte6.jpg" alt="Obra artística Nankim" loading="lazy">
+                        <img class="img-losango img-m" src="./assets/img/arte8.jpg" alt="Obra artística Nankim" loading="lazy">
+                    </div>
+
+                    <!-- Coluna 3 (Centro - Card Fixo do Thiago) -->
+                    <div class="col-losango col-centro" id="losango-col3">
+                        <div class="card-fundador-centro">
+                            <div class="foto-thiago-wrapper">
+                                <img src="./assets/img/thiago.jpg" alt="Thiago Silva Costa">
+                            </div>
+                            <h3>Thiago Silva Costa</h3>
+                            <span class="tag-fundador">FUNDADOR & INSTRUTOR</span>
+                        </div>
+                    </div>
+
+                    <!-- Coluna 4 (Intermediária Direita) -->
+                    <div class="col-losango col-media" id="losango-col4">
+                        <img class="img-losango img-m" src="./assets/img/arte12.jpg" alt="Obra artística Nankim" loading="lazy">
+                        <img class="img-losango img-g" src="./assets/img/arte13.jpg" alt="Obra artística Nankim" loading="lazy">
+                    </div>
+
+                    <!-- Coluna 5 (Ponta Direita) -->
+                    <div class="col-losango col-ponta" id="losango-col5">
+                        <img class="img-losango img-g" src="./assets/img/arte7.jpg" alt="Obra artística Nankim" loading="lazy">
+                        <img class="img-losango img-m" src="./assets/img/arte10.jpg" alt="Obra artística Nankim" loading="lazy">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="container-qs">
+                <!-- Título de Contexto dos Quadros Biográficos -->
+                <header class="cabecalho-subsecao-qs revelar-scroll">
+                    <h3>Trajetória artística</h3>
                 </header>
 
-                <div class="grade-biografia">
-                    <article class="cartao-biografia revelar-scroll">
-                        <span class="numero-editorial">01 / O começo</span>
+                <!-- Quadros Biográficos -->
+                <div class="grid-marcos-thiago revelar-scroll">
+                    <article class="card-marco-qs">
+                        <div class="barra-topo-card-qs"></div>
                         <h3>Um desenho de cada vez</h3>
-                        <p>Tudo começou na adolescência, movido pelo gosto de desenhar os personagens dos desenhos animados da TV. A vontade de entender como uma imagem podia ganhar vida no papel logo se transformou em uma busca por novas referências e técnicas.</p>
+                        <p>Começou na adolescência desenhando personagens da TV. Em 2002, ao conhecer de perto o trabalho de um artista realista, descobriu que precisão técnica é fruto de estudo e método — iniciando mais de 20 anos de dedicação contínua.</p>
                     </article>
-                    <figure class="imagem-biografia revelar-scroll">
-                        <img src="./assets/img/thiago.jpg" alt="Thiago Silva Costa, fundador da Nankim" loading="lazy">
-                        <figcaption>Thiago Silva Costa · Fundador e instrutor</figcaption>
-                    </figure>
-                    <article class="cartao-biografia cartao-biografia-escuro cartao-descoberta revelar-scroll">
-                        <span class="numero-editorial">02 / A descoberta</span>
-                        <h3>O realismo como possibilidade</h3>
-                        <p>Em 2002, Thiago conheceu de perto o trabalho de um artista cujos desenhos pareciam fotografias. A experiência despertou sua paixão pela arte realista e marcou o início de um caminho de aprendizado, prática e aperfeiçoamento.</p>
+
+                    <article class="card-marco-qs">
+                        <div class="barra-topo-card-qs"></div>
+                        <h3>Estudo que vira repertório</h3>
+                        <p>Para transformar paixão em ensino profissional, combinou graduação acadêmica com especializações nas principais escolas criativas do país, trazendo uma visão completa para dentro da Nankim.</p>
                     </article>
                 </div>
-            </div>
-        </section>
 
-        <section class="secao-origem secao-clara" aria-labelledby="titulo-origem">
-            <div class="container-quem-somos">
-                <div class="texto-origem revelar-scroll">
-                    <span class="etiqueta-secao">Uma identidade que nasceu de um sonho</span>
-                    <h2 id="titulo-origem">A origem do nome Nankim</h2>
-                    <p>Na época, a caneta nanquim era um artigo de luxo, e Thiago era fascinado pela técnica. Ele vivia dizendo que um dia teria a sua própria; de tanto falar sobre isso, os amigos começaram a chamá-lo de “Nanquim”.</p>
-                    <p>O apelido virou identidade artística e, naturalmente, deu nome à escola. Hoje, Nankim representa paixão, admiração, dedicação, superação e um sonho que se realizou.</p>
-                    <blockquote>“Sempre que olho para minhas canetas, lembro de cada passo dessa trajetória.”</blockquote>
-                </div>
-            </div>
-        </section>
-
-        <section class="secao-formacao" aria-labelledby="titulo-formacao">
-            <div class="container-quem-somos">
-                <header class="cabecalho-secao cabecalho-secao-escuro revelar-scroll">
-                    <span class="etiqueta-secao">Estudo que vira repertório</span>
-                    <h2 id="titulo-formacao">Formação e especializações</h2>
-                    <p>Experiências que ampliaram o olhar e fortaleceram a prática artística.</p>
+                <!-- Título da Galeria de Formações -->
+                <header class="cabecalho-subsecao-qs revelar-scroll">
+                    <h3>Formação e especializações</h3>
                 </header>
+
+                <!-- Galeria Interativa de Formações -->
                 <div class="galeria-formacao revelar-scroll" aria-label="Galeria interativa de formações">
                     <div class="visual-formacao">
                         <figure class="imagem-formacao">
-                            <img id="imagem-formacao-principal" src="./assets/img/conceitual.png" alt="Imagem do curso de Concept Art da Escola Revolution" loading="lazy">
+                            <img id="imagem-formacao-principal" src="./assets/img/conceitual.png" alt="Concept Art · Escola Revolution" loading="lazy">
                             <figcaption id="legenda-imagem-formacao">Concept Art · Escola Revolution</figcaption>
                         </figure>
                         <div class="miniaturas-formacao" role="group" aria-label="Escolha uma formação">
@@ -102,6 +188,7 @@
                             </button>
                         </div>
                     </div>
+
                     <article class="texto-formacao" aria-live="polite">
                         <span class="tag-formacao" id="tag-formacao">Formação complementar</span>
                         <h3 id="titulo-formacao-destaque">Concept art</h3>
@@ -114,12 +201,15 @@
 
     </main>
 
+    <!-- Injeção dinâmica do rodapé global -->
     <div id="footer-container"></div>
 
     <script src="./js/global.js"></script>
     <script src="./js/login.js"></script>
     <script src="./js/cookies.js"></script>
     <script src="./js/termos.js"></script>
+    <script src="./js/reportar.js"></script>
     <script src="./js/quem-somos.js"></script>
 </body>
+
 </html>

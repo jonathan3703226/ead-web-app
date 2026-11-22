@@ -147,24 +147,4 @@ document.addEventListener("DOMContentLoaded", () => {
         iniciarAutoplayMissao();
     }
 
-    // 7. Accordion Interativo (FAQ)
-    const faqItems = document.querySelectorAll('.faq-item');
-
-    faqItems.forEach(item => {
-        const perguntaBtn = item.querySelector('.faq-pergunta');
-        perguntaBtn.addEventListener('click', () => {
-            const isAtivo = item.classList.contains('ativo');
-            
-            faqItems.forEach(i => {
-                i.classList.remove('ativo');
-                i.querySelector('.faq-resposta').style.maxHeight = null;
-            });
-
-            if (!isAtivo) {
-                item.classList.add('ativo');
-                const resposta = item.querySelector('.faq-resposta');
-                resposta.style.maxHeight = resposta.scrollHeight + "px";
-            }
-        });
-    });
 });
