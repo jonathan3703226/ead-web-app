@@ -1,177 +1,244 @@
 /* ==========================================================================
-   MODAL DE REPORTAR ERRO - ESTILOS ISOLADOS
+   MODAL DE REPORTAR ERRO - PADRÃO VISUAL NANKIM (LOGIN / CADASTRO)
    ========================================================================== */
 
 .modal-reportar-overlay-fix {
     position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
+    inset: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
-    background-color: rgba(0, 0, 0, 0.75) !important;
+    background-color: rgba(0, 0, 0, 0.65) !important;
+    backdrop-filter: blur(5px) !important;
     z-index: 999999 !important;
     display: flex;
     justify-content: center !important;
     align-items: center !important;
-    backdrop-filter: blur(5px) !important;
     padding: 1.5rem !important;
     box-sizing: border-box !important;
 }
 
 .modal-reportar-card-fix {
-    background-color: #ffffff !important;
-    color: #2b2b2b !important;
-    width: 100% !important;
-    max-width: 460px !important; /* Tamanho compacto correto */
-    border-radius: 24px !important;
-    padding: 2.2rem 2rem !important;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35) !important;
     position: relative !important;
+    background-color: #ffffff !important;
+    color: #111111 !important;
+    width: 100% !important;
+    max-width: 480px !important;
+    border-radius: 24px !important;
+    padding: 2.3rem 2.2rem !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28) !important;
+    font-family: 'Montserrat', sans-serif !important;
     box-sizing: border-box !important;
+    animation: modalPadraoEntrada 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+:root[data-theme="dark"] .modal-reportar-card-fix {
+    background-color: #181818 !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
 }
 
 .btn-fechar-x-report {
     position: absolute !important;
-    top: 1rem !important;
-    right: 1.2rem !important;
-    background: none !important;
+    top: 1.2rem !important;
+    right: 1.3rem !important;
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 50% !important;
+    background: rgba(128, 128, 128, 0.1) !important;
     border: none !important;
-    font-size: 1.8rem !important;
+    font-size: 1.4rem !important;
     line-height: 1 !important;
-    color: #888888 !important;
+    color: inherit !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     cursor: pointer !important;
+    transition: background-color 0.2s ease !important;
 }
 
 .btn-fechar-x-report:hover {
-    color: #111111 !important;
+    background: rgba(128, 128, 128, 0.2) !important;
+}
+
+.modal-eyebrow-padrao {
+    display: block !important;
+    font-size: 0.74rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1.4px !important;
+    color: var(--cor-destaque, #f39c12) !important;
+    margin-bottom: 0.35rem !important;
 }
 
 .titulo-reportar-fix {
     font-family: 'Montserrat', sans-serif !important;
-    font-size: 1.4rem !important;
+    font-size: 1.5rem !important;
     font-weight: 800 !important;
-    color: #111111 !important;
-    margin: 0 0 0.3rem 0 !important;
+    color: inherit !important;
+    margin: 0 0 0.4rem 0 !important;
 }
 
 .subtitulo-reportar-fix {
     font-size: 0.88rem !important;
     color: #666666 !important;
-    line-height: 1.4 !important;
-    margin: 0 0 1.2rem 0 !important;
+    line-height: 1.5 !important;
+    margin: 0 0 1.3rem 0 !important;
+}
+
+:root[data-theme="dark"] .subtitulo-reportar-fix {
+    color: #a0a0a0 !important;
+}
+
+.form-reportar-corpo {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
 }
 
 .grupo-opcoes-erro {
     display: flex !important;
     flex-direction: column !important;
-    gap: 0.5rem !important;
-    margin-bottom: 1rem !important;
+    gap: 0.55rem !important;
 }
 
 .opcao-erro-card {
     display: flex !important;
     align-items: center !important;
     gap: 10px !important;
-    padding: 0.7rem 0.9rem !important;
-    border: 1px solid #e0e0e0 !important;
-    border-radius: 12px !important;
+    padding: 0.8rem 1rem !important;
+    border: 1px solid #e2e2e2 !important;
+    border-radius: 14px !important;
     cursor: pointer !important;
     background-color: #f9f9f9 !important;
+    transition: border-color 0.2s ease, background-color 0.2s ease !important;
+}
+
+:root[data-theme="dark"] .opcao-erro-card {
+    background-color: #222222 !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.opcao-erro-card:hover {
+    border-color: #000000 !important;
+}
+
+:root[data-theme="dark"] .opcao-erro-card:hover {
+    border-color: var(--cor-destaque, #f39c12) !important;
 }
 
 .opcao-erro-card input[type="radio"] {
     accent-color: var(--cor-destaque, #f39c12) !important;
-    width: 16px !important;
-    height: 16px !important;
+    width: 17px !important;
+    height: 17px !important;
+    margin: 0 !important;
 }
 
 .opcao-erro-label {
     font-size: 0.88rem !important;
     font-weight: 600 !important;
-    color: #333333 !important;
+    color: inherit !important;
 }
 
 .campo-texto-erro {
     display: flex !important;
     flex-direction: column !important;
-    gap: 0.3rem !important;
-    margin-bottom: 1.2rem !important;
+    gap: 0.4rem !important;
 }
 
 .label-textarea {
-    font-size: 0.82rem !important;
-    font-weight: 600 !important;
-    color: #555555 !important;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    color: inherit !important;
 }
 
 .campo-texto-erro textarea {
     width: 100% !important;
-    padding: 0.75rem !important;
-    border: 1px solid #e0e0e0 !important;
-    border-radius: 10px !important;
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 0.85rem !important;
-    color: #2b2b2b !important;
-    resize: vertical !important;
-    box-sizing: border-box !important;
-    background-color: #fafafa !important;
-}
-
-.btn-enviar-report {
-    width: 100% !important;
-    background-color: #111111 !important;
-    color: #ffffff !important;
-    border: none !important;
-    padding: 0.9rem !important;
-    border-radius: 50px !important;
+    padding: 0.9rem 1.1rem !important;
+    border: 1px solid #e2e2e2 !important;
+    border-radius: 14px !important;
     font-family: 'Montserrat', sans-serif !important;
     font-size: 0.92rem !important;
+    color: #000000 !important;
+    background-color: #f9f9f9 !important;
+    resize: vertical !important;
+    box-sizing: border-box !important;
+    transition: border-color 0.25s ease, background-color 0.25s ease !important;
+}
+
+:root[data-theme="dark"] .campo-texto-erro textarea {
+    background-color: #222222 !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    color: #ffffff !important;
+}
+
+.campo-texto-erro textarea:focus {
+    outline: none !important;
+    border-color: #000000 !important;
+    background-color: #ffffff !important;
+}
+
+:root[data-theme="dark"] .campo-texto-erro textarea:focus {
+    border-color: var(--cor-destaque, #f39c12) !important;
+    background-color: #282828 !important;
+}
+
+.btn-enviar-report,
+.btn-fechar-sucesso {
+    width: 100% !important;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: 1px solid #000000 !important;
+    padding: 1rem 1.8rem !important;
+    border-radius: 50px !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 0.95rem !important;
     font-weight: 700 !important;
     cursor: pointer !important;
+    margin-top: 0.3rem !important;
+    transition: background-color 0.25s ease, transform 0.2s ease !important;
 }
 
-/* Confirmação */
+:root[data-theme="dark"] .btn-enviar-report,
+:root[data-theme="dark"] .btn-fechar-sucesso {
+    background-color: #ffffff !important;
+    color: #111111 !important;
+    border-color: #ffffff !important;
+}
+
+.btn-enviar-report:hover,
+.btn-fechar-sucesso:hover {
+    transform: translateY(-2px) !important;
+    opacity: 0.92 !important;
+}
+
+/* Confirmação no padrão msg-sucesso-card */
 .reportar-sucesso-wrapper {
-    text-align: center !important;
-    padding: 0.8rem 0 0.4rem !important;
+    padding-top: 0.6rem !important;
 }
 
-.icone-check-sucesso {
-    width: 52px !important;
-    height: 52px !important;
-    background-color: rgba(46, 204, 113, 0.15) !important;
-    color: #2ecc71 !important;
-    border-radius: 50% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-size: 1.7rem !important;
-    font-weight: 900 !important;
-    margin: 0 auto 1rem !important;
+.reportar-card-confirmacao {
+    align-items: flex-start !important;
+    text-align: left !important;
+    margin-bottom: 1.4rem !important;
 }
 
 .titulo-sucesso-report {
-    font-size: 1.3rem !important;
+    display: block !important;
+    font-size: 1rem !important;
     font-weight: 800 !important;
-    color: #111111 !important;
-    margin-bottom: 0.4rem !important;
+    color: #166534 !important;
+    margin-bottom: 0.25rem !important;
 }
 
 .texto-sucesso-report {
-    font-size: 0.88rem !important;
-    color: #666666 !important;
-    line-height: 1.4 !important;
-    margin-bottom: 1.5rem !important;
+    font-size: 0.86rem !important;
+    color: #15803d !important;
+    line-height: 1.45 !important;
+    margin: 0 !important;
 }
 
-.btn-fechar-sucesso {
-    background-color: #111111 !important;
-    color: #ffffff !important;
-    border: none !important;
-    padding: 0.8rem 2.2rem !important;
-    border-radius: 50px !important;
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 0.88rem !important;
-    font-weight: 700 !important;
-    cursor: pointer !important;
+@keyframes modalPadraoEntrada {
+    from { transform: translateY(18px) scale(0.97); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
 }

@@ -46,10 +46,10 @@
 }
 
 /* ==========================================================================
-   SEÇÃO 1: TOPO COM EFEITO DE PINCELADA (CLIP-PATH) + VITRINE DAS 3 ETAPAS
+   SEÇÃO 1: TOPO LIMPO APENAS COM O SUBTÍTULO (EFEITO PINCELADA CLIP-PATH)
    ========================================================================== */
 .secao-trilha-topo {
-    padding: 9rem 0 7rem;
+    padding: 9rem 0 5.5rem;
     background-color: var(--cursos-bg-principal);
     transition: background-color 0.3s ease;
 }
@@ -57,10 +57,9 @@
 .cabecalho-topo-cursos {
     text-align: center;
     max-width: 880px;
-    margin: 0 auto 4rem;
+    margin: 0 auto;
 }
 
-/* Subtítulo Principal sem título acima — efeito de abertura horizontal (pincelada) */
 .subtitulo-hero-cursos {
     font-size: clamp(1.35rem, 2.5vw, 2rem);
     font-weight: 600;
@@ -88,214 +87,6 @@
         transform: translateX(0);
     }
 }
-
-/* Grid das 3 Etapas — Cards Ricos Estilo Vitrine da Home */
-.grid-etapas-trilha {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-}
-
-.card-etapa-vitrine {
-    position: relative;
-    border-radius: 26px;
-    overflow: hidden;
-    background-color: #0b0b0b;
-    border: 1px solid rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.35);
-    min-height: 390px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.14);
-    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.45s ease;
-}
-
-.card-etapa-vitrine.card-etapa-ativa {
-    border: 2px solid var(--cor-destaque, #f39c12);
-    box-shadow: 0 20px 45px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.22);
-}
-
-.card-etapa-vitrine:hover {
-    transform: translateY(-8px);
-    border-color: var(--cor-destaque, #f39c12);
-    box-shadow: 0 24px 50px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.26);
-}
-
-.video-bg-etapa {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 1;
-    opacity: 0.48;
-    transition: opacity 0.45s ease, transform 0.6s ease;
-}
-
-.card-etapa-vitrine:hover .video-bg-etapa {
-    opacity: 0.85;
-    transform: scale(1.06);
-}
-
-.overlay-etapa-vitrine {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    background: linear-gradient(180deg, rgba(10, 10, 10, 0.45) 0%, rgba(10, 10, 10, 0.82) 55%, rgba(8, 8, 8, 0.96) 100%);
-    transition: background 0.4s ease;
-}
-
-.card-etapa-vitrine:hover .overlay-etapa-vitrine {
-    background: linear-gradient(180deg, rgba(10, 10, 10, 0.3) 0%, rgba(10, 10, 10, 0.75) 55%, rgba(8, 8, 8, 0.92) 100%);
-}
-
-/* Número gigante em marca d'água no fundo do card */
-.numero-etapa-bg {
-    position: absolute;
-    top: 0.6rem;
-    right: 1.2rem;
-    z-index: 2;
-    font-size: 5.5rem;
-    font-weight: 900;
-    line-height: 1;
-    color: rgba(255, 255, 255, 0.06);
-    pointer-events: none;
-    user-select: none;
-    transition: color 0.4s ease, transform 0.4s ease;
-}
-
-.card-etapa-vitrine:hover .numero-etapa-bg {
-    color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.16);
-    transform: scale(1.05);
-}
-
-.conteudo-etapa-vitrine {
-    position: relative;
-    z-index: 3;
-    padding: 2.1rem 1.9rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    flex: 1;
-}
-
-.topo-card-etapa {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-    margin-bottom: 2.2rem;
-    flex-wrap: wrap;
-}
-
-.badge-etapa-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-    padding: 0.36rem 0.8rem;
-    border-radius: 999px;
-    backdrop-filter: blur(6px);
-}
-
-.badge-etapa-status.disponivel {
-    background-color: rgba(46, 204, 113, 0.22);
-    color: #2ecc71;
-    border: 1px solid rgba(46, 204, 113, 0.45);
-}
-
-.ponto-verde {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background-color: #2ecc71;
-    box-shadow: 0 0 8px #2ecc71;
-}
-
-.badge-etapa-status.em-breve {
-    background-color: rgba(255, 255, 255, 0.12);
-    color: #d4d4d4;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-.nivel-etapa {
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: var(--cor-destaque, #f39c12);
-    letter-spacing: 0.03em;
-}
-
-.corpo-card-etapa {
-    margin-top: auto;
-    margin-bottom: 1.6rem;
-}
-
-.corpo-card-etapa h2 {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: #ffffff;
-    margin-bottom: 0.65rem;
-    line-height: 1.22;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.75);
-}
-
-.corpo-card-etapa p {
-    font-size: 0.92rem;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.84);
-    margin: 0;
-}
-
-.btn-etapa-vitrine {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 0.85rem 1.4rem;
-    border-radius: 50px;
-    background-color: #ffffff;
-    color: #2b2b2b;
-    border: 1px solid #ffffff;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 800;
-    text-decoration: none;
-    box-sizing: border-box;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-
-.btn-etapa-vitrine:hover {
-    background-color: var(--cor-destaque, #f39c12);
-    color: #111111;
-    border-color: var(--cor-destaque, #f39c12);
-}
-
-.btn-etapa-secundario {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 0.85rem 1.4rem;
-    border-radius: 50px;
-    background-color: rgba(255, 255, 255, 0.08);
-    color: #d8d8d8;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 700;
-    text-decoration: none;
-    box-sizing: border-box;
-    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-}
-
-.btn-etapa-secundario:hover {
-    background-color: rgba(255, 255, 255, 0.16);
-    border-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.6);
-    color: #ffffff;
-}
-
 /* ==========================================================================
    SEÇÃO 2: BLOCO ESCURO CURVO - RAIO-X COMPLETO DO CURSO
    ========================================================================== */

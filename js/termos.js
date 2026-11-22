@@ -74,6 +74,11 @@ document.addEventListener('click', (event) => {
     const alvo = event.target instanceof Element ? event.target : null;
     if (!alvo) return;
 
+    if (alvo.id === 'modal-termos') {
+        fecharModalTermos(false);
+        return;
+    }
+
     if (alvo.closest('[data-modal="termos"]')) {
         event.preventDefault();
         abrirModalTermos();

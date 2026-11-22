@@ -1,22 +1,22 @@
 /* ==========================================================================
-   NANKIM ESCOLA DE ARTE - MODAL REPORTAR ERRO (AUTÔNOMO)
+   NANKIM ESCOLA DE ARTE - MODAL REPORTAR ERRO / SUPORTE (PADRONIZADO)
    ========================================================================== */
 
 (function () {
-    // 1. Injeta o HTML isolado
     function injetarModalReportarErro() {
         if (document.getElementById('modal-reportar-erro')) return;
 
         const modalHTML = `
-        <div id="modal-reportar-erro" class="modal-reportar-overlay-fix" style="display: none;">
-            <div class="modal-reportar-card-fix">
-                <button type="button" class="btn-fechar-x-report" id="btn-reportar-fechar-x">&times;</button>
-                
+        <div id="modal-reportar-erro" class="modal modal-reportar-overlay-fix" role="dialog" aria-modal="true" aria-labelledby="titulo-reportar-modal" style="display: none;">
+            <div class="modal-content modal-reportar-card-fix">
+                <button type="button" class="close-btn btn-fechar-x-report" id="btn-reportar-fechar-x" aria-label="Fechar">&times;</button>
+
                 <!-- Formulário de Envio -->
                 <div id="reportar-erro-form-wrapper">
-                    <h3 class="titulo-reportar-fix">Reportar um Erro</h3>
+                    <span class="modal-eyebrow-padrao">Suporte Nankim</span>
+                    <h2 id="titulo-reportar-modal" class="titulo-reportar-fix">Reportar um Erro</h2>
                     <p class="subtitulo-reportar-fix">Encontrou algo incorreto ou com falha? Selecione a opção abaixo para nos avisar.</p>
-                    
+
                     <form id="form-reportar-erro" class="form-reportar-corpo">
                         <div class="grupo-opcoes-erro">
                             <label class="opcao-erro-card">
@@ -37,8 +37,8 @@
                             </label>
                         </div>
 
-                        <div class="campo-texto-erro">
-                            <label for="descricao-erro-input" class="label-textarea">Descrição detalhada (opcional):</label>
+                        <div class="input-group campo-texto-erro">
+                            <label for="descricao-erro-input" class="label-textarea">Descrição detalhada (opcional)</label>
                             <textarea id="descricao-erro-input" name="descricao" placeholder="Descreva o que aconteceu ou cole detalhes relevantes..." rows="3"></textarea>
                         </div>
 
@@ -48,9 +48,13 @@
 
                 <!-- Tela de Confirmação de Sucesso -->
                 <div id="reportar-erro-sucesso" class="reportar-sucesso-wrapper" style="display: none;">
-                    <div class="icone-check-sucesso">✓</div>
-                    <h3 class="titulo-sucesso-report">Relatório Enviado!</h3>
-                    <p class="texto-sucesso-report">Obrigado por nos ajudar a melhorar a plataforma. Nossa equipe analisará a falha em breve.</p>
+                    <div class="msg-sucesso-card reportar-card-confirmacao">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <div>
+                            <strong class="titulo-sucesso-report">Relatório enviado com sucesso!</strong>
+                            <p class="texto-sucesso-report">Obrigado por ajudar a melhorar a plataforma. Nossa equipe analisará a falha em breve.</p>
+                        </div>
+                    </div>
                     <button type="button" class="btn-fechar-sucesso" id="btn-reportar-concluir">Concluir</button>
                 </div>
             </div>
@@ -104,13 +108,19 @@
         }
     }
 
-    // Ouvinte global para o botão do rodapé
     document.addEventListener('click', (e) => {
         const btnReportar = e.target.closest('[data-modal="reportar-erro"]');
         if (btnReportar) {
             e.preventDefault();
             e.stopPropagation();
             abrirModal();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        const modal = document.getElementById('modal-reportar-erro');
+        if (e.key === 'Escape' && modal && modal.style.display === 'flex') {
+            fecharModal();
         }
     });
 

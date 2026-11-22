@@ -1,34 +1,14 @@
 /* ==========================================================================
    CURSOS.JS - Nankim Escola de Arte
-   Play nos vídeos dos cards no hover, acordeão de módulos, FAQ e reveal
+   Acordeão de módulos, FAQ, reveal e botão de degustação
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-    iniciarVideosCardsEtapas();
     iniciarAcordeaoModulos();
     iniciarAcordeaoFaqCursos();
     iniciarRevelacaoScrollCursos();
     iniciarBotaoDegustacaoCursos();
 });
-
-function iniciarVideosCardsEtapas() {
-    const cardsComVideo = document.querySelectorAll('.card-etapa-vitrine.card-com-video');
-    cardsComVideo.forEach((card) => {
-        const video = card.querySelector('.video-bg-etapa');
-        if (!video) return;
-
-        card.addEventListener('mouseenter', () => {
-            const playPromise = video.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(() => {});
-            }
-        });
-
-        card.addEventListener('mouseleave', () => {
-            video.pause();
-        });
-    });
-}
 
 function iniciarAcordeaoModulos() {
     const botoes = document.querySelectorAll('.btn-modulo-header');

@@ -1,54 +1,82 @@
 /* ==========================================================================
-   NANKIM ESCOLA DE ARTE - GERENCIAMENTO DE COOKIES E LGPD
+   NANKIM ESCOLA DE ARTE - BANNER DISCRETO INICIAL + MODAL DE PREFERÊNCIAS
    ========================================================================== */
 
-const cookieComponent = `
+const cookieInitialBar = `
+    <aside id="cookie-banner-inicial" class="cookie-barra-discreta" role="region" aria-label="Aviso de cookies" style="display: none;">
+        <div class="cookie-barra-conteudo">
+            <p class="cookie-barra-texto">
+                Usamos cookies para melhorar sua experiência na <strong>Nankim Escola de Arte</strong>.
+                <button type="button" id="btn-abrir-personalizar-cookie" class="cookie-link-personalizar">Personalizar</button>
+            </p>
+            <div class="cookie-barra-acoes">
+                <button id="btn-barra-rejeitar" type="button" class="cookie-btn-sec">Rejeitar opcionais</button>
+                <button id="btn-barra-aceitar" type="button" class="cookie-btn-pri">Aceitar todos</button>
+            </div>
+        </div>
+    </aside>
+`;
+
+const cookieModalComponent = `
     <div id="cookie-banner" class="cookie-modal-avancado" role="dialog" aria-modal="true" aria-labelledby="cookie-titulo" style="display: none;">
         <section class="cookie-card">
+            <button type="button" class="close-btn cookie-close-btn" id="btn-fechar-cookies-x" aria-label="Fechar preferências">&times;</button>
             <div class="cookie-header">
                 <div class="cookie-texto">
-                    <h2 id="cookie-titulo">Suas preferências de cookies</h2>
-                    <p>Utilizamos cookies para proporcionar uma experiência melhor na Nankim Escola de Arte. Você pode alterar sua escolha quando quiser pelo rodapé.</p>
+                    <span class="modal-eyebrow-padrao">Privacidade & LGPD</span>
+                    <h2 id="cookie-titulo">Preferências de Cookies</h2>
+                    <p>Escolha quais categorias de cookies você autoriza na Nankim Escola de Arte. Você pode alterar suas escolhas a qualquer momento pelo rodapé.</p>
                 </div>
             </div>
-            <div class="cookie-botoes">
-                <button id="btn-rejeitar" type="button">Rejeitar opcionais</button>
-                <button id="btn-aceitar-cookies" type="button">Aceitar todos</button>
-            </div>
-            <div id="cookie-detalhes" class="cookie-detalhes" hidden>
+
+            <div id="cookie-detalhes" class="cookie-detalhes">
                 <div class="cookie-opcao">
                     <input type="checkbox" id="chk-necessarios" checked disabled>
                     <label for="chk-necessarios"><strong>Necessários</strong><br>Essenciais para o funcionamento do site. Sempre ativos.</label>
                 </div>
                 <div class="cookie-opcao">
                     <input type="checkbox" id="chk-funcionais">
-                    <label for="chk-funcionais"><strong>Funcionais</strong><br>Permitem lembrar suas preferências e escolhas.</label>
+                    <label for="chk-funcionais"><strong>Funcionais</strong><br>Permitem lembrar suas preferências e escolhas de tema.</label>
                 </div>
                 <div class="cookie-opcao">
                     <input type="checkbox" id="chk-analiticos">
-                    <label for="chk-analiticos"><strong>Analíticos</strong><br>Ajudam a entender como os visitantes interagem com o site.</label>
+                    <label for="chk-analiticos"><strong>Analíticos</strong><br>Ajudam a entender como os visitantes interagem com a plataforma.</label>
                 </div>
                 <div class="cookie-opcao">
                     <input type="checkbox" id="chk-marketing">
-                    <label for="chk-marketing"><strong>Marketing</strong><br>Usados para fornecer material publicitário relevante.</label>
+                    <label for="chk-marketing"><strong>Marketing</strong><br>Usados para fornecer comunicações e conteúdos relevantes.</label>
                 </div>
+            </div>
+
+            <div class="cookie-botoes">
+                <button id="btn-rejeitar" type="button">Rejeitar opcionais</button>
                 <button id="btn-salvar-pref" type="button">Salvar preferências</button>
+                <button id="btn-aceitar-cookies" type="button">Aceitar todos</button>
             </div>
         </section>
     </div>
 `;
 
 function gerenciarCookies() {
-    // Injeta o HTML apenas se ele ainda não estiver no DOM
+    if (!document.getElementById('cookie-banner-inicial')) {
+        document.body.insertAdjacentHTML('beforeend', cookieInitialBar);
+    }
     if (!document.getElementById('cookie-banner')) {
-        document.body.insertAdjacentHTML('beforeend', cookieComponent);
+        document.body.insertAdjacentHTML('beforeend', cookieModalComponent);
     }
 
-    const banner = document.getElementById('cookie-banner');
-    const painelDetalhes = document.getElementById('cookie-detalhes');
+    const barraInicial = document.getElementById('cookie-banner-inicial');
+    const modalPreferencias = document.getElementById('cookie-banner');
+
+    const btnBarraAceitar = document.getElementById('btn-barra-aceitar');
+    const btnBarraRejeitar = document.getElementById('btn-barra-rejeitar');
+    const btnPersonalizar = document.getElementById('btn-abrir-personalizar-cookie');
+
     const btnAceitar = document.getElementById('btn-aceitar-cookies');
     const btnRejeitar = document.getElementById('btn-rejeitar');
     const btnSalvarPref = document.getElementById('btn-salvar-pref');
+    const btnFecharX = document.getElementById('btn-fechar-cookies-x');
+
     const chkFuncionais = document.getElementById('chk-funcionais');
     const chkAnaliticos = document.getElementById('chk-analiticos');
     const chkMarketing = document.getElementById('chk-marketing');
@@ -62,23 +90,29 @@ function gerenciarCookies() {
             if (chkMarketing) chkMarketing.checked = Boolean(preferencias.marketing);
             return true;
         } catch (error) {
-            console.error('Não foi possível carregar as preferências de cookies:', error);
             return false;
         }
     }
 
-    function abrirBannerInicial() {
-        carregarEstadoSalvo();
-        if (painelDetalhes) painelDetalhes.hidden = true;
-        if (banner) banner.style.display = 'flex';
+    function abrirBarraDiscreta() {
+        if (barraInicial) barraInicial.style.display = 'flex';
     }
 
-    function abrirPreferenciasRodape() {
+    function abrirModalPreferencias() {
         carregarEstadoSalvo();
-        if (painelDetalhes) painelDetalhes.hidden = false;
-        if (banner) {
-            banner.style.display = 'flex';
-            btnAceitar?.focus();
+        if (barraInicial) barraInicial.style.display = 'none';
+        if (modalPreferencias) {
+            modalPreferencias.style.display = 'flex';
+            const card = modalPreferencias.querySelector('.cookie-card');
+            if (card) card.scrollTop = 0;
+            btnFecharX?.focus({ preventScroll: true });
+        }
+    }
+
+    function fecharModalPreferencias() {
+        if (modalPreferencias) modalPreferencias.style.display = 'none';
+        if (!localStorage.getItem('nankim_cookie_prefs')) {
+            abrirBarraDiscreta();
         }
     }
 
@@ -88,48 +122,71 @@ function gerenciarCookies() {
         if (chkFuncionais) chkFuncionais.checked = funcionais;
         if (chkAnaliticos) chkAnaliticos.checked = analiticos;
         if (chkMarketing) chkMarketing.checked = marketing;
-        if (banner) banner.style.display = 'none';
-        if (painelDetalhes) painelDetalhes.hidden = true;
+        if (barraInicial) barraInicial.style.display = 'none';
+        if (modalPreferencias) modalPreferencias.style.display = 'none';
     }
 
-    // Exibe apenas se o usuário ainda não tiver aceito/salvo preferências
+    // Na primeira visita mostra apenas a barra discreta na base (sem bloquear a tela)
     if (!localStorage.getItem('nankim_cookie_prefs')) {
-        abrirBannerInicial();
+        abrirBarraDiscreta();
     } else {
         carregarEstadoSalvo();
     }
 
-    // Ouvinte para o botão no rodapé "Preferências de Cookies"
+    // Botão no rodapé "Preferências de Cookies"
     document.addEventListener('click', (event) => {
         const elemento = event.target instanceof Element ? event.target : null;
         if (!elemento) return;
         if (elemento.closest('[data-cookie-preferences]')) {
-            abrirPreferenciasRodape();
+            event.preventDefault();
+            abrirModalPreferencias();
         }
     });
 
+    if (btnPersonalizar) {
+        btnPersonalizar.onclick = () => abrirModalPreferencias();
+    }
+
+    if (btnBarraAceitar) {
+        btnBarraAceitar.onclick = () => salvarEFechar(true, true, true);
+    }
+
+    if (btnBarraRejeitar) {
+        btnBarraRejeitar.onclick = () => salvarEFechar(false, false, false);
+    }
+
+    if (modalPreferencias) {
+        modalPreferencias.addEventListener('click', (e) => {
+            if (e.target === modalPreferencias) fecharModalPreferencias();
+        });
+    }
+
+    if (btnFecharX) {
+        btnFecharX.onclick = () => fecharModalPreferencias();
+    }
+
     document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && banner && banner.style.display === 'flex') {
-            banner.style.display = 'none';
+        if (event.key === 'Escape' && modalPreferencias && modalPreferencias.style.display === 'flex') {
+            fecharModalPreferencias();
         }
     });
 
     if (btnAceitar) {
-        btnAceitar.onclick = function(e) {
+        btnAceitar.onclick = (e) => {
             e.stopPropagation();
             salvarEFechar(true, true, true);
         };
     }
 
     if (btnRejeitar) {
-        btnRejeitar.onclick = function(e) {
+        btnRejeitar.onclick = (e) => {
             e.stopPropagation();
             salvarEFechar(false, false, false);
         };
     }
 
     if (btnSalvarPref) {
-        btnSalvarPref.onclick = function(e) {
+        btnSalvarPref.onclick = (e) => {
             e.stopPropagation();
             salvarEFechar(
                 chkFuncionais ? chkFuncionais.checked : false,
