@@ -161,17 +161,99 @@ function configurarAutenticacao() {
     const formLogin = document.getElementById('form-login');
     const formCadastro = document.getElementById('form-cadastro');
 
+    const inputNomeCad = document.getElementById('cad-nome');
+    const inputEmailCad = document.getElementById('cad-email');
+    const inputConfirmEmailCad = document.getElementById('cad-confirm-email');
+    const inputTelefoneCad = document.getElementById('cad-telefone');
+    const inputSenhaCad = document.getElementById('cad-senha');
+    const inputConfirmSenhaCad = document.getElementById('cad-confirm-senha');
+    const checkTermosCad = document.getElementById('cad-termos');
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+    // Estado em memória para lembrar os dados se o modal de cadastro for fechado sem querer
+    const estadoCadastro = {
+        nome: '',
+        email: '',
+        confirmEmail: '',
+        telefone: '',
+        senha: '',
+        confirmSenha: '',
+        termos: false,
+        touched: {}
+    };
+
+    function salvarEstadoInputs() {
+        if (inputNomeCad) estadoCadastro.nome = inputNomeCad.value;
+        if (inputEmailCad) estadoCadastro.email = inputEmailCad.value;
+        if (inputConfirmEmailCad) estadoCadastro.confirmEmail = inputConfirmEmailCad.value;
+        if (inputTelefoneCad) estadoCadastro.telefone = inputTelefoneCad.value;
+        if (inputSenhaCad) estadoCadastro.senha = inputSenhaCad.value;
+        if (inputConfirmSenhaCad) estadoCadastro.confirmSenha = inputConfirmSenhaCad.value;
+        if (checkTermosCad) estadoCadastro.termos = checkTermosCad.checked;
+    }
+
+    function restaurarEstadoInputs() {
+        if (inputNomeCad) inputNomeCad.value = estadoCadastro.nome;
+        if (inputEmailCad) inputEmailCad.value = estadoCadastro.email;
+        if (inputConfirmEmailCad) inputConfirmEmailCad.value = estadoCadastro.confirmEmail;
+        if (inputTelefoneCad) inputTelefoneCad.value = estadoCadastro.telefone;
+        if (inputSenhaCad) inputSenhaCad.value = estadoCadastro.senha;
+        if (inputConfirmSenhaCad) inputConfirmSenhaCad.value = estadoCadastro.confirmSenha;
+        if (checkTermosCad) checkTermosCad.checked = estadoCadastro.termos;
+
+        if (estadoCadastro.touched['cad-nome']) validarNomeCad(false);
+        if (estadoCadastro.touched['cad-email']) validarEmailCad(false);
+        if (estadoCadastro.touched['cad-confirm-email']) validarConfirmEmailCad(false);
+        if (estadoCadastro.touched['cad-telefone']) validarTelefoneCad(false);
+        if (estadoCadastro.touched['cad-senha']) validarSenhaCad(false);
+        if (estadoCadastro.touched['cad-confirm-senha']) validarConfirmSenhaCad(false);
+        if (estadoCadastro.touched['cad-termos']) validarTermosCad(false);
+    }
+
+    function limparEstadoCadastro() {
+        estadoCadastro.nome = '';
+        estadoCadastro.email = '';
+        estadoCadastro.confirmEmail = '';
+        estadoCadastro.telefone = '';
+        estadoCadastro.senha = '';
+        estadoCadastro.confirmSenha = '';
+        estadoCadastro.termos = false;
+        estadoCadastro.touched = {};
+
+        if (formCadastro) {
+            formCadastro.reset();
+            formCadastro.querySelectorAll('.input-group').forEach((g) => {
+                g.classList.remove('erro', 'sucesso');
+            });
+            formCadastro.querySelectorAll('.input-feedback').forEach((f) => {
+                f.textContent = '';
+            });
+            atualizarReq('req-minimo', false, 'Mínimo de 8 caracteres');
+            atualizarReq('req-maiuscula', false, 'Pelo menos 1 letra maiúscula');
+            atualizarReq('req-numero', false, 'Pelo menos 1 número');
+            atualizarReq('req-simbolo', false, 'Pelo menos 1 caractere especial (!@#$)');
+        }
+    }
+
     const svgOlhoAberto = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
     const svgOlhoFechado = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>`;
 
     function exibirModal(id) {
         const modal = document.getElementById(id);
-        if (modal) modal.style.display = 'flex';
+        if (!modal) return;
+        if (id === 'modal-cadastro') {
+            restaurarEstadoInputs();
+        }
+        modal.style.display = 'flex';
     }
 
     function ocultarModal(id) {
         const modal = document.getElementById(id);
-        if (modal) modal.style.display = 'none';
+        if (!modal) return;
+        if (id === 'modal-cadastro') {
+            salvarEstadoInputs();
+        }
+        modal.style.display = 'none';
     }
 
     function definirErroCampo(inputEl, mensagem) {
@@ -250,7 +332,7 @@ function configurarAutenticacao() {
             const emailInput = document.getElementById('login-email');
             const emailVal = emailInput ? emailInput.value.trim().toLowerCase() : '';
 
-            if (!emailVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+            if (!emailVal || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailVal)) {
                 definirErroCampo(emailInput, 'Digite seu e-mail acima para recuperar a senha.');
                 mostrarMensagemGeral(formLogin, 'Digite um e-mail válido no campo acima para recuperar a senha.');
                 if (emailInput) emailInput.focus();
@@ -305,20 +387,118 @@ function configurarAutenticacao() {
         }
     });
 
-    // 2. VALIDAÇÃO INSTANTÂNEA E MÁSCARA DO CADASTRO
-    const inputNomeCad = document.getElementById('cad-nome');
-    const inputEmailCad = document.getElementById('cad-email');
-    const inputConfirmEmailCad = document.getElementById('cad-confirm-email');
-    const inputTelefoneCad = document.getElementById('cad-telefone');
-    const inputSenhaCad = document.getElementById('cad-senha');
-    const inputConfirmSenhaCad = document.getElementById('cad-confirm-senha');
-    const checkTermosCad = document.getElementById('cad-termos');
-    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // 2. VALIDAÇÃO INSTANTÂNEA (VERMELHO/VERDE NO FOCUS E INPUT) E MÁSCARA DO CADASTRO
+    function validarNomeCad(marcarTouched = true) {
+        if (marcarTouched) estadoCadastro.touched['cad-nome'] = true;
+        salvarEstadoInputs();
+        const v = inputNomeCad.value.trim();
+        if (v.length < 3 || !v.includes(' ')) {
+            definirErroCampo(inputNomeCad, 'Digite seu nome e sobrenome.');
+        } else {
+            definirErroCampo(inputNomeCad, '');
+        }
+    }
+
+    function validarEmailCad(marcarTouched = true) {
+        if (marcarTouched) estadoCadastro.touched['cad-email'] = true;
+        salvarEstadoInputs();
+        const v = inputEmailCad.value.trim().toLowerCase();
+        if (!regexEmail.test(v)) {
+            definirErroCampo(inputEmailCad, 'Informe um e-mail válido (ex: nome@dominio.com).');
+        } else {
+            definirErroCampo(inputEmailCad, '');
+        }
+
+        if (inputConfirmEmailCad && (inputConfirmEmailCad.value || estadoCadastro.touched['cad-confirm-email'])) {
+            validarConfirmEmailCad(false);
+        }
+    }
+
+    function validarConfirmEmailCad(marcarTouched = true) {
+        if (marcarTouched) estadoCadastro.touched['cad-confirm-email'] = true;
+        salvarEstadoInputs();
+        const confirmVal = inputConfirmEmailCad.value.trim().toLowerCase();
+        const origVal = inputEmailCad ? inputEmailCad.value.trim().toLowerCase() : '';
+
+        if (!confirmVal || confirmVal !== origVal) {
+            definirErroCampo(inputConfirmEmailCad, 'Os e-mails digitados não são iguais.');
+        } else {
+            definirErroCampo(inputConfirmEmailCad, '');
+        }
+    }
+
+    function validarTelefoneCad(marcarTouched = true) {
+        if (marcarTouched) estadoCadastro.touched['cad-telefone'] = true;
+        salvarEstadoInputs();
+        const digitos = inputTelefoneCad.value.replace(/\D/g, '');
+        if (digitos.length < 11) {
+            definirErroCampo(inputTelefoneCad, 'Informe DDD + 9 dígitos (Ex: (61) 98765-4321).');
+        } else {
+            definirErroCampo(inputTelefoneCad, '');
+        }
+    }
+
+    function atualizarReq(id, valido, texto) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (valido) {
+            el.classList.add('valido');
+            el.textContent = `✔ ${texto}`;
+        } else {
+            el.classList.remove('valido');
+            el.textContent = `✖ ${texto}`;
+        }
+    }
+
+    function validarSenhaCad(marcarTouched = true) {
+        if (marcarTouched) estadoCadastro.touched['cad-senha'] = true;
+        salvarEstadoInputs();
+        const val = inputSenhaCad.value;
+        const temMin = val.length >= 8;
+        const temMai = /[A-Z]/.test(val);
+        const temNum = /[0-9]/.test(val);
+        const temSim = /[^A-Za-z0-9]/.test(val);
+
+        atualizarReq('req-minimo', temMin, 'Mínimo de 8 caracteres');
+        atualizarReq('req-maiuscula', temMai, 'Pelo menos 1 letra maiúscula');
+        atualizarReq('req-numero', temNum, 'Pelo menos 1 número');
+        atualizarReq('req-simbolo', temSim, 'Pelo menos 1 caractere especial (!@#$)');
+
+        if (temMin && temMai && temNum && temSim) {
+            definirErroCampo(inputSenhaCad, '');
+        } else {
+            definirErroCampo(inputSenhaCad, 'A senha não atende a todos os requisitos.');
+        }
+
+        if (inputConfirmSenhaCad && (inputConfirmSenhaCad.value || estadoCadastro.touched['cad-confirm-senha'])) {
+            validarConfirmSenhaCad(false);
+        }
+    }
+
+    function validarConfirmSenhaCad(marcarTouched = true) {
+        if (marcarTouched) estadoCadastro.touched['cad-confirm-senha'] = true;
+        salvarEstadoInputs();
+        if (!inputConfirmSenhaCad.value || inputConfirmSenhaCad.value !== inputSenhaCad.value) {
+            definirErroCampo(inputConfirmSenhaCad, 'As senhas digitadas não coincidem.');
+        } else {
+            definirErroCampo(inputConfirmSenhaCad, '');
+        }
+    }
+
+    function validarTermosCad(marcarTouched = true) {
+        if (marcarTouched) estadoCadastro.touched['cad-termos'] = true;
+        salvarEstadoInputs();
+        if (!checkTermosCad.checked) {
+            definirErroCampo(checkTermosCad, 'Aceite os termos para continuar.');
+        } else {
+            definirErroCampo(checkTermosCad, '');
+        }
+    }
 
     if (inputTelefoneCad) {
+        inputTelefoneCad.addEventListener('focus', () => validarTelefoneCad(true));
         inputTelefoneCad.addEventListener('input', (e) => {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 11) value = value.slice(0, 11);
+            let value = e.target.value.replace(/\D/g, '').slice(0, 11);
 
             if (value.length > 6) {
                 value = `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7)}`;
@@ -329,109 +509,37 @@ function configurarAutenticacao() {
             }
             e.target.value = value;
 
-            const digitos = value.replace(/\D/g, '');
-            if (digitos.length < 11) {
-                definirErroCampo(inputTelefoneCad, 'Informe DDD + 9 dígitos (Ex: (61) 98765-4321).');
-            } else {
-                definirErroCampo(inputTelefoneCad, '');
-            }
+            validarTelefoneCad(true);
         });
     }
 
     if (inputNomeCad) {
-        inputNomeCad.addEventListener('input', () => {
-            const v = inputNomeCad.value.trim();
-            if (v.length < 3 || !v.includes(' ')) {
-                definirErroCampo(inputNomeCad, 'Digite seu nome e sobrenome.');
-            } else {
-                definirErroCampo(inputNomeCad, '');
-            }
-        });
+        inputNomeCad.addEventListener('focus', () => validarNomeCad(true));
+        inputNomeCad.addEventListener('input', () => validarNomeCad(true));
     }
 
     if (inputEmailCad) {
-        inputEmailCad.addEventListener('input', () => {
-            const v = inputEmailCad.value.trim().toLowerCase();
-            if (!regexEmail.test(v)) {
-                definirErroCampo(inputEmailCad, 'Informe um e-mail válido (ex: nome@dominio.com).');
-            } else {
-                definirErroCampo(inputEmailCad, '');
-            }
-
-            if (inputConfirmEmailCad && inputConfirmEmailCad.value) {
-                inputConfirmEmailCad.dispatchEvent(new Event('input'));
-            }
-        });
+        inputEmailCad.addEventListener('focus', () => validarEmailCad(true));
+        inputEmailCad.addEventListener('input', () => validarEmailCad(true));
     }
 
     if (inputConfirmEmailCad) {
-        inputConfirmEmailCad.addEventListener('input', () => {
-            const confirmVal = inputConfirmEmailCad.value.trim().toLowerCase();
-            const origVal = inputEmailCad ? inputEmailCad.value.trim().toLowerCase() : '';
-
-            if (confirmVal !== origVal || !confirmVal) {
-                definirErroCampo(inputConfirmEmailCad, 'Os e-mails digitados não são iguais.');
-            } else {
-                definirErroCampo(inputConfirmEmailCad, '');
-            }
-        });
+        inputConfirmEmailCad.addEventListener('focus', () => validarConfirmEmailCad(true));
+        inputConfirmEmailCad.addEventListener('input', () => validarConfirmEmailCad(true));
     }
 
     if (inputSenhaCad) {
-        inputSenhaCad.addEventListener('input', () => {
-            const val = inputSenhaCad.value;
-            const temMin = val.length >= 8;
-            const temMai = /[A-Z]/.test(val);
-            const temNum = /[0-9]/.test(val);
-            const temSim = /[^A-Za-z0-9]/.test(val);
-
-            atualizarReq('req-minimo', temMin, 'Mínimo de 8 caracteres');
-            atualizarReq('req-maiuscula', temMai, 'Pelo menos 1 letra maiúscula');
-            atualizarReq('req-numero', temNum, 'Pelo menos 1 número');
-            atualizarReq('req-simbolo', temSim, 'Pelo menos 1 caractere especial (!@#$)');
-
-            if (temMin && temMai && temNum && temSim) {
-                definirErroCampo(inputSenhaCad, '');
-            } else {
-                definirErroCampo(inputSenhaCad, 'A senha não atende a todos os requisitos.');
-            }
-
-            if (inputConfirmSenhaCad && inputConfirmSenhaCad.value) {
-                inputConfirmSenhaCad.dispatchEvent(new Event('input'));
-            }
-        });
-
-        function atualizarReq(id, valido, texto) {
-            const el = document.getElementById(id);
-            if (!el) return;
-            if (valido) {
-                el.classList.add('valido');
-                el.textContent = `✔ ${texto}`;
-            } else {
-                el.classList.remove('valido');
-                el.textContent = `✖ ${texto}`;
-            }
-        }
+        inputSenhaCad.addEventListener('focus', () => validarSenhaCad(true));
+        inputSenhaCad.addEventListener('input', () => validarSenhaCad(true));
     }
 
     if (inputConfirmSenhaCad) {
-        inputConfirmSenhaCad.addEventListener('input', () => {
-            if (inputConfirmSenhaCad.value !== inputSenhaCad.value || !inputConfirmSenhaCad.value) {
-                definirErroCampo(inputConfirmSenhaCad, 'As senhas digitadas não coincidem.');
-            } else {
-                definirErroCampo(inputConfirmSenhaCad, '');
-            }
-        });
+        inputConfirmSenhaCad.addEventListener('focus', () => validarConfirmSenhaCad(true));
+        inputConfirmSenhaCad.addEventListener('input', () => validarConfirmSenhaCad(true));
     }
 
     if (checkTermosCad) {
-        checkTermosCad.addEventListener('change', () => {
-            if (!checkTermosCad.checked) {
-                definirErroCampo(checkTermosCad, 'Aceite os termos para continuar.');
-            } else {
-                definirErroCampo(checkTermosCad, '');
-            }
-        });
+        checkTermosCad.addEventListener('change', () => validarTermosCad(true));
     }
 
     // 3. SUBMISSÃO DO CADASTRO
@@ -447,6 +555,8 @@ function configurarAutenticacao() {
 
             if (formCadastro.querySelectorAll('.input-group.erro').length > 0) {
                 mostrarMensagemGeral(formCadastro, 'Corrija os campos destacados em vermelho acima.');
+                const primeiroErro = formCadastro.querySelector('.input-group.erro input');
+                if (primeiroErro) primeiroErro.focus();
                 return;
             }
 
@@ -456,6 +566,7 @@ function configurarAutenticacao() {
             if (usuarios.some((c) => c.email.toLowerCase() === email)) {
                 definirErroCampo(inputEmailCad, 'Este e-mail já está cadastrado.');
                 mostrarMensagemGeral(formCadastro, 'Este e-mail já está cadastrado. Faça login para continuar.');
+                inputEmailCad.focus();
                 return;
             }
 
@@ -487,6 +598,7 @@ function configurarAutenticacao() {
                 return;
             }
 
+            limparEstadoCadastro();
             ocultarModal('modal-cadastro');
             exibirModal('modal-login');
 
@@ -516,7 +628,6 @@ function configurarAutenticacao() {
             if (tipoAcesso === 'professor') {
                 if (email === 'professor@nankim.com' && senha === 'admin123') {
                     try {
-                        // Guardamos 'tipo' e 'perfil' para total compatibilidade com area-professor.html
                         sessionStorage.setItem('nankim_sessao', JSON.stringify({
                             logado: true,
                             tipo: 'professor',

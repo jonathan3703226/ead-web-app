@@ -616,6 +616,13 @@ body {
     z-index: 5;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
+.secao-degustacao .btn-degustacao-cta {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
 
 .degustacao-container {
     max-width: 1080px;
