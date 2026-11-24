@@ -553,22 +553,50 @@
 .botao-assinar-principal {
     width: 100%;
     padding: 1rem 1.5rem;
-    border: 1px solid var(--cor-destaque, #f39c12);
-    border-radius: 50px;
-    background-color: var(--cor-destaque, #f39c12);
-    color: #111111;
+    border: 1px solid var(--cor-destaque, #f39c12) !important;
+    border-radius: 50px !important;
+    background-color: var(--cor-destaque, #f39c12) !important;
+    color: #111111 !important;
     font-family: 'Montserrat', sans-serif;
     font-size: 1rem;
     font-weight: 800;
     cursor: pointer;
-    transition: transform 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    transition: background-color 0.3s ease, color 0.3s ease, filter 0.25s ease, box-shadow 0.25s ease;
     margin-bottom: 0.8rem;
 }
 
 .botao-assinar-principal:hover {
-    transform: translateY(-2px);
     filter: brightness(1.06);
     box-shadow: 0 10px 25px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.35);
+}
+
+.botao-degustacao-secundario {
+    width: 100%;
+    padding: 0.9rem 1.4rem;
+    border-radius: 50px !important;
+    background-color: #ffffff !important;
+    border: 1px solid #ffffff !important;
+    color: #2b2b2b !important;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    margin-bottom: 1.5rem;
+}
+
+.botao-degustacao-secundario:hover {
+    background-color: #2b2b2b !important;
+    color: #ffffff !important;
+    border-color: #ffffff !important;
 }
 
 .botao-degustacao-secundario {
@@ -937,4 +965,127 @@
     .bloco-info-curso {
         padding: 1.6rem;
     }
+}
+/* ==========================================================================
+   CORREÇÃO DE LARGURA DA SEÇÃO CLARA + CARDS DE PLANOS ANCORADOS
+   ========================================================================== */
+.bloco-claro-curvo {
+    width: 100%;
+    max-width: 100%;
+    background-color: var(--cursos-bg-principal);
+    color: var(--cursos-texto-escuro);
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    margin-top: -40px;
+    padding: 6rem 0 7rem;
+    position: relative;
+    z-index: 6;
+    box-shadow: 0 -30px 0 0 var(--cursos-secao-escura-bg);
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.seletor-planos-ancoragem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin: 0.85rem 0 1.35rem;
+}
+
+.opcao-plano-card {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.9rem 1rem;
+    border-radius: 16px;
+    border: 1.5px solid var(--cursos-borda-escura);
+    background-color: rgba(255, 255, 255, 0.03);
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.2s ease;
+}
+
+.opcao-plano-card:hover {
+    border-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.55);
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.opcao-plano-card.selecionado {
+    border-color: var(--cor-destaque, #f39c12);
+    background-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.12);
+    box-shadow: 0 8px 22px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.16);
+}
+
+.opcao-plano-card.destaque-anual {
+    margin-top: 0.55rem;
+    padding-top: 1.25rem;
+}
+
+.selo-melhor-escolha {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    background-color: var(--cor-destaque, #f39c12);
+    color: #111111;
+    font-size: 0.65rem;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+}
+
+.plano-info-esq {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.plano-info-esq strong {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.plano-info-esq span {
+    font-size: 0.75rem;
+    color: var(--cursos-texto-cinza-escuro);
+}
+
+.tag-economia-sutil {
+    background: rgba(46, 204, 113, 0.18);
+    color: #2ecc71;
+    font-size: 0.68rem;
+    padding: 0.12rem 0.45rem;
+    border-radius: 999px;
+    margin-left: 4px;
+}
+
+.plano-preco-dir {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.plano-preco-dir strong {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1.1;
+}
+
+.plano-preco-dir .valor-destaque-anual {
+    font-size: 1.4rem;
+    color: var(--cor-destaque, #f39c12);
+}
+
+.plano-preco-dir span {
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: var(--cursos-texto-cinza-escuro);
 }

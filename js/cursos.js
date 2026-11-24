@@ -1,6 +1,6 @@
 /* ==========================================================================
    CURSOS.JS - Nankim Escola de Arte
-   Acordeão de módulos, FAQ, reveal e botão de degustação
+   Acordeão de módulos, FAQ, reveal, degustação e seletor de planos ancorados
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     iniciarAcordeaoFaqCursos();
     iniciarRevelacaoScrollCursos();
     iniciarBotaoDegustacaoCursos();
+    iniciarSeletorPlanosCursos();
 });
 
 function iniciarAcordeaoModulos() {
@@ -82,4 +83,27 @@ function iniciarBotaoDegustacaoCursos() {
             }
         });
     }
+}
+
+function iniciarSeletorPlanosCursos() {
+    const opcoes = document.querySelectorAll('.opcao-plano-card');
+    const btnMatricular = document.getElementById('btn-matricular-plano');
+    if (!opcoes.length || !btnMatricular) return;
+
+    const textosBotao = {
+        mensal: 'Assinar Plano Mensal (R$ 89,90)',
+        semestral: 'Assinar Plano Semestral (6x R$ 58,31)',
+        anual: 'Assinar Plano Anual (12x R$ 39,90)'
+    };
+
+    opcoes.forEach((opcao) => {
+        opcao.addEventListener('click', () => {
+            opcoes.forEach((o) => o.classList.remove('selecionado'));
+            opcao.classList.add('selecionado');
+
+            const plano = opcao.getAttribute('data-plano') || 'anual';
+            btnMatricular.setAttribute('data-plano', plano);
+            btnMatricular.textContent = textosBotao[plano] || textosBotao.anual;
+        });
+    });
 }

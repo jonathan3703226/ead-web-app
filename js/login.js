@@ -170,7 +170,6 @@ function configurarAutenticacao() {
     const checkTermosCad = document.getElementById('cad-termos');
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-    // Estado em memória para lembrar os dados se o modal de cadastro for fechado sem querer
     const estadoCadastro = {
         nome: '',
         email: '',
@@ -280,6 +279,7 @@ function configurarAutenticacao() {
     }
 
     function mostrarMensagemGeral(form, texto, tipo = 'msg-erro') {
+        if (!form) return;
         form.querySelectorAll('.msg-erro, .msg-sucesso-info').forEach((m) => m.remove());
         if (!texto) return;
         const mensagem = document.createElement('div');
@@ -294,7 +294,6 @@ function configurarAutenticacao() {
         const alvo = e.target instanceof Element ? e.target : null;
         if (!alvo) return;
 
-        // Alternância de Abas (Sou Aluno vs Sou Professor)
         const tabBtn = alvo.closest('.tab-perfil');
         if (tabBtn) {
             e.preventDefault();
@@ -325,14 +324,13 @@ function configurarAutenticacao() {
             return;
         }
 
-        // Clique em "Esqueceu sua senha?"
         const linkEsqueci = alvo.closest('#link-esqueci-senha');
         if (linkEsqueci) {
             e.preventDefault();
             const emailInput = document.getElementById('login-email');
             const emailVal = emailInput ? emailInput.value.trim().toLowerCase() : '';
 
-            if (!emailVal || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailVal)) {
+            if (!emailVal || !regexEmail.test(emailVal)) {
                 definirErroCampo(emailInput, 'Digite seu e-mail acima para recuperar a senha.');
                 mostrarMensagemGeral(formLogin, 'Digite um e-mail válido no campo acima para recuperar a senha.');
                 if (emailInput) emailInput.focus();
@@ -348,7 +346,6 @@ function configurarAutenticacao() {
             return;
         }
 
-        // Toggle Olho Senha
         const btnToggle = alvo.closest('.btn-toggle-senha');
         if (btnToggle) {
             e.preventDefault();
@@ -362,7 +359,6 @@ function configurarAutenticacao() {
             return;
         }
 
-        // Trocar para Cadastro
         if (alvo.closest('#btn-alternar-para-cadastro') || alvo.closest('[data-modal="cadastro"]')) {
             e.preventDefault();
             ocultarModal('modal-login');
@@ -370,7 +366,6 @@ function configurarAutenticacao() {
             return;
         }
 
-        // Trocar para Login
         if (alvo.closest('#btn-alternar-para-login') || alvo.closest('[data-modal="login"]')) {
             e.preventDefault();
             ocultarModal('modal-cadastro');
@@ -378,7 +373,6 @@ function configurarAutenticacao() {
             return;
         }
 
-        // Fechar Modais (X)
         const btnFechar = alvo.closest('[data-close]');
         if (btnFechar) {
             e.preventDefault();
@@ -387,7 +381,7 @@ function configurarAutenticacao() {
         }
     });
 
-    // 2. VALIDAÇÃO INSTANTÂNEA (VERMELHO/VERDE NO FOCUS E INPUT) E MÁSCARA DO CADASTRO
+    // 2. VALIDAÇÃO INSTANTÂNEA E MÁSCARA DO CADASTRO
     function validarNomeCad(marcarTouched = true) {
         if (marcarTouched) estadoCadastro.touched['cad-nome'] = true;
         salvarEstadoInputs();
@@ -542,7 +536,7 @@ function configurarAutenticacao() {
         checkTermosCad.addEventListener('change', () => validarTermosCad(true));
     }
 
-    // 3. SUBMISSÃO DO CADASTRO
+    // 3. SUBMISSÃO DO CADASTRO (LOGIN AUTOMÁTICO + MÓDULO 1 LIBERADO)
     if (formCadastro) {
         formCadastro.addEventListener('submit', (event) => {
             event.preventDefault();
@@ -577,6 +571,7 @@ function configurarAutenticacao() {
                 telefone: inputTelefoneCad.value.trim(),
                 senha: inputSenhaCad.value,
                 matriculado: false,
+                modulo1_liberado: true,
                 cursos: [
                     {
                         id: 'fundamentos-desenho',
@@ -584,7 +579,9 @@ function configurarAutenticacao() {
                         apenasModulo1: true,
                         progresso: 0,
                         ultimaAula: 0,
-                        aulasConcluidas: []
+                        aulasConcluidas: [],
+                        plano: 'Degustação Gratuita (Módulo I)',
+                        statusPagamento: 'gratuito'
                     }
                 ]
             };
@@ -593,19 +590,44 @@ function configurarAutenticacao() {
 
             try {
                 localStorage.setItem('nankim_db', JSON.stringify(usuarios));
+                sessionStorage.setItem('nankim_sessao', JSON.stringify({
+                    logado: true,
+                    tipo: 'aluno',
+                    perfil: 'aluno',
+                    nome: novoUsuario.nome,
+                    email: novoUsuario.email
+                }));
+                sessionStorage.removeItem('nankim_degustacao_pendente');
             } catch (error) {
-                mostrarMensagemGeral(formCadastro, 'Não foi possível salvar seu cadastro neste navegador.');
+                mostrarMensagemGeral(formCadastro, 'Não foi possível concluir seu cadastro neste navegador.');
                 return;
             }
 
             limparEstadoCadastro();
-            ocultarModal('modal-cadastro');
-            exibirModal('modal-login');
 
-            const loginEmailInput = document.getElementById('login-email');
-            if (loginEmailInput) loginEmailInput.value = email;
+            const modalCadastroContent = document.querySelector('#modal-cadastro .modal-content');
+            if (modalCadastroContent) {
+                modalCadastroContent.innerHTML = `
+                    <div style="padding: 1.5rem 0.5rem; text-align: center;">
+                        <h2 style="margin-bottom: 0.75rem;">Conta criada com sucesso!</h2>
+                        <div class="msg-liberado-card" style="margin-top: 1rem; align-items: center; justify-content: center; text-align: center;">
+                            <div class="liberado-icone-wrapper">
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </div>
+                            <div class="liberado-textos">
+                                <strong style="font-size: 1.05rem; color: #166534;">Módulo I gratuito liberado! Entrando na Área do Aluno...</strong>
+                            </div>
+                        </div>
+                        <div class="barra-carregando-wrapper" style="margin-top: 1rem;">
+                            <div class="barra-carregando-progresso" style="animation-duration: 1.5s;"></div>
+                        </div>
+                    </div>
+                `;
+            }
 
-            mostrarMensagemGeral(formLogin, 'Conta criada com sucesso! Faça login para começar.', 'msg-sucesso-info');
+            setTimeout(() => {
+                window.location.href = 'area-aluno.html';
+            }, 1500);
         });
     }
 
@@ -654,7 +676,28 @@ function configurarAutenticacao() {
                 return;
             }
 
+            // Garante que qualquer aluno cadastrado já tenha o Módulo 1 liberado
+            if (!usuario.matriculado && usuario.modulo1_liberado !== true) {
+                usuario.modulo1_liberado = true;
+            }
+
+            if (!Array.isArray(usuario.cursos) || usuario.cursos.length === 0) {
+                usuario.cursos = [
+                    {
+                        id: 'fundamentos-desenho',
+                        nome: 'Fundamentos do Desenho',
+                        apenasModulo1: !usuario.matriculado,
+                        progresso: 0,
+                        ultimaAula: 0,
+                        aulasConcluidas: [],
+                        plano: usuario.matriculado ? 'Plano Ativo' : 'Degustação Gratuita (Módulo I)',
+                        statusPagamento: usuario.matriculado ? 'aprovado' : 'gratuito'
+                    }
+                ];
+            }
+
             try {
+                localStorage.setItem('nankim_db', JSON.stringify(usuarios));
                 sessionStorage.setItem('nankim_sessao', JSON.stringify({
                     logado: true,
                     tipo: 'aluno',
@@ -670,6 +713,14 @@ function configurarAutenticacao() {
         });
     }
 }
+
+// Limpa e fecha os modais caso o usuário clique no botão Voltar do navegador (bfcache)
+window.addEventListener('pageshow', () => {
+    const modalLogin = document.getElementById('modal-login');
+    const modalCadastro = document.getElementById('modal-cadastro');
+    if (modalLogin) modalLogin.style.display = 'none';
+    if (modalCadastro) modalCadastro.style.display = 'none';
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     injetarModaisAutenticacao();

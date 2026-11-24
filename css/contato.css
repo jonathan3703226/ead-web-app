@@ -364,24 +364,26 @@
     width: 100%;
     min-height: 54px;
     padding: 1rem 2rem;
-    border: 1px solid var(--cor-destaque, #f39c12);
-    border-radius: 50px;
-    background-color: var(--cor-destaque, #f39c12);
-    color: #111111;
+    border: 1px solid var(--cor-destaque, #f39c12) !important;
+    border-radius: 50px !important;
+    background-color: var(--cor-destaque, #f39c12) !important;
+    color: #111111 !important;
     font-family: 'Montserrat', sans-serif;
     font-size: 1rem;
     font-weight: 800;
     cursor: pointer;
     margin-top: 0.4rem;
-    transition: transform 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    transition: filter 0.25s ease, box-shadow 0.25s ease;
 }
 
 .contato-botao-enviar:hover {
-    transform: translateY(-2px);
     filter: brightness(1.06);
     box-shadow: 0 10px 25px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.35);
 }
-
 /* ==========================================================================
    MODAL DE CONFIRMAÇÃO DE ENVIO
    ========================================================================== */

@@ -108,30 +108,46 @@ function fecharModal(modalId) {
 
 
 /* --------------------------------------------------------------------------
-   3. EFEITOS VISUAIS E INTERAÇÕES (LINK MAGNÉTICO CORRIGIDO)
+   3. EFEITOS VISUAIS E INTERAÇÕES (LINK MAGNÉTICO PADRONIZADO E SUTIL)
    -------------------------------------------------------------------------- */
 function aplicarEfeitoMagnetico() {
     const elementos = document.querySelectorAll('.link-magnetico, .logo-magnetico');
 
+    // Limite máximo de deslocamento em pixels (idêntico para botões pequenos ou largos)
+    const MAX_X = 7;
+    const MAX_Y = 5;
+
     elementos.forEach((el) => {
-        // Evita duplicar listeners
         if (el.getAttribute('data-magnetico-ativo')) return;
         el.setAttribute('data-magnetico-ativo', 'true');
 
+        el.style.willChange = 'transform';
+
+        el.addEventListener('mouseenter', () => {
+            // Transição curtíssima no movimento para acompanhar o cursor sem atraso
+            el.style.transition = 'transform 0.12s cubic-bezier(0.22, 1, 0.36, 1)';
+        });
+
         el.addEventListener('mousemove', (e) => {
             const rect = el.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
+            // Normaliza a posição do mouse dentro do botão entre -1 e +1
+            const normX = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
+            const normY = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
 
-            el.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
+            // Garante que nunca ultrapasse o limite sutil definido
+            const moveX = Math.max(-1, Math.min(1, normX)) * MAX_X;
+            const moveY = Math.max(-1, Math.min(1, normY)) * MAX_Y;
+
+            el.style.transform = `translate3d(${moveX.toFixed(2)}px, ${moveY.toFixed(2)}px, 0)`;
         });
 
         el.addEventListener('mouseleave', () => {
-            el.style.transform = 'translate(0px, 0px)';
+            // Retorno elástico e suave idêntico em todas as páginas
+            el.style.transition = 'transform 0.35s cubic-bezier(0.22, 1, 0.36, 1)';
+            el.style.transform = 'translate3d(0px, 0px, 0)';
         });
     });
 }
-
 
 /* --------------------------------------------------------------------------
    4. INJEÇÃO DINÂMICA DO MENU E RODAPÉ

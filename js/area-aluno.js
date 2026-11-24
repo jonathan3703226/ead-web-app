@@ -15,12 +15,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailUsuario = usuarioSessao.email;
 
     let dbUsuarios = JSON.parse(localStorage.getItem('nankim_db')) || [];
-    let usuarioAtual = dbUsuarios.find(u => u.email === emailUsuario);
+    let idxUsuarioAtual = dbUsuarios.findIndex(u => u.email.toLowerCase() === String(emailUsuario).toLowerCase());
+    let usuarioAtual = idxUsuarioAtual !== -1 ? dbUsuarios[idxUsuarioAtual] : null;
 
     if (!usuarioAtual) {
         sessionStorage.removeItem('nankim_sessao');
         window.location.href = 'index.html';
         return;
+    }
+
+    // Garante automaticamente o Módulo 1 liberado para qualquer aluno cadastrado
+    if (!usuarioAtual.matriculado && usuarioAtual.modulo1_liberado !== true) {
+        usuarioAtual.modulo1_liberado = true;
+        if (!Array.isArray(usuarioAtual.cursos) || usuarioAtual.cursos.length === 0) {
+            usuarioAtual.cursos = [
+                {
+                    id: 'fundamentos-desenho',
+                    nome: 'Fundamentos do Desenho',
+                    apenasModulo1: true,
+                    progresso: 0,
+                    ultimaAula: 0,
+                    aulasConcluidas: []
+                }
+            ];
+        }
+        dbUsuarios[idxUsuarioAtual] = usuarioAtual;
+        localStorage.setItem('nankim_db', JSON.stringify(dbUsuarios));
     }
 
     // 2. PREENCHER HEADER E BOAS VINDAS
@@ -70,20 +90,20 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 'fundamentos-desenho',
             titulo: 'Fundamentos do Desenho',
             descricao: 'O ponto de partida para qualquer artista. Domine formas, perspectiva e luz com uma trilha prática e progressiva.',
-            imagem: '../assets/img/fundamentos-desenho.jpg'
+            imagem: './assets/img/fundamentos-desenho.jpg'
         },
         {
             id: 'anatomia-humana',
             titulo: 'Anatomia Humana',
             descricao: 'Estude proporções, musculatura e movimento para desenhar figuras humanas com mais confiança.',
-            imagem: '../assets/img/anatomia-humana.jpg',
+            imagem: './assets/img/anatomia-humana.jpg',
             disponivel: false
         },
         {
             id: 'ilustracao-digital',
             titulo: 'Ilustração Digital',
             descricao: 'Desenvolva seu processo digital, da composição e cor até a finalização de uma ilustração autoral.',
-            imagem: '../assets/img/ilustracao-digital.jpg',
+            imagem: './assets/img/ilustracao-digital.jpg',
             disponivel: false
         }
     ];
@@ -119,21 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
-
-        // Evento de liberar Módulo 1 gratuito
-        const btnLiberarMod1 = document.getElementById('btn-liberar-mod1');
-        if (btnLiberarMod1) {
-            btnLiberarMod1.addEventListener('click', () => {
-                usuarioAtual.modulo1_liberado = true;
-                const db = JSON.parse(localStorage.getItem('nankim_db')) || [];
-                const idx = db.findIndex(u => u.email === usuarioAtual.email);
-                if (idx !== -1) {
-                    db[idx].modulo1_liberado = true;
-                    localStorage.setItem('nankim_db', JSON.stringify(db));
-                }
-                renderizarCentralAlunos();
-            });
-        }
     }
 
     function renderizarCursoFuturo(curso) {
@@ -154,15 +159,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderizarCursoFundamentos() {
         const matriculado = usuarioAtual.matriculado === true;
-        const degustacao = usuarioAtual.modulo1_liberado === true;
 
         let tagHTML = '';
         let progressoHTML = '';
         let acoesHTML = '';
-        let filtroImg = 'grayscale(0%) opacity(1)';
+        const filtroImg = 'grayscale(0%) opacity(1)';
         const titulo = 'Fundamentos do Desenho';
         const desc = 'O ponto de partida para qualquer artista. Domine formas, perspectiva e luz com uma trilha prática e progressiva.';
-        const imagem = '../assets/img/fundamentos-desenho.jpg';
+        const imagem = './assets/img/fundamentos-desenho.jpg';
 
         if (matriculado) {
             tagHTML = `<span class="tag-status tag-completo">Curso Completo</span>`;
@@ -174,7 +178,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (containerMatriculados) {
                 containerMatriculados.innerHTML += criarCardExpandivelHTML(titulo, desc, imagem, tagHTML, progressoHTML, acoesHTML, filtroImg, false);
             }
-        } else if (degustacao) {
+        } else {
+            // Qualquer aluno cadastrado já possui o Módulo 1 liberado automaticamente
             tagHTML = `<span class="tag-status tag-degustacao">Módulo 1 Liberado</span>`;
             progressoHTML = `<span class="texto-aviso-bloqueado">Aproveite sua aula experimental grátis.</span>`;
             acoesHTML = `
@@ -184,28 +189,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (containerMatriculados) {
                 containerMatriculados.innerHTML += criarCardExpandivelHTML(titulo, desc, imagem, tagHTML, progressoHTML, acoesHTML, filtroImg, true);
             }
-        } else {
-            tagHTML = `<span class="tag-status tag-bloqueado">🔒 Bloqueado</span>`;
-            filtroImg = 'grayscale(100%) opacity(0.6)';
-            progressoHTML = `
-                <span class="texto-aviso-bloqueado" style="color: #e74c3c;">
-                    Você ainda não possui acesso a este curso.
-                </span>
-            `;
-            acoesHTML = `
-                <button type="button" class="btn-acao-custom btn-secundario" id="btn-liberar-mod1">Liberar Módulo 1 Grátis</button>
-                <button type="button" class="btn-acao-custom btn-comprar btn-abrir-checkout-direto">Assinar Curso Completo</button>
-            `;
-            if (containerCatalogo) {
-                containerCatalogo.innerHTML += criarCardExpandivelHTML(titulo, desc, imagem, tagHTML, progressoHTML, acoesHTML, filtroImg, true);
-            }
         }
     }
 
     function criarCardExpandivelHTML(titulo, descricao, imagem, tagHTML, progressoHTML, acoesHTML, filtroImg, mostrarPreco) {
         const rodapePreco = mostrarPreco ? `
             <div class="curso-compra">
-                <p><span>Investimento único</span><strong>R$ 49,90</strong></p>
+                <p><span>A partir de</span><strong>R$ 39,90/mês</strong></p>
                 ${acoesHTML}
             </div>
         ` : `
