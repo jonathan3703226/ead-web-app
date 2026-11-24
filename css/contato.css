@@ -1,42 +1,17 @@
 /* ==========================================================================
    CONTATO.CSS - Nankim Escola de Arte
-   Padrão Visual: Home, Quem Somos & Cursos + Validação Instantânea e Modal
+   Estilos específicos da página de Contato (Canais, Formulário e Modal)
    ========================================================================== */
 
 :root {
-    --contato-bg-principal: #ffffff;
-    --contato-texto-escuro: #2b2b2b;
-    --contato-texto-suave: #555555;
-
-    --contato-secao-escura-bg: #2b2b2b;
-    --contato-secao-escura-texto: #ffffff;
-    --contato-bg-card-escuro: #1a1a1a;
-    --contato-texto-cinza-escuro: #cccccc;
-    --contato-borda-escura: rgba(255, 255, 255, 0.12);
-    --contato-campo-bg: #111111;
-
-    /* Cores de Validação Instantânea */
     --cor-campo-erro: #e74c3c;
     --cor-campo-valido: #2ecc71;
 }
 
-:root[data-theme="dark"] {
-    --contato-bg-principal: #000000;
-    --contato-texto-escuro: #ffffff;
-    --contato-texto-suave: #a0a0a0;
-
-    --contato-secao-escura-bg: #1a1a1a;
-    --contato-secao-escura-texto: #ffffff;
-    --contato-bg-card-escuro: #111111;
-    --contato-texto-cinza-escuro: #cccccc;
-    --contato-borda-escura: rgba(255, 255, 255, 0.12);
-    --contato-campo-bg: #080808;
-}
-
 .pagina-contato {
     font-family: 'Montserrat', sans-serif;
-    background-color: var(--contato-bg-principal);
-    color: var(--contato-texto-escuro);
+    background-color: var(--superficie-principal);
+    color: var(--texto-principal);
     overflow-x: hidden;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -47,20 +22,10 @@
     padding: 0 4%;
 }
 
-.menu-global nav a[href="contato.html"].pagina-ativa {
-    font-weight: 700;
-}
-
-.menu-global nav a[href="contato.html"].pagina-ativa .dot-hover {
-    background-color: var(--cor-destaque, #f39c12);
-}
-
-/* ==========================================================================
-   SEÇÃO 1: TOPO LIMPO (SUBTÍTULO PRINCIPAL COM REVELAÇÃO SUAVE)
-   ========================================================================== */
+/* ================= SEÇÃO 1: TOPO LIMPO ================= */
 .secao-topo-contato {
     padding: 9rem 0 5.5rem;
-    background-color: var(--contato-bg-principal);
+    background-color: var(--superficie-principal);
     transition: background-color 0.3s ease;
 }
 
@@ -75,16 +40,10 @@
     font-weight: 600;
     line-height: 1.55;
     letter-spacing: -0.4px;
-    color: var(--contato-texto-escuro);
+    color: var(--texto-principal);
     margin: 0;
     opacity: 0;
     animation: revelarSubtituloTopo 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
-}
-
-.prefixo-barra {
-    color: var(--cor-destaque, #f39c12);
-    font-weight: 900;
-    margin-right: 8px;
 }
 
 .linha-luminosa-topo {
@@ -93,8 +52,8 @@
     height: 3px;
     margin: 1.8rem auto 0;
     border-radius: 999px;
-    background: linear-gradient(90deg, transparent, var(--cor-destaque, #f39c12), #ffe082, var(--cor-destaque, #f39c12), transparent);
-    box-shadow: 0 0 14px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.65);
+    background: linear-gradient(90deg, transparent, var(--cor-destaque), #ffe082, var(--cor-destaque), transparent);
+    box-shadow: 0 0 14px rgba(var(--cor-destaque-rgb), 0.65);
     animation: expandirLinhaTopo 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
 }
 
@@ -121,19 +80,18 @@
         opacity: 1;
     }
 }
-/* ==========================================================================
-   SEÇÃO 2: BLOCO ESCURO CURVO (40PX) — CANAIS & FORMULÁRIO
-   ========================================================================== */
+
+/* ================= SEÇÃO 2: BLOCO ESCURO CURVO - CANAIS & FORMULÁRIO ================= */
 .bloco-escuro-curvo {
-    background-color: var(--contato-secao-escura-bg);
-    color: var(--contato-secao-escura-texto);
+    background-color: var(--secao-escura-bg);
+    color: var(--secao-escura-texto);
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
     margin-top: -30px;
     padding: 6rem 0 8rem;
     position: relative;
     z-index: 5;
-    box-shadow: 0 -30px 0 0 var(--contato-bg-principal);
+    box-shadow: 0 -30px 0 0 var(--superficie-principal);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -146,9 +104,9 @@
 
 .selo-atendimento-contato {
     display: inline-block;
-    background-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.16);
-    border: 1px solid rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.45);
-    color: var(--cor-destaque, #f39c12);
+    background-color: rgba(var(--cor-destaque-rgb), 0.16);
+    border: 1px solid rgba(var(--cor-destaque-rgb), 0.45);
+    color: var(--cor-destaque);
     font-size: 0.72rem;
     font-weight: 800;
     letter-spacing: 1.2px;
@@ -166,43 +124,11 @@
     margin-bottom: 1.3rem;
 }
 
-.texto-fluxo-dourado {
-    background: linear-gradient(
-        110deg,
-        var(--cor-destaque, #f39c12) 0%,
-        #ffe082 25%,
-        var(--cor-destaque, #f39c12) 50%,
-        #ffb300 75%,
-        var(--cor-destaque, #f39c12) 100%
-    );
-    background-size: 250% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: brilhoContinuoTextoContato 3.5s linear infinite, pulsoNeonSuaveContato 3s ease-in-out infinite;
-    display: inline-block;
-    position: relative;
-}
-
-.sublinhado-traco::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -6px;
-    width: 100%;
-    height: 4px;
-    border-radius: 4px;
-    background: linear-gradient(90deg, transparent, var(--cor-destaque, #f39c12), #ffe082, var(--cor-destaque, #f39c12), transparent);
-    background-size: 200% 100%;
-    animation: deslizarTracoLuzContato 2.5s linear infinite;
-    box-shadow: 0 0 12px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.7);
-}
-
 .contato-texto-apoio {
     font-size: 1.02rem;
     font-weight: 300;
     line-height: 1.75;
-    color: var(--contato-texto-cinza-escuro);
+    color: var(--secao-escura-texto-suave);
     margin-bottom: 2.2rem;
     max-width: 480px;
 }
@@ -219,8 +145,8 @@
     display: flex;
     align-items: center;
     gap: 1.1rem;
-    background-color: var(--contato-bg-card-escuro);
-    border: 1px solid var(--contato-borda-escura);
+    background-color: var(--secao-escura-card);
+    border: 1px solid var(--secao-escura-borda);
     border-radius: 20px;
     padding: 1.25rem 1.5rem;
     text-decoration: none;
@@ -230,7 +156,7 @@
 
 .card-canal-contato:hover {
     transform: translateY(-4px);
-    border-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.6);
+    border-color: rgba(var(--cor-destaque-rgb), 0.6);
     box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
 }
 
@@ -238,9 +164,9 @@
     width: 48px;
     height: 48px;
     border-radius: 14px;
-    background-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.14);
-    border: 1px solid rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.35);
-    color: var(--cor-destaque, #f39c12);
+    background-color: rgba(var(--cor-destaque-rgb), 0.14);
+    border: 1px solid rgba(var(--cor-destaque-rgb), 0.35);
+    color: var(--cor-destaque);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -258,7 +184,7 @@
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--cor-destaque, #f39c12);
+    color: var(--cor-destaque);
 }
 
 .info-canal-contato strong {
@@ -268,12 +194,10 @@
     overflow-wrap: anywhere;
 }
 
-/* ==========================================================================
-   CARD DO FORMULÁRIO & VALIDAÇÃO INSTANTÂNEA (VERMELHO / VERDE)
-   ========================================================================== */
+/* ================= CARD DO FORMULÁRIO & VALIDAÇÃO INSTANTÂNEA ================= */
 .card-formulario-contato {
-    background-color: var(--contato-bg-card-escuro);
-    border: 1px solid var(--contato-borda-escura);
+    background-color: var(--secao-escura-card);
+    border: 1px solid var(--secao-escura-borda);
     border-radius: 28px;
     padding: 2.6rem 2.4rem;
     box-shadow: 0 20px 45px rgba(0, 0, 0, 0.32);
@@ -299,7 +223,7 @@
 }
 
 .form-contato .input-group label span {
-    color: var(--contato-texto-cinza-escuro);
+    color: var(--secao-escura-texto-suave);
     font-weight: 400;
     font-size: 0.82rem;
 }
@@ -308,13 +232,12 @@
 .form-contato textarea {
     width: 100%;
     padding: 0.95rem 1.15rem;
-    border: 2px solid var(--contato-borda-escura);
+    border: 2px solid var(--secao-escura-borda);
     border-radius: 14px;
-    background-color: var(--contato-campo-bg);
+    background-color: var(--secao-escura-campo);
     color: #ffffff;
     font-family: 'Montserrat', sans-serif;
     font-size: 0.95rem;
-    box-sizing: border-box;
     outline: none;
     transition: border-color 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
 }
@@ -325,7 +248,6 @@
     opacity: 1;
 }
 
-/* Estado Inválido (Vermelho imediato ao clicar/digitar enquanto não válido) */
 .form-contato .input-group.campo-invalido input,
 .form-contato .input-group.campo-invalido textarea {
     border-color: var(--cor-campo-erro) !important;
@@ -336,7 +258,6 @@
     color: #ff7675;
 }
 
-/* Estado Válido (Verde assim que a informação é válida) */
 .form-contato .input-group.campo-valido input,
 .form-contato .input-group.campo-valido textarea {
     border-color: var(--cor-campo-valido) !important;
@@ -364,29 +285,28 @@
     width: 100%;
     min-height: 54px;
     padding: 1rem 2rem;
-    border: 1px solid var(--cor-destaque, #f39c12) !important;
-    border-radius: 50px !important;
-    background-color: var(--cor-destaque, #f39c12) !important;
-    color: #111111 !important;
+    border: 1px solid var(--cor-destaque);
+    border-radius: 50px;
+    background-color: var(--cor-destaque);
+    color: #111111;
     font-family: 'Montserrat', sans-serif;
     font-size: 1rem;
     font-weight: 800;
     cursor: pointer;
     margin-top: 0.4rem;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     transition: filter 0.25s ease, box-shadow 0.25s ease;
 }
 
 .contato-botao-enviar:hover {
     filter: brightness(1.06);
-    box-shadow: 0 10px 25px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.35);
+    box-shadow: 0 10px 25px rgba(var(--cor-destaque-rgb), 0.35);
 }
-/* ==========================================================================
-   MODAL DE CONFIRMAÇÃO DE ENVIO
-   ========================================================================== */
+
+/* ================= MODAL DE CONFIRMAÇÃO DE ENVIO ================= */
 .modal-contato-overlay {
     position: fixed;
     inset: 0;
@@ -416,7 +336,7 @@
     width: 100%;
     max-width: 460px;
     background: linear-gradient(145deg, #1e1e1e 0%, #111111 100%);
-    border: 2px solid var(--cor-destaque, #f39c12);
+    border: 2px solid var(--cor-destaque);
     border-radius: 28px;
     padding: 2.8rem 2.2rem 2.4rem;
     text-align: center;
@@ -501,15 +421,15 @@
 }
 
 .modal-contato-box p strong {
-    color: var(--cor-destaque, #f39c12);
+    color: var(--cor-destaque);
 }
 
 .btn-ok-modal-contato {
     width: 100%;
     padding: 0.95rem 1.8rem;
     border-radius: 50px;
-    border: 1px solid var(--cor-destaque, #f39c12);
-    background-color: var(--cor-destaque, #f39c12);
+    border: 1px solid var(--cor-destaque);
+    background-color: var(--cor-destaque);
     color: #111111;
     font-family: 'Montserrat', sans-serif;
     font-size: 0.95rem;
@@ -523,53 +443,12 @@
     filter: brightness(1.06);
 }
 
-/* ==========================================================================
-   ANIMAÇÕES DE REVELAÇÃO SCROLL & KEYFRAMES
-   ========================================================================== */
-.revelar-scroll {
-    opacity: 0;
-    transform: translateY(35px) scale(0.97);
-    filter: blur(6px);
-    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 1s cubic-bezier(0.16, 1, 0.3, 1),
-        filter 1s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform, filter;
-}
-
-.revelar-scroll.visivel {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0px);
-}
-
-@keyframes piscarCursorContato {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
-
-@keyframes brilhoContinuoTextoContato {
-    0% { background-position: 0% center; }
-    100% { background-position: 250% center; }
-}
-
-@keyframes pulsoNeonSuaveContato {
-    0%, 100% { filter: drop-shadow(0 0 8px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.35)); }
-    50% { filter: drop-shadow(0 0 18px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.75)); }
-}
-
-@keyframes deslizarTracoLuzContato {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-}
-
 @keyframes girarAnelSucesso {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
 
-/* ==========================================================================
-   RESPONSIVIDADE
-   ========================================================================== */
+/* ================= RESPONSIVIDADE ================= */
 @media (max-width: 960px) {
     .contato-layout {
         grid-template-columns: 1fr;

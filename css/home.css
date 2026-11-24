@@ -1,103 +1,51 @@
 /* ==========================================================================
-   ESTILOS ESPECÍFICOS DA HOME PAGE (NANKIM ESCOLA DE ARTE)
+   HOME.CSS - Nankim Escola de Arte
+   Estilos específicos da página inicial (Super Header, Diagnóstico, Vitrine,
+   Degustação Gratuita, Depoimentos e Propósito)
    ========================================================================== */
-
-/* --- VARIÁVEIS LOCAIS DE TEMA DA HOME --- */
-:root {
-    /* Tema Claro: Fundo Branco Absoluto, elementos pretos viram Cinza Escuro */
-    --home-bg-principal: #ffffff;
-    --home-texto-escuro: #2b2b2b;
-    --home-texto-suave: #555555;
-    --home-bg-card-claro: #f4f4f4;
-    --home-borda-suave: #e0e0e0;
-
-    /* Blocos de Transição (Claro) */
-    --home-secao-escura-bg: #2b2b2b;
-    --home-secao-escura-texto: #ffffff;
-    --home-secao-clara-bg: #ffffff;
-    --home-secao-clara-texto: #2b2b2b;
-}
-
-:root[data-theme="dark"] {
-    /* Tema Escuro Invertido: Fundo/cards em Preto Absoluto e seções escuras em Cinza */
-    --home-bg-principal: #000000;
-    --home-texto-escuro: #ffffff;
-    --home-texto-suave: #a0a0a0;
-    --home-bg-card-claro: #0d0d0d;
-    --home-borda-suave: #222222;
-
-    /* Blocos de Transição (Escuro Invertido) */
-    --home-secao-escura-bg: #1a1a1a;
-    --home-secao-escura-texto: #ffffff;
-    --home-secao-clara-bg: #000000;
-    --home-secao-clara-texto: #ffffff;
-}
 
 body {
     overflow-x: hidden;
-    background-color: var(--home-bg-principal);
+    background-color: var(--superficie-principal);
     transition: background-color 0.3s ease;
 }
 
-/* --- Blocos Escuros e Claros de Transição --- */
+/* ================= BLOCOS DE TRANSIÇÃO CURVOS (40PX) ================= */
 .cuberto-dark-section {
-    background-color: var(--home-secao-escura-bg) !important;
-    color: var(--home-secao-escura-texto);
-    padding: 1.5rem 0 5rem !important; /* Aproximado do topo da curva */
+    background-color: var(--secao-escura-bg);
+    color: var(--secao-escura-texto);
+    padding: 1.5rem 0 5rem;
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
     margin-top: -30px;
     position: relative;
     z-index: 5;
-    box-shadow: 0 -30px 0 0 var(--home-bg-principal);
+    box-shadow: 0 -30px 0 0 var(--superficie-principal);
     transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .cuberto-light-section {
-    background-color: var(--home-secao-clara-bg) !important;
-    color: var(--home-secao-clara-texto);
+    background-color: var(--superficie-principal);
+    color: var(--texto-principal);
     padding: 6rem 0 3rem;
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
     margin-top: -40px;
     position: relative;
     z-index: 6;
-    box-shadow: 0 -30px 0 0 var(--home-secao-escura-bg);
+    box-shadow: 0 -30px 0 0 var(--secao-escura-bg);
     transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .cuberto-dark-footer-section {
-    background-color: inherit !important;
+    background-color: inherit;
     color: inherit;
     padding: 4rem 0 8rem;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    margin-top: 0;
     position: relative;
     z-index: 8;
-    box-shadow: none !important;
 }
 
-
-
-/* --- Efeito Revelar no Scroll (IntersectionObserver) --- */
-.revelar-scroll {
-    opacity: 0;
-    transform: translateY(40px) scale(0.96);
-    filter: blur(8px);
-    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-        filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform, filter;
-}
-
-.revelar-scroll.visivel {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0px);
-}
-
-/* --- Cabeçalhos e Container Vitrine --- */
+/* ================= CONTAINERS & CABEÇALHOS DE VITRINE ================= */
 .container-vitrine {
     max-width: 1200px;
     margin: 0 auto;
@@ -106,25 +54,21 @@ body {
 
 .cabecalho-vitrine {
     text-align: center;
-    margin-bottom: 3rem;
+    margin: 0 auto 3rem;
     max-width: 950px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .cabecalho-vitrine-claro {
     text-align: center;
-    margin-bottom: 2rem;
+    margin: 0 auto 2rem;
     max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .titulo-destaque-vitrine {
     font-family: 'Montserrat', sans-serif;
     font-size: clamp(2rem, 3.8vw, 3.2rem);
-    font-weight: 800 !important;
-    color: var(--home-secao-escura-texto);
+    font-weight: 800;
+    color: var(--secao-escura-texto);
     line-height: 1.15;
     letter-spacing: -1.5px;
     margin-bottom: 1rem;
@@ -133,16 +77,16 @@ body {
 .subtitulo-detalhe-vitrine {
     font-family: 'Montserrat', sans-serif;
     font-size: clamp(1.05rem, 1.8vw, 1.35rem);
-    font-weight: 300 !important;
-    color: #cccccc;
+    font-weight: 300;
+    color: var(--secao-escura-texto-suave);
     letter-spacing: -0.3px;
 }
 
 .titulo-destaque-claro {
     font-family: 'Montserrat', sans-serif;
     font-size: clamp(2rem, 3.8vw, 3.2rem);
-    font-weight: 800 !important;
-    color: var(--home-texto-escuro);
+    font-weight: 800;
+    color: var(--texto-principal);
     line-height: 1.15;
     letter-spacing: -1.5px;
     margin-bottom: 1rem;
@@ -151,16 +95,16 @@ body {
 .subtitulo-detalhe-claro {
     font-family: 'Montserrat', sans-serif;
     font-size: clamp(1.05rem, 1.8vw, 1.35rem);
-    font-weight: 300 !important;
-    color: var(--home-texto-suave);
+    font-weight: 300;
+    color: var(--texto-suave);
     letter-spacing: -0.3px;
 }
 
-/* --- Seção 1: Super Header --- */
+/* ================= SEÇÃO 1: SUPER HEADER & SHOWREEL ================= */
 .super-header-gnomon {
-    background-color: var(--home-bg-principal) !important;
-    color: var(--home-texto-escuro);
-    padding: 8rem 0 3rem 0;
+    background-color: var(--superficie-principal);
+    color: var(--texto-principal);
+    padding: 8rem 0 3rem;
     width: 100%;
     overflow: hidden;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -176,10 +120,10 @@ body {
 }
 
 .titulo-cuberto-estilo {
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: clamp(2.8rem, 6vw, 5.2rem) !important;
-    font-weight: 600 !important;
-    color: var(--home-texto-escuro);
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5.2rem);
+    font-weight: 600;
+    color: var(--texto-principal);
     text-align: center;
     line-height: 1.1;
     max-width: 950px;
@@ -216,21 +160,8 @@ body {
 .subtitulo-pergunta-cuberto {
     font-family: 'Montserrat', sans-serif;
     font-size: clamp(1.1rem, 2vw, 1.5rem);
-    font-weight: 400 !important;
-    color: var(--home-texto-escuro);
-}
-
-.prefixo-barra {
-    color: var(--cor-destaque);
-    margin-right: 6px;
-    font-weight: 800;
-}
-
-.cursor-typing {
-    display: inline-block;
-    color: var(--cor-destaque);
-    font-weight: 700;
-    animation: piscarCursor 0.8s infinite;
+    font-weight: 400;
+    color: var(--texto-principal);
 }
 
 .container-video-showreel {
@@ -239,9 +170,8 @@ body {
     aspect-ratio: 16 / 7;
     border-radius: 20px;
     overflow: hidden;
-    margin-top: 0;
-    margin-bottom: 2.5rem;
-    background-color: #000;
+    margin: 0 0 2.5rem;
+    background-color: #000000;
     position: relative;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
     opacity: 0;
@@ -262,16 +192,14 @@ body {
     z-index: 1;
 }
 
-/* ==========================================================================
-   SEÇÃO 2: DIAGNÓSTICO (PROBLEMAS DO AUTODIDATA)
-   ========================================================================== */
+/* ================= SEÇÃO 2: DIAGNÓSTICO (TRILHA DE OBSTÁCULOS) ================= */
 .secao-pilares-clean {
-    padding: 0.5rem 0 3rem !important;
+    padding: 0.5rem 0 3rem;
     width: 100%;
 }
 
 .secao-pilares-clean .cabecalho-vitrine {
-    margin-bottom: 1.8rem !important;
+    margin-bottom: 1.8rem;
 }
 
 .trilha-obstaculos-wrapper {
@@ -279,11 +207,9 @@ body {
     display: flex;
     flex-direction: column;
     gap: 2.2rem;
-    margin-top: 3rem;
+    margin: 3rem auto 0;
     padding: 1rem 0;
     max-width: 950px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .linha-trilha-guia {
@@ -292,7 +218,7 @@ body {
     bottom: 20px;
     left: 50%;
     width: 2px;
-    background: linear-gradient(180deg, rgba(var(--cor-destaque-rgb), 0.15) 0%, rgba(var(--cor-destaque-rgb), 0.6) 50%, rgba(var(--cor-destaque-rgb), 0.15) 100%) !important;
+    background: linear-gradient(180deg, rgba(var(--cor-destaque-rgb), 0.15) 0%, rgba(var(--cor-destaque-rgb), 0.6) 50%, rgba(var(--cor-destaque-rgb), 0.15) 100%);
     transform: translateX(-50%);
     pointer-events: none;
     z-index: 1;
@@ -302,8 +228,8 @@ body {
     position: relative;
     z-index: 2;
     width: min(480px, 85%);
-    background: var(--home-bg-card-claro, #ffffff);
-    border: 1px solid var(--home-borda-suave, rgba(0, 0, 0, 0.1));
+    background: var(--superficie-card-claro);
+    border: 1px solid var(--borda-suave);
     border-radius: 20px;
     padding: 1.8rem 2.2rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
@@ -313,8 +239,8 @@ body {
 
 .card-trilha:hover {
     transform: translateY(-4px) scale(1.01);
-    border-color: rgba(var(--cor-destaque-rgb), 0.6) !important;
-    box-shadow: 0 15px 35px rgba(var(--cor-destaque-rgb), 0.18) !important;
+    border-color: rgba(var(--cor-destaque-rgb), 0.6);
+    box-shadow: 0 15px 35px rgba(var(--cor-destaque-rgb), 0.18);
 }
 
 .marcador-ponto {
@@ -322,10 +248,10 @@ body {
     top: 50%;
     width: 12px;
     height: 12px;
-    background-color: var(--cor-destaque) !important;
+    background-color: var(--cor-destaque);
     border-radius: 50%;
     transform: translateY(-50%);
-    box-shadow: 0 0 12px rgba(var(--cor-destaque-rgb), 0.8) !important;
+    box-shadow: 0 0 12px rgba(var(--cor-destaque-rgb), 0.8);
     z-index: 3;
 }
 
@@ -339,15 +265,15 @@ body {
 .card-direita .marcador-ponto { left: -30px; }
 
 .card-trilha.destaque-nankim {
-    border: 1px solid rgba(var(--cor-destaque-rgb), 0.45) !important;
-    background: var(--home-bg-card-claro, #ffffff);
-    box-shadow: 0 12px 35px rgba(var(--cor-destaque-rgb), 0.15) !important;
+    border: 1px solid rgba(var(--cor-destaque-rgb), 0.45);
+    background: var(--superficie-card-claro);
+    box-shadow: 0 12px 35px rgba(var(--cor-destaque-rgb), 0.15);
 }
 
 :root[data-theme="dark"] .card-trilha.destaque-nankim {
     background: #111111;
-    border-color: rgba(var(--cor-destaque-rgb), 0.5) !important;
-    box-shadow: 0 12px 35px rgba(var(--cor-destaque-rgb), 0.25) !important;
+    border-color: rgba(var(--cor-destaque-rgb), 0.5);
+    box-shadow: 0 12px 35px rgba(var(--cor-destaque-rgb), 0.25);
 }
 
 .texto-card-trilha {
@@ -355,15 +281,15 @@ body {
     font-size: clamp(0.98rem, 1.3vw, 1.1rem);
     font-weight: 600;
     line-height: 1.6;
-    color: var(--home-texto-escuro);
+    color: var(--texto-principal);
     margin: 0;
 }
 
 .divisor-secao-glow {
     width: min(300px, 60%);
     height: 1px;
-    margin: 4rem auto 1rem !important;
-    background: linear-gradient(90deg, transparent 0%, rgba(var(--cor-destaque-rgb), 0.6) 50%, transparent 100%) !important;
+    margin: 4rem auto 1rem;
+    background: linear-gradient(90deg, transparent 0%, rgba(var(--cor-destaque-rgb), 0.6) 50%, transparent 100%);
     position: relative;
 }
 
@@ -375,77 +301,26 @@ body {
     transform: translate(-50%, -50%);
     width: 6px;
     height: 6px;
-    background-color: var(--cor-destaque) !important;
+    background-color: var(--cor-destaque);
     border-radius: 50%;
-    box-shadow: 0 0 10px rgba(var(--cor-destaque-rgb), 0.8) !important;
+    box-shadow: 0 0 10px rgba(var(--cor-destaque-rgb), 0.8);
 }
 
-/* ==========================================================================
-   SEÇÃO 3: VITRINE DE ETAPAS (NOVO DESIGN COM SLOGAN NO TOPO)
-   ========================================================================== */
+/* ================= SEÇÃO 3: VITRINE DE CURSOS ================= */
 .secao-vitrine-cursos {
     width: 100%;
-    padding-top: 1rem !important;
+    padding-top: 1rem;
 }
-/* Título com destaque máximo e animação contínua na Seção 3 */
+
 .titulo-animado-nankim {
-    font-size: clamp(2.3rem, 4.5vw, 3.6rem) !important;
-    font-weight: 900 !important;
-    line-height: 1.15 !important;
+    font-size: clamp(2.3rem, 4.5vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.15;
     letter-spacing: -1.5px;
-    color: #ffffff !important;
-    margin-bottom: 1.2rem !important;
+    color: #ffffff;
+    margin-bottom: 1.2rem;
 }
 
-/* Gradiente dourado/âmbar com brilho deslizando continuamente */
-.texto-fluxo-dourado {
-    background: linear-gradient(
-        110deg,
-        var(--cor-destaque, #f39c12) 0%,
-        #ffe082 25%,
-        var(--cor-destaque, #f39c12) 50%,
-        #ffb300 75%,
-        var(--cor-destaque, #f39c12) 100%
-    );
-    background-size: 250% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: brilhoContinuoTexto 3.5s linear infinite, pulsoNeonSuave 3s ease-in-out infinite;
-    display: inline-block;
-    position: relative;
-}
-
-/* Traço luminoso contínuo abaixo de "ganha traço." */
-.sublinhado-traco::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -6px;
-    width: 100%;
-    height: 4px;
-    border-radius: 4px;
-    background: linear-gradient(90deg, transparent, var(--cor-destaque, #f39c12), #ffe082, var(--cor-destaque, #f39c12), transparent);
-    background-size: 200% 100%;
-    animation: deslizarTracoLuz 2.5s linear infinite;
-    box-shadow: 0 0 12px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.7);
-}
-
-@keyframes brilhoContinuoTexto {
-    0% { background-position: 0% center; }
-    100% { background-position: 250% center; }
-}
-
-@keyframes pulsoNeonSuave {
-    0%, 100% { filter: drop-shadow(0 0 8px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.35)); }
-    50% { filter: drop-shadow(0 0 18px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.75)); }
-}
-
-@keyframes deslizarTracoLuz {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-}
-/* 2. Quadros / Cards dos Cursos */
 .grid-cards-cursos {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -555,10 +430,10 @@ body {
 }
 
 .descricao-curso {
-    font-size: 0.95rem !important;
-    color: rgba(255, 255, 255, 0.85) !important;
-    line-height: 1.5 !important;
-    margin-top: 0.5rem !important;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.5;
+    margin-top: 0.5rem;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
 }
 
@@ -569,7 +444,7 @@ body {
     width: 100%;
     text-align: center;
     background-color: #ffffff;
-    color: #2b2b2b !important;
+    color: #2b2b2b;
     font-family: 'Montserrat', sans-serif;
     font-size: 0.95rem;
     font-weight: 700;
@@ -577,14 +452,13 @@ body {
     border-radius: 50px;
     border: 1px solid #ffffff;
     text-decoration: none;
-    box-sizing: border-box;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .btn-card-cta:hover {
     background-color: #2b2b2b;
-    color: #ffffff !important;
+    color: #ffffff;
     border-color: #ffffff;
 }
 
@@ -600,28 +474,16 @@ body {
     border-radius: 50px;
     border: 1px solid rgba(255, 255, 255, 0.15);
     cursor: not-allowed;
-    box-sizing: border-box;
 }
 
-
-
-/* ==========================================================================
-   SEÇÃO 4: DEGUSTAÇÃO GRATUITA (MÓDULO PILOTO)
-   ========================================================================== */
+/* ================= SEÇÃO 4: DEGUSTAÇÃO GRATUITA (MÓDULO PILOTO) ================= */
 .secao-degustacao {
-    background-color: var(--home-secao-escura-bg) !important;
-    color: var(--home-secao-escura-texto);
+    background-color: var(--secao-escura-bg);
+    color: var(--secao-escura-texto);
     padding: 3rem 5% 7rem;
     position: relative;
     z-index: 5;
     transition: background-color 0.3s ease, color 0.3s ease;
-}
-.secao-degustacao .btn-degustacao-cta {
-    display: inline-flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    position: relative !important;
-    z-index: 10 !important;
 }
 
 .degustacao-container {
@@ -638,14 +500,13 @@ body {
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
 }
 
-/* Borda com luz na cor de destaque (Âmbar/Dourado) */
 .borda-luz-vermelha {
     position: absolute;
     top: -50%;
     left: -50%;
     width: 200%;
     height: 200%;
-    background: conic-gradient(transparent, transparent, transparent, var(--cor-destaque, #f39c12));
+    background: conic-gradient(transparent, transparent, transparent, var(--cor-destaque));
     animation: percorrerBorda 6s linear infinite;
     z-index: 1;
 }
@@ -672,15 +533,14 @@ body {
     margin: 0 auto;
 }
 
-/* Círculo pontilhado na cor de destaque */
 .degustacao-circulo-giratorio {
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    border: 2px dashed rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.5);
-    background-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.04);
+    border: 2px dashed rgba(var(--cor-destaque-rgb), 0.5);
+    background-color: rgba(var(--cor-destaque-rgb), 0.04);
     animation: girarCirculo 18s linear infinite;
-    box-shadow: 0 0 20px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.15);
+    box-shadow: 0 0 20px rgba(var(--cor-destaque-rgb), 0.15);
 }
 
 .degustacao-texto-pulsante {
@@ -701,13 +561,12 @@ body {
     margin-bottom: 0.2rem;
 }
 
-/* Texto 100% GRÁTIS na cor de destaque */
 .selo-destaque.selo-vermelho {
-    font-family: 'Share Tech', sans-serif, 'Montserrat';
+    font-family: 'Share Tech', 'Montserrat', sans-serif;
     font-size: 1.85rem;
     font-weight: 900;
-    color: var(--cor-destaque, #f39c12) !important;
-    text-shadow: 0 0 15px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.4);
+    color: var(--cor-destaque);
+    text-shadow: 0 0 15px rgba(var(--cor-destaque-rgb), 0.4);
     line-height: 1.1;
     white-space: nowrap;
 }
@@ -746,34 +605,34 @@ body {
     line-height: 1.4;
 }
 
-/* --- Botão CTA da Seção 4 (Degustação) com Suporte ao Efeito Magnético --- */
 .btn-degustacao-cta {
-    background-color: #ffffff !important;
-    color: #2b2b2b !important;
-    border: 1px solid #ffffff !important;
-    padding: 1.1rem 2.5rem !important;
-    border-radius: 50px !important;
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 1rem !important;
-    font-weight: 800 !important;
-    cursor: pointer !important;
-    margin-top: 0.5rem !important;
-    display: inline-flex !important;
+    background-color: #ffffff;
+    color: #2b2b2b;
+    border: 1px solid #ffffff;
+    padding: 1.1rem 2.5rem;
+    border-radius: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    box-sizing: border-box;
-    /* SEM !important no transform e no transition para permitir a animação fluida do JS */
+    position: relative;
+    z-index: 10;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .btn-degustacao-cta:hover {
-    background-color: #2b2b2b !important;
-    color: #ffffff !important;
-    border-color: #ffffff !important;
+    background-color: #2b2b2b;
+    color: #ffffff;
+    border-color: #ffffff;
     box-shadow: 0 10px 25px rgba(255, 255, 255, 0.15);
 }
-/* --- Seção 5: Depoimentos --- */
+
+/* ================= SEÇÃO 5: DEPOIMENTOS EM LEQUE ================= */
 .wrapper-depoimentos-stack {
     position: relative;
     width: 100%;
@@ -789,8 +648,8 @@ body {
     position: absolute;
     width: 360px;
     height: 250px;
-    background-color: var(--home-bg-card-claro);
-    border: 1px solid var(--home-borda-suave);
+    background-color: var(--superficie-card-claro);
+    border: 1px solid var(--borda-suave);
     border-radius: 20px;
     padding: 2rem;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
@@ -804,7 +663,7 @@ body {
     font-size: 1rem;
     line-height: 1.5;
     font-weight: 500;
-    color: var(--home-texto-escuro);
+    color: var(--texto-principal);
 }
 
 .depo-header-sucesso {
@@ -821,7 +680,7 @@ body {
     background-position: center;
     border: 2px solid var(--cor-destaque);
     flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(179, 63, 48, 0.18);
+    box-shadow: 0 4px 12px rgba(var(--cor-destaque-rgb), 0.2);
 }
 
 .depo-info-aluno {
@@ -832,7 +691,7 @@ body {
 .depo-nome {
     font-size: 1.15rem;
     font-weight: 800;
-    color: var(--home-texto-escuro);
+    color: var(--texto-principal);
     margin: 0 0 2px 0;
     line-height: 1.2;
 }
@@ -847,7 +706,7 @@ body {
 .depo-empresa {
     font-size: 0.82rem;
     font-weight: 600;
-    color: var(--home-texto-suave);
+    color: var(--texto-suave);
     margin-top: 2px;
 }
 
@@ -861,9 +720,9 @@ body {
 .wrapper-depoimentos-stack:hover .card-depo:nth-child(3) { transform: translate(-210px, 140px) rotate(1deg); }
 .wrapper-depoimentos-stack:hover .card-depo:nth-child(4) { transform: translate(210px, 145px) rotate(-1deg); }
 
-/* --- Seção 6: Propósito e Didática --- */
+/* ================= SEÇÃO 6: PROPÓSITO E DIDÁTICA ================= */
 .secao-missao-institucional {
-    background-color: var(--home-bg-principal) !important;
+    background-color: var(--superficie-principal);
     padding: 2rem 0 8rem;
     width: 100%;
     position: relative;
@@ -892,8 +751,8 @@ body {
     border-radius: 28px;
     overflow: hidden;
     box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
-    border: 1px solid var(--home-borda-suave);
-    background-color: var(--home-bg-card-claro);
+    border: 1px solid var(--borda-suave);
+    background-color: var(--superficie-card-claro);
 }
 
 .moldura-foto-destaque img {
@@ -904,7 +763,9 @@ body {
     transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
 }
 
-.moldura-foto-destaque:hover img { transform: scale(1.04); }
+.moldura-foto-destaque:hover img {
+    transform: scale(1.04);
+}
 
 .overlay-gradiente-foto {
     position: absolute;
@@ -928,42 +789,41 @@ body {
 }
 
 .grid-thumbs-galeria {
-    display: flex !important;
-    gap: 12px !important;
-    margin-top: 1rem !important;
-    justify-content: flex-start !important;
-    flex-wrap: wrap !important;
+    display: flex;
+    gap: 12px;
+    margin-top: 0.5rem;
+    justify-content: flex-start;
+    flex-wrap: wrap;
 }
 
 .thumb-item {
-    width: 65px !important;
-    height: 65px !important;
-    border-radius: 12px !important;
-    background-size: cover !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    border: 2px solid transparent !important;
-    cursor: pointer !important;
-    opacity: 0.7 !important;
-    transition: all 0.3s ease !important;
-    display: inline-block !important;
-    box-sizing: border-box !important;
+    width: 65px;
+    height: 65px;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 2px solid transparent;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    display: inline-block;
 }
 
 .thumb-item:hover {
-    opacity: 1 !important;
-    transform: translateY(-2px) !important;
+    opacity: 1;
+    transform: translateY(-2px);
 }
 
 .thumb-item.ativo {
-    opacity: 1 !important;
-    border-color: var(--cor-destaque) !important;
-    box-shadow: 0 4px 12px rgba(243, 156, 18, 0.4) !important;
+    opacity: 1;
+    border-color: var(--cor-destaque);
+    box-shadow: 0 4px 12px rgba(var(--cor-destaque-rgb), 0.4);
 }
 
 .card-texto-proposito {
-    background-color: var(--home-bg-card-claro);
-    border: 1px solid var(--home-borda-suave);
+    background-color: var(--superficie-card-claro);
+    border: 1px solid var(--borda-suave);
     border-radius: 28px;
     padding: 3rem 2.8rem;
     position: relative;
@@ -984,7 +844,7 @@ body {
     font-size: 1.15rem;
     line-height: 1.75;
     font-weight: 600;
-    color: var(--home-texto-escuro);
+    color: var(--texto-principal);
     margin-bottom: 1.2rem;
 }
 
@@ -992,7 +852,7 @@ body {
     font-size: 1rem;
     line-height: 1.7;
     font-weight: 400;
-    color: var(--home-texto-suave);
+    color: var(--texto-suave);
     margin-bottom: 2rem;
 }
 
@@ -1012,13 +872,11 @@ body {
 .nome-instrutor-missao {
     font-size: 0.9rem;
     font-weight: 700;
-    color: var(--home-texto-escuro);
+    color: var(--texto-principal);
     letter-spacing: -0.2px;
 }
 
-
-
-/* --- ANIMAÇÕES KEYFRAMES --- */
+/* ================= KEYFRAMES EXCLUSIVOS DA HOME ================= */
 @keyframes entrarEsquerdaLento {
     from { opacity: 0; transform: translateX(-120px); }
     to { opacity: 1; transform: translateX(0); }
@@ -1027,16 +885,6 @@ body {
 @keyframes entrarDireitaLento {
     from { opacity: 0; transform: translateX(120px); }
     to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes subirTextoVideo {
-    from { opacity: 0; transform: translate(-50%, 30px); }
-    to { opacity: 1; transform: translate(-50%, 0); }
-}
-
-@keyframes piscarCursor {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
 }
 
 @keyframes fadeUpScaleLento {
@@ -1060,7 +908,7 @@ body {
     100% { transform: scale(1); opacity: 0.95; }
 }
 
-/* --- RESPONSIVIDADE --- */
+/* ================= RESPONSIVIDADE ================= */
 @media (max-width: 900px) {
     .degustacao-card-conteudo-inner {
         grid-template-columns: 1fr;
@@ -1076,9 +924,30 @@ body {
 }
 
 @media (max-width: 850px) {
-    .linha-trilha-guia, .marcador-ponto { display: none !important; }
-    .trilha-obstaculos-wrapper { gap: 1.2rem; }
-    .card-trilha { width: 100% !important; align-self: center !important; }
-    .wrapper-depoimentos-stack { height: auto; flex-direction: column; gap: 1.5rem; }
-    .card-depo { position: relative; width: 100%; height: auto; transform: none !important; }
+    .linha-trilha-guia,
+    .marcador-ponto {
+        display: none;
+    }
+
+    .trilha-obstaculos-wrapper {
+        gap: 1.2rem;
+    }
+
+    .card-trilha {
+        width: 100%;
+        align-self: center;
+    }
+
+    .wrapper-depoimentos-stack {
+        height: auto;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .card-depo {
+        position: relative;
+        width: 100%;
+        height: auto;
+        transform: none !important;
+    }
 }

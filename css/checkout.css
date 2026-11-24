@@ -1,14 +1,24 @@
+/* ==========================================================================
+   CHECKOUT.CSS - Nankim Escola de Arte
+   Seletor de planos, abas de pagamento (PIX, Boleto, Cartão) e QR Code
+   ========================================================================== */
+
 .modal-checkout {
     max-width: 560px;
 }
 
 .subtitulo-modal {
-    margin: -10px 0 1.25rem;
-    color: #555;
+    margin: -1rem 0 1.25rem;
+    color: #555555;
     font-size: 0.9rem;
+    text-align: center;
 }
 
-/* Seletor compacto de plano no topo do checkout */
+:root[data-theme="dark"] .subtitulo-modal {
+    color: #a0a0a0;
+}
+
+/* ================= SELETOR COMPACTO DE PLANOS ================= */
 .checkout-planos-resumo {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -22,15 +32,21 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 10px 6px;
-    border: 1.5px solid #d8d2c8;
-    border-radius: 8px;
-    background: #fafafa;
-    color: #222;
+    padding: 12px 6px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 12px;
+    background: #f9f9f9;
+    color: #222222;
     font-family: inherit;
     cursor: pointer;
     text-align: center;
-    transition: all 0.2s ease;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+:root[data-theme="dark"] .btn-plano-modal {
+    background: #222222;
+    border-color: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
 }
 
 .btn-plano-modal strong {
@@ -38,9 +54,9 @@
 }
 
 .btn-plano-modal span {
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     font-weight: 800;
-    color: #222;
+    color: inherit;
     margin-top: 2px;
 }
 
@@ -50,32 +66,45 @@
     font-weight: 700;
 }
 
+:root[data-theme="dark"] .btn-plano-modal small {
+    color: #4ade80;
+}
+
 .btn-plano-modal.ativo {
     border-color: var(--cor-destaque);
     background: #fff9ef;
-    box-shadow: 0 4px 12px rgba(243, 156, 18, 0.18);
+    box-shadow: 0 4px 12px rgba(var(--cor-destaque-rgb), 0.18);
+}
+
+:root[data-theme="dark"] .btn-plano-modal.ativo {
+    background: rgba(var(--cor-destaque-rgb), 0.14);
 }
 
 .tag-recomendado-mini {
     position: absolute;
-    top: -8px;
+    top: -9px;
     background: var(--cor-destaque);
-    color: #111;
+    color: #111111;
     font-size: 0.6rem;
     font-weight: 900;
-    padding: 1px 7px;
+    padding: 2px 8px;
     border-radius: 999px;
+    letter-spacing: 0.04em;
 }
 
-/* Abas de Método de Pagamento (exibidas apenas no Plano Mensal) */
+/* ================= MÉTODOS DE PAGAMENTO ================= */
 .metodos-pagamento {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
-    padding: 10px;
-    border: 1px solid #d8d2c8;
-    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 14px;
     margin-bottom: 1rem;
+}
+
+:root[data-theme="dark"] .metodos-pagamento {
+    border-color: rgba(255, 255, 255, 0.14);
 }
 
 .metodos-pagamento[hidden] {
@@ -84,7 +113,7 @@
 
 .metodos-pagamento legend {
     padding: 0 6px;
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     font-weight: 700;
 }
 
@@ -94,16 +123,26 @@
     justify-content: center;
     gap: 6px;
     padding: 8px 6px;
-    border-radius: 6px;
+    border-radius: 10px;
     border: 1px solid #e4dfd7;
-    font-size: 0.86rem;
+    font-size: 0.85rem;
     font-weight: 700;
     cursor: pointer;
     transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
+:root[data-theme="dark"] .metodos-pagamento label {
+    border-color: rgba(255, 255, 255, 0.12);
+    background: #222222;
+}
+
 .metodos-pagamento label:has(input:checked) {
     background: #fff9ef;
+    border-color: var(--cor-destaque);
+}
+
+:root[data-theme="dark"] .metodos-pagamento label:has(input:checked) {
+    background: rgba(var(--cor-destaque-rgb), 0.16);
     border-color: var(--cor-destaque);
 }
 
@@ -113,13 +152,18 @@
     accent-color: var(--cor-destaque);
 }
 
-/* Painéis PIX, Boleto e Cartão */
+/* ================= PAINÉIS PIX, BOLETO E CARTÃO ================= */
 .painel-metodo-box {
-    border: 1px solid #e2dcd2;
-    border-radius: 8px;
+    border: 1px solid #e2e2e2;
+    border-radius: 14px;
     padding: 14px;
-    background: #fcfbf9;
+    background: #f9f9f9;
     margin-bottom: 1rem;
+}
+
+:root[data-theme="dark"] .painel-metodo-box {
+    background: #222222;
+    border-color: rgba(255, 255, 255, 0.14);
 }
 
 .pix-qr-layout {
@@ -131,9 +175,9 @@
 .pix-qr-imagem {
     width: 120px;
     height: 120px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #dddddd;
+    background: #ffffff;
     padding: 4px;
     flex-shrink: 0;
 }
@@ -142,15 +186,20 @@
 .boleto-box h4 {
     margin: 0 0 4px;
     font-size: 0.95rem;
-    color: #1f1f1f;
+    color: inherit;
 }
 
 .pix-info-texto p,
 .boleto-box p {
     margin: 0 0 8px;
     font-size: 0.82rem;
-    color: #555;
+    color: #555555;
     line-height: 1.45;
+}
+
+:root[data-theme="dark"] .pix-info-texto p,
+:root[data-theme="dark"] .boleto-box p {
+    color: #b0b0b0;
 }
 
 .linha-copia-cola {
@@ -162,35 +211,47 @@
 .linha-copia-cola input {
     flex: 1;
     font-size: 0.76rem;
-    padding: 7px 9px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background: #fff;
-    color: #333;
+    padding: 8px 10px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #333333;
     font-family: monospace;
+}
+
+:root[data-theme="dark"] .linha-copia-cola input {
+    background: #141414;
+    border-color: rgba(255, 255, 255, 0.16);
+    color: #e2e2e2;
 }
 
 .btn-copiar-codigo {
     padding: 0 12px;
     border: none;
-    border-radius: 5px;
-    background: #222;
-    color: #fff;
+    border-radius: 8px;
+    background: #111111;
+    color: #ffffff;
     font-size: 0.78rem;
     font-weight: 700;
     cursor: pointer;
     white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+:root[data-theme="dark"] .btn-copiar-codigo {
+    background: #ffffff;
+    color: #111111;
 }
 
 .btn-copiar-codigo:hover {
     background: var(--cor-destaque);
-    color: #111;
+    color: #111111;
 }
 
 .boleto-barras-visual {
     height: 46px;
     margin: 10px 0;
-    border-radius: 4px;
+    border-radius: 6px;
     background: repeating-linear-gradient(
         90deg,
         #111 0px, #111 2px,
@@ -200,7 +261,7 @@
         #111 9px, #111 10px,
         #fff 10px, #fff 14px
     );
-    border: 1px solid #ddd;
+    border: 1px solid #dddddd;
 }
 
 .dados-cartao {
@@ -219,13 +280,19 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 12px;
-    border-radius: 6px;
+    padding: 9px 12px;
+    border-radius: 10px;
     background: #f4f1ea;
     border: 1px solid #e2dcd0;
     font-size: 0.82rem;
     font-weight: 700;
-    color: #333;
+    color: #333333;
+}
+
+:root[data-theme="dark"] .aviso-cartao-exclusivo {
+    background: #242424;
+    border-color: rgba(255, 255, 255, 0.14);
+    color: #e2e2e2;
 }
 
 .campo-cartao-wrapper {
@@ -244,28 +311,40 @@
     right: 10px;
     font-size: 0.72rem;
     font-weight: 800;
-    padding: 2px 7px;
-    border-radius: 4px;
-    background: #eee;
-    color: #333;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: #eeeeee;
+    color: #333333;
     text-transform: uppercase;
+}
+
+:root[data-theme="dark"] .badge-bandeira-cartao {
+    background: #333333;
+    color: #ffffff;
 }
 
 .select-parcelas {
     width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+    padding: 0.85rem 1rem;
+    border: 1px solid #e2e2e2;
+    border-radius: 14px;
     font-family: inherit;
     font-size: 0.9rem;
     font-weight: 700;
-    background: #fff;
-    color: #222;
+    background: #f9f9f9;
+    color: #222222;
+}
+
+:root[data-theme="dark"] .select-parcelas {
+    background: #222222;
+    border-color: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
 }
 
 .checkout-nota {
     padding: 10px 12px;
     border-left: 3px solid var(--cor-destaque);
+    border-radius: 0 8px 8px 0;
     background: #f8f2e7;
     color: #4c4943;
     font-size: 0.83rem;
@@ -273,11 +352,17 @@
     margin-bottom: 1rem;
 }
 
+:root[data-theme="dark"] .checkout-nota {
+    background: rgba(var(--cor-destaque-rgb), 0.12);
+    color: #d8d4cc;
+}
+
 @media (max-width: 520px) {
     .pix-qr-layout {
         flex-direction: column;
         text-align: center;
     }
+
     .checkout-planos-resumo {
         grid-template-columns: 1fr;
     }

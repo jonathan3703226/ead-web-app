@@ -1,244 +1,238 @@
 /* ==========================================================================
-   MODAL DE REPORTAR ERRO - PADRÃO VISUAL NANKIM (LOGIN / CADASTRO)
+   REPORTAR.CSS - Nankim Escola de Arte
+   Modal de reporte de falhas / feedback técnico
    ========================================================================== */
 
 .modal-reportar-overlay-fix {
-    position: fixed !important;
-    inset: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background-color: rgba(0, 0, 0, 0.65) !important;
-    backdrop-filter: blur(5px) !important;
-    z-index: 999999 !important;
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(6px);
+    z-index: 999999;
     display: flex;
-    justify-content: center !important;
-    align-items: center !important;
-    padding: 1.5rem !important;
-    box-sizing: border-box !important;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
 }
 
 .modal-reportar-card-fix {
-    position: relative !important;
-    background-color: #ffffff !important;
-    color: #111111 !important;
-    width: 100% !important;
-    max-width: 480px !important;
-    border-radius: 24px !important;
-    padding: 2.3rem 2.2rem !important;
-    border: 1px solid rgba(0, 0, 0, 0.1) !important;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28) !important;
-    font-family: 'Montserrat', sans-serif !important;
-    box-sizing: border-box !important;
-    animation: modalPadraoEntrada 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    position: relative;
+    background-color: #ffffff;
+    color: #111111;
+    width: 100%;
+    max-width: 480px;
+    border-radius: 24px;
+    padding: 2.3rem 2.2rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+    font-family: 'Montserrat', sans-serif;
+    animation: surgimentoModal 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :root[data-theme="dark"] .modal-reportar-card-fix {
-    background-color: #181818 !important;
-    color: #ffffff !important;
-    border-color: rgba(255, 255, 255, 0.14) !important;
+    background-color: #181818;
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.14);
 }
 
 .btn-fechar-x-report {
-    position: absolute !important;
-    top: 1.2rem !important;
-    right: 1.3rem !important;
-    width: 36px !important;
-    height: 36px !important;
-    border-radius: 50% !important;
-    background: rgba(128, 128, 128, 0.1) !important;
-    border: none !important;
-    font-size: 1.4rem !important;
-    line-height: 1 !important;
-    color: inherit !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    cursor: pointer !important;
-    transition: background-color 0.2s ease !important;
+    position: absolute;
+    top: 1.2rem;
+    right: 1.3rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(128, 128, 128, 0.1);
+    border: none;
+    font-size: 1.4rem;
+    line-height: 1;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .btn-fechar-x-report:hover {
-    background: rgba(128, 128, 128, 0.2) !important;
+    background: rgba(128, 128, 128, 0.2);
+    transform: rotate(90deg);
 }
 
 .modal-eyebrow-padrao {
-    display: block !important;
-    font-size: 0.74rem !important;
-    font-weight: 800 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 1.4px !important;
-    color: var(--cor-destaque, #f39c12) !important;
-    margin-bottom: 0.35rem !important;
+    display: block;
+    font-size: 0.74rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    color: var(--cor-destaque);
+    margin-bottom: 0.35rem;
 }
 
 .titulo-reportar-fix {
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 1.5rem !important;
-    font-weight: 800 !important;
-    color: inherit !important;
-    margin: 0 0 0.4rem 0 !important;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: inherit;
+    margin: 0 0 0.4rem 0;
 }
 
 .subtitulo-reportar-fix {
-    font-size: 0.88rem !important;
-    color: #666666 !important;
-    line-height: 1.5 !important;
-    margin: 0 0 1.3rem 0 !important;
+    font-size: 0.88rem;
+    color: #666666;
+    line-height: 1.5;
+    margin: 0 0 1.3rem 0;
 }
 
 :root[data-theme="dark"] .subtitulo-reportar-fix {
-    color: #a0a0a0 !important;
+    color: #a0a0a0;
 }
 
 .form-reportar-corpo {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 1rem !important;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .grupo-opcoes-erro {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 0.55rem !important;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
 }
 
 .opcao-erro-card {
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
-    padding: 0.8rem 1rem !important;
-    border: 1px solid #e2e2e2 !important;
-    border-radius: 14px !important;
-    cursor: pointer !important;
-    background-color: #f9f9f9 !important;
-    transition: border-color 0.2s ease, background-color 0.2s ease !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.8rem 1rem;
+    border: 1px solid #e2e2e2;
+    border-radius: 14px;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 :root[data-theme="dark"] .opcao-erro-card {
-    background-color: #222222 !important;
-    border-color: rgba(255, 255, 255, 0.12) !important;
+    background-color: #222222;
+    border-color: rgba(255, 255, 255, 0.12);
 }
 
 .opcao-erro-card:hover {
-    border-color: #000000 !important;
+    border-color: #000000;
 }
 
 :root[data-theme="dark"] .opcao-erro-card:hover {
-    border-color: var(--cor-destaque, #f39c12) !important;
+    border-color: var(--cor-destaque);
 }
 
 .opcao-erro-card input[type="radio"] {
-    accent-color: var(--cor-destaque, #f39c12) !important;
-    width: 17px !important;
-    height: 17px !important;
-    margin: 0 !important;
+    accent-color: var(--cor-destaque);
+    width: 17px;
+    height: 17px;
+    margin: 0;
 }
 
 .opcao-erro-label {
-    font-size: 0.88rem !important;
-    font-weight: 600 !important;
-    color: inherit !important;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: inherit;
 }
 
 .campo-texto-erro {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 0.4rem !important;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
 }
 
 .label-textarea {
-    font-size: 0.85rem !important;
-    font-weight: 700 !important;
-    color: inherit !important;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: inherit;
 }
 
 .campo-texto-erro textarea {
-    width: 100% !important;
-    padding: 0.9rem 1.1rem !important;
-    border: 1px solid #e2e2e2 !important;
-    border-radius: 14px !important;
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 0.92rem !important;
-    color: #000000 !important;
-    background-color: #f9f9f9 !important;
-    resize: vertical !important;
-    box-sizing: border-box !important;
-    transition: border-color 0.25s ease, background-color 0.25s ease !important;
+    width: 100%;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid #e2e2e2;
+    border-radius: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.92rem;
+    color: #111111;
+    background-color: #f9f9f9;
+    resize: vertical;
+    transition: border-color 0.25s ease, background-color 0.25s ease;
 }
 
 :root[data-theme="dark"] .campo-texto-erro textarea {
-    background-color: #222222 !important;
-    border-color: rgba(255, 255, 255, 0.12) !important;
-    color: #ffffff !important;
+    background-color: #222222;
+    border-color: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
 }
 
 .campo-texto-erro textarea:focus {
-    outline: none !important;
-    border-color: #000000 !important;
-    background-color: #ffffff !important;
+    outline: none;
+    border-color: #000000;
+    background-color: #ffffff;
 }
 
 :root[data-theme="dark"] .campo-texto-erro textarea:focus {
-    border-color: var(--cor-destaque, #f39c12) !important;
-    background-color: #282828 !important;
+    border-color: var(--cor-destaque);
+    background-color: #282828;
 }
 
 .btn-enviar-report,
 .btn-fechar-sucesso {
-    width: 100% !important;
-    background-color: #000000 !important;
-    color: #ffffff !important;
-    border: 1px solid #000000 !important;
-    padding: 1rem 1.8rem !important;
-    border-radius: 50px !important;
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 0.95rem !important;
-    font-weight: 700 !important;
-    cursor: pointer !important;
-    margin-top: 0.3rem !important;
-    transition: background-color 0.25s ease, transform 0.2s ease !important;
+    width: 100%;
+    background-color: #000000;
+    color: #ffffff;
+    border: 1px solid #000000;
+    padding: 1rem 1.8rem;
+    border-radius: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 0.3rem;
+    transition: background-color 0.25s ease, transform 0.2s ease, opacity 0.2s ease;
 }
 
 :root[data-theme="dark"] .btn-enviar-report,
 :root[data-theme="dark"] .btn-fechar-sucesso {
-    background-color: #ffffff !important;
-    color: #111111 !important;
-    border-color: #ffffff !important;
+    background-color: #ffffff;
+    color: #111111;
+    border-color: #ffffff;
 }
 
 .btn-enviar-report:hover,
 .btn-fechar-sucesso:hover {
-    transform: translateY(-2px) !important;
-    opacity: 0.92 !important;
+    transform: translateY(-2px);
+    opacity: 0.92;
 }
 
-/* Confirmação no padrão msg-sucesso-card */
 .reportar-sucesso-wrapper {
-    padding-top: 0.6rem !important;
+    padding-top: 0.6rem;
 }
 
 .reportar-card-confirmacao {
-    align-items: flex-start !important;
-    text-align: left !important;
-    margin-bottom: 1.4rem !important;
+    align-items: flex-start;
+    text-align: left;
+    margin-bottom: 1.4rem;
 }
 
 .titulo-sucesso-report {
-    display: block !important;
-    font-size: 1rem !important;
-    font-weight: 800 !important;
-    color: #166534 !important;
-    margin-bottom: 0.25rem !important;
+    display: block;
+    font-size: 1rem;
+    font-weight: 800;
+    color: inherit;
+    margin-bottom: 0.25rem;
 }
 
 .texto-sucesso-report {
-    font-size: 0.86rem !important;
-    color: #15803d !important;
-    line-height: 1.45 !important;
-    margin: 0 !important;
-}
-
-@keyframes modalPadraoEntrada {
-    from { transform: translateY(18px) scale(0.97); opacity: 0; }
-    to { transform: translateY(0) scale(1); opacity: 1; }
+    font-size: 0.86rem;
+    color: inherit;
+    opacity: 0.9;
+    line-height: 1.45;
+    margin: 0;
 }

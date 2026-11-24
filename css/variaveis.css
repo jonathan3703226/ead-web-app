@@ -1,22 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Caveat:wght@500;600;700&family=Comfortaa:wght@500;600;700&display=swap');
-
 /* ==========================================================================
-   SISTEMA DE VARIÁVEIS GLOBAIS (NANKIM ESCOLA DE ARTE)
+   VARIAVEIS.CSS - Nankim Escola de Arte
+   Design Tokens Globais, Temas (Claro/Escuro) e Animações Compartilhadas
    ========================================================================== */
 
 :root {
-    /* --- Nova Cor de Destaque Oficial: Amarelo Âmbar / Dourado --- */
+    /* --- Cor de Destaque Oficial: Amarelo Âmbar / Dourado --- */
     --cor-destaque: #f39c12;
     --cor-destaque-hover: #d35400;
     --cor-destaque-rgb: 243, 156, 18;
 
-    /* --- Variáveis do Menu --- */
+    /* --- Superfícies & Tipografia (Páginas Públicas - Tema Claro) --- */
+    --superficie-principal: #ffffff;
+    --superficie-card-claro: #f4f4f4;
+    --texto-principal: #2b2b2b;
+    --texto-suave: #555555;
+    --borda-suave: #e0e0e0;
+
+    --secao-escura-bg: #2b2b2b;
+    --secao-escura-texto: #ffffff;
+    --secao-escura-card: #1a1a1a;
+    --secao-escura-texto-suave: #cccccc;
+    --secao-escura-borda: rgba(255, 255, 255, 0.12);
+    --secao-escura-campo: #111111;
+
+    /* --- Menu e Rodapé --- */
     --bg-menu: #ffffff;
     --texto-menu: #000000;
     --menu-bg: #ffffff;
     --menu-texto: #000000;
     --menu-scrolled-bg: rgba(255, 255, 255, 0.98);
 
+    /* --- Área do Aluno / Admin --- */
     --painel-fundo: #f5f6f8;
     --painel-header: #ffffff;
     --painel-superficie: #ffffff;
@@ -38,18 +52,33 @@
 }
 
 :root[data-theme="dark"] {
-    /* --- Cor de Destaque no Dark Mode (Ligeiramente mais luminosa) --- */
+    /* --- Cor de Destaque no Dark Mode --- */
     --cor-destaque: #f1c40f;
     --cor-destaque-hover: #f39c12;
     --cor-destaque-rgb: 241, 196, 15;
 
-    /* --- Variáveis do Menu no Dark Mode --- */
+    /* --- Superfícies & Tipografia (Páginas Públicas - Tema Escuro) --- */
+    --superficie-principal: #000000;
+    --superficie-card-claro: #0d0d0d;
+    --texto-principal: #ffffff;
+    --texto-suave: #a0a0a0;
+    --borda-suave: #222222;
+
+    --secao-escura-bg: #1a1a1a;
+    --secao-escura-texto: #ffffff;
+    --secao-escura-card: #111111;
+    --secao-escura-texto-suave: #cccccc;
+    --secao-escura-borda: rgba(255, 255, 255, 0.12);
+    --secao-escura-campo: #080808;
+
+    /* --- Menu e Rodapé --- */
     --bg-menu: #2b2b2b;
     --texto-menu: #ffffff;
     --menu-bg: #2b2b2b;
     --menu-texto: #ffffff;
     --menu-scrolled-bg: rgba(43, 43, 43, 0.98);
 
+    /* --- Área do Aluno / Admin --- */
     --painel-fundo: #070707;
     --painel-header: #000000;
     --painel-superficie: #111111;
@@ -70,65 +99,86 @@
     --painel-filtro-logo: invert(1);
 }
 
-.btn-toggle-tema {
-    width: 40px;
-    height: 40px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--painel-borda-forte);
-    border-radius: 50%;
-    background: transparent;
-    color: var(--painel-texto);
-    cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.2s ease;
+/* ==========================================================================
+   CLASSES & ANIMAÇÕES GLOBAIS COMPARTILHADAS
+   ========================================================================== */
+.prefixo-barra {
+    color: var(--cor-destaque);
+    font-weight: 900;
+    margin-right: 8px;
 }
 
-.btn-toggle-tema:hover {
-    background: rgba(128, 128, 128, 0.15);
-    transform: translateY(-1px);
+.cursor-typing {
+    display: inline-block;
+    color: var(--cor-destaque);
+    font-weight: 800;
+    animation: piscarCursorGlobal 0.8s infinite;
 }
 
-.btn-toggle-tema svg {
-    width: 19px;
-    height: 19px;
+.texto-fluxo-dourado {
+    background: linear-gradient(
+        110deg,
+        var(--cor-destaque) 0%,
+        #ffe082 25%,
+        var(--cor-destaque) 50%,
+        #ffb300 75%,
+        var(--cor-destaque) 100%
+    );
+    background-size: 250% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: brilhoContinuoTextoGlobal 3.5s linear infinite, pulsoNeonSuaveGlobal 3s ease-in-out infinite;
+    display: inline-block;
+    position: relative;
 }
 
-:root[data-theme="dark"] .btn-toggle-tema .icone-sol,
-:root:not([data-theme="dark"]) .btn-toggle-tema .icone-lua {
-    display: inline-flex;
+.sublinhado-traco::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 4px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, transparent, var(--cor-destaque), #ffe082, var(--cor-destaque), transparent);
+    background-size: 200% 100%;
+    animation: deslizarTracoLuzGlobal 2.5s linear infinite;
+    box-shadow: 0 0 12px rgba(var(--cor-destaque-rgb), 0.7);
 }
 
-:root[data-theme="dark"] .btn-toggle-tema .icone-lua,
-:root:not([data-theme="dark"]) .btn-toggle-tema .icone-sol {
-    display: none;
+.revelar-scroll {
+    opacity: 0;
+    transform: translateY(35px) scale(0.97);
+    filter: blur(6px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 1s cubic-bezier(0.16, 1, 0.3, 1),
+        filter 1s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform, filter;
 }
 
-/* Inverte o SVG do ícone no modo escuro se necessário */
-:root[data-theme="dark"] .menu-global .logo-img-simbolo {
-    filter: invert(1);
+.revelar-scroll.visivel {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
 }
 
-/* ================= RESET BÁSICO E TIPOGRAFIA ================= */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+@keyframes piscarCursorGlobal {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
 }
 
-html {
-    scroll-behavior: smooth;
+@keyframes brilhoContinuoTextoGlobal {
+    0% { background-position: 0% center; }
+    100% { background-position: 250% center; }
 }
 
-body {
-    background-color: var(--home-bg-principal, #ffffff);
-    color: #333;
-    line-height: 1.6;
+@keyframes pulsoNeonSuaveGlobal {
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(var(--cor-destaque-rgb), 0.35)); }
+    50% { filter: drop-shadow(0 0 18px rgba(var(--cor-destaque-rgb), 0.75)); }
 }
 
-img,
-iframe,
-video {
-    max-width: 100%;
+@keyframes deslizarTracoLuzGlobal {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
 }

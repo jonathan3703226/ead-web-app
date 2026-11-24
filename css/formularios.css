@@ -1,8 +1,23 @@
-/* ================= FORMULÁRIOS ================= */
+/* ==========================================================================
+   FORMULARIOS.CSS - Nankim Escola de Arte
+   Inputs, validação visual, requisitos de senha, abas de perfil e feedbacks
+   ========================================================================== */
+
 form {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 1.15rem;
+}
+
+.linha-inputs {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+}
+
+.linha-inputs .input-group {
+    flex: 1;
+    min-width: 0;
 }
 
 .input-group {
@@ -19,17 +34,26 @@ form {
     font-family: 'Montserrat', sans-serif;
 }
 
+:root[data-theme="dark"] .input-group label {
+    color: #e2e2e2;
+}
+
 .input-group input {
     width: 100%;
-    box-sizing: border-box !important;
     padding: 0.9rem 1.1rem;
     border: 1px solid #e2e2e2;
     border-radius: 14px;
     background-color: #f9f9f9;
     font-family: 'Montserrat', sans-serif;
     font-size: 0.95rem;
-    color: #000000;
-    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    color: #111111;
+    transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+:root[data-theme="dark"] .input-group input {
+    background-color: #222222;
+    border-color: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
 }
 
 .input-group input:focus {
@@ -39,6 +63,13 @@ form {
     box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
 }
 
+:root[data-theme="dark"] .input-group input:focus {
+    border-color: var(--cor-destaque);
+    background-color: #282828;
+    box-shadow: 0 0 0 4px rgba(var(--cor-destaque-rgb), 0.15);
+}
+
+/* ================= CAMPO DE SENHA & BOTÃO OLHO ================= */
 .campo-senha-wrapper {
     position: relative;
     display: flex;
@@ -57,7 +88,7 @@ form {
     border: none;
     cursor: pointer;
     font-size: 1.1rem;
-    opacity: 0.6;
+    opacity: 0.65;
     transition: opacity 0.2s ease;
 }
 
@@ -65,9 +96,12 @@ form {
     opacity: 1;
 }
 
-form button[type="submit"] {
+/* ================= BOTÕES DE SUBMIT & ALTERNAR CADASTRO ================= */
+form button[type="submit"],
+.btn-confirmacao-preto {
+    width: 100%;
     background-color: #000000;
-    color: #ffffff !important;
+    color: #ffffff;
     border: 1px solid #000000;
     padding: 1rem 1.8rem;
     border-radius: 50px;
@@ -75,22 +109,33 @@ form button[type="submit"] {
     font-size: 0.95rem;
     font-weight: 700;
     cursor: pointer;
-    margin-top: 0.8rem;
-    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+    margin-top: 0.6rem;
+    transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.2s ease, opacity 0.2s ease;
 }
 
-form button[type="submit"]:hover:not(:disabled) {
-    background-color: #222222;
-    border-color: #222222;
+:root[data-theme="dark"] form button[type="submit"],
+:root[data-theme="dark"] .btn-confirmacao-preto {
+    background-color: #ffffff;
+    color: #111111;
+    border-color: #ffffff;
+}
+
+form button[type="submit"]:hover:not(:disabled),
+.btn-confirmacao-preto:hover:not(:disabled) {
+    opacity: 0.9;
     transform: translateY(-2px);
 }
 
 .alternar-cadastro {
-    margin-top: 0.5rem;
+    margin-top: 0.4rem;
     color: #666666;
     font-size: 0.88rem;
     font-family: 'Montserrat', sans-serif;
     text-align: center;
+}
+
+:root[data-theme="dark"] .alternar-cadastro {
+    color: #a0a0a0;
 }
 
 .alternar-cadastro button {
@@ -103,17 +148,63 @@ form button[type="submit"]:hover:not(:disabled) {
     text-decoration: underline;
     text-underline-offset: 3px;
     cursor: pointer;
-    transition: color 0.2s ease;
+    transition: opacity 0.2s ease;
 }
 
 .alternar-cadastro button:hover {
-    color: #000000;
+    opacity: 0.85;
 }
 
-/* ================= FEEDBACK E VALIDAÇÃO ================= */
+/* ================= ABAS DE PERFIL (ALUNO / ADMIN) ================= */
+.login-tabs-perfil {
+    display: flex;
+    background-color: #f1f5f9;
+    padding: 4px;
+    border-radius: 50px;
+    margin-bottom: 1.2rem;
+}
+
+:root[data-theme="dark"] .login-tabs-perfil {
+    background-color: #242424;
+}
+
+.tab-perfil {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 0.65rem 1rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #64748b;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+:root[data-theme="dark"] .tab-perfil {
+    color: #999999;
+}
+
+.tab-perfil.active {
+    background-color: #000000;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+:root[data-theme="dark"] .tab-perfil.active {
+    background-color: #ffffff;
+    color: #111111;
+}
+
+/* ================= FEEDBACKS & VALIDAÇÃO ================= */
 .input-group.erro input {
     border-color: #e74c3c !important;
     background-color: #fff8f8 !important;
+}
+
+:root[data-theme="dark"] .input-group.erro input {
+    background-color: rgba(231, 76, 60, 0.12) !important;
 }
 
 .input-group.sucesso input {
@@ -124,7 +215,7 @@ form button[type="submit"]:hover:not(:disabled) {
     font-size: 0.78rem;
     color: #e74c3c;
     min-height: 1.1rem;
-    margin-top: 0.2rem;
+    margin-top: 0.15rem;
     display: block;
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
@@ -133,65 +224,41 @@ form button[type="submit"]:hover:not(:disabled) {
 .msg-erro {
     background-color: #fdeaea;
     color: #e74c3c;
-    padding: 0.8rem;
-    border-radius: 4px;
-    font-size: 0.9rem;
+    padding: 0.85rem 1rem;
+    border-radius: 12px;
+    font-size: 0.88rem;
     border-left: 4px solid #e74c3c;
+}
+
+:root[data-theme="dark"] .msg-erro {
+    background-color: rgba(231, 76, 60, 0.14);
 }
 
 .msg-sucesso-info {
     background-color: #eafaf1;
     color: #27ae60;
-    padding: 0.8rem;
-    border-radius: 4px;
-    font-size: 0.9rem;
+    padding: 0.85rem 1rem;
+    border-radius: 12px;
+    font-size: 0.88rem;
     border-left: 4px solid #27ae60;
 }
 
+:root[data-theme="dark"] .msg-sucesso-info {
+    background-color: rgba(39, 174, 96, 0.14);
+}
+
 .animar-shake {
-    animation: shake 0.5s;
+    animation: shake 0.45s ease;
 }
 
 @keyframes shake {
-    0% { transform: translateX(0); }
+    0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-5px); }
     50% { transform: translateX(5px); }
     75% { transform: translateX(-5px); }
-    100% { transform: translateX(0); }
 }
 
-.senha-requisitos {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    margin-top: 0.5rem;
-    font-size: 0.8rem;
-    color: #777;
-    transition: all 0.3s ease;
-}
-
-.senha-requisitos span {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.senha-requisitos span.valido {
-    color: #27ae60;
-    font-weight: 500;
-}
-
-.linha-inputs {
-    display: flex;
-    gap: 1rem;
-    width: 100%;
-}
-
-.linha-inputs .input-group {
-    flex: 1;
-    min-width: 0;
-}
-
+/* ================= REQUISITOS DE SENHA & TERMOS ================= */
 .senha-requisitos {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -203,11 +270,16 @@ form button[type="submit"]:hover:not(:disabled) {
     margin-top: -0.2rem;
 }
 
+:root[data-theme="dark"] .senha-requisitos {
+    background-color: #222222;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
 .req-item {
     font-size: 0.78rem;
     font-weight: 600;
     color: #e74c3c;
-    transition: color 0.3s ease;
+    transition: color 0.25s ease;
 }
 
 .req-item.valido {
@@ -215,17 +287,21 @@ form button[type="submit"]:hover:not(:disabled) {
 }
 
 .checkbox-group {
-    margin-top: 0.4rem;
+    margin-top: 0.3rem;
 }
 
 .label-termos {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 0.85rem !important;
-    color: #555555 !important;
-    font-weight: 500 !important;
+    font-size: 0.85rem;
+    color: #555555;
+    font-weight: 500;
     cursor: pointer;
+}
+
+:root[data-theme="dark"] .label-termos {
+    color: #b5b5b5;
 }
 
 .label-termos input[type="checkbox"] {
@@ -233,6 +309,7 @@ form button[type="submit"]:hover:not(:disabled) {
     height: 18px;
     accent-color: var(--cor-destaque);
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .label-termos a {
@@ -241,57 +318,26 @@ form button[type="submit"]:hover:not(:disabled) {
     text-decoration: underline;
 }
 
-@media (max-width: 650px) {
-    .linha-inputs {
-        flex-direction: column;
-        gap: 1.2rem;
-    }
-    .senha-requisitos {
-        grid-template-columns: 1fr;
-    }
-}
-
-.msg-sucesso-card {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    background-color: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    color: #166534;
-    padding: 1rem 1.2rem;
-    border-radius: 16px;
-    font-size: 0.92rem;
-    margin-bottom: 1.5rem;
-}
-
-.btn-confirmacao-preto {
-    width: 100%;
-    background-color: #000000;
-    color: #ffffff !important;
-    border: 1px solid #000000;
-    padding: 1rem 1.8rem;
-    border-radius: 50px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.btn-confirmacao-preto:hover {
-    background-color: #222222;
-    transform: translateY(-2px);
-}
-
+/* ================= CARDS DE CONFIRMAÇÃO & REDIRECIONAMENTO ================= */
+.msg-sucesso-card,
 .msg-liberado-card {
     display: flex;
     align-items: flex-start;
-    gap: 1rem;
+    gap: 0.9rem;
     background-color: #f0fdf4;
     border: 1px solid #bbf7d0;
-    padding: 1.2rem;
-    border-radius: 18px;
-    margin-bottom: 1.5rem;
+    color: #166534;
+    padding: 1.1rem 1.2rem;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    margin-bottom: 1.4rem;
+}
+
+:root[data-theme="dark"] .msg-sucesso-card,
+:root[data-theme="dark"] .msg-liberado-card {
+    background-color: rgba(34, 197, 94, 0.14);
+    border-color: rgba(34, 197, 94, 0.35);
+    color: #86efac;
 }
 
 .liberado-icone-wrapper {
@@ -305,15 +351,20 @@ form button[type="submit"]:hover:not(:disabled) {
     justify-content: center;
 }
 
+:root[data-theme="dark"] .liberado-icone-wrapper {
+    background-color: rgba(34, 197, 94, 0.22);
+}
+
 .liberado-textos strong {
     display: block;
-    color: #166534;
+    color: inherit;
     font-size: 0.98rem;
     margin-bottom: 0.2rem;
 }
 
 .liberado-textos p {
-    color: #15803d;
+    color: inherit;
+    opacity: 0.9;
     font-size: 0.85rem;
     margin: 0;
 }
@@ -324,6 +375,10 @@ form button[type="submit"]:hover:not(:disabled) {
     background-color: #e2e8f0;
     border-radius: 10px;
     overflow: hidden;
+}
+
+:root[data-theme="dark"] .barra-carregando-wrapper {
+    background-color: #2a2a2a;
 }
 
 .barra-carregando-progresso {
@@ -338,29 +393,13 @@ form button[type="submit"]:hover:not(:disabled) {
     to { width: 100%; }
 }
 
-.login-tabs-perfil {
-    display: flex;
-    background-color: #f1f5f9;
-    padding: 4px;
-    border-radius: 50px;
-    margin-bottom: 1.2rem;
-}
+@media (max-width: 650px) {
+    .linha-inputs {
+        flex-direction: column;
+        gap: 1.15rem;
+    }
 
-.tab-perfil {
-    flex: 1;
-    background: transparent;
-    border: none;
-    padding: 0.65rem 1rem;
-    font-size: 0.88rem;
-    font-weight: 700;
-    color: #64748b;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.tab-perfil.active {
-    background-color: #000000;
-    color: #ffffff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    .senha-requisitos {
+        grid-template-columns: 1fr;
+    }
 }

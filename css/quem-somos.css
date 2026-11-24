@@ -1,33 +1,12 @@
 /* ==========================================================================
-   ESTILOS ESPECÍFICOS DA PÁGINA QUEM SOMOS (ALINHADO AO PADRÃO DA HOME)
+   QUEM-SOMOS.CSS - Nankim Escola de Arte
+   Estilos específicos da página Quem Somos (Essência, Pilares e Fundador)
    ========================================================================== */
-
-:root {
-    --qs-bg-principal: #ffffff;
-    --qs-texto-escuro: #2b2b2b;
-    --qs-texto-suave: #555555;
-    --qs-bg-card-claro: #f4f4f4;
-    --qs-borda-suave: #e0e0e0;
-
-    --qs-secao-escura-bg: #2b2b2b;
-    --qs-secao-escura-texto: #ffffff;
-}
-
-:root[data-theme="dark"] {
-    --qs-bg-principal: #000000;
-    --qs-texto-escuro: #ffffff;
-    --qs-texto-suave: #a0a0a0;
-    --qs-bg-card-claro: #0d0d0d;
-    --qs-borda-suave: #222222;
-
-    --qs-secao-escura-bg: #1a1a1a;
-    --qs-secao-escura-texto: #ffffff;
-}
 
 .pagina-quem-somos {
     overflow-x: hidden;
-    background-color: var(--qs-bg-principal);
-    color: var(--qs-texto-escuro);
+    background-color: var(--superficie-principal);
+    color: var(--texto-principal);
     font-family: 'Montserrat', sans-serif;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -48,12 +27,12 @@
    BLOCO UNIFICADO DA ESCOLA (SEÇÕES 1 E 2 NO MESMO FUNDO)
    ========================================================================== */
 .bloco-escola-unificado {
-    background-color: var(--qs-bg-principal);
+    background-color: var(--superficie-principal);
     padding-bottom: 7rem;
     transition: background-color 0.3s ease;
 }
 
-/* --- Seção 1: Essência & Origem do Nome --- */
+/* ================= SEÇÃO 1: ESSÊNCIA & ORIGEM DO NOME ================= */
 .secao-essencia-topo {
     padding: 9rem 0 1rem;
 }
@@ -70,38 +49,25 @@
     font-weight: 800;
     line-height: 1.18;
     letter-spacing: -1.2px;
-    color: var(--qs-texto-escuro);
+    color: var(--texto-principal);
     margin: 0 0 1.8rem;
     min-height: 3.6em;
-}
-
-.prefixo-barra {
-    color: var(--cor-destaque, #f39c12);
-    font-weight: 900;
-    margin-right: 8px;
-}
-
-.cursor-typing {
-    display: inline-block;
-    color: var(--cor-destaque, #f39c12);
-    font-weight: 800;
-    animation: piscarCursorQs 0.8s infinite;
 }
 
 .coluna-texto-essencia p {
     font-size: 1.04rem;
     line-height: 1.78;
-    color: var(--qs-texto-suave);
+    color: var(--texto-suave);
     margin-bottom: 1.2rem;
 }
 
 .coluna-texto-essencia strong {
-    color: var(--qs-texto-escuro);
+    color: var(--texto-principal);
 }
 
 .card-citacao-nankim {
-    background-color: var(--qs-bg-card-claro);
-    border: 1px solid var(--qs-borda-suave);
+    background-color: var(--superficie-card-claro);
+    border: 1px solid var(--borda-suave);
     border-radius: 28px;
     padding: 2.8rem 2.4rem;
     position: relative;
@@ -111,14 +77,14 @@
 
 .card-citacao-nankim:hover {
     transform: translateY(-4px);
-    border-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.5);
+    border-color: rgba(var(--cor-destaque-rgb), 0.5);
 }
 
 .aspas-destaque {
     font-size: 4rem;
     line-height: 1;
     font-weight: 900;
-    color: var(--cor-destaque, #f39c12);
+    color: var(--cor-destaque);
     display: block;
     margin-bottom: -1rem;
 }
@@ -128,7 +94,7 @@
     font-size: 1.12rem;
     font-weight: 600;
     line-height: 1.65;
-    color: var(--qs-texto-escuro);
+    color: var(--texto-principal);
 }
 
 .autor-citacao {
@@ -140,26 +106,26 @@
 .linha-destaque-qs {
     width: 32px;
     height: 3px;
-    background-color: var(--cor-destaque, #f39c12);
+    background-color: var(--cor-destaque);
     border-radius: 2px;
 }
 
 .autor-citacao strong {
     display: block;
     font-size: 0.95rem;
-    color: var(--qs-texto-escuro);
+    color: var(--texto-principal);
 }
 
 .autor-citacao span {
     font-size: 0.82rem;
-    color: var(--qs-texto-suave);
+    color: var(--texto-suave);
 }
 
 .divisor-secao-glow {
     width: min(300px, 60%);
     height: 1px;
     margin: 4.5rem auto 3.5rem;
-    background: linear-gradient(90deg, transparent 0%, rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.6) 50%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, rgba(var(--cor-destaque-rgb), 0.6) 50%, transparent 100%);
     position: relative;
 }
 
@@ -171,12 +137,12 @@
     transform: translate(-50%, -50%);
     width: 6px;
     height: 6px;
-    background-color: var(--cor-destaque, #f39c12);
+    background-color: var(--cor-destaque);
     border-radius: 50%;
-    box-shadow: 0 0 10px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.8);
+    box-shadow: 0 0 10px rgba(var(--cor-destaque-rgb), 0.8);
 }
 
-/* --- Seção 2: Como Ensinamos (Mesmo Fundo + Título Animado) --- */
+/* ================= SEÇÃO 2: COMO ENSINAMOS (PILARES) ================= */
 .secao-pilares-qs {
     padding: 1rem 0 0;
 }
@@ -190,48 +156,16 @@
 .titulo-animado-qs {
     font-size: clamp(2.2rem, 4.2vw, 3.4rem);
     font-weight: 900;
-    color: var(--qs-texto-escuro);
+    color: var(--texto-principal);
     line-height: 1.15;
     letter-spacing: -1.5px;
     margin-bottom: 1.1rem;
 }
 
-.texto-fluxo-dourado {
-    background: linear-gradient(
-        110deg,
-        var(--cor-destaque, #f39c12) 0%,
-        #ffe082 25%,
-        var(--cor-destaque, #f39c12) 50%,
-        #ffb300 75%,
-        var(--cor-destaque, #f39c12) 100%
-    );
-    background-size: 250% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: brilhoContinuoTextoQs 3.5s linear infinite, pulsoNeonSuaveQs 3s ease-in-out infinite;
-    display: inline-block;
-    position: relative;
-}
-
-.sublinhado-traco::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -5px;
-    width: 100%;
-    height: 4px;
-    border-radius: 4px;
-    background: linear-gradient(90deg, transparent, var(--cor-destaque, #f39c12), #ffe082, var(--cor-destaque, #f39c12), transparent);
-    background-size: 200% 100%;
-    animation: deslizarTracoLuzQs 2.5s linear infinite;
-    box-shadow: 0 0 12px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.7);
-}
-
 .subtitulo-padrao-qs {
     font-size: clamp(1.05rem, 1.8vw, 1.3rem);
     font-weight: 300;
-    color: var(--qs-texto-suave);
+    color: var(--texto-suave);
 }
 
 .grid-pilares-qs {
@@ -241,8 +175,8 @@
 }
 
 .card-pilar-qs {
-    background-color: var(--qs-bg-card-claro);
-    border: 1px solid var(--qs-borda-suave);
+    background-color: var(--superficie-card-claro);
+    border: 1px solid var(--borda-suave);
     border-radius: 24px;
     padding: 2.6rem 2.2rem;
     position: relative;
@@ -258,15 +192,15 @@
     left: 0;
     width: 100%;
     height: 3px;
-    background: linear-gradient(90deg, transparent, var(--cor-destaque, #f39c12), transparent);
+    background: linear-gradient(90deg, transparent, var(--cor-destaque), transparent);
     opacity: 0;
     transition: opacity 0.35s ease;
 }
 
 .card-pilar-qs:hover {
     transform: translateY(-6px);
-    border-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.6);
-    box-shadow: 0 16px 35px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.14);
+    border-color: rgba(var(--cor-destaque-rgb), 0.6);
+    box-shadow: 0 16px 35px rgba(var(--cor-destaque-rgb), 0.14);
 }
 
 .card-pilar-qs:hover::before {
@@ -274,20 +208,20 @@
 }
 
 .destaque-borda-qs {
-    border-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.45);
+    border-color: rgba(var(--cor-destaque-rgb), 0.45);
 }
 
 .card-pilar-qs h3 {
     font-size: 1.4rem;
     font-weight: 800;
-    color: var(--qs-texto-escuro);
+    color: var(--texto-principal);
     margin-bottom: 0.9rem;
 }
 
 .card-pilar-qs p {
     font-size: 0.98rem;
     line-height: 1.68;
-    color: var(--qs-texto-suave);
+    color: var(--texto-suave);
     margin: 0;
 }
 
@@ -295,18 +229,18 @@
    SEÇÃO 3: O FUNDADOR & MENTOR (BLOCO ESCURO CURVO)
    ========================================================================== */
 .bloco-escuro-curvo {
-    background-color: var(--qs-secao-escura-bg);
-    color: var(--qs-secao-escura-texto);
+    background-color: var(--secao-escura-bg);
+    color: var(--secao-escura-texto);
     padding: 6rem 0 8rem;
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
     margin-top: -30px;
     position: relative;
     z-index: 5;
-    box-shadow: 0 -30px 0 0 var(--qs-bg-principal);
+    box-shadow: 0 -30px 0 0 var(--superficie-principal);
 }
 
-/* --- Grid em Losango (5 Colunas com Parallax) --- */
+/* ================= GRID EM LOSANGO (5 COLUNAS COM PARALLAX) ================= */
 .grid-losango-wrapper {
     display: flex;
     justify-content: center;
@@ -357,14 +291,14 @@
 
 .img-losango:hover {
     transform: scale(1.04);
-    border-color: var(--cor-destaque, #f39c12);
+    border-color: var(--cor-destaque);
     z-index: 5;
 }
 
-/* Card Central do Thiago (Fixo e Não-Clicável) */
+/* Card Central do Thiago */
 .card-fundador-centro {
     background: linear-gradient(145deg, #1f1f1f, #111111);
-    border: 2px solid var(--cor-destaque, #f39c12);
+    border: 2px solid var(--cor-destaque);
     border-radius: 26px;
     padding: 2.3rem 1.8rem;
     color: #ffffff;
@@ -382,7 +316,7 @@
     height: 112px;
     border-radius: 50%;
     overflow: hidden;
-    border: 3px solid var(--cor-destaque, #f39c12);
+    border: 3px solid var(--cor-destaque);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     margin-bottom: 0.3rem;
 }
@@ -405,8 +339,8 @@
     font-size: 0.7rem;
     font-weight: 800;
     letter-spacing: 1.4px;
-    color: var(--cor-destaque, #f39c12);
-    background: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.14);
+    color: var(--cor-destaque);
+    background: rgba(var(--cor-destaque-rgb), 0.14);
     padding: 0.35rem 0.9rem;
     border-radius: 20px;
 }
@@ -418,7 +352,21 @@
     margin: 0.3rem 0 0;
 }
 
-/* --- Quadros Biográficos Abaixo do Losango (No Fundo Escuro) --- */
+/* ================= QUADROS BIOGRÁFICOS ABAIXO DO LOSANGO ================= */
+.cabecalho-subsecao-qs {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 2rem;
+}
+
+.cabecalho-subsecao-qs h3 {
+    font-size: clamp(1.65rem, 2.8vw, 2.25rem);
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
 .grid-marcos-thiago {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -443,7 +391,7 @@
     left: 0;
     width: 100%;
     height: 4px;
-    background: linear-gradient(90deg, var(--cor-destaque, #f39c12), #ffe082, var(--cor-destaque, #f39c12));
+    background: linear-gradient(90deg, var(--cor-destaque), #ffe082, var(--cor-destaque));
     transform: scaleX(0.35);
     transform-origin: left;
     transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
@@ -451,7 +399,7 @@
 
 .card-marco-qs:hover {
     transform: translateY(-6px);
-    border-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.6);
+    border-color: rgba(var(--cor-destaque-rgb), 0.6);
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
 }
 
@@ -469,33 +417,11 @@
 .card-marco-qs p {
     font-size: 0.98rem;
     line-height: 1.72;
-    color: #cccccc;
+    color: var(--secao-escura-texto-suave);
     margin: 0;
 }
 
-/* --- Cabeçalho de Transição para as Formações --- */
-/* --- Títulos das Subseções do Fundador (Trajetória e Formações) --- */
-.cabecalho-subsecao-qs {
-    text-align: center;
-    max-width: 720px;
-    margin: 0 auto 2rem;
-}
-
-.cabecalho-subsecao-qs h3 {
-    font-size: clamp(1.65rem, 2.8vw, 2.25rem);
-    font-weight: 800;
-    color: #ffffff;
-    margin: 0;
-    letter-spacing: -0.5px;
-}
-.cabecalho-formacoes-qs p {
-    font-size: 1rem;
-    font-weight: 300;
-    color: #bbbbbb;
-    margin: 0;
-}
-
-/* --- Galeria Interativa de Formações (No Fundo Escuro) --- */
+/* ================= GALERIA INTERATIVA DE FORMAÇÕES ================= */
 .galeria-formacao {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
@@ -538,7 +464,7 @@
     position: absolute;
     inset: auto 0 0 0;
     padding: 32px 18px 14px;
-    color: #fff;
+    color: #ffffff;
     background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
     font-size: 0.8rem;
     font-weight: 600;
@@ -568,7 +494,7 @@
 }
 
 .miniatura-formacao.ativo {
-    border-color: var(--cor-destaque, #f39c12);
+    border-color: var(--cor-destaque);
     opacity: 1;
 }
 
@@ -583,9 +509,9 @@
     display: inline-block;
     margin-bottom: 1rem;
     padding: 0.4rem 0.9rem;
-    border: 1px solid rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.45);
+    border: 1px solid rgba(var(--cor-destaque-rgb), 0.45);
     border-radius: 30px;
-    color: var(--cor-destaque, #f39c12);
+    color: var(--cor-destaque);
     font-size: 0.72rem;
     font-weight: 800;
     letter-spacing: 0.8px;
@@ -602,50 +528,18 @@
 .texto-formacao h4 {
     font-size: 1.05rem;
     font-weight: 700;
-    color: var(--cor-destaque, #f39c12);
+    color: var(--cor-destaque);
     margin: 0 0 1.2rem;
 }
 
 .texto-formacao p {
     font-size: 1rem;
     line-height: 1.7;
-    color: #cccccc;
+    color: var(--secao-escura-texto-suave);
     margin: 0;
 }
 
-/* --- Animações Keyframes --- */
-.revelar-scroll {
-    opacity: 0;
-    transform: translateY(35px);
-    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.revelar-scroll.visivel {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-@keyframes piscarCursorQs {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
-
-@keyframes brilhoContinuoTextoQs {
-    0% { background-position: 0% center; }
-    100% { background-position: 250% center; }
-}
-
-@keyframes pulsoNeonSuaveQs {
-    0%, 100% { filter: drop-shadow(0 0 8px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.35)); }
-    50% { filter: drop-shadow(0 0 18px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.75)); }
-}
-
-@keyframes deslizarTracoLuzQs {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-}
-
-/* --- Responsividade --- */
+/* ================= RESPONSIVIDADE ================= */
 @media (max-width: 1024px) {
     .grid-essencia,
     .grid-pilares-qs,
@@ -665,6 +559,6 @@
     .col-losango {
         width: 100%;
         max-width: 440px;
-        margin-top: 0 !important;
+        margin-top: 0;
     }
 }

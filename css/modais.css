@@ -1,13 +1,16 @@
-/* ================= MODAIS ================= */
+/* ==========================================================================
+   MODAIS.CSS - Nankim Escola de Arte
+   Base visual unificada para todos os modais (Login, Cadastro, Checkout, etc.)
+   ========================================================================== */
+
 .modal {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.65);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(6px);
     z-index: 2000;
     justify-content: center;
     align-items: center;
@@ -16,18 +19,25 @@
 
 .modal-content {
     background-color: #ffffff;
-    padding: 2.8rem 2.2rem 2.2rem;
-    border-radius: 28px;
+    color: #111111;
+    padding: 2.5rem 2.2rem 2.2rem;
+    border-radius: 24px;
     width: 100%;
     max-width: 440px;
     position: relative;
-    box-sizing: border-box;
-    max-height: 90vh;
-    max-height: min(90vh, calc(100vh - 3rem));
+    max-height: min(88vh, calc(100vh - 3rem));
     overflow-y: auto;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    animation: surgimentoModal 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    font-family: 'Montserrat', sans-serif;
+    animation: surgimentoModal 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+:root[data-theme="dark"] .modal-content {
+    background-color: #181818;
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.14);
 }
 
 .modal-largo {
@@ -37,7 +47,7 @@
 @keyframes surgimentoModal {
     from {
         opacity: 0;
-        transform: translateY(20px) scale(0.96);
+        transform: translateY(18px) scale(0.97);
     }
     to {
         opacity: 1;
@@ -48,39 +58,51 @@
 .modal-content::-webkit-scrollbar {
     width: 6px;
 }
+
 .modal-content::-webkit-scrollbar-track {
     background: transparent;
 }
+
 .modal-content::-webkit-scrollbar-thumb {
-    background: #e0e0e0;
+    background: rgba(128, 128, 128, 0.35);
     border-radius: 10px;
 }
+
 .modal-content::-webkit-scrollbar-thumb:hover {
     background: var(--cor-destaque);
 }
 
 .close-btn {
     position: absolute;
-    top: 20px;
-    right: 22px;
-    font-size: 1.6rem;
+    top: 1.2rem;
+    right: 1.3rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(128, 128, 128, 0.1);
+    border: none;
+    font-size: 1.4rem;
     line-height: 1;
     cursor: pointer;
-    color: #999999;
-    transition: color 0.2s ease, transform 0.2s ease;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .close-btn:hover {
-    color: #000000;
+    background: rgba(128, 128, 128, 0.2);
     transform: rotate(90deg);
 }
 
 .modal-content h2 {
-    margin-bottom: 1.8rem;
-    color: #000000;
+    margin-bottom: 1.6rem;
+    color: inherit;
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.6rem;
+    font-size: 1.55rem;
     font-weight: 800;
     text-align: center;
     letter-spacing: -0.5px;
+    padding: 0 1.8rem;
 }

@@ -1,40 +1,12 @@
 /* ==========================================================================
    CURSOS.CSS - Nankim Escola de Arte
-   Padrão Visual: Home & Quem Somos (Alternância Claro/Escuro, Curvas 40px, Vitrine)
+   Estilos específicos da página de Cursos (Raio-X, Planos, Módulos, FAQ)
    ========================================================================== */
-
-:root {
-    --cursos-bg-principal: #ffffff;
-    --cursos-texto-escuro: #2b2b2b;
-    --cursos-texto-suave: #555555;
-    --cursos-bg-card-claro: #f4f4f4;
-    --cursos-borda-suave: #e0e0e0;
-
-    --cursos-secao-escura-bg: #2b2b2b;
-    --cursos-secao-escura-texto: #ffffff;
-    --cursos-bg-card-escuro: #1a1a1a;
-    --cursos-texto-cinza-escuro: #cccccc;
-    --cursos-borda-escura: rgba(255, 255, 255, 0.12);
-}
-
-:root[data-theme="dark"] {
-    --cursos-bg-principal: #000000;
-    --cursos-texto-escuro: #ffffff;
-    --cursos-texto-suave: #a0a0a0;
-    --cursos-bg-card-claro: #0d0d0d;
-    --cursos-borda-suave: #222222;
-
-    --cursos-secao-escura-bg: #1a1a1a;
-    --cursos-secao-escura-texto: #ffffff;
-    --cursos-bg-card-escuro: #111111;
-    --cursos-texto-cinza-escuro: #cccccc;
-    --cursos-borda-escura: rgba(255, 255, 255, 0.12);
-}
 
 .pagina-cursos {
     font-family: 'Montserrat', sans-serif;
-    background-color: var(--cursos-bg-principal);
-    color: var(--cursos-texto-escuro);
+    background-color: var(--superficie-principal);
+    color: var(--texto-principal);
     overflow-x: hidden;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -45,12 +17,10 @@
     padding: 0 4%;
 }
 
-/* ==========================================================================
-   SEÇÃO 1: TOPO LIMPO APENAS COM O SUBTÍTULO (EFEITO PINCELADA CLIP-PATH)
-   ========================================================================== */
+/* ================= SEÇÃO 1: TOPO LIMPO COM EFEITO PINCELADA ================= */
 .secao-trilha-topo {
     padding: 9rem 0 5.5rem;
-    background-color: var(--cursos-bg-principal);
+    background-color: var(--superficie-principal);
     transition: background-color 0.3s ease;
 }
 
@@ -65,16 +35,10 @@
     font-weight: 600;
     line-height: 1.55;
     letter-spacing: -0.4px;
-    color: var(--cursos-texto-escuro);
+    color: var(--texto-principal);
     margin: 0;
     clip-path: inset(0 100% 0 0);
     animation: pinceladaHorizontalCursos 1.35s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
-}
-
-.prefixo-barra {
-    color: var(--cor-destaque, #f39c12);
-    font-weight: 900;
-    margin-right: 8px;
 }
 
 @keyframes pinceladaHorizontalCursos {
@@ -87,19 +51,18 @@
         transform: translateX(0);
     }
 }
-/* ==========================================================================
-   SEÇÃO 2: BLOCO ESCURO CURVO - RAIO-X COMPLETO DO CURSO
-   ========================================================================== */
+
+/* ================= SEÇÃO 2: BLOCO ESCURO CURVO - RAIO-X DO CURSO ================= */
 .bloco-escuro-curvo {
-    background-color: var(--cursos-secao-escura-bg);
-    color: var(--cursos-secao-escura-texto);
+    background-color: var(--secao-escura-bg);
+    color: var(--secao-escura-texto);
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
     margin-top: -30px;
     padding: 6rem 0 8.5rem;
     position: relative;
     z-index: 5;
-    box-shadow: 0 -30px 0 0 var(--cursos-bg-principal);
+    box-shadow: 0 -30px 0 0 var(--superficie-principal);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -111,9 +74,9 @@
 
 .selo-etapa-destaque {
     display: inline-block;
-    background-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.16);
-    border: 1px solid rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.45);
-    color: var(--cor-destaque, #f39c12);
+    background-color: rgba(var(--cor-destaque-rgb), 0.16);
+    border: 1px solid rgba(var(--cor-destaque-rgb), 0.45);
+    color: var(--cor-destaque);
     font-size: 0.74rem;
     font-weight: 800;
     letter-spacing: 1.2px;
@@ -131,43 +94,11 @@
     margin-bottom: 1.2rem;
 }
 
-.texto-fluxo-dourado {
-    background: linear-gradient(
-        110deg,
-        var(--cor-destaque, #f39c12) 0%,
-        #ffe082 25%,
-        var(--cor-destaque, #f39c12) 50%,
-        #ffb300 75%,
-        var(--cor-destaque, #f39c12) 100%
-    );
-    background-size: 250% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: brilhoContinuoTextoCursos 3.5s linear infinite, pulsoNeonSuaveCursos 3s ease-in-out infinite;
-    display: inline-block;
-    position: relative;
-}
-
-.sublinhado-traco::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -6px;
-    width: 100%;
-    height: 4px;
-    border-radius: 4px;
-    background: linear-gradient(90deg, transparent, var(--cor-destaque, #f39c12), #ffe082, var(--cor-destaque, #f39c12), transparent);
-    background-size: 200% 100%;
-    animation: deslizarTracoLuzCursos 2.5s linear infinite;
-    box-shadow: 0 0 12px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.7);
-}
-
 .descricao-principal-curso {
     font-size: clamp(1rem, 1.6vw, 1.15rem);
     font-weight: 300;
     line-height: 1.7;
-    color: var(--cursos-texto-cinza-escuro);
+    color: var(--secao-escura-texto-suave);
     margin-bottom: 2.5rem;
 }
 
@@ -176,8 +107,8 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
-    background-color: var(--cursos-bg-card-escuro);
-    border: 1px solid var(--cursos-borda-escura);
+    background-color: var(--secao-escura-card);
+    border: 1px solid var(--secao-escura-borda);
     border-radius: 22px;
     padding: 1.5rem 1.2rem;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
@@ -189,7 +120,7 @@
     align-items: center;
     text-align: center;
     padding: 0.4rem;
-    border-right: 1px solid var(--cursos-borda-escura);
+    border-right: 1px solid var(--secao-escura-borda);
 }
 
 .item-metrica:last-child {
@@ -199,13 +130,13 @@
 .item-metrica strong {
     font-size: 1.28rem;
     font-weight: 800;
-    color: var(--cor-destaque, #f39c12);
+    color: var(--cor-destaque);
     margin-bottom: 0.25rem;
 }
 
 .item-metrica span {
     font-size: 0.84rem;
-    color: var(--cursos-texto-cinza-escuro);
+    color: var(--secao-escura-texto-suave);
 }
 
 /* Layout 2 Colunas: Conteúdo + Checkout Sticky */
@@ -223,8 +154,8 @@
 }
 
 .bloco-info-curso {
-    background-color: var(--cursos-bg-card-escuro);
-    border: 1px solid var(--cursos-borda-escura);
+    background-color: var(--secao-escura-card);
+    border: 1px solid var(--secao-escura-borda);
     border-radius: 26px;
     padding: 2.4rem;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
@@ -247,14 +178,14 @@
 .card-aprendizado {
     position: relative;
     background-color: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--cursos-borda-escura);
+    border: 1px solid var(--secao-escura-borda);
     border-radius: 20px;
     padding: 1.5rem;
     transition: border-color 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
 }
 
 .card-aprendizado:hover {
-    border-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.55);
+    border-color: rgba(var(--cor-destaque-rgb), 0.55);
     background-color: rgba(255, 255, 255, 0.05);
     transform: translateY(-3px);
 }
@@ -264,9 +195,9 @@
     font-size: 0.72rem;
     font-weight: 900;
     letter-spacing: 1px;
-    color: var(--cor-destaque, #f39c12);
-    background-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.14);
-    border: 1px solid rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.3);
+    color: var(--cor-destaque);
+    background-color: rgba(var(--cor-destaque-rgb), 0.14);
+    border: 1px solid rgba(var(--cor-destaque-rgb), 0.3);
     padding: 0.22rem 0.65rem;
     border-radius: 999px;
     margin-bottom: 0.75rem;
@@ -282,7 +213,7 @@
 .card-aprendizado p {
     font-size: 0.9rem;
     line-height: 1.6;
-    color: var(--cursos-texto-cinza-escuro);
+    color: var(--secao-escura-texto-suave);
     margin: 0;
 }
 
@@ -303,7 +234,7 @@
 .resumo-carga {
     font-size: 0.85rem;
     font-weight: 700;
-    color: var(--cor-destaque, #f39c12);
+    color: var(--cor-destaque);
 }
 
 .lista-modulos-acordeao {
@@ -313,7 +244,7 @@
 }
 
 .item-modulo {
-    border: 1px solid var(--cursos-borda-escura);
+    border: 1px solid var(--secao-escura-borda);
     border-radius: 18px;
     background-color: rgba(255, 255, 255, 0.02);
     overflow: hidden;
@@ -321,7 +252,7 @@
 }
 
 .item-modulo.aberto {
-    border-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.55);
+    border-color: rgba(var(--cor-destaque-rgb), 0.55);
     background-color: rgba(255, 255, 255, 0.04);
 }
 
@@ -344,7 +275,7 @@
     display: block;
     font-size: 0.76rem;
     font-weight: 700;
-    color: var(--cor-destaque, #f39c12);
+    color: var(--cor-destaque);
     margin-bottom: 0.25rem;
 }
 
@@ -374,13 +305,13 @@
 
 .duracao-modulo {
     font-size: 0.82rem;
-    color: var(--cursos-texto-cinza-escuro);
+    color: var(--secao-escura-texto-suave);
 }
 
 .icone-seta-modulo {
     font-size: 1.35rem;
     font-weight: 700;
-    color: var(--cor-destaque, #f39c12);
+    color: var(--cor-destaque);
     transition: transform 0.25s ease;
     line-height: 1;
 }
@@ -402,7 +333,7 @@
 }
 
 .conteudo-modulo ul {
-    border-top: 1px solid var(--cursos-borda-escura);
+    border-top: 1px solid var(--secao-escura-borda);
     padding-top: 1rem;
     display: flex;
     flex-direction: column;
@@ -414,14 +345,14 @@
 .conteudo-modulo li {
     font-size: 0.9rem;
     line-height: 1.55;
-    color: var(--cursos-texto-cinza-escuro);
+    color: var(--secao-escura-texto-suave);
     padding-left: 1rem;
     position: relative;
 }
 
 .conteudo-modulo li::before {
     content: "•";
-    color: var(--cor-destaque, #f39c12);
+    color: var(--cor-destaque);
     position: absolute;
     left: 0;
     font-weight: 800;
@@ -435,7 +366,7 @@
 .texto-materiais {
     font-size: 0.95rem;
     line-height: 1.65;
-    color: var(--cursos-texto-cinza-escuro);
+    color: var(--secao-escura-texto-suave);
     margin-bottom: 1.2rem;
 }
 
@@ -450,7 +381,7 @@
 
 .lista-materiais-simples li {
     background-color: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--cursos-borda-escura);
+    border: 1px solid var(--secao-escura-borda);
     border-radius: 14px;
     padding: 0.9rem 1.05rem;
     font-size: 0.9rem;
@@ -462,19 +393,19 @@
 
 .lista-materiais-simples li::before {
     content: "✓";
-    color: var(--cor-destaque, #f39c12);
+    color: var(--cor-destaque);
     font-weight: 800;
 }
 
-/* Card Checkout Sticky */
+/* ================= CARD CHECKOUT STICKY & PLANOS ANCORADOS ================= */
 .coluna-checkout-sticky {
     position: sticky;
     top: 6.5rem;
 }
 
 .card-checkout-curso {
-    background-color: var(--cursos-bg-card-escuro);
-    border: 2px solid var(--cor-destaque, #f39c12);
+    background-color: var(--secao-escura-card);
+    border: 2px solid var(--cor-destaque);
     border-radius: 28px;
     overflow: hidden;
     box-shadow: 0 22px 50px rgba(0, 0, 0, 0.45);
@@ -510,93 +441,155 @@
     left: 1rem;
     background-color: rgba(17, 17, 17, 0.88);
     backdrop-filter: blur(6px);
-    color: var(--cor-destaque, #f39c12);
+    color: var(--cor-destaque);
     font-size: 0.74rem;
     font-weight: 700;
     padding: 0.35rem 0.85rem;
     border-radius: 999px;
-    border: 1px solid rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.35);
+    border: 1px solid rgba(var(--cor-destaque-rgb), 0.35);
 }
 
 .corpo-card-checkout {
     padding: 2rem;
 }
 
-.preco-box-checkout {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1.5rem;
-}
-
 .label-investimento {
+    display: block;
     font-size: 0.8rem;
     font-weight: 700;
-    color: var(--cursos-texto-cinza-escuro);
+    color: var(--secao-escura-texto-suave);
     text-transform: uppercase;
     letter-spacing: 0.06em;
 }
 
-.valor-curso {
-    font-size: 2.6rem;
+.seletor-planos-ancoragem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin: 0.85rem 0 1.35rem;
+}
+
+.opcao-plano-card {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.9rem 1rem;
+    border-radius: 16px;
+    border: 1.5px solid var(--secao-escura-borda);
+    background-color: rgba(255, 255, 255, 0.03);
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.2s ease;
+}
+
+.opcao-plano-card:hover {
+    border-color: rgba(var(--cor-destaque-rgb), 0.55);
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.opcao-plano-card.selecionado {
+    border-color: var(--cor-destaque);
+    background-color: rgba(var(--cor-destaque-rgb), 0.12);
+    box-shadow: 0 8px 22px rgba(var(--cor-destaque-rgb), 0.16);
+}
+
+.opcao-plano-card.destaque-anual {
+    margin-top: 0.55rem;
+    padding-top: 1.25rem;
+}
+
+.selo-melhor-escolha {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    background-color: var(--cor-destaque);
+    color: #111111;
+    font-size: 0.65rem;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+}
+
+.plano-info-esq {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.plano-info-esq strong {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.plano-info-esq span {
+    font-size: 0.75rem;
+    color: var(--secao-escura-texto-suave);
+}
+
+.tag-economia-sutil {
+    background: rgba(46, 204, 113, 0.18);
+    color: #2ecc71;
+    font-size: 0.68rem;
+    padding: 0.12rem 0.45rem;
+    border-radius: 999px;
+    margin-left: 4px;
+}
+
+.plano-preco-dir {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.plano-preco-dir strong {
+    font-size: 1.2rem;
     font-weight: 900;
     color: #ffffff;
     line-height: 1.1;
-    margin: 0.25rem 0;
 }
 
-.detalhe-pagamento {
-    font-size: 0.85rem;
-    color: #2ecc71;
+.plano-preco-dir .valor-destaque-anual {
+    font-size: 1.4rem;
+    color: var(--cor-destaque);
+}
+
+.plano-preco-dir span {
+    font-size: 0.74rem;
     font-weight: 600;
+    color: var(--secao-escura-texto-suave);
 }
 
 .botao-assinar-principal {
     width: 100%;
     padding: 1rem 1.5rem;
-    border: 1px solid var(--cor-destaque, #f39c12) !important;
-    border-radius: 50px !important;
-    background-color: var(--cor-destaque, #f39c12) !important;
-    color: #111111 !important;
+    border: 1px solid var(--cor-destaque);
+    border-radius: 50px;
+    background-color: var(--cor-destaque);
+    color: #111111;
     font-family: 'Montserrat', sans-serif;
     font-size: 1rem;
     font-weight: 800;
     cursor: pointer;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     transition: background-color 0.3s ease, color 0.3s ease, filter 0.25s ease, box-shadow 0.25s ease;
     margin-bottom: 0.8rem;
 }
 
 .botao-assinar-principal:hover {
     filter: brightness(1.06);
-    box-shadow: 0 10px 25px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.35);
-}
-
-.botao-degustacao-secundario {
-    width: 100%;
-    padding: 0.9rem 1.4rem;
-    border-radius: 50px !important;
-    background-color: #ffffff !important;
-    border: 1px solid #ffffff !important;
-    color: #2b2b2b !important;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.92rem;
-    font-weight: 700;
-    cursor: pointer;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-    margin-bottom: 1.5rem;
-}
-
-.botao-degustacao-secundario:hover {
-    background-color: #2b2b2b !important;
-    color: #ffffff !important;
-    border-color: #ffffff !important;
+    box-shadow: 0 10px 25px rgba(var(--cor-destaque-rgb), 0.35);
 }
 
 .botao-degustacao-secundario {
@@ -610,6 +603,10 @@
     font-size: 0.92rem;
     font-weight: 700;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     margin-bottom: 1.5rem;
 }
@@ -621,7 +618,7 @@
 }
 
 .lista-beneficios-checkout {
-    border-top: 1px solid var(--cursos-borda-escura);
+    border-top: 1px solid var(--secao-escura-borda);
     padding-top: 1.3rem;
     display: flex;
     flex-direction: column;
@@ -632,7 +629,7 @@
 
 .lista-beneficios-checkout li {
     font-size: 0.88rem;
-    color: var(--cursos-texto-cinza-escuro);
+    color: var(--secao-escura-texto-suave);
     padding-left: 1.35rem;
     position: relative;
     line-height: 1.45;
@@ -642,23 +639,22 @@
     content: "✓";
     position: absolute;
     left: 0;
-    color: var(--cor-destaque, #f39c12);
+    color: var(--cor-destaque);
     font-weight: 800;
 }
 
-/* ==========================================================================
-   SEÇÃO 3: BLOCO CLARO CURVO - PRÓXIMAS ETAPAS & FAQ
-   ========================================================================== */
+/* ================= SEÇÃO 3: BLOCO CLARO CURVO - PRÓXIMAS ETAPAS & FAQ ================= */
 .bloco-claro-curvo {
-    background-color: var(--cursos-bg-principal);
-    color: var(--cursos-texto-escuro);
+    width: 100%;
+    background-color: var(--superficie-principal);
+    color: var(--texto-principal);
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
     margin-top: -40px;
     padding: 6rem 0 7rem;
     position: relative;
     z-index: 6;
-    box-shadow: 0 -30px 0 0 var(--cursos-secao-escura-bg);
+    box-shadow: 0 -30px 0 0 var(--secao-escura-bg);
     transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -671,7 +667,7 @@
 .titulo-claro-cursos {
     font-size: clamp(2rem, 3.8vw, 3rem);
     font-weight: 800;
-    color: var(--cursos-texto-escuro);
+    color: var(--texto-principal);
     letter-spacing: -1.2px;
     line-height: 1.15;
     margin-bottom: 0.9rem;
@@ -681,10 +677,9 @@
     font-size: clamp(1.02rem, 1.7vw, 1.25rem);
     font-weight: 300;
     line-height: 1.6;
-    color: var(--cursos-texto-suave);
+    color: var(--texto-suave);
 }
 
-/* Grid Próximas Etapas */
 .grid-futuros-cursos {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -693,8 +688,8 @@
 }
 
 .card-futuro-curso {
-    background-color: var(--cursos-bg-card-claro);
-    border: 1px solid var(--cursos-borda-suave);
+    background-color: var(--superficie-card-claro);
+    border: 1px solid var(--borda-suave);
     border-radius: 26px;
     overflow: hidden;
     display: flex;
@@ -704,7 +699,7 @@
 
 .card-futuro-curso:hover {
     transform: translateY(-6px);
-    border-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.55);
+    border-color: rgba(var(--cor-destaque-rgb), 0.55);
     box-shadow: 0 18px 38px rgba(0, 0, 0, 0.09);
 }
 
@@ -759,21 +754,21 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--cor-destaque, #f39c12);
+    color: var(--cor-destaque);
     margin-bottom: 0.45rem;
 }
 
 .conteudo-futuro-curso h3 {
     font-size: 1.48rem;
     font-weight: 800;
-    color: var(--cursos-texto-escuro);
+    color: var(--texto-principal);
     margin-bottom: 0.75rem;
 }
 
 .conteudo-futuro-curso p {
     font-size: 0.95rem;
     line-height: 1.65;
-    color: var(--cursos-texto-suave);
+    color: var(--texto-suave);
     margin-bottom: 1.3rem;
 }
 
@@ -783,10 +778,10 @@
     gap: 0.45rem;
     margin-top: auto;
     padding-top: 1rem;
-    border-top: 1px dashed var(--cursos-borda-suave);
+    border-top: 1px dashed var(--borda-suave);
     font-size: 0.82rem;
     font-weight: 600;
-    color: var(--cursos-texto-suave);
+    color: var(--texto-suave);
 }
 
 .aviso-indisponivel-sutil::before {
@@ -794,7 +789,7 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background-color: var(--cor-destaque, #f39c12);
+    background-color: var(--cor-destaque);
     opacity: 0.75;
 }
 
@@ -812,7 +807,7 @@
 .titulo-faq-cursos {
     font-size: clamp(1.8rem, 3.2vw, 2.5rem);
     font-weight: 800;
-    color: var(--cursos-texto-escuro);
+    color: var(--texto-principal);
     letter-spacing: -1px;
     margin-bottom: 0.65rem;
 }
@@ -820,7 +815,7 @@
 .subtitulo-faq-cursos {
     font-size: 1rem;
     font-weight: 300;
-    color: var(--cursos-texto-suave);
+    color: var(--texto-suave);
 }
 
 .lista-faq-cursos {
@@ -830,16 +825,16 @@
 }
 
 .item-faq-curso {
-    background-color: var(--cursos-bg-card-claro);
-    border: 1px solid var(--cursos-borda-suave);
+    background-color: var(--superficie-card-claro);
+    border: 1px solid var(--borda-suave);
     border-radius: 20px;
     overflow: hidden;
     transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.3s ease;
 }
 
 .item-faq-curso.aberto {
-    border-color: var(--cor-destaque, #f39c12);
-    box-shadow: 0 12px 28px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.12);
+    border-color: var(--cor-destaque);
+    box-shadow: 0 12px 28px rgba(var(--cor-destaque-rgb), 0.12);
 }
 
 .btn-faq-curso {
@@ -855,14 +850,14 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 1.02rem;
     font-weight: 700;
-    color: var(--cursos-texto-escuro);
+    color: var(--texto-principal);
     cursor: pointer;
 }
 
 .icone-faq {
     font-size: 1.4rem;
     font-weight: 700;
-    color: var(--cor-destaque, #f39c12);
+    color: var(--cor-destaque);
     transition: transform 0.25s ease;
     flex-shrink: 0;
 }
@@ -886,58 +881,14 @@
 .resposta-faq-curso p {
     font-size: 0.95rem;
     line-height: 1.65;
-    color: var(--cursos-texto-suave);
-    border-top: 1px solid var(--cursos-borda-suave);
+    color: var(--texto-suave);
+    border-top: 1px solid var(--borda-suave);
     padding-top: 1rem;
     margin: 0;
 }
 
-/* ==========================================================================
-   ANIMAÇÕES DE REVELAÇÃO SCROLL & KEYFRAMES
-   ========================================================================== */
-.revelar-scroll {
-    opacity: 0;
-    transform: translateY(35px) scale(0.97);
-    filter: blur(6px);
-    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 1s cubic-bezier(0.16, 1, 0.3, 1),
-        filter 1s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform, filter;
-}
-
-.revelar-scroll.visivel {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0px);
-}
-
-@keyframes brilhoContinuoTextoCursos {
-    0% { background-position: 0% center; }
-    100% { background-position: 250% center; }
-}
-
-@keyframes pulsoNeonSuaveCursos {
-    0%, 100% { filter: drop-shadow(0 0 8px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.35)); }
-    50% { filter: drop-shadow(0 0 18px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.75)); }
-}
-
-@keyframes deslizarTracoLuzCursos {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-}
-
-/* ==========================================================================
-   RESPONSIVIDADE
-   ========================================================================== */
+/* ================= RESPONSIVIDADE ================= */
 @media (max-width: 992px) {
-    .grid-etapas-trilha {
-        grid-template-columns: 1fr;
-    }
-
-    .card-etapa-vitrine {
-        min-height: 320px;
-    }
-
     .layout-vendas-curso {
         grid-template-columns: 1fr;
     }
@@ -965,127 +916,4 @@
     .bloco-info-curso {
         padding: 1.6rem;
     }
-}
-/* ==========================================================================
-   CORREÇÃO DE LARGURA DA SEÇÃO CLARA + CARDS DE PLANOS ANCORADOS
-   ========================================================================== */
-.bloco-claro-curvo {
-    width: 100%;
-    max-width: 100%;
-    background-color: var(--cursos-bg-principal);
-    color: var(--cursos-texto-escuro);
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
-    margin-top: -40px;
-    padding: 6rem 0 7rem;
-    position: relative;
-    z-index: 6;
-    box-shadow: 0 -30px 0 0 var(--cursos-secao-escura-bg);
-    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.seletor-planos-ancoragem {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-    margin: 0.85rem 0 1.35rem;
-}
-
-.opcao-plano-card {
-    position: relative;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-    padding: 0.9rem 1rem;
-    border-radius: 16px;
-    border: 1.5px solid var(--cursos-borda-escura);
-    background-color: rgba(255, 255, 255, 0.03);
-    color: #ffffff;
-    font-family: 'Montserrat', sans-serif;
-    text-align: left;
-    cursor: pointer;
-    transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.2s ease;
-}
-
-.opcao-plano-card:hover {
-    border-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.55);
-    background-color: rgba(255, 255, 255, 0.06);
-}
-
-.opcao-plano-card.selecionado {
-    border-color: var(--cor-destaque, #f39c12);
-    background-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.12);
-    box-shadow: 0 8px 22px rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.16);
-}
-
-.opcao-plano-card.destaque-anual {
-    margin-top: 0.55rem;
-    padding-top: 1.25rem;
-}
-
-.selo-melhor-escolha {
-    position: absolute;
-    top: -10px;
-    left: 14px;
-    background-color: var(--cor-destaque, #f39c12);
-    color: #111111;
-    font-size: 0.65rem;
-    font-weight: 900;
-    letter-spacing: 0.06em;
-    padding: 0.2rem 0.65rem;
-    border-radius: 999px;
-}
-
-.plano-info-esq {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-}
-
-.plano-info-esq strong {
-    font-size: 0.95rem;
-    font-weight: 800;
-    color: #ffffff;
-}
-
-.plano-info-esq span {
-    font-size: 0.75rem;
-    color: var(--cursos-texto-cinza-escuro);
-}
-
-.tag-economia-sutil {
-    background: rgba(46, 204, 113, 0.18);
-    color: #2ecc71;
-    font-size: 0.68rem;
-    padding: 0.12rem 0.45rem;
-    border-radius: 999px;
-    margin-left: 4px;
-}
-
-.plano-preco-dir {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    text-align: right;
-    flex-shrink: 0;
-}
-
-.plano-preco-dir strong {
-    font-size: 1.2rem;
-    font-weight: 900;
-    color: #ffffff;
-    line-height: 1.1;
-}
-
-.plano-preco-dir .valor-destaque-anual {
-    font-size: 1.4rem;
-    color: var(--cor-destaque, #f39c12);
-}
-
-.plano-preco-dir span {
-    font-size: 0.74rem;
-    font-weight: 600;
-    color: var(--cursos-texto-cinza-escuro);
 }
