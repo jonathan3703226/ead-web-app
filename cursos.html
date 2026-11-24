@@ -8,19 +8,19 @@
         content="Conheça a trilha de cursos da Nankim Escola de Arte e todos os detalhes de Fundamentos do Desenho.">
     <title>Nankim Escola de Arte | Cursos</title>
 
-    <!-- Conexão Prévia Google Fonts (Padrão Home e Quem Somos) -->
+    <!-- Conexão Prévia Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Caveat:wght@500;600;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
 
     <!-- Estilos Globais e Específicos -->
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/variaveis.css">
-    <link rel="stylesheet" href="css/menu.css">
-    <link rel="stylesheet" href="css/rodape.css">
-    <link rel="stylesheet" href="css/modais.css">
-    <link rel="stylesheet" href="css/formularios.css">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/variaveis.css">
+    <link rel="stylesheet" href="./css/menu.css">
+    <link rel="stylesheet" href="./css/rodape.css">
+    <link rel="stylesheet" href="./css/modais.css">
+    <link rel="stylesheet" href="./css/formularios.css">
     <link rel="stylesheet" href="./css/cursos.css">
     <link rel="stylesheet" href="./css/checkout.css">
     <link rel="stylesheet" href="./css/cookies.css">
@@ -306,7 +306,7 @@
 
                                 <div class="seletor-planos-ancoragem" role="radiogroup"
                                     aria-label="Planos de acesso Nankim">
-                                    <button type="button" class="opcao-plano-card" data-plano="mensal">
+                                    <button type="button" class="opcao-plano-card" role="radio" aria-checked="false" data-plano="mensal">
                                         <div class="plano-info-esq">
                                             <strong>Mensal</strong>
                                             <span>Cobrança mensal · Cartão, PIX ou Boleto</span>
@@ -317,7 +317,7 @@
                                         </div>
                                     </button>
 
-                                    <button type="button" class="opcao-plano-card" data-plano="semestral">
+                                    <button type="button" class="opcao-plano-card" role="radio" aria-checked="false" data-plano="semestral">
                                         <div class="plano-info-esq">
                                             <strong>Semestral <small class="tag-economia-sutil">-35%</small></strong>
                                             <span>6x de R$ 58,31 sem juros (Total R$ 349,90)</span>
@@ -328,7 +328,7 @@
                                         </div>
                                     </button>
 
-                                    <button type="button" class="opcao-plano-card selecionado destaque-anual"
+                                    <button type="button" class="opcao-plano-card selecionado destaque-anual" role="radio" aria-checked="true"
                                         data-plano="anual">
                                         <span class="selo-melhor-escolha">MAIS ESCOLHIDO · ECONOMIZE 55%</span>
                                         <div class="plano-info-esq">
@@ -437,17 +437,6 @@
                                     confirmação do pagamento.</p>
                             </div>
                         </div>
-                        <div class="item-faq-curso">
-                            <button class="btn-faq-curso" type="button" aria-expanded="false">
-                                <span>O valor de R$ 49,90 é mensalidade ou pagamento único?</span>
-                                <span class="icone-faq" aria-hidden="true">+</span>
-                            </button>
-                            <div class="resposta-faq-curso">
-                                <p>É um investimento único de R$ 49,90 — sem mensalidades, assinaturas
-                                    recorrentes ou taxas extras. Após a confirmação, todos os 16 módulos
-                                    completos (237 aulas) ficam liberados na sua conta.</p>
-                            </div>
-                        </div>
 
                         <div class="item-faq-curso">
                             <button class="btn-faq-curso" type="button" aria-expanded="false">
@@ -520,12 +509,15 @@
         </div>
     </div>
 
+    <!-- Scripts Globais -->
     <script src="./js/global.js"></script>
     <script src="./js/login.js"></script>
     <script src="./js/cookies.js"></script>
     <script src="./js/termos.js"></script>
     <script src="./js/reportar.js"></script>
     <script src="./js/checkout.js"></script>
+
+    <!-- Script Exclusivo de Cursos -->
     <script src="./js/cursos.js"></script>
 </body>
 
