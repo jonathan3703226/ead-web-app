@@ -34,6 +34,7 @@ const PLANOS_NANKIM = {
 };
 
 let planoSelecionadoCheckout = 'anual';
+let modoCheckoutLogado = false;
 
 // Estado em memória do checkout (preserva dados apenas enquanto a compra não foi finalizada)
 const estadoCheckout = {
@@ -72,6 +73,17 @@ function obterUsuariosCheckout() {
         return Array.isArray(usuarios) ? usuarios : [];
     } catch (e) {
         return [];
+    }
+}
+
+function obterUsuarioSessaoCheckout() {
+    try {
+        const sessao = JSON.parse(sessionStorage.getItem('nankim_sessao') || 'null');
+        if (!sessao || !sessao.email) return null;
+        const usuarios = obterUsuariosCheckout();
+        return usuarios.find((u) => u.email.toLowerCase() === String(sessao.email).toLowerCase()) || sessao;
+    } catch (e) {
+        return null;
     }
 }
 
@@ -200,7 +212,10 @@ function gerarOpcoesParcelamento(plano, parcelaSalva = null) {
     return html;
 }
 
+// Fluxo comercial padrão (página cursos.html)
 function iniciarCheckout(event) {
+    modoCheckoutLogado = false;
+
     if (event && event.currentTarget) {
         const planoBtn = event.currentTarget.getAttribute('data-plano');
         if (planoBtn && PLANOS_NANKIM[planoBtn] && planoBtn !== planoSelecionadoCheckout) {
@@ -215,8 +230,31 @@ function iniciarCheckout(event) {
     renderizarCheckoutUnico();
 }
 
+// Fluxo da Área do Aluno (mantém todos os campos idênticos e preenche automaticamente)
+function iniciarCheckoutLogado(planoInicial = 'anual') {
+    modoCheckoutLogado = true;
+
+    if (PLANOS_NANKIM[planoInicial] && planoInicial !== planoSelecionadoCheckout) {
+        planoSelecionadoCheckout = planoInicial;
+        estadoCheckout.parcelas = null;
+    }
+
+    const usuarioLogado = obterUsuarioSessaoCheckout();
+    if (usuarioLogado) {
+        estadoCheckout.nome = usuarioLogado.nome || '';
+        estadoCheckout.email = usuarioLogado.email || '';
+        estadoCheckout.cpf = usuarioLogado.cpf || '';
+    }
+
+    const modal = document.getElementById('modal-checkout');
+    if (modal) modal.style.display = 'flex';
+
+    renderizarCheckoutUnico();
+}
+
 function renderizarCheckoutUnico() {
     const planoInicial = PLANOS_NANKIM[planoSelecionadoCheckout] || PLANOS_NANKIM.anual;
+    const usuarioLogado = modoCheckoutLogado ? obterUsuarioSessaoCheckout() : null;
 
     if (planoInicial.apenasCartao) {
         estadoCheckout.metodo = 'cartao';
@@ -224,7 +262,9 @@ function renderizarCheckoutUnico() {
 
     atualizarTituloCheckout(
         'Finalizar Assinatura Nankim',
-        'Preencha seus dados e escolha o plano. Sua conta é liberada na hora.'
+        modoCheckoutLogado && usuarioLogado
+            ? 'Confira seus dados preenchidos, informe o CPF e escolha seu plano.'
+            : 'Preencha seus dados e escolha o plano. Sua conta é liberada na hora.'
     );
 
     const payloadPixMensal = gerarPayloadPix(PLANOS_NANKIM.mensal.valorTotal);
@@ -252,7 +292,7 @@ function renderizarCheckoutUnico() {
                 </button>
             </div>
 
-            <!-- Dados do Aluno (sempre limpos ao iniciar nova compra) -->
+            <!-- Dados do Aluno (idênticos em todas as páginas; preenchidos se logado) -->
             <div class="linha-inputs">
                 <div class="input-group">
                     <label for="checkout-nome">Nome completo</label>
@@ -261,7 +301,7 @@ function renderizarCheckoutUnico() {
                 </div>
                 <div class="input-group">
                     <label for="checkout-email">E-mail de acesso</label>
-                    <input type="email" id="checkout-email" autocomplete="off" placeholder="seuemail@dominio.com" value="${estadoCheckout.email}" required>
+                    <input type="email" id="checkout-email" autocomplete="off" placeholder="seuemail@dominio.com" value="${estadoCheckout.email}" ${modoCheckoutLogado && usuarioLogado ? 'readonly' : ''} required>
                     <small class="input-feedback"></small>
                 </div>
             </div>
@@ -514,9 +554,17 @@ function renderizarCheckoutUnico() {
 
     atualizarInterfacePorPlanoEMetodo();
 
-    if (estadoCheckout.touched.nome) validarNome();
-    if (estadoCheckout.touched.email) validarEmail();
-    if (estadoCheckout.touched.cpf) validarCampoCpf();
+    // Valida visualmente os campos já preenchidos quando o aluno está logado
+    if (modoCheckoutLogado && usuarioLogado) {
+        if (inputNome.value.trim()) validarNome();
+        if (inputEmail.value.trim()) validarEmail();
+        if (inputCpf.value.trim()) validarCampoCpf();
+    } else {
+        if (estadoCheckout.touched.nome) validarNome();
+        if (estadoCheckout.touched.email) validarEmail();
+        if (estadoCheckout.touched.cpf) validarCampoCpf();
+    }
+
     if (obterMetodoAtual() === 'cartao') {
         if (estadoCheckout.touched.numCartao) validarNumCartao();
         if (estadoCheckout.touched.validade) validarValidade();
@@ -533,8 +581,8 @@ function renderizarCheckoutUnico() {
 
         const emailDigitado = inputEmail.value.trim().toLowerCase();
         if (emailJaPossuiAssinatura(emailDigitado)) {
-            mostrarErroCheckout('Este e-mail já possui uma assinatura ativa e não pode comprar novamente.', true);
-            inputEmail.focus();
+            mostrarErroCheckout('Este e-mail já possui uma assinatura ativa e não pode comprar novamente.', !modoCheckoutLogado);
+            if (!modoCheckoutLogado) inputEmail.focus();
             return;
         }
 
@@ -569,7 +617,7 @@ function concluirCheckout({ nome, email, cpf, metodo, parcelas }) {
     const plano = PLANOS_NANKIM[planoSelecionadoCheckout] || PLANOS_NANKIM.anual;
 
     if (emailJaPossuiAssinatura(email)) {
-        mostrarErroCheckout('Este e-mail já possui uma assinatura ativa e não pode comprar novamente.', true);
+        mostrarErroCheckout('Este e-mail já possui uma assinatura ativa e não pode comprar novamente.', !modoCheckoutLogado);
         return;
     }
 
@@ -591,6 +639,7 @@ function concluirCheckout({ nome, email, cpf, metodo, parcelas }) {
 
     if (indice >= 0) {
         usuario = usuarios[indice];
+        usuario.nome = nome;
         usuario.matriculado = true;
         usuario.cpf = cpf;
         usuario.planoAtivo = dadosAssinatura;
@@ -702,13 +751,3 @@ document.addEventListener('DOMContentLoaded', () => {
         botao.addEventListener('click', iniciarCheckout);
     });
 });
-
-function iniciarCheckoutLogado(planoInicial = 'anual') {
-    if (PLANOS_NANKIM[planoInicial] && planoInicial !== planoSelecionadoCheckout) {
-        planoSelecionadoCheckout = planoInicial;
-        estadoCheckout.parcelas = null;
-    }
-    const modal = document.getElementById('modal-checkout');
-    if (modal) modal.style.display = 'flex';
-    renderizarCheckoutUnico();
-}

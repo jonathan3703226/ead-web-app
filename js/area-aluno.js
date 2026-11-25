@@ -1,10 +1,8 @@
-/* ==========================================================
-   LÓGICA E INTERATIVIDADE DA ÁREA DO ALUNO (NANKIM)
-   ========================================================== */
+/* ==========================================================================
+   AREA-ALUNO.JS - Lógica do Painel de Estudos (Nankim Escola de Arte)
+   ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-
-    // 1. CARREGAR DADOS DO USUÁRIO E VERIFICAR LOGIN
     const sessaoData = sessionStorage.getItem('nankim_sessao');
     if (!sessaoData) {
         window.location.href = 'index.html';
@@ -12,19 +10,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const usuarioSessao = JSON.parse(sessaoData);
-    const emailUsuario = usuarioSessao.email;
+    const dbUsuarios = JSON.parse(localStorage.getItem('nankim_db')) || [];
+    const idxUsuario = dbUsuarios.findIndex(
+        (u) => String(u.email || '').toLowerCase() === String(usuarioSessao.email || '').toLowerCase()
+    );
 
-    let dbUsuarios = JSON.parse(localStorage.getItem('nankim_db')) || [];
-    let idxUsuarioAtual = dbUsuarios.findIndex(u => u.email.toLowerCase() === String(emailUsuario).toLowerCase());
-    let usuarioAtual = idxUsuarioAtual !== -1 ? dbUsuarios[idxUsuarioAtual] : null;
-
-    if (!usuarioAtual) {
+    if (idxUsuario === -1) {
         sessionStorage.removeItem('nankim_sessao');
         window.location.href = 'index.html';
         return;
     }
 
-    // Garante automaticamente o Módulo 1 liberado para qualquer aluno cadastrado
+    const usuarioAtual = dbUsuarios[idxUsuario];
+
+    // Garante o Módulo I liberado para qualquer aluno cadastrado
     if (!usuarioAtual.matriculado && usuarioAtual.modulo1_liberado !== true) {
         usuarioAtual.modulo1_liberado = true;
         if (!Array.isArray(usuarioAtual.cursos) || usuarioAtual.cursos.length === 0) {
@@ -39,188 +38,156 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             ];
         }
-        dbUsuarios[idxUsuarioAtual] = usuarioAtual;
+        dbUsuarios[idxUsuario] = usuarioAtual;
         localStorage.setItem('nankim_db', JSON.stringify(dbUsuarios));
     }
 
-    // 2. PREENCHER HEADER E BOAS VINDAS
-    const primeiroNome = usuarioAtual.nome ? usuarioAtual.nome.split(' ')[0] : 'Aluno';
-    const inicial = primeiroNome.charAt(0).toUpperCase();
-    
-    const elemNomeTopo = document.getElementById('nome-aluno-topo');
-    const elemAvatar = document.getElementById('avatar-iniciais');
+    // Preenche boas-vindas e métricas
+    const primeiroNome = usuarioAtual.nome ? usuarioAtual.nome.split(' ')[0] : 'Artista';
     const textoBoasVindas = document.getElementById('texto-boas-vindas');
+    if (textoBoasVindas) {
+        textoBoasVindas.textContent = `Olá, ${primeiroNome}!`;
+    }
 
-    if (elemNomeTopo) elemNomeTopo.textContent = primeiroNome;
-    if (elemAvatar) elemAvatar.textContent = inicial;
-    if (textoBoasVindas) textoBoasVindas.textContent = `Olá, ${primeiroNome}!`;
+    const totalAulasCurso = 12;
+    const concluidasSala = JSON.parse(localStorage.getItem('nankim_aulas_concluidas') || '[]');
+    const qtdConcluidas = Array.isArray(concluidasSala) ? concluidasSala.length : 0;
+    const percentual = Math.min(Math.round((qtdConcluidas / totalAulasCurso) * 100), 100);
 
-    // 3. DROPDOWN MENU DO PERFIL
-    const btnMenu = document.getElementById('btn-menu-perfil');
-    const dropdown = document.getElementById('dropdown-perfil');
+    const elContador = document.getElementById('contador-aulas-concluidas');
+    const elPlano = document.getElementById('status-plano-aluno');
+    if (elContador) elContador.textContent = `${qtdConcluidas}/${totalAulasCurso}`;
+    if (elPlano) elPlano.textContent = usuarioAtual.matriculado ? 'Acesso Completo' : 'Módulo I Grátis';
 
-    if (btnMenu && dropdown) {
-        btnMenu.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdown.classList.toggle('show');
-        });
+    renderizarCursoAtivo(usuarioAtual, qtdConcluidas, totalAulasCurso, percentual);
+    renderizarProximasEtapas();
+});
 
-        document.addEventListener('click', (e) => {
-            if (!dropdown.contains(e.target) && e.target !== btnMenu) {
-                dropdown.classList.remove('show');
+function renderizarCursoAtivo(usuarioAtual, qtdConcluidas, totalAulas, percentual) {
+    const container = document.getElementById('container-cursos-matriculados');
+    if (!container) return;
+
+    const matriculado = usuarioAtual.matriculado === true;
+    const statusBadge = matriculado
+        ? `<span class="tag-status-curso ativo">● Curso Completo Liberado</span>`
+        : `<span class="tag-status-curso degustacao">✦ Degustação Gratuita · Módulo I Liberado</span>`;
+
+    const botaoAcaoPrincipal = matriculado
+        ? `<a href="sala-de-aula.html" class="btn-aluno-primario link-magnetico">${qtdConcluidas > 0 ? 'Continuar de onde parei' : 'Iniciar Curso Agora'}</a>`
+        : `
+            <a href="sala-de-aula.html" class="btn-aluno-primario link-magnetico">Acessar Módulo I Grátis</a>
+            <button type="button" class="btn-aluno-secundario link-magnetico" id="btn-upgrade-completo">Desbloquear Curso Completo (12 aulas)</button>
+        `;
+
+    container.innerHTML = `
+        <article class="card-curso-destaque-aluno">
+            <div class="capa-curso-aluno">
+                <img src="./assets/img/fundamentos-desenho.jpg" alt="Fundamentos do Desenho">
+                <span class="badge-etapa-card">ETAPA 1 · FORMAÇÃO BASE</span>
+            </div>
+
+            <div class="corpo-curso-destaque-aluno">
+                <div>
+                    <div class="topo-meta-curso">
+                        ${statusBadge}
+                        <div class="meta-chips-curso">
+                            <span>3 Módulos</span>
+                            <span>•</span>
+                            <span>12 Aulas Práticas</span>
+                            <span>•</span>
+                            <span>12h Certificadas</span>
+                        </div>
+                    </div>
+
+                    <h3>Fundamentos do Desenho</h3>
+                    <p>Do controle de traço e figura em ação até a criação de criaturas, perspectiva em 3 pontos de fuga, arte-final em nanquim e montagem de portfólio.</p>
+                </div>
+
+                <div class="bloco-progresso-aluno">
+                    <div class="info-progresso-topo">
+                        <span>Progresso na trilha (${qtdConcluidas} de ${totalAulas} aulas)</span>
+                        <strong>${percentual}%</strong>
+                    </div>
+                    <div class="barra-progresso-trilha">
+                        <div class="barra-progresso-fill" style="width: ${percentual}%;"></div>
+                    </div>
+                </div>
+
+                <div class="rodape-acoes-curso">
+                    ${botaoAcaoPrincipal}
+                </div>
+            </div>
+        </article>
+    `;
+
+    const btnUpgrade = document.getElementById('btn-upgrade-completo');
+    if (btnUpgrade) {
+        btnUpgrade.addEventListener('click', () => {
+            if (typeof iniciarCheckoutLogado === 'function') {
+                iniciarCheckoutLogado();
             }
         });
     }
 
-    // 4. LOGOUT
-    const btnSair = document.getElementById('btn-sair');
-    if (btnSair) {
-        btnSair.addEventListener('click', () => {
-            sessionStorage.removeItem('nankim_sessao');
-            window.location.href = 'index.html';
+    document.querySelectorAll('[data-close="checkout"]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const modal = document.getElementById('modal-checkout');
+            if (modal) modal.style.display = 'none';
         });
+    });
+
+    // Aplica o efeito magnético sutil do global.js apenas nos botões .link-magnetico
+    if (typeof aplicarEfeitoMagnetico === 'function') {
+        aplicarEfeitoMagnetico();
     }
+}
 
-    // 5. RENDERIZAÇÃO DINÂMICA DOS CURSOS
-    const containerMatriculados = document.getElementById('container-cursos-matriculados');
-    const containerCatalogo = document.getElementById('container-cursos-catalogo');
+function renderizarProximasEtapas() {
+    const container = document.getElementById('container-cursos-catalogo');
+    if (!container) return;
 
-    const listaCursosPlataforma = [
+    const etapasFuturas = [
         {
-            id: 'fundamentos-desenho',
-            titulo: 'Fundamentos do Desenho',
-            descricao: 'O ponto de partida para qualquer artista. Domine formas, perspectiva e luz com uma trilha prática e progressiva.',
-            imagem: './assets/img/fundamentos-desenho.jpg'
-        },
-        {
-            id: 'anatomia-humana',
-            titulo: 'Anatomia Humana',
-            descricao: 'Estude proporções, musculatura e movimento para desenhar figuras humanas com mais confiança.',
+            etapa: 'ETAPA 2 · EM BREVE',
+            nivel: 'Nível Intermediário · Em gravação',
+            titulo: 'Anatomia & Movimento',
+            descricao: 'Proporções do corpo humano, estrutura e dinamismo para dar vida aos seus personagens — aprofundando a base criada nos Fundamentos.',
             imagem: './assets/img/anatomia-humana.jpg',
-            disponivel: false
+            topicos: [
+                'Estrutura esquelética e proporções em múltiplos ângulos',
+                'Grupos musculares e volume natural sem rigidez',
+                'Linha de ação avançada, mãos, pés e poses dinâmicas'
+            ]
         },
         {
-            id: 'ilustracao-digital',
-            titulo: 'Ilustração Digital',
-            descricao: 'Desenvolva seu processo digital, da composição e cor até a finalização de uma ilustração autoral.',
+            etapa: 'ETAPA 3 · EM BREVE',
+            nivel: 'Nível Avançado · Em gravação',
+            titulo: 'Especialização & Mercado',
+            descricao: 'Pintura digital, teoria das cores e acabamento profissional para montar seu portfólio e atuar no mercado criativo.',
             imagem: './assets/img/ilustracao-digital.jpg',
-            disponivel: false
+            topicos: [
+                'Fluxo digital, camadas, pincéis e transição do papel',
+                'Teoria das cores, temperatura de luz e atmosfera',
+                'Renderização comercial e posicionamento de portfólio'
+            ]
         }
     ];
 
-    function renderizarCentralAlunos() {
-        if (containerMatriculados) containerMatriculados.innerHTML = '';
-        if (containerCatalogo) containerCatalogo.innerHTML = '';
-
-        listaCursosPlataforma.forEach(curso => {
-            if (curso.id === 'fundamentos-desenho') {
-                renderizarCursoFundamentos();
-            } else {
-                renderizarCursoFuturo(curso);
-            }
-        });
-
-        // Eventos dos botões de fechar checkout
-        document.querySelectorAll('[data-close="checkout"]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const modalCheckout = document.getElementById('modal-checkout');
-                if (modalCheckout) modalCheckout.style.display = 'none';
-            });
-        });
-
-        // Eventos dos botões de checkout direto
-        document.querySelectorAll('.btn-abrir-checkout-direto').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (typeof iniciarCheckoutLogado === 'function') {
-                    iniciarCheckoutLogado();
-                } else {
-                    console.error('Função iniciarCheckoutLogado não foi encontrada.');
-                }
-            });
-        });
-    }
-
-    function renderizarCursoFuturo(curso) {
-        if (!containerCatalogo) return;
-        const htmlCard = `
-            <article class="curso-card-aluno card-estatico">
-                <img src="${curso.imagem}" alt="${curso.titulo}" class="curso-card-imagem">
-                <div class="curso-painel">
-                    <header class="curso-cabecalho">
-                        <span class="tag-status tag-breve">Em breve</span>
-                        <h2>${curso.titulo}</h2>
-                    </header>
-                </div>
-            </article>
-        `;
-        containerCatalogo.innerHTML += htmlCard;
-    }
-
-    function renderizarCursoFundamentos() {
-        const matriculado = usuarioAtual.matriculado === true;
-
-        let tagHTML = '';
-        let progressoHTML = '';
-        let acoesHTML = '';
-        const filtroImg = 'grayscale(0%) opacity(1)';
-        const titulo = 'Fundamentos do Desenho';
-        const desc = 'O ponto de partida para qualquer artista. Domine formas, perspectiva e luz com uma trilha prática e progressiva.';
-        const imagem = './assets/img/fundamentos-desenho.jpg';
-
-        if (matriculado) {
-            tagHTML = `<span class="tag-status tag-completo">Curso Completo</span>`;
-            progressoHTML = `
-                <div class="barra-fundo"><div class="barra-preenchida" style="width: 0%;"></div></div>
-                <span class="texto-progresso">0% concluído</span>
-            `;
-            acoesHTML = `<a href="sala-de-aula.html" class="btn-acao-custom btn-primario">Continuar Curso</a>`;
-            if (containerMatriculados) {
-                containerMatriculados.innerHTML += criarCardExpandivelHTML(titulo, desc, imagem, tagHTML, progressoHTML, acoesHTML, filtroImg, false);
-            }
-        } else {
-            // Qualquer aluno cadastrado já possui o Módulo 1 liberado automaticamente
-            tagHTML = `<span class="tag-status tag-degustacao">Módulo 1 Liberado</span>`;
-            progressoHTML = `<span class="texto-aviso-bloqueado">Aproveite sua aula experimental grátis.</span>`;
-            acoesHTML = `
-                <a href="sala-de-aula.html" class="btn-acao-custom btn-primario">Acessar Módulo 1</a>
-                <button type="button" class="btn-acao-custom btn-comprar btn-abrir-checkout-direto">Assinar Curso Completo</button>
-            `;
-            if (containerMatriculados) {
-                containerMatriculados.innerHTML += criarCardExpandivelHTML(titulo, desc, imagem, tagHTML, progressoHTML, acoesHTML, filtroImg, true);
-            }
-        }
-    }
-
-    function criarCardExpandivelHTML(titulo, descricao, imagem, tagHTML, progressoHTML, acoesHTML, filtroImg, mostrarPreco) {
-        const rodapePreco = mostrarPreco ? `
-            <div class="curso-compra">
-                <p><span>A partir de</span><strong>R$ 39,90/mês</strong></p>
-                ${acoesHTML}
+    container.innerHTML = etapasFuturas.map((curso) => `
+        <article class="card-etapa-futura">
+            <div class="capa-etapa-futura">
+                <img src="${curso.imagem}" alt="${curso.titulo}" loading="lazy">
+                <span class="badge-futura-etapa">🔒 ${curso.etapa}</span>
             </div>
-        ` : `
-            <div class="curso-compra" style="justify-content: flex-start;">
-                ${acoesHTML}
+            <div class="corpo-etapa-futura">
+                <span class="nivel-etapa-futura">${curso.nivel}</span>
+                <h3>${curso.titulo}</h3>
+                <p>${curso.descricao}</p>
+                <ul class="lista-modulos-preview">
+                    ${curso.topicos.map((t) => `<li>${t}</li>`).join('')}
+                </ul>
+                <div class="rodape-etapa-futura">Em produção · Liberação automática no catálogo</div>
             </div>
-        `;
-
-        return `
-            <article class="curso-card-aluno">
-                <img src="${imagem}" alt="${titulo}" class="curso-card-imagem" style="filter: ${filtroImg};">
-                <div class="curso-painel">
-                    <header class="curso-cabecalho">
-                        ${tagHTML}
-                        <h2>${titulo}</h2>
-                    </header>
-                    <div class="curso-detalhes">
-                        <p class="curso-descricao">${descricao}</p>
-                        <div class="area-status-curso">${progressoHTML}</div>
-                        ${rodapePreco}
-                    </div>
-                </div>
-            </article>
-        `;
-    }
-
-    renderizarCentralAlunos();
-});
+        </article>
+    `).join('');
+}

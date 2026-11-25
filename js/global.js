@@ -156,7 +156,7 @@ function injetarMenuERodape() {
     const header = document.getElementById('header-container');
     const footer = document.getElementById('footer-container');
 
-    if (header) {
+    if (header && header.dataset.menuLogado !== 'true') {
         header.innerHTML = `
 <header class="menu-global">
     <a class="logo" href="index.html" aria-label="Nankim Escola de Arte - início">
