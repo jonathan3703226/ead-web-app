@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo | Nankim Escola de Arte</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/variaveis.css">
+    <link rel="stylesheet" href="./css/admin.css">
+</head>
+<body class="admin-body">
+
+    <!-- PAINEL ADMINISTRATIVO PRINCIPAL -->
+    <div id="admin-app-shell" class="admin-layout">
+
+        <!-- SIDEBAR LATERAL -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-topo">
+                <div class="admin-logo">
+                    <span class="admin-logo-mark">N</span>
+                    <div>
+                        <strong>Nankim</strong>
+                        <small>Painel Admin</small>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="admin-nav" aria-label="Navegação administrativa">
+                <button type="button" class="admin-nav-btn active" data-tab="visao-geral">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Visão Geral</span>
+                </button>
+                <button type="button" class="admin-nav-btn" data-tab="alunos">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>Alunos &amp; Matrículas</span>
+                    <span id="badge-total-alunos" class="nav-counter">0</span>
+                </button>
+                <button type="button" class="admin-nav-btn" data-tab="duvidas">
+                    <i class="fa-solid fa-comments"></i>
+                    <span>Dúvidas &amp; Fórum</span>
+                    <span id="badge-total-duvidas" class="nav-counter">0</span>
+                </button>
+                <button type="button" class="admin-nav-btn" data-tab="reportes">
+                    <i class="fa-solid fa-flag"></i>
+                    <span>Reportes de Erro</span>
+                    <span id="badge-total-reportes" class="nav-counter alerta">0</span>
+                </button>
+                <button type="button" class="admin-nav-btn" data-tab="cursos">
+                    <i class="fa-solid fa-clapperboard"></i>
+                    <span>Cursos &amp; Conteúdo</span>
+                </button>
+            </nav>
+
+            <div class="admin-sidebar-rodape">
+                <button type="button" id="btn-admin-sair" class="btn-admin-danger-ghost">
+                    <i class="fa-solid fa-right-from-bracket"></i> Encerrar Sessão
+                </button>
+            </div>
+        </aside>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="admin-main">
+            <header class="admin-topbar">
+                <div>
+                    <h1 id="admin-page-title">Visão Geral da Escola</h1>
+                    <p id="admin-page-subtitle">Acompanhe matrículas, progresso dos alunos e suporte técnico em tempo real.</p>
+                </div>
+                <div class="admin-user-pill">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <span id="admin-logged-name">Administrador Nankim</span>
+                </div>
+            </header>
+
+            <!-- ABA 1: VISÃO GERAL -->
+            <section id="sec-visao-geral" class="admin-tab-section">
+                <div class="admin-kpi-grid">
+                    <article class="kpi-card">
+                        <div class="kpi-icon"><i class="fa-solid fa-users"></i></div>
+                        <div>
+                            <span class="kpi-label">Total de Alunos</span>
+                            <strong id="kpi-alunos-total" class="kpi-value">0</strong>
+                        </div>
+                    </article>
+
+                    <article class="kpi-card">
+                        <div class="kpi-icon destaque"><i class="fa-solid fa-crown"></i></div>
+                        <div>
+                            <span class="kpi-label">Acesso Completo</span>
+                            <strong id="kpi-alunos-pagos" class="kpi-value">0</strong>
+                        </div>
+                    </article>
+
+                    <article class="kpi-card">
+                        <div class="kpi-icon"><i class="fa-solid fa-award"></i></div>
+                        <div>
+                            <span class="kpi-label">Certificados Liberados</span>
+                            <strong id="kpi-certificados" class="kpi-value">0</strong>
+                        </div>
+                    </article>
+
+                    <article class="kpi-card">
+                        <div class="kpi-icon alerta"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                        <div>
+                            <span class="kpi-label">Reportes Pendentes</span>
+                            <strong id="kpi-reportes-abertos" class="kpi-value">0</strong>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="admin-two-col">
+                    <div class="admin-panel-box">
+                        <div class="panel-box-header">
+                            <h2>Últimas Dúvidas na Sala de Aula</h2>
+                            <button type="button" class="link-ver-todos" data-jump="duvidas">Gerenciar todas →</button>
+                        </div>
+                        <div id="resumo-ultimas-duvidas" class="admin-stack-list"></div>
+                    </div>
+
+                    <div class="admin-panel-box">
+                        <div class="panel-box-header">
+                            <h2>Reportes Técnicos Recentes</h2>
+                            <button type="button" class="link-ver-todos" data-jump="reportes">Abrir central →</button>
+                        </div>
+                        <div id="resumo-ultimos-reportes" class="admin-stack-list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ABA 2: ALUNOS & MATRÍCULAS -->
+            <section id="sec-alunos" class="admin-tab-section hidden">
+                <div class="admin-panel-box">
+                    <div class="panel-box-header wrap">
+                        <div>
+                            <h2>Base de Alunos Cadastrados</h2>
+                            <p class="panel-sub">Libere o curso completo manualmente, habilite certificados ou gerencie contas.</p>
+                        </div>
+                        <div class="admin-search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="filtro-alunos" placeholder="Buscar por nome ou e-mail...">
+                        </div>
+                    </div>
+
+                    <div class="admin-table-wrap">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Aluno</th>
+                                    <th>Plano Atual</th>
+                                    <th>Certificado</th>
+                                    <th>Ações de Gestão</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabela-alunos-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ABA 3: DÚVIDAS & COMENTÁRIOS -->
+            <section id="sec-duvidas" class="admin-tab-section hidden">
+                <div class="admin-panel-box">
+                    <div class="panel-box-header wrap">
+                        <div>
+                            <h2>Central de Dúvidas &amp; Fórum das Aulas</h2>
+                            <p class="panel-sub">Responda como Instrutor Oficial ou edite respostas já enviadas (atualiza na hora na Sala de Aula e notifica o aluno).</p>
+                        </div>
+                        <select id="filtro-aula-duvidas" class="admin-select">
+                            <option value="todas">Todas as 12 aulas</option>
+                        </select>
+                    </div>
+
+                    <div id="lista-admin-duvidas" class="admin-stack-list"></div>
+                </div>
+            </section>
+
+            <!-- ABA 4: REPORTES DE ERRO -->
+            <section id="sec-reportes" class="admin-tab-section hidden">
+                <div class="admin-panel-box">
+                    <div class="panel-box-header wrap">
+                        <div>
+                            <h2>Tickets &amp; Reportes de Erro</h2>
+                            <p class="panel-sub">Relatos enviados pelos alunos através do botão "Reportar erro" na plataforma.</p>
+                        </div>
+                        <select id="filtro-status-reportes" class="admin-select">
+                            <option value="todos">Todos os relatos</option>
+                            <option value="pendente">Pendentes</option>
+                            <option value="resolvido">Resolvidos</option>
+                        </select>
+                    </div>
+
+                    <div id="lista-admin-reportes" class="admin-stack-list"></div>
+                </div>
+            </section>
+
+            <!-- ABA 5: CURSOS & CONTEÚDO (SIMULADOR DE CRUD COMPLETO) -->
+            <section id="sec-cursos" class="admin-tab-section hidden">
+                <div class="admin-panel-box">
+                    <!-- Aviso claro de ambiente simulado -->
+                    <div class="cms-aviso-simulacao" role="status">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <div>
+                            <strong>Modo Simulação (CMS Demonstrativo):</strong> As alterações realizadas nesta aba ficam salvas apenas no painel administrativo para demonstração de gestão de conteúdo e <strong>não alteram</strong> o catálogo público nem as aulas da Sala de Aula (diferente de <em>Alunos</em>, <em>Dúvidas</em> e <em>Reportes</em>, que refletem em tempo real no site).
+                        </div>
+                    </div>
+
+                    <div class="cms-toolbar">
+                        <div>
+                            <div class="cms-toolbar-titulo-row">
+                                <h2>Gestão de Cursos, Módulos &amp; Aulas</h2>
+                                <span class="status-pill pago">Simulador CMS</span>
+                            </div>
+                            <p class="panel-sub cms-toolbar-sub">
+                                Crie cursos do zero, adicione módulos, suba aulas com vídeo/PDF e monte checklists práticos.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div id="lista-cms-cursos" class="admin-stack-list cms-cursos-lista"></div>
+
+                    <!-- Botão na base da lista -->
+                    <div class="cms-rodape-criar">
+                        <button type="button" id="btn-novo-curso" class="btn-admin-primary">
+                            <i class="fa-solid fa-plus"></i> Criar Novo Curso
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- TOAST DE CONFIRMAÇÃO DE AÇÕES -->
+    <div id="admin-toast-container" class="admin-toast-container" aria-live="polite"></div>
+
+    <!-- MODAL DE CONFIRMAÇÃO ESTILIZADO (SUBSTITUI CONFIRM NATIVO) -->
+    <div id="modal-admin-confirm" class="admin-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-titulo">
+        <div class="admin-modal-box admin-confirm-box">
+            <div class="confirm-icon-wrap">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 id="confirm-modal-titulo" class="confirm-titulo">Confirmar exclusão</h3>
+            <p id="confirm-modal-mensagem" class="confirm-mensagem">Tem certeza que deseja excluir este item?</p>
+            <div class="confirm-acoes">
+                <button type="button" id="btn-confirm-cancelar" class="btn-mini">Cancelar</button>
+                <button type="button" id="btn-confirm-executar" class="btn-admin-danger-solid">Sim, excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 1: CRIAR / EDITAR CURSO -->
+    <div id="modal-cms-curso" class="admin-modal-overlay" role="dialog" aria-modal="true">
+        <div class="admin-modal-box">
+            <div class="admin-modal-topo">
+                <div class="modal-topo-titulo-wrap">
+                    <h3 id="titulo-modal-curso">Novo Curso</h3>
+                    <span id="badge-rascunho-curso" class="badge-rascunho hidden">Rascunho restaurado</span>
+                </div>
+                <button type="button" class="btn-fechar-admin-modal" data-close-modal="modal-cms-curso" title="Fechar (mantém rascunho)">&times;</button>
+            </div>
+            <form id="form-cms-curso" class="admin-sim-grid" novalidate>
+                <input type="hidden" id="cms-curso-id">
+                <input type="hidden" id="cms-curso-capa-nome">
+
+                <div class="admin-field admin-col-full">
+                    <label for="cms-curso-titulo">Título do Curso *</label>
+                    <input type="text" id="cms-curso-titulo" placeholder="Ex: Anatomia & Movimento" required>
+                    <small class="admin-field-feedback"></small>
+                </div>
+
+                <div class="admin-field">
+                    <label for="cms-curso-carga">Carga Horária (horas) *</label>
+                    <input type="text" id="cms-curso-carga" inputmode="numeric" placeholder="Ex: 12 horas" maxlength="10" required>
+                    <small class="admin-field-feedback"></small>
+                </div>
+
+                <div class="admin-field">
+                    <label for="cms-curso-preco">Valor / Plano *</label>
+                    <input type="text" id="cms-curso-preco" placeholder="Ex: 12x R$ 39,90 ou Gratuito" required>
+                    <small class="admin-field-feedback"></small>
+                </div>
+
+                <div class="admin-field">
+                    <label for="cms-curso-status">Status de Publicação</label>
+                    <select id="cms-curso-status" class="admin-select cms-select-altura">
+                        <option value="disponivel">Disponível Agora</option>
+                        <option value="em-breve">Em Breve</option>
+                    </select>
+                </div>
+
+                <div class="admin-field">
+                    <label for="cms-curso-capa-file">Imagem de Capa (PNG, JPG ou WEBP)</label>
+                    <label class="admin-file-drop" for="cms-curso-capa-file">
+                        <i class="fa-regular fa-image"></i>
+                        <span id="label-cms-curso-capa">Selecionar imagem de capa...</span>
+                        <input type="file" id="cms-curso-capa-file" accept="image/png,image/jpeg,image/webp">
+                    </label>
+                    <small class="admin-field-feedback"></small>
+                </div>
+
+                <div class="admin-field admin-col-full">
+                    <label for="cms-curso-descricao">Descrição Comercial &amp; Ementa *</label>
+                    <textarea id="cms-curso-descricao" rows="3" placeholder="Descreva o que o aluno vai aprender neste curso (mín. 15 caracteres)..." required></textarea>
+                    <small class="admin-field-feedback"></small>
+                </div>
+
+                <div class="admin-col-full cms-modal-rodape">
+                    <button type="button" class="btn-mini" data-cancel-modal="modal-cms-curso">Cancelar</button>
+                    <button type="submit" class="btn-admin-primary">Salvar Curso</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: CRIAR / EDITAR MÓDULO -->
+    <div id="modal-cms-modulo" class="admin-modal-overlay" role="dialog" aria-modal="true">
+        <div class="admin-modal-box">
+            <div class="admin-modal-topo">
+                <div class="modal-topo-titulo-wrap">
+                    <h3 id="titulo-modal-modulo">Novo Módulo</h3>
+                    <span id="badge-rascunho-modulo" class="badge-rascunho hidden">Rascunho restaurado</span>
+                </div>
+                <button type="button" class="btn-fechar-admin-modal" data-close-modal="modal-cms-modulo" title="Fechar (mantém rascunho)">&times;</button>
+            </div>
+            <form id="form-cms-modulo" class="admin-sim-grid" novalidate>
+                <input type="hidden" id="cms-mod-curso-id">
+                <input type="hidden" id="cms-mod-id">
+
+                <div class="admin-field admin-col-full">
+                    <label for="cms-mod-titulo">Nome do Módulo *</label>
+                    <input type="text" id="cms-mod-titulo" placeholder="Ex: Módulo I — Domínio do Traço" required>
+                    <small class="admin-field-feedback"></small>
+                </div>
+
+                <div class="admin-field">
+                    <label for="cms-mod-acesso">Regra de Acesso</label>
+                    <select id="cms-mod-acesso" class="admin-select cms-select-altura">
+                        <option value="completo">Apenas Assinantes (Curso Completo)</option>
+                        <option value="gratis">Degustação Gratuita</option>
+                    </select>
+                </div>
+
+                <div class="admin-field">
+                    <label for="cms-mod-carga">Carga Estimada (horas) *</label>
+                    <input type="text" id="cms-mod-carga" inputmode="numeric" placeholder="Ex: 4 horas" maxlength="14" required>
+                    <small class="admin-field-feedback"></small>
+                </div>
+
+                <div class="admin-col-full cms-modal-rodape">
+                    <button type="button" class="btn-mini" data-cancel-modal="modal-cms-modulo">Cancelar</button>
+                    <button type="submit" class="btn-admin-primary">Salvar Módulo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 3: CRIAR / EDITAR AULA -->
+    <div id="modal-cms-aula" class="admin-modal-overlay" role="dialog" aria-modal="true">
+        <div class="admin-modal-box">
+            <div class="admin-modal-topo">
+                <div class="modal-topo-titulo-wrap">
+                    <h3 id="titulo-modal-aula">Nova Aula</h3>
+                    <span id="badge-rascunho-aula" class="badge-rascunho hidden">Rascunho restaurado</span>
+                </div>
+                <button type="button" class="btn-fechar-admin-modal" data-close-modal="modal-cms-aula" title="Fechar (mantém rascunho)">&times;</button>
+            </div>
+            <form id="form-cms-aula" class="admin-sim-grid" novalidate>
+                <input type="hidden" id="cms-aula-curso-id">
+                <input type="hidden" id="cms-aula-mod-id">
+                <input type="hidden" id="cms-aula-id">
+                <input type="hidden" id="cms-aula-pdf-nome">
+
+                <div class="admin-field admin-col-full">
+                    <label for="cms-aula-titulo">Título da Aula *</label>
+                    <input type="text" id="cms-aula-titulo" placeholder="Ex: Aula 01 — Treinamento de Traço" required>
+                    <small class="admin-field-feedback"></small>
+                </div>
+
+                <div class="admin-field">
+                    <label for="cms-aula-youtube">Link do Vídeo (YouTube) *</label>
+                    <input type="url" id="cms-aula-youtube" placeholder="https://www.youtube.com/watch?v=..." required>
+                    <small class="admin-field-feedback"></small>
+                </div>
+
+                <div class="admin-field">
+                    <label for="cms-aula-pdf-file">Material de Apoio (.PDF ou .ZIP)</label>
+                    <label class="admin-file-drop" for="cms-aula-pdf-file">
+                        <i class="fa-solid fa-file-arrow-up"></i>
+                        <span id="label-cms-aula-pdf">Anexar apostila ou ficha...</span>
+                        <input type="file" id="cms-aula-pdf-file" accept=".pdf,.zip,application/pdf,application/zip">
+                    </label>
+                    <small class="admin-field-feedback"></small>
+                </div>
+
+                <div class="admin-field admin-col-full">
+                    <label for="cms-aula-resumo">Resumo da Aula *</label>
+                    <textarea id="cms-aula-resumo" rows="2" placeholder="Explicação do conteúdo abordado no vídeo (mín. 10 caracteres)..." required></textarea>
+                    <small class="admin-field-feedback"></small>
+                </div>
+
+                <div class="admin-field admin-col-full">
+                    <label for="cms-aula-exercicio">Enunciado do Exercício Prático</label>
+                    <textarea id="cms-aula-exercicio" rows="2" placeholder="Descreva a atividade prática que o aluno deverá executar..."></textarea>
+                    <small class="admin-field-feedback"></small>
+                </div>
+
+                <!-- Checklist interativo de etapas (igual à Sala de Aula) -->
+                <div class="admin-field admin-col-full">
+                    <label>Checklist de Entrega do Aluno (Etapas Marcáveis)</label>
+                    <div class="checklist-builder-input-row">
+                        <input type="text" id="cms-checklist-novo-item" placeholder="Ex: Preencher 3 folhas A4 com linhas paralelas...">
+                        <button type="button" id="btn-add-checklist-item" class="btn-mini destaque">
+                            <i class="fa-solid fa-plus"></i> Adicionar Etapa
+                        </button>
+                    </div>
+                    <ul id="lista-cms-checklist-preview" class="cms-checklist-preview-list"></ul>
+                </div>
+
+                <div class="admin-col-full cms-modal-rodape">
+                    <button type="button" class="btn-mini" data-cancel-modal="modal-cms-aula">Cancelar</button>
+                    <button type="submit" class="btn-admin-primary">Salvar Aula</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="./js/admin.js"></script>
+</body>
+</html>

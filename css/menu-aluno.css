@@ -30,13 +30,14 @@
     gap: 1.5rem;
 }
 
-/* --- LOGO IDENTICA À ÁREA COMERCIAL --- */
+/* --- LOGO IDENTICA À ÁREA COMERCIAL (SEM AÇÃO DE CLIQUE E SEM CORTE NO HOVER) --- */
 .logo-logado {
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
     text-decoration: none;
-    cursor: pointer;
+    cursor: default;
+    user-select: none;
 }
 
 .logo-logado .logo-icone-wrapper {
@@ -55,6 +56,9 @@
     transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+:root[data-theme="dark"] .logo-logado .logo-img-simbolo {
+    filter: invert(1);
+}
 
 .logo-logado:hover .logo-img-simbolo {
     transform: rotate(360deg);
@@ -64,7 +68,7 @@
     display: inline-flex;
     align-items: center;
     white-space: nowrap;
-    line-height: 1;
+    line-height: 1.2;
 }
 
 .logo-logado .logo-fixo {
@@ -81,21 +85,23 @@
     opacity: 0;
     overflow: hidden;
     font-family: 'Caveat', cursive;
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: var(--texto-principal, #111111);
     white-space: nowrap;
+    padding-right: 0;
     transition: max-width 0.45s cubic-bezier(0.76, 0, 0.24, 1),
                 opacity 0.35s ease,
-                padding-left 0.35s ease;
+                padding-left 0.35s ease,
+                padding-right 0.35s ease;
 }
 
 .logo-logado:hover .logo-expansivel {
-    max-width: 180px;
+    max-width: 240px;
     opacity: 1;
-    padding-left: 0.4rem;
+    padding-left: 0.45rem;
+    padding-right: 0.5rem;
 }
-
 /* --- NAVEGAÇÃO CENTRAL --- */
 .nav-logado {
     display: flex;
@@ -320,6 +326,129 @@
     color: #ffffff;
 }
 
+/* ==========================================================================
+   MODO FOCO (SALA DE AULA) - Mesmo header adaptado para estudo sem distração
+   ========================================================================== */
+.header-foco-container {
+    max-width: 1600px;
+    padding: 0.85rem 2.5%;
+}
+
+.foco-esquerda {
+    display: flex;
+    align-items: center;
+    gap: 1.15rem;
+}
+
+.divisor-foco {
+    width: 1px;
+    height: 22px;
+    background-color: var(--borda-suave, rgba(0, 0, 0, 0.14));
+}
+
+:root[data-theme="dark"] .divisor-foco {
+    background-color: rgba(255, 255, 255, 0.14);
+}
+
+.breadcrumb-foco {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+}
+
+.breadcrumb-link-foco {
+    color: var(--texto-suave, #666666);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.breadcrumb-link-foco:hover {
+    color: var(--cor-destaque, #f39c12);
+}
+
+.breadcrumb-sep-foco {
+    color: var(--texto-suave, #666666);
+    opacity: 0.6;
+}
+
+.breadcrumb-atual-foco {
+    color: var(--texto-principal, #111111);
+    font-weight: 700;
+}
+
+.progresso-header-foco {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-right: 0.35rem;
+}
+
+.progresso-foco-textos {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    line-height: 1.2;
+}
+
+.progresso-foco-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--texto-suave, #666666);
+}
+
+.progresso-foco-valor {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--cor-destaque, #f39c12);
+}
+
+.progresso-foco-trilha {
+    width: 120px;
+    height: 8px;
+    background-color: rgba(128, 128, 128, 0.22);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progresso-foco-fill {
+    height: 100%;
+    background-color: var(--cor-destaque, #f39c12);
+    border-radius: 999px;
+    transition: width 0.45s ease;
+}
+
+.btn-voltar-foco {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    border: 1px solid var(--borda-suave, rgba(0, 0, 0, 0.14));
+    background-color: transparent;
+    color: var(--texto-principal, #111111);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+}
+
+:root[data-theme="dark"] .btn-voltar-foco {
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+.btn-voltar-foco:hover {
+    border-color: var(--cor-destaque, #f39c12);
+    background-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.12);
+    color: var(--cor-destaque, #f39c12);
+}
+
 /* Responsivo */
 @media (max-width: 768px) {
     .header-logado-container {
@@ -334,5 +463,11 @@
         border-top: 1px solid var(--borda-suave, rgba(0, 0, 0, 0.08));
         padding-top: 0.7rem;
         gap: 1.5rem;
+    }
+
+    .divisor-foco,
+    .breadcrumb-foco,
+    .progresso-foco-trilha {
+        display: none;
     }
 }

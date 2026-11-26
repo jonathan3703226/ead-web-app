@@ -1,104 +1,326 @@
 /* ==========================================================================
-   NANKIM ESCOLA DE ARTE - SALA DE AULA
+   NANKIM ESCOLA DE ARTE - SALA DE AULA (PLAYER PROTEGIDO & LAYOUT REFINADO)
    ========================================================================== */
 
-/* Custom Scrollbar */
-::-webkit-scrollbar { 
-    width: 6px; 
-    height: 6px; 
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
 }
 
-::-webkit-scrollbar-track { 
+::-webkit-scrollbar-track {
     background: var(--painel-fundo);
 }
 
-::-webkit-scrollbar-thumb { 
+::-webkit-scrollbar-thumb {
     background: var(--painel-borda);
-    border-radius: 4px; 
+    border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb:hover { 
+::-webkit-scrollbar-thumb:hover {
     background: var(--painel-borda-forte);
 }
 
-/* Logo expand animation */
-.logo-expansivel {
-    max-width: 0;
-    opacity: 0;
+/* --- PLAYER ESTILO SENAI PLAY (BLOQUEIA CLIQUES PARA YOUTUBE E OCULTA OVERLAYS) --- */
+.nankim-player-wrapper {
+    position: relative;
+    width: 100%;
+    border-radius: 14px;
     overflow: hidden;
-    white-space: nowrap;
-    transition: max-width 0.45s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.35s ease, padding 0.35s ease;
+    background: #000;
+    user-select: none;
 }
 
-.logo-wrapper:hover .logo-expansivel {
-    max-width: 200px;
-    opacity: 1;
-    padding-left: 0.35rem;
-    padding-right: 0.5rem;
-}
-
-.logo-img {
-    filter: invert(1);
-    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.logo-wrapper:hover .logo-img {
-    transform: rotate(360deg);
-}
-
-/* YouTube Embed Wrapper */
 .video-container {
     position: relative;
-    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    padding-bottom: 56.25%; /* 16:9 */
     height: 0;
     overflow: hidden;
     background-color: #000;
-    border-radius: 12px;
 }
 
-.video-container iframe {
+/* Recorta sutilmente as barras superior (título/canal) e inferior ("Assista no YouTube") do embed */
+.video-container iframe,
+.video-container #yt-player-frame {
     position: absolute;
-    top: 0;
+    top: -62px;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: calc(100% + 124px);
     border: 0;
+    pointer-events: none;
+}
+
+/* Escudo interativo sobre o vídeo: clique = Play/Pause, duplo clique = Tela cheia */
+.player-click-shield {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.45) 100%);
+    transition: opacity 0.25s ease, background 0.25s ease;
+}
+
+.nankim-player-wrapper.tocando .player-click-shield {
+    background: transparent;
+}
+
+.player-center-btn {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: rgba(243, 156, 18, 0.95);
+    color: #111111;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+    transition: transform 0.2s ease, opacity 0.25s ease;
+    pointer-events: none;
+}
+
+.nankim-player-wrapper.tocando .player-center-btn {
+    opacity: 0;
+    transform: scale(0.85);
+}
+
+.nankim-player-wrapper:hover .player-center-btn {
+    transform: scale(1.06);
+}
+
+/* Barra de Controles Própria Nankim */
+.nankim-player-controls {
+    position: relative;
+    z-index: 20;
+    background: #0d0d0d;
+    border-top: 1px solid #222;
+    padding: 0.65rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.player-timeline-bar {
+    width: 100%;
+    height: 6px;
+    background: #2a2a2a;
+    border-radius: 999px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.player-timeline-bar:hover {
+    height: 8px;
+}
+
+.player-timeline-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--cor-destaque, #f39c12);
+    border-radius: 999px;
+    transition: width 0.15s linear;
+}
+
+.player-controls-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    color: #e5e7eb;
+    font-size: 0.8rem;
+}
+
+.player-controls-left,
+.player-controls-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.ctrl-btn {
+    background: transparent;
+    border: none;
+    color: #e5e7eb;
+    cursor: pointer;
+    padding: 0.3rem 0.45rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.ctrl-btn:hover {
+    color: var(--cor-destaque, #f39c12);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.player-time-display {
+    font-variant-numeric: tabular-nums;
+    font-size: 0.75rem;
+    color: #9ca3af;
+    font-weight: 600;
+}
+
+.player-speed-select {
+    background: #1a1a1a;
+    color: #e5e7eb;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 0.2rem 0.45rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* --- TELA CHEIA (FULLSCREEN) --- */
+.nankim-player-wrapper:fullscreen,
+.nankim-player-wrapper:-webkit-full-screen {
+    width: 100vw !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    background: #000000 !important;
+}
+
+.nankim-player-wrapper:fullscreen .video-container,
+.nankim-player-wrapper:-webkit-full-screen .video-container {
+    padding-bottom: 0 !important;
+    height: calc(100vh - 58px) !important;
+    flex: 1 !important;
+}
+
+/* --- SIDEBAR DE MÓDULOS --- */
+.sidebar-modulos-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.lista-modulos-scroll {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.85rem;
+}
+
+.modulo-box {
+    border: 1px solid var(--painel-borda);
+    border-radius: 12px;
+    background: var(--painel-superficie);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.modulo-header-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.9rem 1rem;
+    background: var(--painel-superficie-alt);
+    border: none;
+    color: var(--painel-texto);
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.modulo-header-btn:hover {
+    background: var(--painel-hover);
+}
+
+.modulo-aulas-lista {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--painel-borda);
+    background: var(--painel-superficie);
+}
+
+.modulo-aulas-lista.collapsed {
+    display: none;
+}
+
+.aula-item-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--painel-borda-suave);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.aula-item-row:last-child {
+    border-bottom: none;
+}
+
+.aula-item-row:hover {
+    background: var(--painel-hover);
+}
+
+.aula-item-row.ativa {
+    background: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.12);
+    border-left: 3px solid var(--cor-destaque, #f39c12);
+    padding-left: calc(1rem - 3px);
 }
 
 /* Active Tab Styling */
 .tab-btn.active {
-    color: #ffffff;
+    color: var(--painel-texto);
     border-bottom: 2px solid var(--cor-destaque, #f39c12);
-    background-color: rgba(243, 156, 18, 0.08);
+    background-color: rgba(var(--cor-destaque-rgb, 243, 156, 18), 0.08);
 }
 
-/* Accordion transition */
-.accordion-content {
-    transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
-    max-height: 1000px;
-    overflow: hidden;
+/* Botões de ação da aula integrados aos tokens de variaveis.css */
+#btn-anterior,
+#btn-proxima,
+#btn-reportar-aula,
+#btn-concluir {
+    background-color: var(--painel-superficie-alt) !important;
+    border: 1px solid var(--painel-borda-forte) !important;
+    color: var(--painel-texto) !important;
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
 }
 
-.accordion-content.collapsed {
-    max-height: 0;
-    opacity: 0;
-    padding-top: 0;
-    padding-bottom: 0;
+#btn-anterior:hover:not(:disabled),
+#btn-proxima:hover:not(:disabled),
+#btn-concluir:hover {
+    border-color: var(--cor-destaque) !important;
+    background-color: var(--painel-hover) !important;
 }
 
+#btn-reportar-aula:hover {
+    border-color: #ef4444 !important;
+    color: #ef4444 !important;
+}
+
+#btn-concluir.concluida {
+    background-color: var(--cor-destaque) !important;
+    border-color: var(--cor-destaque) !important;
+    color: #111111 !important;
+}
+
+/* --- SUPORTE AO MODO CLARO --- */
 :root:not([data-theme="dark"]) .sala-de-aula {
     background: var(--painel-fundo);
     color: var(--painel-texto);
 }
 
-:root:not([data-theme="dark"]) .sala-de-aula > header {
-    background: rgba(255, 255, 255, 0.96);
-    border-color: var(--painel-borda);
-}
-
 :root:not([data-theme="dark"]) .sala-de-aula [class~="bg-nankimCard"],
 :root:not([data-theme="dark"]) .sala-de-aula [class*="bg-zinc-"] {
-    background-color: var(--painel-superficie-alt);
+    background-color: var(--painel-superficie);
 }
 
 :root:not([data-theme="dark"]) .sala-de-aula [class~="border-nankimBorder"],
@@ -112,21 +334,12 @@
 :root:not([data-theme="dark"]) .sala-de-aula [class~="text-gray-300"],
 :root:not([data-theme="dark"]) .sala-de-aula [class~="text-gray-400"],
 :root:not([data-theme="dark"]) .sala-de-aula [class~="text-gray-500"],
-:root:not([data-theme="dark"]) .sala-de-aula [class~="text-gray-600"],
 :root:not([data-theme="dark"]) .sala-de-aula [class*="text-zinc-"] {
     color: var(--painel-texto);
 }
 
-:root:not([data-theme="dark"]) .sala-de-aula [class*="hover:bg-zinc-"]:hover {
-    background-color: var(--painel-borda);
-}
-
-:root:not([data-theme="dark"]) .sala-de-aula [class~="hover:text-white"]:hover {
-    color: var(--painel-texto);
-}
-
 :root:not([data-theme="dark"]) .sala-de-aula [class~="bg-black/40"] {
-    background-color: #edf0f3;
+    background-color: var(--painel-superficie-alt);
 }
 
 :root:not([data-theme="dark"]) .sala-de-aula textarea,
@@ -136,6 +349,8 @@
     color: var(--painel-texto);
 }
 
-:root:not([data-theme="dark"]) .tab-btn.active {
-    color: var(--painel-texto);
+@media (max-width: 1024px) {
+    .sidebar-modulos-card {
+        max-height: none;
+    }
 }

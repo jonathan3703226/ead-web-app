@@ -343,6 +343,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('#form-alterar-senha .btn-toggle-senha').forEach((botao) => {
         botao.addEventListener('click', (e) => {
+            const paramsUrl = new URLSearchParams(window.location.search);
+            if (paramsUrl.get('imprimirCertificado') === '1') {
+                document.getElementById('btn-abrir-cert').click();
+                setTimeout(() => window.print(), 250);
+            }
             e.preventDefault();
             const wrapper = botao.closest('.campo-senha-wrapper');
             const inputSenha = wrapper ? wrapper.querySelector('input') : null;
@@ -481,7 +486,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const concluidas = JSON.parse(localStorage.getItem('nankim_aulas_concluidas') || '[]');
     const qtdConcluidas = Array.isArray(concluidas) ? concluidas.length : 0;
-    const cursoConcluido = usuarioAtual.matriculado === true && qtdConcluidas >= 12;
+    const jaConcluiuAntes =
+        usuarioAtual.certificadoLiberado === true ||
+        localStorage.getItem('nankim_certificado_liberado') === 'true';
+
+    if (usuarioAtual.matriculado === true && qtdConcluidas >= 12 && !jaConcluiuAntes) {
+        usuarioAtual.certificadoLiberado = true;
+        localStorage.setItem('nankim_certificado_liberado', 'true');
+    }
+
+    const cursoConcluido = usuarioAtual.matriculado === true && (qtdConcluidas >= 12 || jaConcluiuAntes);
 
     if (cursoConcluido) {
         containerCert.innerHTML = `

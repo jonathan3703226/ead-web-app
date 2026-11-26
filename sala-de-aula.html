@@ -1,32 +1,30 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sala de Aula | Nankim Art School</title>
-    
-    <!-- CSS Base e Específicos -->
+
+    <!-- CSS Base e Modulares (incluindo reportar.css para o modal funcionar) -->
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/variaveis.css">
-    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/menu-aluno.css">
     <link rel="stylesheet" href="./css/rodape.css">
+    <link rel="stylesheet" href="./css/modais.css">
+    <link rel="stylesheet" href="./css/formularios.css">
     <link rel="stylesheet" href="./css/termos.css">
     <link rel="stylesheet" href="./css/cookies.css">
+    <link rel="stylesheet" href="./css/reportar.css">
     <link rel="stylesheet" href="./css/sala-de-aula.css">
 
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS CDN com preflight desativado -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Caveat:wght@700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <script>
         tailwind.config = {
+            corePlugins: {
+                preflight: false,
+            },
             theme: {
                 extend: {
                     colors: {
@@ -46,108 +44,133 @@
             }
         }
     </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Audiowide&family=Caveat:wght@500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body class="sala-de-aula bg-nankimDark text-gray-100 font-sans min-h-screen flex flex-col antialiased">
 
-    <!-- HEADER DE NAVEGAÇÃO SUPERIOR (Modo Foco do Aluno) -->
-    <header class="sticky top-0 z-50 bg-black/90 backdrop-blur-md border-b border-nankimBorder px-4 sm:px-8 py-3 shadow-2xl">
-        <div class="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-4">
-            
-            <!-- Esquerda: Logo + Breadcrumb -->
-            <div class="flex items-center gap-4 sm:gap-6">
-                <a href="area-aluno.html" class="logo-wrapper inline-flex items-center gap-2 select-none" title="Voltar para Área do Aluno">
-                    <div class="w-9 h-9 flex items-center justify-center relative">
-                        <svg class="logo-img w-8 h-8" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="8"/>
-                            <path d="M32 70V30L68 70V30" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <div class="inline-flex items-center text-white leading-none">
-                        <span class="font-audiowide text-xl tracking-wider">NANKIM</span>
-                        <span class="logo-expansivel font-caveat text-lg font-bold">Art School</span>
-                    </div>
-                </a>
-
-                <div class="h-5 w-[1px] bg-nankimBorder hidden sm:block"></div>
-
-                <!-- Breadcrumbs -->
-                <nav class="hidden md:flex items-center gap-2 text-xs sm:text-sm text-gray-400">
-                    <a href="area-aluno.html" class="hover:text-white transition-colors">Área do Aluno</a>
-                    <i class="fa-solid fa-chevron-right text-[10px] text-gray-600"></i>
-                    <span id="breadcrumb-curso" class="text-white font-semibold">Fundamentos do Desenho</span>
-                </nav>
-            </div>
-
-            <!-- Direita: Tema + Progresso Geral + Perfil + Botão Voltar -->
-            <div class="flex items-center gap-3 sm:gap-6 ml-auto sm:ml-0">
-                <button id="btn-toggle-tema" class="btn-toggle-tema" type="button" aria-label="Alternar tema" title="Alternar tema">
-                    <span class="icone-sol" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-                    </span>
-                    <span class="icone-lua" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-                    </span>
-                </button>
-
-                <div class="flex items-center gap-3">
-                    <div class="flex flex-col items-end">
-                        <span class="text-xs text-gray-400 font-medium">Progresso Geral</span>
-                        <span id="header-percent-text" class="text-sm font-bold text-nankimGreen">0%</span>
-                    </div>
-                    <div class="w-24 sm:w-36 h-2.5 bg-zinc-800 rounded-full overflow-hidden border border-zinc-700/50">
-                        <div id="header-progress-bar" class="h-full bg-nankimGreen transition-all duration-500 rounded-full" style="width: 0%"></div>
-                    </div>
-                </div>
-
-                <a href="meu-perfil.html" class="hidden sm:inline-flex items-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-gray-200 text-xs sm:text-sm font-semibold px-3 py-2 rounded-lg border border-zinc-800 transition-all" title="Meu Perfil e Certificados">
-                    <i class="fa-regular fa-user text-nankimGreen"></i>
-                    <span>Perfil</span>
-                </a>
-
-                <button id="btn-voltar-painel" type="button" class="inline-flex items-center gap-2 bg-zinc-800/80 hover:bg-zinc-700 text-gray-200 text-xs sm:text-sm font-semibold px-3 py-2 rounded-lg border border-zinc-700 transition-all cursor-pointer">
-                    <i class="fa-solid fa-arrow-left"></i>
-                    <span class="hidden sm:inline">Voltar</span>
-                </button>
-            </div>
-
-        </div>
-    </header>
+    <!-- CABEÇALHO UNIFICADO INJETADO PELO menu-aluno.js EM MODO FOCO -->
+    <div id="header-container"></div>
 
     <!-- CONTEÚDO PRINCIPAL -->
-    <main class="max-w-[1600px] w-full mx-auto p-4 sm:p-6 lg:p-8 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
-        
-        <!-- COLUNA ESQUERDA: VIDEO PLAYER + CONTEÚDO DA AULA -->
+    <main
+        class="max-w-[1600px] w-full mx-auto p-4 sm:p-6 lg:p-8 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
+
+        <!-- COLUNA ESQUERDA: VIDEO PLAYER PROTEGIDO + CONTEÚDO DA AULA -->
         <section class="lg:col-span-8 flex flex-col gap-6">
-            
-            <div class="bg-black rounded-2xl p-2 sm:p-3 border border-nankimBorder shadow-2xl">
-                <div class="video-container">
-                    <iframe id="video-iframe" src="" title="Player da aula" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+            <!-- PLAYER ESTILO SENAI PLAY (SEM CLIQUE DIRETO NO YOUTUBE) -->
+            <div class="bg-black rounded-2xl p-2 sm:p-3 border border-solid border-nankimBorder shadow-2xl">
+                <div id="nankim-player-wrapper" class="nankim-player-wrapper" oncontextmenu="return false;">
+                    <div class="video-container">
+                        <div id="yt-player-frame"></div>
+                        <!-- Camada de proteção que bloqueia clique no título/logo YouTube e controla Play/Pause -->
+                        <div id="player-click-shield" class="player-click-shield"
+                            title="Clique para reproduzir ou pausar">
+                            <button type="button" id="player-center-btn" class="player-center-btn"
+                                aria-label="Reproduzir aula">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Barra de Controles Customizada Nankim -->
+                    <div class="nankim-player-controls">
+                        <div id="player-timeline-bar" class="player-timeline-bar" title="Avançar ou retroceder na aula">
+                            <div id="player-timeline-fill" class="player-timeline-fill"></div>
+                        </div>
+
+                        <div class="player-controls-row">
+                            <div class="player-controls-left">
+                                <button type="button" id="ctrl-play-pause" class="ctrl-btn"
+                                    title="Play / Pause (Espaço)">
+                                    <i id="ctrl-play-icon" class="fa-solid fa-play"></i>
+                                </button>
+                                <button type="button" id="ctrl-rewind" class="ctrl-btn" title="Voltar 10 segundos">
+                                    <i class="fa-solid fa-rotate-left"></i>
+                                    <span class="text-[11px] font-bold">-10s</span>
+                                </button>
+                                <button type="button" id="ctrl-forward" class="ctrl-btn" title="Avançar 10 segundos">
+                                    <span class="text-[11px] font-bold">+10s</span>
+                                    <i class="fa-solid fa-rotate-right"></i>
+                                </button>
+                                <button type="button" id="ctrl-mute" class="ctrl-btn" title="Silenciar / Ativar som">
+                                    <i id="ctrl-volume-icon" class="fa-solid fa-volume-high"></i>
+                                </button>
+                                <span id="player-time-display" class="player-time-display">00:00 / 00:00</span>
+                            </div>
+
+                            <div class="player-controls-right">
+                                <select id="ctrl-speed" class="player-speed-select"
+                                    aria-label="Velocidade de reprodução" title="Velocidade">
+                                    <option value="0.75">0.75x</option>
+                                    <option value="1" selected>1.0x</option>
+                                    <option value="1.25">1.25x</option>
+                                    <option value="1.5">1.5x</option>
+                                    <option value="2">2.0x</option>
+                                </select>
+                                <button type="button" id="ctrl-fullscreen" class="ctrl-btn" title="Tela cheia">
+                                    <i class="fa-solid fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Título da Aula & Painel de Ações Rápidas -->
-            <div class="bg-nankimCard rounded-xl p-5 sm:p-6 border border-nankimBorder flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-lg">
-                <div class="flex flex-col gap-1.5">
-                    <div class="flex items-center gap-2">
-                        <span id="aula-modulo-badge" class="bg-zinc-800 text-zinc-300 text-[10px] sm:text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md border border-zinc-700">Módulo I</span>
-                        <span id="aula-duracao-badge" class="text-xs text-gray-400 font-medium"><i class="fa-regular fa-clock mr-1"></i>1h prática</span>
+            <!-- Título da Aula & Barra de Ações Alinhada -->
+            <div
+                class="bg-nankimCard rounded-xl p-5 sm:p-6 border border-solid border-nankimBorder flex flex-col gap-5 shadow-lg">
+                <!-- Linha Superior: Metadados + Título + Reportar Erro -->
+                <div class="flex items-start justify-between gap-4">
+                    <div class="flex flex-col gap-2">
+                        <div class="flex items-center gap-2.5 flex-wrap">
+                            <span id="aula-modulo-badge"
+                                class="bg-amber-500/15 text-nankimGreen text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-md border border-solid border-amber-500/30">Módulo
+                                I</span>
+                            <span id="aula-duracao-badge" class="text-xs text-gray-400 font-medium"><i
+                                    class="fa-regular fa-clock mr-1"></i>1h de estudo e prática</span>
+                        </div>
+                        <h1 id="aula-titulo"
+                            class="text-xl sm:text-2xl font-extrabold text-white tracking-tight leading-snug m-0">
+                            Carregando aula...</h1>
                     </div>
-                    <h1 id="aula-titulo" class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">Carregando aula...</h1>
+
+                    <button id="btn-reportar-aula" type="button" data-open="reportar"
+                        class="shrink-0 inline-flex items-center gap-1.5 bg-zinc-900/90 hover:bg-red-500/10 text-gray-400 hover:text-red-400 text-xs font-semibold px-3 py-2 rounded-lg transition-all cursor-pointer"
+                        title="Reportar problema no vídeo ou material desta aula">
+                        <i class="fa-solid fa-flag text-[11px]"></i>
+                        <span class="hidden sm:inline">Reportar erro</span>
+                    </button>
                 </div>
 
-                <!-- Botões de Ação -->
-                <div class="flex flex-wrap items-center gap-3 pt-2 md:pt-0 border-t border-zinc-800 md:border-0">
-                    <button id="btn-concluir" type="button" class="flex-1 md:flex-none inline-flex items-center justify-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-lg border border-zinc-700 transition-all cursor-pointer">
+                <!-- Linha Inferior: Barra de Conclusão à Esquerda + Navegação Anterior/Próxima à Direita -->
+                <div
+                    class="pt-4 border-0 border-t border-solid border-zinc-800/90 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                    <button id="btn-concluir" type="button"
+                        class="inline-flex items-center justify-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-xs sm:text-sm px-5 py-2.5 rounded-lg transition-all cursor-pointer">
                         <i id="btn-concluir-icon" class="fa-regular fa-circle-check text-nankimGreen text-base"></i>
                         <span id="btn-concluir-texto">Marcar como Concluída</span>
                     </button>
 
-                    <div class="flex items-center gap-2 w-full md:w-auto">
-                        <button id="btn-anterior" type="button" class="flex-1 md:flex-none inline-flex items-center justify-center gap-1.5 bg-zinc-900 hover:bg-zinc-800 text-gray-300 text-xs sm:text-sm font-semibold px-3.5 py-2.5 rounded-lg border border-zinc-800 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+                    <div class="grid grid-cols-2 sm:flex items-center gap-2.5">
+                        <button id="btn-anterior" type="button"
+                            class="inline-flex items-center justify-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-gray-200 text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-lg transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
                             <i class="fa-solid fa-chevron-left text-xs"></i>
                             <span>Anterior</span>
                         </button>
-                        <button id="btn-proxima" type="button" class="flex-1 md:flex-none inline-flex items-center justify-center gap-1.5 bg-zinc-900 hover:bg-zinc-800 text-gray-300 text-xs sm:text-sm font-semibold px-3.5 py-2.5 rounded-lg border border-zinc-800 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+
+                        <button id="btn-proxima" type="button"
+                            class="inline-flex items-center justify-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-gray-200 text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-lg transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
                             <span>Próxima</span>
                             <i class="fa-solid fa-chevron-right text-xs"></i>
                         </button>
@@ -155,73 +178,147 @@
                 </div>
             </div>
 
-            <!-- ABAS DINÂMICAS -->
-            <div class="bg-nankimCard rounded-xl border border-nankimBorder overflow-hidden shadow-lg flex flex-col">
-                <div class="flex border-b border-nankimBorder overflow-x-auto no-scrollbar bg-black/40">
-                    <button type="button" id="tab-visao-geral" class="tab-btn active flex items-center gap-2 px-5 py-3.5 text-xs sm:text-sm font-bold text-gray-400 whitespace-nowrap transition-all border-b-2 border-transparent hover:text-white">
+            <!-- ABAS DINÂMICAS REESTRUTURADAS -->
+            <div
+                class="bg-nankimCard rounded-xl border border-solid border-nankimBorder overflow-hidden shadow-lg flex flex-col">
+                <div class="flex border-b border-solid border-nankimBorder overflow-x-auto no-scrollbar bg-black/40">
+                    <button type="button" id="tab-visao-geral"
+                        class="tab-btn active flex items-center gap-2 px-5 py-3.5 text-xs sm:text-sm font-bold text-gray-400 bg-transparent border-0 border-b-2 border-solid border-transparent whitespace-nowrap transition-all hover:text-white cursor-pointer">
                         <i class="fa-solid fa-book-open"></i> Visão Geral
                     </button>
-                    <button type="button" id="tab-atividades" class="tab-btn flex items-center gap-2 px-5 py-3.5 text-xs sm:text-sm font-bold text-gray-400 whitespace-nowrap transition-all border-b-2 border-transparent hover:text-white">
-                        <i class="fa-solid fa-pencil-ruler"></i> Exercícios
+                    <button type="button" id="tab-atividades"
+                        class="tab-btn flex items-center gap-2 px-5 py-3.5 text-xs sm:text-sm font-bold text-gray-400 bg-transparent border-0 border-b-2 border-solid border-transparent whitespace-nowrap transition-all hover:text-white cursor-pointer">
+                        <i class="fa-solid fa-pencil-ruler"></i> Exercício Prático
                     </button>
-                    <button type="button" id="tab-materiais" class="tab-btn flex items-center gap-2 px-5 py-3.5 text-xs sm:text-sm font-bold text-gray-400 whitespace-nowrap transition-all border-b-2 border-transparent hover:text-white">
-                        <i class="fa-solid fa-paperclip"></i> Materiais de Apoio
+                    <button type="button" id="tab-materiais"
+                        class="tab-btn flex items-center gap-2 px-5 py-3.5 text-xs sm:text-sm font-bold text-gray-400 bg-transparent border-0 border-b-2 border-solid border-transparent whitespace-nowrap transition-all hover:text-white cursor-pointer">
+                        <i class="fa-solid fa-paperclip"></i> Material de Apoio
                     </button>
-                    <button type="button" id="tab-comentarios" class="tab-btn flex items-center gap-2 px-5 py-3.5 text-xs sm:text-sm font-bold text-gray-400 whitespace-nowrap transition-all border-b-2 border-transparent hover:text-white">
+                    <button type="button" id="tab-comentarios"
+                        class="tab-btn flex items-center gap-2 px-5 py-3.5 text-xs sm:text-sm font-bold text-gray-400 bg-transparent border-0 border-b-2 border-solid border-transparent whitespace-nowrap transition-all hover:text-white cursor-pointer">
                         <i class="fa-solid fa-comments"></i> Dúvidas &amp; Comentários
                     </button>
                 </div>
 
-                <div class="p-5 sm:p-6 text-sm text-gray-300 leading-relaxed">
+                <div class="p-5 sm:p-7 text-sm text-gray-300 leading-relaxed">
                     <!-- Visão Geral -->
-                    <div id="conteudo-visao-geral" class="tab-content flex flex-col gap-4">
-                        <h3 class="text-base font-bold text-white flex items-center gap-2">
-                            <i class="fa-solid fa-circle-info text-nankimGreen"></i> Sobre esta aula
-                        </h3>
-                        <p id="aula-descricao" class="text-gray-300 text-sm sm:text-base">Carregando descrição da aula...</p>
-                        
-                        <div class="mt-4 p-4 rounded-lg bg-zinc-900/80 border border-zinc-800">
-                            <h4 class="text-xs font-bold text-nankimGreen uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                                <i class="fa-solid fa-lightbulb"></i> Dica do Professor
-                            </h4>
-                            <p id="aula-dica" class="text-xs sm:text-sm text-gray-400 italic">Mantenha a mão relaxada ao segurar o lápis.</p>
+                    <div id="conteudo-visao-geral" class="tab-content flex flex-col gap-5">
+                        <div class="flex flex-col gap-2">
+                            <span class="text-[11px] font-extrabold uppercase tracking-wider text-nankimGreen">Resumo da
+                                Aula</span>
+                            <p id="aula-descricao" class="text-gray-200 text-sm sm:text-base leading-relaxed m-0">
+                                Carregando descrição da aula...</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div
+                                class="p-4 rounded-xl bg-zinc-900/80 border border-solid border-zinc-800 flex flex-col gap-2">
+                                <h4
+                                    class="text-xs font-extrabold text-white uppercase tracking-wider flex items-center gap-2 m-0">
+                                    <i class="fa-solid fa-bullseye text-nankimGreen"></i> O que você vai dominar
+                                </h4>
+                                <ul id="aula-objetivos"
+                                    class="space-y-1.5 text-xs sm:text-sm text-gray-300 list-none p-0 m-0"></ul>
+                            </div>
+
+                            <div
+                                class="p-4 rounded-xl bg-zinc-900/80 border border-solid border-zinc-800 flex flex-col gap-2">
+                                <h4
+                                    class="text-xs font-extrabold text-white uppercase tracking-wider flex items-center gap-2 m-0">
+                                    <i class="fa-solid fa-pen-nib text-nankimGreen"></i> Materiais Necessários na Mesa
+                                </h4>
+                                <p id="aula-ferramentas" class="text-xs sm:text-sm text-gray-300 m-0"></p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="p-4 rounded-xl bg-amber-500/10 border border-solid border-amber-500/30 flex items-start gap-3">
+                            <i class="fa-solid fa-lightbulb text-nankimGreen text-base mt-0.5"></i>
+                            <div class="flex flex-col gap-1">
+                                <h4 class="text-xs font-extrabold text-nankimGreen uppercase tracking-wider m-0">Dica de
+                                    Ouro do Professor</h4>
+                                <p id="aula-dica" class="text-xs sm:text-sm text-gray-300 m-0"></p>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Exercícios -->
-                    <div id="conteudo-atividades" class="tab-content hidden flex flex-col gap-4">
-                        <h3 class="text-base font-bold text-white flex items-center gap-2">
-                            <i class="fa-solid fa-list-check text-nankimGreen"></i> Atividade Prática Proposta
-                        </h3>
-                        <p id="aula-exercicio-desc" class="text-gray-300">Carregando instruções do exercício...</p>
-                        <div class="bg-zinc-900/60 p-4 rounded-xl border border-zinc-800 flex flex-col gap-3">
-                            <h4 class="text-xs font-bold text-gray-300 uppercase tracking-wider">Checklist de Entrega:</h4>
-                            <ul id="aula-checklist" class="space-y-2 text-xs sm:text-sm text-gray-400"></ul>
+                    <div id="conteudo-atividades" class="tab-content hidden flex flex-col gap-5">
+                        <div
+                            class="p-5 rounded-xl bg-zinc-900/90 border border-solid border-zinc-800 flex flex-col gap-2">
+                            <div class="flex items-center justify-between flex-wrap gap-2">
+                                <span
+                                    class="text-[11px] font-extrabold uppercase tracking-wider text-nankimGreen">Desafio
+                                    Prático da Aula</span>
+                                <span id="aula-tempo-pratica"
+                                    class="text-xs font-bold text-gray-400 bg-black/40 px-2.5 py-1 rounded-md border border-solid border-zinc-800">Tempo
+                                    estimado: 40 min</span>
+                            </div>
+                            <h3 id="aula-exercicio-titulo" class="text-base sm:text-lg font-extrabold text-white m-0">
+                                Atividade Prática</h3>
+                            <p id="aula-exercicio-desc" class="text-gray-300 text-sm m-0">Carregando instruções do
+                                exercício...</p>
+                        </div>
+
+                        <div
+                            class="bg-zinc-900/60 p-5 rounded-xl border border-solid border-zinc-800 flex flex-col gap-3">
+                            <div class="flex items-center justify-between">
+                                <h4 class="text-xs font-extrabold text-white uppercase tracking-wider m-0">Etapas para
+                                    concluir o exercício (clique para marcar):</h4>
+                                <span id="checklist-progresso-texto" class="text-xs font-bold text-nankimGreen">0/3
+                                    concluídas</span>
+                            </div>
+                            <ul id="aula-checklist"
+                                class="space-y-2.5 text-xs sm:text-sm text-gray-300 list-none p-0 m-0"></ul>
                         </div>
                     </div>
 
                     <!-- Materiais -->
                     <div id="conteudo-materiais" class="tab-content hidden flex flex-col gap-4">
-                        <h3 class="text-base font-bold text-white flex items-center gap-2">
-                            <i class="fa-solid fa-download text-nankimGreen"></i> Arquivos &amp; Referências
-                        </h3>
-                        <div id="aula-materiais-lista" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-extrabold text-white flex items-center gap-2 m-0">
+                                <i class="fa-solid fa-folder-open text-nankimGreen"></i> Kit de Apoio e Referências
+                                desta Aula
+                            </h3>
+                            <p class="text-xs text-gray-400 m-0">Guias visuais, grades estruturais e fichas de exercício
+                                preparadas para acompanhar a aula.</p>
+                        </div>
+                        <div id="aula-materiais-lista" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                     </div>
 
-                    <!-- Comentários -->
+                    <!-- Comentários (Público ou Privado para o Instrutor) -->
                     <div id="conteudo-comentarios" class="tab-content hidden flex flex-col gap-6">
                         <div class="flex flex-col gap-3">
-                            <label for="input-comentario" class="text-xs font-bold uppercase text-gray-400">Deixe sua dúvida ou envie seu exercício</label>
-                            <textarea id="input-comentario" rows="3" placeholder="Escreva seu comentário para o professor..." class="w-full bg-zinc-900 text-white text-sm p-3 rounded-lg border border-zinc-800 focus:outline-none focus:border-nankimGreen resize-none placeholder-gray-600 transition-colors"></textarea>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                <label for="input-comentario" class="text-xs font-bold uppercase text-gray-400">Envie sua dúvida ou comentário sobre esta aula</label>
+                                
+                                <!-- Seletor de Visibilidade: Público ou Privado -->
+                                <div class="inline-flex rounded-lg bg-zinc-900 p-1 border border-solid border-zinc-800 self-start">
+                                    <button type="button" id="btn-vis-publico" data-visibilidade="publico" class="vis-btn active px-3 py-1.5 rounded-md text-xs font-bold bg-nankimGreen text-zinc-950 border-0 cursor-pointer transition-all flex items-center gap-1.5">
+                                        <i class="fa-solid fa-users text-[11px]"></i> Público
+                                    </button>
+                                    <button type="button" id="btn-vis-privado" data-visibilidade="privado" class="vis-btn px-3 py-1.5 rounded-md text-xs font-bold bg-transparent text-gray-400 hover:text-white border-0 cursor-pointer transition-all flex items-center gap-1.5">
+                                        <i class="fa-solid fa-lock text-[11px]"></i> Privado (Instrutor)
+                                    </button>
+                                </div>
+                            </div>
+
+                            <p id="aviso-visibilidade-comentario" class="text-xs text-gray-400 m-0 flex items-center gap-1.5">
+                                <i class="fa-solid fa-globe text-nankimGreen"></i>
+                                <span>Visível para todos os alunos desta aula e para o instrutor.</span>
+                            </p>
+
+                            <textarea id="input-comentario" rows="3" placeholder="Escreva sua dúvida pública para a turma e o instrutor..." class="w-full bg-zinc-900 text-white text-sm p-3 rounded-lg border border-solid border-zinc-800 focus:outline-none focus:border-nankimGreen resize-none placeholder-gray-600 transition-colors"></textarea>
+                            
                             <div class="flex justify-end">
-                                <button id="btn-publicar-comentario" type="button" class="bg-nankimGreen hover:bg-nankimGreenHover text-zinc-950 text-xs sm:text-sm font-extrabold px-5 py-2.5 rounded-lg transition-all flex items-center gap-2 cursor-pointer">
-                                    <i class="fa-solid fa-paper-plane"></i> Publicar
+                                <button id="btn-publicar-comentario" type="button" class="bg-nankimGreen hover:bg-nankimGreenHover text-zinc-950 border-0 text-xs sm:text-sm font-extrabold px-5 py-2.5 rounded-lg transition-all flex items-center gap-2 cursor-pointer">
+                                    <i class="fa-solid fa-paper-plane"></i> <span id="texto-btn-publicar">Publicar Comentário</span>
                                 </button>
                             </div>
                         </div>
 
-                        <div class="border-t border-zinc-800 pt-4 flex flex-col gap-4">
-                            <h4 class="text-xs font-bold uppercase text-gray-400 tracking-wider">Comentários da Turma</h4>
+                        <div class="border-t border-solid border-zinc-800 pt-4 flex flex-col gap-4">
+                            <h4 class="text-xs font-bold uppercase text-gray-400 tracking-wider m-0">Mensagens e Dúvidas da Aula</h4>
                             <div id="lista-comentarios" class="space-y-4"></div>
                         </div>
                     </div>
@@ -231,22 +328,17 @@
 
         <!-- COLUNA DIREITA: SIDEBAR DE MÓDULOS -->
         <aside class="lg:col-span-4 flex flex-col gap-4">
-            <div class="bg-nankimCard rounded-xl border border-nankimBorder overflow-hidden shadow-2xl flex flex-col lg:max-h-[calc(100vh-100px)]">
-                <div class="p-4 sm:p-5 border-b border-nankimBorder bg-black/40 flex flex-col gap-3">
-                    <div class="flex items-center justify-between">
-                        <h2 class="font-extrabold text-white text-base flex items-center gap-2">
-                            <i class="fa-solid fa-layer-group text-nankimGreen"></i> Conteúdo do Curso
-                        </h2>
-                        <span id="aulas-concluidas-count" class="text-xs font-bold text-gray-400 bg-zinc-800 px-2.5 py-1 rounded-md">0/12 Aulas</span>
-                    </div>
-
-                    <div class="relative">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-500"></i>
-                        <input type="text" id="input-busca" placeholder="Buscar aula ou assunto..." class="w-full bg-zinc-900/90 text-xs text-white pl-8 pr-3 py-2.5 rounded-lg border border-zinc-800 focus:outline-none focus:border-nankimGreen placeholder-gray-500 transition-colors">
-                    </div>
+            <div
+                class="sidebar-modulos-card bg-nankimCard rounded-xl border border-solid border-nankimBorder overflow-hidden shadow-2xl">
+                <div class="p-4 sm:p-5 border-b border-solid border-nankimBorder bg-black/40 flex items-center justify-between">
+                    <h2 class="font-extrabold text-white text-base flex items-center gap-2 m-0">
+                        <i class="fa-solid fa-layer-group text-nankimGreen"></i> Conteúdo do Curso
+                    </h2>
+                    <span id="aulas-concluidas-count"
+                        class="text-xs font-bold text-gray-300 bg-zinc-800 px-2.5 py-1 rounded-md">0/12 Aulas</span>
                 </div>
 
-                <div id="container-modulos" class="p-3 flex flex-col gap-3 flex-1 lg:overflow-y-auto"></div>
+                <div id="container-modulos" class="lista-modulos-scroll"></div>
             </div>
         </aside>
 
@@ -255,10 +347,13 @@
     <!-- CONTAINER ONDE O GLOBAL.JS INJETA O RODAPÉ DINÂMICO -->
     <div id="footer-container"></div>
 
-    <!-- Scripts Globais e da Sala de Aula -->
+    <!-- Scripts Globais, Menu Unificado, Reportar Erro e Sala de Aula -->
     <script src="./js/global.js"></script>
+    <script src="./js/menu-aluno.js"></script>
     <script src="./js/cookies.js"></script>
     <script src="./js/termos.js"></script>
+    <script src="./js/reportar.js"></script>
     <script src="./js/sala-de-aula.js"></script>
 </body>
+
 </html>

@@ -54,6 +54,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const qtdConcluidas = Array.isArray(concluidasSala) ? concluidasSala.length : 0;
     const percentual = Math.min(Math.round((qtdConcluidas / totalAulasCurso) * 100), 100);
 
+    // Persiste liberação permanente do certificado quando atingir 100%
+    if (usuarioAtual.matriculado && percentual >= 100 && usuarioAtual.certificadoLiberado !== true) {
+        usuarioAtual.certificadoLiberado = true;
+        localStorage.setItem('nankim_certificado_liberado', 'true');
+        dbUsuarios[idxUsuario] = usuarioAtual;
+        localStorage.setItem('nankim_db', JSON.stringify(dbUsuarios));
+    }
+
     const elContador = document.getElementById('contador-aulas-concluidas');
     const elPlano = document.getElementById('status-plano-aluno');
     if (elContador) elContador.textContent = `${qtdConcluidas}/${totalAulasCurso}`;
@@ -68,16 +76,41 @@ function renderizarCursoAtivo(usuarioAtual, qtdConcluidas, totalAulas, percentua
     if (!container) return;
 
     const matriculado = usuarioAtual.matriculado === true;
-    const statusBadge = matriculado
-        ? `<span class="tag-status-curso ativo">● Curso Completo Liberado</span>`
-        : `<span class="tag-status-curso degustacao">✦ Degustação Gratuita · Módulo I Liberado</span>`;
+    const cursoConcluido = matriculado && percentual >= 100;
+    const certificadoJaLiberado =
+        matriculado &&
+        (cursoConcluido ||
+            usuarioAtual.certificadoLiberado === true ||
+            localStorage.getItem('nankim_certificado_liberado') === 'true');
 
-    const botaoAcaoPrincipal = matriculado
-        ? `<a href="sala-de-aula.html" class="btn-aluno-primario link-magnetico">${qtdConcluidas > 0 ? 'Continuar de onde parei' : 'Iniciar Curso Agora'}</a>`
-        : `
+    const statusBadge = cursoConcluido
+        ? `<span class="tag-status-curso ativo">★ Formação Concluída · 100%</span>`
+        : certificadoJaLiberado
+            ? `<span class="tag-status-curso ativo">★ Certificado Emitido · 100% Concluído</span>`
+            : matriculado
+                ? `<span class="tag-status-curso ativo">● Curso Completo Liberado</span>`
+                : `<span class="tag-status-curso degustacao">✦ Degustação Gratuita · Módulo I Liberado</span>`;
+
+    let botaoAcaoPrincipal = '';
+    if (cursoConcluido || certificadoJaLiberado) {
+        botaoAcaoPrincipal = `
+            <button type="button" class="btn-aluno-primario link-magnetico" id="btn-imprimir-cert-area">
+                <i class="fa-solid fa-award" style="margin-right:8px;"></i>Imprimir Certificado
+            </button>
+            <a href="sala-de-aula.html" class="btn-aluno-secundario link-magnetico">
+                <i class="fa-solid fa-play" style="margin-right:8px;"></i>Acessar Aulas
+            </a>
+        `;
+    } else if (matriculado) {
+        botaoAcaoPrincipal = `
+            <a href="sala-de-aula.html" class="btn-aluno-primario link-magnetico">${qtdConcluidas > 0 ? 'Continuar de onde parei' : 'Iniciar Curso Agora'}</a>
+        `;
+    } else {
+        botaoAcaoPrincipal = `
             <a href="sala-de-aula.html" class="btn-aluno-primario link-magnetico">Acessar Módulo I Grátis</a>
             <button type="button" class="btn-aluno-secundario link-magnetico" id="btn-upgrade-completo">Desbloquear Curso Completo (12 aulas)</button>
         `;
+    }
 
     container.innerHTML = `
         <article class="card-curso-destaque-aluno">
@@ -120,6 +153,14 @@ function renderizarCursoAtivo(usuarioAtual, qtdConcluidas, totalAulas, percentua
         </article>
     `;
 
+    // Ação: Imprimir Certificado direto da Área do Aluno
+    const btnCertArea = document.getElementById('btn-imprimir-cert-area');
+    if (btnCertArea) {
+        btnCertArea.addEventListener('click', () => {
+            window.location.href = 'meu-perfil.html?imprimirCertificado=1';
+        });
+    }
+
     const btnUpgrade = document.getElementById('btn-upgrade-completo');
     if (btnUpgrade) {
         btnUpgrade.addEventListener('click', () => {
@@ -136,7 +177,6 @@ function renderizarCursoAtivo(usuarioAtual, qtdConcluidas, totalAulas, percentua
         });
     });
 
-    // Aplica o efeito magnético sutil do global.js apenas nos botões .link-magnetico
     if (typeof aplicarEfeitoMagnetico === 'function') {
         aplicarEfeitoMagnetico();
     }

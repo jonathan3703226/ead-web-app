@@ -1,20 +1,14 @@
 function injetarModaisAutenticacao() {
-    // 1. Modal de Login com Abas (Aluno / Professor)
+    // 1. Modal de Login Único (Identifica automaticamente Aluno ou Admin)
     if (!document.getElementById('modal-login')) {
         document.body.insertAdjacentHTML('beforeend', `
             <div id="modal-login" class="modal">
                 <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="titulo-login">
                     <button class="close-btn" type="button" data-close="login" aria-label="Fechar">&times;</button>
-                    
-                    <!-- Seletor de Perfil (Aluno vs Professor) -->
-                    <div class="login-tabs-perfil">
-                        <button type="button" class="tab-perfil active" data-perfil="aluno">Sou Aluno</button>
-                        <button type="button" class="tab-perfil" data-perfil="professor">Sou Professor</button>
-                    </div>
 
-                    <h2 id="titulo-login">Login - Área do Aluno</h2>
+                    <h2 id="titulo-login">Entrar na Nankim</h2>
                     
-                    <form id="form-login" novalidate data-tipo-acesso="aluno">
+                    <form id="form-login" novalidate>
                         <div class="input-group">
                             <label for="login-email">E-mail</label>
                             <input type="email" id="login-email" placeholder="seuemail@dominio.com" required autocomplete="email">
@@ -34,9 +28,17 @@ function injetarModaisAutenticacao() {
                             <small class="input-feedback"></small>
                         </div>
 
-                        <!-- Dica para acesso de Professor (Oculto por padrão) -->
-                        <div id="dica-acesso-professor" style="display: none; font-size: 0.8rem; color: #888888; background: #1a1a1a; border: 1px solid #333; padding: 0.6rem 0.8rem; border-radius: 8px; margin-bottom: 1rem;">
-                            💡 Acesso de teste: <strong>professor@nankim.com</strong> / senha: <strong>admin123</strong>
+                        <!-- Card com credenciais de teste do Admin para demonstração -->
+                        <div id="card-credenciais-admin" style="font-size: 0.78rem; color: #cbd5e1; background: #181818; border: 1px solid rgba(243, 156, 18, 0.35); padding: 0.7rem 0.85rem; border-radius: 10px; margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.35rem;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;gap:0.5rem;">
+                                <span style="color:#f39c12;font-weight:800;text-transform:uppercase;letter-spacing:0.04em;font-size:0.7rem;">
+                                    🛡️ Acesso Administrativo (Demo)
+                                </span>
+                                <button type="button" id="btn-preencher-admin" style="background:rgba(243,156,18,0.16);border:1px solid rgba(243,156,18,0.45);color:#f39c12;font-size:0.7rem;font-weight:800;padding:0.2rem 0.55rem;border-radius:6px;cursor:pointer;">
+                                    Preencher
+                                </button>
+                            </div>
+                            <span>E-mail: <strong style="color:#ffffff;">admin@nankim.com.br</strong> · Senha: <strong style="color:#ffffff;">admin123</strong></span>
                         </div>
 
                         <div class="login-acoes-auxiliares" id="container-esqueci-senha">
@@ -148,13 +150,34 @@ function injetarModaisAutenticacao() {
 
 function obterUsuarios() {
     const dados = localStorage.getItem('nankim_db');
-    if (!dados) return [];
-    try {
-        const usuarios = JSON.parse(dados);
-        return Array.isArray(usuarios) ? usuarios : [];
-    } catch (error) {
-        return [];
+    let usuarios = [];
+    if (dados) {
+        try {
+            const parsed = JSON.parse(dados);
+            if (Array.isArray(parsed)) usuarios = parsed;
+        } catch (error) {
+            usuarios = [];
+        }
     }
+
+    // Garante que a conta administrativa padrão exista no banco local
+    const adminEmail = 'admin@nankim.com.br';
+    if (!usuarios.some((u) => String(u.email || '').toLowerCase() === adminEmail)) {
+        usuarios.push({
+            id: 1,
+            nome: 'Prof. Thiago Nankim (Admin)',
+            email: adminEmail,
+            senha: 'admin123',
+            role: 'admin',
+            matriculado: true,
+            modulo1_liberado: true
+        });
+        try {
+            localStorage.setItem('nankim_db', JSON.stringify(usuarios));
+        } catch (_) {}
+    }
+
+    return usuarios;
 }
 
 function configurarAutenticacao() {
@@ -294,33 +317,13 @@ function configurarAutenticacao() {
         const alvo = e.target instanceof Element ? e.target : null;
         if (!alvo) return;
 
-        const tabBtn = alvo.closest('.tab-perfil');
-        if (tabBtn) {
+        if (alvo.closest('#btn-preencher-admin')) {
             e.preventDefault();
-            document.querySelectorAll('.tab-perfil').forEach(t => t.classList.remove('active'));
-            tabBtn.classList.add('active');
-
-            const perfil = tabBtn.getAttribute('data-perfil');
-            const tituloLogin = document.getElementById('titulo-login');
-            const dicaProf = document.getElementById('dica-acesso-professor');
-            const containerEsqueci = document.getElementById('container-esqueci-senha');
-            const containerAlternarCad = document.getElementById('container-alternar-cadastro');
-
+            const emailInput = document.getElementById('login-email');
+            const senhaInput = document.getElementById('login-senha');
+            if (emailInput) emailInput.value = 'admin@nankim.com.br';
+            if (senhaInput) senhaInput.value = 'admin123';
             mostrarMensagemGeral(formLogin, '');
-
-            if (perfil === 'professor') {
-                formLogin.setAttribute('data-tipo-acesso', 'professor');
-                tituloLogin.textContent = 'Login - Área do Professor';
-                dicaProf.style.display = 'block';
-                containerEsqueci.style.display = 'none';
-                containerAlternarCad.style.display = 'none';
-            } else {
-                formLogin.setAttribute('data-tipo-acesso', 'aluno');
-                tituloLogin.textContent = 'Login - Área do Aluno';
-                dicaProf.style.display = 'none';
-                containerEsqueci.style.display = 'block';
-                containerAlternarCad.style.display = 'block';
-            }
             return;
         }
 
@@ -570,6 +573,7 @@ function configurarAutenticacao() {
                 email: email,
                 telefone: inputTelefoneCad.value.trim(),
                 senha: inputSenhaCad.value,
+                role: 'aluno',
                 matriculado: false,
                 modulo1_liberado: true,
                 cursos: [
@@ -592,6 +596,7 @@ function configurarAutenticacao() {
                 localStorage.setItem('nankim_db', JSON.stringify(usuarios));
                 sessionStorage.setItem('nankim_sessao', JSON.stringify({
                     logado: true,
+                    role: 'aluno',
                     tipo: 'aluno',
                     perfil: 'aluno',
                     nome: novoUsuario.nome,
@@ -631,13 +636,12 @@ function configurarAutenticacao() {
         });
     }
 
-    // 4. SUBMISSÃO DO LOGIN
+    // 4. SUBMISSÃO DO LOGIN ÚNICO (ROTEIA AUTOMATICAMENTE PARA ADMIN OU ALUNO)
     if (formLogin) {
         formLogin.addEventListener('submit', (event) => {
             event.preventDefault();
             mostrarMensagemGeral(formLogin, '');
 
-            const tipoAcesso = formLogin.getAttribute('data-tipo-acesso') || 'aluno';
             const email = document.getElementById('login-email').value.trim().toLowerCase();
             const senha = document.getElementById('login-senha').value;
 
@@ -646,37 +650,33 @@ function configurarAutenticacao() {
                 return;
             }
 
-            // A) LOGIN DE PROFESSOR
-            if (tipoAcesso === 'professor') {
-                if (email === 'professor@nankim.com' && senha === 'admin123') {
-                    try {
-                        sessionStorage.setItem('nankim_sessao', JSON.stringify({
-                            logado: true,
-                            tipo: 'professor',
-                            perfil: 'professor',
-                            nome: 'Thiago Nankim',
-                            email: email
-                        }));
-                    } catch (error) {
-                        console.error('Erro ao salvar sessão:', error);
-                    }
-                    window.location.href = 'area-professor.html';
-                } else {
-                    mostrarMensagemGeral(formLogin, 'Credenciais de professor incorretas.');
-                }
-                return;
-            }
-
-            // B) LOGIN DE ALUNO
             const usuarios = obterUsuarios();
-            const usuario = usuarios.find((c) => c.email.toLowerCase() === email);
+            const usuario = usuarios.find((c) => String(c.email || '').toLowerCase() === email);
 
             if (!usuario || usuario.senha !== senha) {
                 mostrarMensagemGeral(formLogin, 'E-mail ou senha incorretos.');
                 return;
             }
 
-            // Garante que qualquer aluno cadastrado já tenha o Módulo 1 liberado
+            // A) SE FOR ADMINISTRADOR -> VAI DIRETO PARA O PAINEL ADMIN
+            if (usuario.role === 'admin' || email === 'admin@nankim.com.br') {
+                try {
+                    sessionStorage.setItem('nankim_sessao', JSON.stringify({
+                        logado: true,
+                        role: 'admin',
+                        tipo: 'admin',
+                        perfil: 'admin',
+                        nome: usuario.nome || 'Administrador Nankim',
+                        email: usuario.email
+                    }));
+                } catch (error) {
+                    console.error('Erro ao iniciar sessão admin:', error);
+                }
+                window.location.href = 'admin.html';
+                return;
+            }
+
+            // B) SE FOR ALUNO -> GARANTE MÓDULO I E VAI PARA ÁREA DO ALUNO
             if (!usuario.matriculado && usuario.modulo1_liberado !== true) {
                 usuario.modulo1_liberado = true;
             }
@@ -700,6 +700,7 @@ function configurarAutenticacao() {
                 localStorage.setItem('nankim_db', JSON.stringify(usuarios));
                 sessionStorage.setItem('nankim_sessao', JSON.stringify({
                     logado: true,
+                    role: 'aluno',
                     tipo: 'aluno',
                     perfil: 'aluno',
                     nome: usuario.nome || email.split('@')[0],
@@ -723,6 +724,7 @@ window.addEventListener('pageshow', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+    obterUsuarios();
     injetarModaisAutenticacao();
     configurarAutenticacao();
 });
