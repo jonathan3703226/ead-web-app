@@ -1,23 +1,15 @@
 /* ==========================================================================
    SALA DE AULA - NANKIM ART SCHOOL
-   - Player blindado estilo SENAI Play (bloqueia saída para o YouTube e ofusca IDs)
+   - Embed padrão oficial do YouTube (em conformidade com os Termos de Uso)
    - Grade oficial completa: 3 Módulos · 12 Aulas alinhadas a cursos.html
    - Navegação Anterior/Próxima, Conclusão definitiva em 100%, Checklist interativo
-   - Dúvidas & Comentários com suporte a postagem Pública ou Privada ao instrutor
-   - Modal comemorativo de conclusão do curso + Notificação de certificado
+   - Dúvidas & Comentários persistentes (Público/Privado, edição e exclusão pelo aluno)
+   - Deep-link via notificações (?aula=aula-x&aba=comentarios)
    ========================================================================== */
 
 const sessaoAtiva = sessionStorage.getItem('nankim_sessao');
 if (!sessaoAtiva) {
     window.location.href = 'index.html';
-}
-
-function decodificarVideoRef(token) {
-    try {
-        return atob(token);
-    } catch (_) {
-        return token;
-    }
 }
 
 const CURSO_DATA = {
@@ -33,7 +25,7 @@ const CURSO_DATA = {
                     id: 'aula-1',
                     titulo: 'Aula 01 — Treinamento de Traço',
                     duracao: '1h de estudo e prática',
-                    videoToken: 'LWhrQjgwWHBGcEE=',
+                    videoId: 'wzE4iSsUIjc',
                     descricao: 'Domine a coordenação motora fina e o controle da pressão no papel. Você vai praticar exercícios progressivos de aquecimento que eliminam o traço "peludo" e inseguro, garantindo linhas contínuas, limpas e precisas.',
                     objetivos: [
                         'Controlar a firmeza do pulso, cotovelo e ombro ao riscar o papel',
@@ -59,7 +51,7 @@ const CURSO_DATA = {
                     id: 'aula-2',
                     titulo: 'Aula 02 — Estrutura e Esboço',
                     duracao: '1h de estudo e prática',
-                    videoToken: 'MzZZNkRSY1V0ZG8=',
+                    videoId: 'DX1q2cN4F_0',
                     descricao: 'Aprenda a enxergar qualquer objeto ou personagem através de formas geométricas primárias (esferas, cilindros e caixas) antes de desenhar qualquer detalhe superficial.',
                     objetivos: [
                         'Decompor referências complexas em sólidos geométricos simples',
@@ -85,7 +77,7 @@ const CURSO_DATA = {
                     id: 'aula-3',
                     titulo: 'Aula 03 — Corpo Musculoso e Proporção Heroica',
                     duracao: '1h de estudo e prática',
-                    videoToken: 'R3g5T3RuMHhYTFU=',
+                    videoId: 'Gx9Otn0xXLU',
                     descricao: 'Construção anatômica estilizada para personagens de ação e quadrinhos. Entenda a grade de proporção heroica (8 a 8,5 cabeças) e o encaixe dos principais grupos musculares.',
                     objetivos: [
                         'Aplicar a régua de proporção heroica para personagens atléticos',
@@ -111,7 +103,7 @@ const CURSO_DATA = {
                     id: 'aula-4',
                     titulo: 'Aula 04 — Corpo Humano em Movimento',
                     duracao: '1h de estudo e prática',
-                    videoToken: 'OXQwVDlLSVAxb2s=',
+                    videoId: '9t0T9KIP1ok',
                     descricao: 'Como eliminar a rigidez de "boneco travado" usando linha de ação, contraposto (inclinação oposta entre ombros e quadril), torção do tronco e distribuição de peso.',
                     objetivos: [
                         'Identificar e exagerar a linha de ação principal de qualquer pose',
@@ -144,7 +136,7 @@ const CURSO_DATA = {
                     id: 'aula-5',
                     titulo: 'Aula 05 — Design de Criaturas (Dragão)',
                     duracao: '1h de estudo e prática',
-                    videoToken: 'RWhXSC1LUXp0MXM=',
+                    videoId: 'EhWH-KQzt1s',
                     descricao: 'Fundamentos de Creature Design aplicando anatomia comparada: estrutura craniana reptiliana, articulação de asas baseada em morcegos/aves, pescoço serpentino e distribuição orgânica de escamas.',
                     objetivos: [
                         'Construir crânio, chifres, focinho e expressão feroz em perspectiva',
@@ -169,7 +161,7 @@ const CURSO_DATA = {
                     id: 'aula-6',
                     titulo: 'Aula 06 — Transformando Personagens em Chibi',
                     duracao: '1h de estudo e prática',
-                    videoToken: 'dHZxaGViSnNVS1U=',
+                    videoId: 'tvqhebJsUKU',
                     descricao: 'Aprenda a traduzir qualquer personagem complexo para a estética Chibi (2 a 3 cabeças de altura), sintetizando detalhes e exagerando expressões para maximizar o carisma.',
                     objetivos: [
                         'Ajustar a proporção corporal para 2 ou 2,5 cabeças',
@@ -194,7 +186,7 @@ const CURSO_DATA = {
                     id: 'aula-7',
                     titulo: 'Aula 07 — Perspectiva em 3 Pontos de Fuga',
                     duracao: '1h de estudo e prática',
-                    videoToken: 'YWtrUDdNWUpYcFE=',
+                    videoId: 'akkP7MYJXpQ',
                     descricao: 'Domine a perspectiva cônica com 3 pontos de fuga para construir cenas vertiginosas vistas de baixo para cima (contra-plongée) ou de cima para baixo (plongée).',
                     objetivos: [
                         'Posicionar Linha do Horizonte e os 3 pontos de fuga dentro e fora da folha',
@@ -219,7 +211,7 @@ const CURSO_DATA = {
                     id: 'aula-8',
                     titulo: 'Aula 08 — Construção de Cenário Medieval',
                     duracao: '1h de estudo e prática',
-                    videoToken: 'bHhYSGFpM1kwUnM=',
+                    videoId: 'lxXHai3Y0Rs',
                     descricao: 'Composição de ambientes históricos e fantásticos: como organizar primeiro plano, plano médio e fundo para construir uma vila ou fortaleza medieval cheia de atmosfera.',
                     objetivos: [
                         'Estruturar a cena em 3 camadas de profundidade bem definidas',
@@ -251,7 +243,7 @@ const CURSO_DATA = {
                     id: 'aula-9',
                     titulo: 'Aula 09 — Finalização com Caneta Nanquim',
                     duracao: '1h de estudo e prática',
-                    videoToken: 'MVdHYVV6LWZ3ZU0=',
+                    videoId: '1WGaUz-fweM',
                     descricao: 'Técnicas profissionais de arte-final tradicional no papel: controle de peso de linha, contorno externo vs. interno, hachuras cruzadas e preenchimento de áreas de preto sólido.',
                     objetivos: [
                         'Aplicar variação de espessura de linha (line weight) conforme luz e profundidade',
@@ -276,7 +268,7 @@ const CURSO_DATA = {
                     id: 'aula-10',
                     titulo: 'Aula 10 — Luz e Sombra em Cenários',
                     duracao: '1h de estudo e prática',
-                    videoToken: 'ajhibFZlclpUQ3M=',
+                    videoId: 'j8blVerZTCs',
                     descricao: 'Como iluminar ambientes complexos definindo uma fonte luminosa principal, separando planos por valores tonais e projetando sombras coerentes.',
                     objetivos: [
                         'Estabelecer direção e intensidade de uma fonte de luz primária',
@@ -301,7 +293,7 @@ const CURSO_DATA = {
                     id: 'aula-11',
                     titulo: 'Aula 11 — Introdução à Colorização',
                     duracao: '1h de estudo e prática',
-                    videoToken: 'RVl6emtTcDBKbXM=',
+                    videoId: 'EYzzkSp0Jms',
                     descricao: 'Fundamentos práticos de teoria das cores: círculo cromático, temperatura (cores quentes e frias), harmonia complementar/análoga e aplicação de cor sobre arte-final.',
                     objetivos: [
                         'Montar paletas harmoniosas de 3 a 4 cores antes de iniciar a pintura',
@@ -326,7 +318,7 @@ const CURSO_DATA = {
                     id: 'aula-12',
                     titulo: 'Aula 12 — Mentoria de Portfólio e Mercado',
                     duracao: '1h de estudo e prática',
-                    videoToken: 'REZvX1dJNldtV1k=',
+                    videoId: 'DFo_WI6WmWY',
                     descricao: 'Como curar suas melhores peças, digitalizar ou fotografar desenhos tradicionais com acabamento profissional, estruturar seu portfólio e conquistar seus primeiros clientes ou vagas.',
                     objetivos: [
                         'Selecionar de 6 a 8 peças com alto nível técnico e unidade visual',
@@ -358,11 +350,7 @@ let checklistsPorAula = {};
 let comentariosPorAula = {};
 let usuarioMatriculado = false;
 let visibilidadeComentarioAtual = 'publico';
-
-// Variáveis do Player Blindado (YouTube IFrame API)
-let ytPlayer = null;
-let ytApiPronta = false;
-let timerProgressoVideo = null;
+let comentarioEmEdicaoId = null;
 
 function verificarMatriculaUsuario() {
     const sessao = sessionStorage.getItem('nankim_sessao');
@@ -378,7 +366,26 @@ function verificarMatriculaUsuario() {
     }
 }
 
+
+function lerComentariosStorage() {
+    try {
+        const raw = localStorage.getItem('nankim_comentarios');
+        const parsed = raw ? JSON.parse(raw) : {};
+        return (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) ? parsed : {};
+    } catch (_) {
+        return {};
+    }
+}
+
+function salvarComentariosStorage(obj) {
+    comentariosPorAula = obj;
+    localStorage.setItem('nankim_comentarios', JSON.stringify(obj));
+}
+
 function cursoEstaConcluido() {
+    // Se a compra foi revogada (não matriculado), o curso completo não está concluído
+    if (!usuarioMatriculado) return false;
+
     const totalAulas = contarTotalAulas();
     if (aulasConcluidas.size >= totalAulas) return true;
     if (localStorage.getItem('nankim_certificado_liberado') === 'true') return true;
@@ -388,50 +395,81 @@ function cursoEstaConcluido() {
         if (sessao) {
             const db = JSON.parse(localStorage.getItem('nankim_db')) || [];
             const u = db.find(item => String(item.email || '').toLowerCase() === String(sessao.email || '').toLowerCase());
-            if (u && u.certificadoLiberado === true) return true;
+            if (u && u.matriculado === true && u.certificadoLiberado === true) return true;
         }
     } catch (_) {}
 
     return false;
 }
 
+function lerComentariosStorage() {
+    try {
+        const raw = localStorage.getItem('nankim_comentarios');
+        const parsed = raw ? JSON.parse(raw) : {};
+        return (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) ? parsed : {};
+    } catch (_) {
+        return {};
+    }
+}
+
+function salvarComentariosStorage(obj) {
+    comentariosPorAula = obj;
+    localStorage.setItem('nankim_comentarios', JSON.stringify(obj));
+}
+
+
+
+function obterChaveProgressoUsuario() {
+    const email = obterEmailUsuarioLogado();
+    return email ? `nankim_progresso_${email}` : 'nankim_progresso_guest';
+}
+
 function carregarEstado() {
     verificarMatriculaUsuario();
 
+    const chaveUsuario = obterChaveProgressoUsuario();
+    let dadosUsuario = null;
     try {
-        const savedConcluidas = localStorage.getItem('nankim_aulas_concluidas');
-        if (savedConcluidas) {
-            aulasConcluidas = new Set(JSON.parse(savedConcluidas));
-        }
+        const rawUser = localStorage.getItem(chaveUsuario);
+        if (rawUser) dadosUsuario = JSON.parse(rawUser);
     } catch (_) {}
 
-    // Se o curso já foi concluído anteriormente, garante que todas as 12 aulas permaneçam marcadas
-    if (cursoEstaConcluido()) {
+    if (dadosUsuario && Array.isArray(dadosUsuario.aulasConcluidas)) {
+        aulasConcluidas = new Set(dadosUsuario.aulasConcluidas);
+    } else {
+        aulasConcluidas = new Set();
+    }
+
+    // Se a compra foi revogada, remove conclusões dos módulos pagos e limpa o certificado
+    if (!usuarioMatriculado) {
+        const aulasGratuitas = new Set(['aula-1', 'aula-2', 'aula-3', 'aula-4']);
+        aulasConcluidas = new Set(Array.from(aulasConcluidas).filter(id => aulasGratuitas.has(id)));
+        localStorage.removeItem('nankim_certificado_liberado');
+    } else if (cursoEstaConcluido()) {
         CURSO_DATA.modulos.forEach(m => m.aulas.forEach(a => aulasConcluidas.add(a.id)));
-        localStorage.setItem('nankim_aulas_concluidas', JSON.stringify(Array.from(aulasConcluidas)));
     }
 
-    try {
-        const savedChecklists = localStorage.getItem('nankim_checklists_aulas');
-        if (savedChecklists) {
-            checklistsPorAula = JSON.parse(savedChecklists);
-        }
-    } catch (_) {}
+    localStorage.setItem('nankim_aulas_concluidas', JSON.stringify(Array.from(aulasConcluidas)));
 
-    const savedUltimaAula = localStorage.getItem('nankim_ultima_aula');
-    if (savedUltimaAula && obterAulaEModulo(savedUltimaAula)) {
-        const dadosSalvos = obterAulaEModulo(savedUltimaAula);
+    if (dadosUsuario && dadosUsuario.checklists && typeof dadosUsuario.checklists === 'object') {
+        checklistsPorAula = dadosUsuario.checklists;
+    } else {
+        checklistsPorAula = {};
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const aulaParam = params.get('aula');
+    const savedUltimaAula = dadosUsuario?.ultimaAula || 'aula-1';
+    const aulaAlvo = (aulaParam && obterAulaEModulo(aulaParam)) ? aulaParam : savedUltimaAula;
+
+    if (aulaAlvo && obterAulaEModulo(aulaAlvo)) {
+        const dadosSalvos = obterAulaEModulo(aulaAlvo);
         if (!dadosSalvos.modulo.pago || usuarioMatriculado) {
-            aulaAtualId = savedUltimaAula;
+            aulaAtualId = aulaAlvo;
         }
     }
 
-    try {
-        const savedComentarios = localStorage.getItem('nankim_comentarios');
-        comentariosPorAula = savedComentarios ? JSON.parse(savedComentarios) : {};
-    } catch (_) {
-        comentariosPorAula = {};
-    }
+    comentariosPorAula = lerComentariosStorage();
 }
 
 function sincronizarProgressoNoBanco() {
@@ -440,8 +478,20 @@ function sincronizarProgressoNoBanco() {
 
     try {
         const userObj = JSON.parse(sessao);
+        const emailNorm = String(userObj.email || '').toLowerCase().trim();
+        const chaveUsuario = obterChaveProgressoUsuario();
+
+        // Salva estado isolado por e-mail
+        localStorage.setItem(chaveUsuario, JSON.stringify({
+            aulasConcluidas: Array.from(aulasConcluidas),
+            checklists: checklistsPorAula,
+            ultimaAula: aulaAtualId
+        }));
+        localStorage.setItem('nankim_aulas_concluidas', JSON.stringify(Array.from(aulasConcluidas)));
+        localStorage.setItem('nankim_ultima_aula', aulaAtualId);
+
         const db = JSON.parse(localStorage.getItem('nankim_db')) || [];
-        const idx = db.findIndex(u => String(u.email || '').toLowerCase() === String(userObj.email || '').toLowerCase());
+        const idx = db.findIndex(u => String(u.email || '').toLowerCase().trim() === emailNorm);
         if (idx === -1) return;
 
         const totalAulas = contarTotalAulas();
@@ -450,6 +500,9 @@ function sincronizarProgressoNoBanco() {
         if (porcentagem >= 100 && db[idx].matriculado) {
             db[idx].certificadoLiberado = true;
             localStorage.setItem('nankim_certificado_liberado', 'true');
+        } else if (!db[idx].matriculado) {
+            db[idx].certificadoLiberado = false;
+            localStorage.removeItem('nankim_certificado_liberado');
         }
 
         if (Array.isArray(db[idx].cursos) && db[idx].cursos.length > 0) {
@@ -466,7 +519,6 @@ function salvarEstado() {
     localStorage.setItem('nankim_aulas_concluidas', JSON.stringify(Array.from(aulasConcluidas)));
     localStorage.setItem('nankim_checklists_aulas', JSON.stringify(checklistsPorAula));
     localStorage.setItem('nankim_ultima_aula', aulaAtualId);
-    localStorage.setItem('nankim_comentarios', JSON.stringify(comentariosPorAula));
     sincronizarProgressoNoBanco();
 }
 
@@ -475,132 +527,29 @@ function contarTotalAulas() {
 }
 
 // ==========================================================================
-// PLAYER BLINDADO ESTILO SENAI PLAY (YouTube IFrame API sem links expostos)
-// ==========================================================================
-function inicializarYouTubeAPI() {
-    if (window.YT && window.YT.Player) {
-        ytApiPronta = true;
-        criarOuTrocarVideoPlayer(aulaAtualId);
-        return;
-    }
-
-    window.onYouTubeIframeAPIReady = function () {
-        ytApiPronta = true;
-        criarOuTrocarVideoPlayer(aulaAtualId);
-    };
-
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    document.head.appendChild(tag);
-}
-
-function criarOuTrocarVideoPlayer(idAula) {
-    const dados = obterAulaEModulo(idAula);
-    if (!dados) return;
-
-    const videoIdReal = decodificarVideoRef(dados.aula.videoToken);
-    if (!ytApiPronta) return;
-
-    if (ytPlayer && typeof ytPlayer.cueVideoById === 'function') {
-        ytPlayer.cueVideoById(videoIdReal);
-        atualizarVisualPlayPause(false);
-        resetarBarraTempo();
-        return;
-    }
-
-    ytPlayer = new YT.Player('yt-player-frame', {
-        videoId: videoIdReal,
-        playerVars: {
-            controls: 0,
-            disablekb: 1,
-            fs: 0,
-            iv_load_policy: 3,
-            modestbranding: 1,
-            rel: 0,
-            playsinline: 1,
-            origin: window.location.origin
-        },
-        events: {
-            onReady: () => {
-                iniciarMonitoramentoTempo();
-            },
-            onStateChange: (event) => {
-                if (event.data === YT.PlayerState.PLAYING) {
-                    atualizarVisualPlayPause(true);
-                } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
-                    atualizarVisualPlayPause(false);
-                }
-            }
-        }
-    });
-}
-
-function alternarPlayPause() {
-    if (!ytPlayer || typeof ytPlayer.getPlayerState !== 'function') return;
-    const estado = ytPlayer.getPlayerState();
-    if (estado === YT.PlayerState.PLAYING) {
-        ytPlayer.pauseVideo();
-    } else {
-        ytPlayer.playVideo();
-    }
-}
-
-function atualizarVisualPlayPause(tocando) {
-    const wrapper = document.getElementById('nankim-player-wrapper');
-    const centerBtn = document.getElementById('player-center-btn');
-    const ctrlIcon = document.getElementById('ctrl-play-icon');
-
-    if (wrapper) {
-        wrapper.classList.toggle('tocando', tocando);
-    }
-    if (centerBtn) {
-        centerBtn.innerHTML = tocando
-            ? '<i class="fa-solid fa-pause"></i>'
-            : '<i class="fa-solid fa-play ml-1"></i>';
-    }
-    if (ctrlIcon) {
-        ctrlIcon.className = tocando ? 'fa-solid fa-pause' : 'fa-solid fa-play';
-    }
-}
-
-function formatarSegundos(seg) {
-    const s = Math.max(0, Math.floor(seg || 0));
-    const min = Math.floor(s / 60);
-    const resto = s % 60;
-    return `${String(min).padStart(2, '0')}:${String(resto).padStart(2, '0')}`;
-}
-
-function resetarBarraTempo() {
-    const fill = document.getElementById('player-timeline-fill');
-    const disp = document.getElementById('player-time-display');
-    if (fill) fill.style.width = '0%';
-    if (disp) disp.textContent = '00:00 / 00:00';
-}
-
-function iniciarMonitoramentoTempo() {
-    if (timerProgressoVideo) clearInterval(timerProgressoVideo);
-    timerProgressoVideo = setInterval(() => {
-        if (!ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
-        const atual = ytPlayer.getCurrentTime() || 0;
-        const total = ytPlayer.getDuration() || 0;
-        const pct = total > 0 ? Math.min((atual / total) * 100, 100) : 0;
-
-        const fill = document.getElementById('player-timeline-fill');
-        const disp = document.getElementById('player-time-display');
-        if (fill) fill.style.width = `${pct}%`;
-        if (disp) disp.textContent = `${formatarSegundos(atual)} / ${formatarSegundos(total)}`;
-    }, 350);
-}
-
-// ==========================================================================
-// INICIALIZAÇÃO E CARREGAMENTO DE AULAS
+// INICIALIZAÇÃO E CARREGAMENTO DE AULAS (PLAYER PADRÃO DO YOUTUBE)
 // ==========================================================================
 document.addEventListener('DOMContentLoaded', () => {
     carregarEstado();
     configurarEventosDOM();
     carregarAula(aulaAtualId);
     atualizarProgressoGeral();
-    inicializarYouTubeAPI();
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('aba') === 'comentarios') {
+        mudarAba('comentarios');
+        setTimeout(() => {
+            document.getElementById('conteudo-comentarios')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150);
+    }
+});
+
+// Sincroniza comentários em tempo real se alterados em outra aba (ex: painel admin)
+window.addEventListener('storage', (e) => {
+    if (e.key === 'nankim_comentarios') {
+        comentariosPorAula = lerComentariosStorage();
+        renderizarComentarios();
+    }
 });
 
 function obterAulaEModulo(idAula) {
@@ -623,10 +572,14 @@ function carregarAula(idAula) {
     }
 
     aulaAtualId = idAula;
+    comentarioEmEdicaoId = null;
     salvarEstado();
 
-    if (ytApiPronta) {
-        criarOuTrocarVideoPlayer(idAula);
+    // Carrega vídeo no embed padrão oficial do YouTube
+    const iframeYt = document.getElementById('yt-iframe-padrao');
+    if (iframeYt && aula.videoId) {
+        iframeYt.src = `https://www.youtube.com/embed/${aula.videoId}?rel=0`;
+        iframeYt.title = aula.titulo;
     }
 
     // Atualiza cabeçalho da aula
@@ -934,7 +887,6 @@ function exibirModalParabensCurso() {
 }
 
 function toggleAulaConcluida() {
-    // Bloqueia desmarcação após o curso atingir 100%
     if (cursoEstaConcluido()) {
         return;
     }
@@ -945,7 +897,6 @@ function toggleAulaConcluida() {
     } else {
         aulasConcluidas.add(aulaAtualId);
 
-        // Ao atingir 100% (12/12 aulas), dispara notificação e abre o modal de parabéns
         const totalAulas = contarTotalAulas();
         if (usuarioMatriculado && aulasConcluidas.size >= totalAulas) {
             if (window.NankimNotificacoes) {
@@ -1009,7 +960,7 @@ function atualizarProgressoGeral() {
 }
 
 // ==========================================================================
-// ABAS, COMENTÁRIOS (PÚBLICO / PRIVADO) E MODAL REPORTAR ERRO
+// ABAS, COMENTÁRIOS (PÚBLICO / PRIVADO / EDITAR / EXCLUIR) E REPORTAR ERRO
 // ==========================================================================
 function mudarAba(abaId) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
@@ -1024,6 +975,7 @@ function mudarAba(abaId) {
 
 function selecionarVisibilidadeComentario(modo) {
     visibilidadeComentarioAtual = modo === 'privado' ? 'privado' : 'publico';
+    comentarioEmEdicaoId = null;
 
     const btnPub = document.getElementById('btn-vis-publico');
     const btnPriv = document.getElementById('btn-vis-privado');
@@ -1058,12 +1010,14 @@ function selecionarVisibilidadeComentario(modo) {
             ? 'Publicar Comentário'
             : 'Enviar Mensagem Privada';
     }
+
+    renderizarComentarios();
 }
 
 function obterEmailUsuarioLogado() {
     try {
         const s = JSON.parse(sessionStorage.getItem('nankim_sessao'));
-        return String(s?.email || '').toLowerCase();
+        return String(s?.email || '').toLowerCase().trim();
     } catch (_) {
         return '';
     }
@@ -1073,36 +1027,164 @@ function renderizarComentarios() {
     const container = document.getElementById('lista-comentarios');
     if (!container) return;
 
+    const atualizado = lerComentariosStorage();
+    let precisouGerarId = false;
+
+    Object.keys(atualizado).forEach((aid) => {
+        if (!Array.isArray(atualizado[aid])) return;
+        atualizado[aid].forEach((item, idx) => {
+            if (!item.id) {
+                item.id = `msg-${aid}-${Date.now()}-${idx}`;
+                precisouGerarId = true;
+            }
+        });
+    });
+
+    if (precisouGerarId) {
+        salvarComentariosStorage(atualizado);
+    } else {
+        comentariosPorAula = atualizado;
+    }
+
     const emailAtual = obterEmailUsuarioLogado();
     const todos = comentariosPorAula[aulaAtualId] || [];
+    const modoPrivado = visibilidadeComentarioAtual === 'privado';
 
-    const visiveis = todos.filter(c => !c.privado || c.autorEmail === emailAtual || !c.autorEmail);
+    // Separa estritamente mensagens públicas das privadas conforme a aba selecionada
+    const perguntasVisiveis = todos.filter((c) => {
+        if (c.oficial) return false;
+        if (modoPrivado) {
+            return Boolean(c.privado) && (c.autorEmail === emailAtual || !c.autorEmail);
+        }
+        return !c.privado;
+    });
 
-    if (visiveis.length === 0) {
-        container.innerHTML = '<p class="text-xs text-gray-500 italic m-0">Nenhum comentário publicado ainda nesta aula. Seja o primeiro a perguntar!</p>';
+    const respostasOficiais = todos.filter((c) => c.oficial);
+
+    if (perguntasVisiveis.length === 0) {
+        container.innerHTML = modoPrivado
+            ? '<p class="text-xs text-gray-500 italic m-0">Você ainda não enviou nenhuma dúvida privada ao instrutor nesta aula.</p>'
+            : '<p class="text-xs text-gray-500 italic m-0">Nenhum comentário público publicado ainda nesta aula. Seja o primeiro a perguntar!</p>';
         return;
     }
 
-    container.innerHTML = visiveis.map(c => `
-        <div class="flex gap-3 p-3.5 rounded-xl ${c.privado ? 'bg-amber-500/5 border border-solid border-amber-500/30' : 'bg-zinc-900/70 border border-solid border-zinc-800/80'}">
-            <div class="w-8 h-8 rounded-full ${c.oficial ? 'bg-nankimGreen text-zinc-950' : 'bg-zinc-700 text-gray-200'} font-bold flex items-center justify-center text-xs flex-shrink-0">
-                ${c.avatar}
-            </div>
-            <div class="flex flex-col gap-1 w-full">
-                <div class="flex items-center justify-between flex-wrap gap-2">
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <span class="text-xs font-bold text-white">${c.autor}</span>
-                        ${c.oficial ? '<span class="bg-amber-500/20 text-nankimGreen text-[9px] font-bold px-1.5 py-0.5 rounded border border-solid border-amber-500/30">Instrutor</span>' : ''}
-                        ${c.privado
-                            ? '<span class="bg-zinc-800 text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded border border-solid border-amber-500/30 inline-flex items-center gap-1"><i class="fa-solid fa-lock text-[9px]"></i> Privado (Você & Instrutor)</span>'
-                            : '<span class="bg-zinc-800/80 text-gray-400 text-[10px] font-semibold px-2 py-0.5 rounded inline-flex items-center gap-1"><i class="fa-solid fa-globe text-[9px]"></i> Público</span>'}
+    container.innerHTML = perguntasVisiveis.map(c => {
+        const ehDoAlunoLogado = emailAtual && String(c.autorEmail || '').toLowerCase().trim() === emailAtual;
+        const editandoEste = comentarioEmEdicaoId === c.id;
+        const respostasDestaPergunta = respostasOficiais.filter(r => r.replyToId === c.id);
+
+        const respostasHtml = respostasDestaPergunta.map(r => {
+            const prefixoAutor = `@${c.autor} — `;
+            const textoLimpo = String(r.texto || '').replace(prefixoAutor, '');
+
+            return `
+                <div class="mt-2.5 ml-2 sm:ml-6 pl-3 border-0 border-l-2 border-solid border-nankimGreen bg-black/35 rounded-r-lg p-3 flex gap-2.5">
+                    <div class="w-7 h-7 rounded-full bg-nankimGreen text-zinc-950 font-bold flex items-center justify-center text-[11px] flex-shrink-0">
+                        ${r.avatar || 'T'}
                     </div>
-                    <span class="text-[10px] text-gray-500">${c.data}</span>
+                    <div class="flex flex-col gap-1 w-full">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-bold text-white">${r.autor}</span>
+                                <span class="bg-amber-500/20 text-nankimGreen text-[9px] font-bold px-1.5 py-0.5 rounded border border-solid border-amber-500/30">Instrutor</span>
+                            </div>
+                            <span class="text-[10px] text-gray-500">${r.data}</span>
+                        </div>
+                        <p class="text-xs sm:text-sm text-gray-200 m-0">${textoLimpo}</p>
+                    </div>
                 </div>
-                <p class="text-xs sm:text-sm text-gray-300 mt-0.5 m-0">${c.texto}</p>
+            `;
+        }).join('');
+
+        return `
+            <div class="flex flex-col p-3.5 rounded-xl ${c.privado ? 'bg-amber-500/5 border border-solid border-amber-500/30' : 'bg-zinc-900/70 border border-solid border-zinc-800/80'}">
+                <div class="flex gap-3">
+                    <div class="w-8 h-8 rounded-full bg-zinc-700 text-gray-200 font-bold flex items-center justify-center text-xs flex-shrink-0">
+                        ${c.avatar}
+                    </div>
+                    <div class="flex flex-col gap-1.5 w-full">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="text-xs font-bold text-white">${c.autor}</span>
+                                ${c.privado
+                                    ? '<span class="bg-zinc-800 text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded border border-solid border-amber-500/30 inline-flex items-center gap-1"><i class="fa-solid fa-lock text-[9px]"></i> Privado (Você & Instrutor)</span>'
+                                    : '<span class="bg-zinc-800/80 text-gray-400 text-[10px] font-semibold px-2 py-0.5 rounded inline-flex items-center gap-1"><i class="fa-solid fa-globe text-[9px]"></i> Público</span>'}
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-[10px] text-gray-500">${c.data}</span>
+                                ${ehDoAlunoLogado && !editandoEste ? `
+                                    <button type="button" onclick="iniciarEdicaoComentarioAluno('${c.id}')" class="text-[11px] text-gray-400 hover:text-nankimGreen bg-transparent border-0 cursor-pointer px-1" title="Editar comentário">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+                                    <button type="button" onclick="excluirComentarioAluno('${c.id}')" class="text-[11px] text-gray-400 hover:text-red-400 bg-transparent border-0 cursor-pointer px-1" title="Excluir comentário">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </div>
+
+                        ${editandoEste ? `
+                            <div class="flex flex-col gap-2 mt-1">
+                                <textarea id="edit-textarea-${c.id}" rows="2" class="w-full bg-zinc-950 text-white text-xs sm:text-sm p-2.5 rounded-lg border border-solid border-nankimGreen focus:outline-none resize-none">${c.texto}</textarea>
+                                <div class="flex justify-end gap-2">
+                                    <button type="button" onclick="cancelarEdicaoComentarioAluno()" class="bg-zinc-800 hover:bg-zinc-700 text-gray-300 border-0 text-xs font-bold px-3 py-1.5 rounded-md cursor-pointer">Cancelar</button>
+                                    <button type="button" onclick="salvarEdicaoComentarioAluno('${c.id}')" class="bg-nankimGreen hover:bg-nankimGreenHover text-zinc-950 border-0 text-xs font-extrabold px-3 py-1.5 rounded-md cursor-pointer">Salvar</button>
+                                </div>
+                            </div>
+                        ` : `
+                            <p class="text-xs sm:text-sm text-gray-300 mt-0.5 m-0">${c.texto}</p>
+                        `}
+                    </div>
+                </div>
+                ${respostasHtml}
             </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
+}
+
+function obterEmailUsuarioLogado() {
+    try {
+        const s = JSON.parse(sessionStorage.getItem('nankim_sessao'));
+        return String(s?.email || '').toLowerCase().trim();
+    } catch (_) {
+        return '';
+    }
+}
+
+function iniciarEdicaoComentarioAluno(comentarioId) {
+    comentarioEmEdicaoId = comentarioId;
+    renderizarComentarios();
+}
+
+function cancelarEdicaoComentarioAluno() {
+    comentarioEmEdicaoId = null;
+    renderizarComentarios();
+}
+
+function salvarEdicaoComentarioAluno(comentarioId) {
+    const textarea = document.getElementById(`edit-textarea-${comentarioId}`);
+    const novoTexto = textarea?.value.trim();
+    if (!novoTexto) return;
+
+    const atual = lerComentariosStorage();
+    const lista = atual[aulaAtualId] || [];
+    const item = lista.find(c => c.id === comentarioId);
+    if (item) {
+        item.texto = novoTexto;
+        item.data = 'Editado agora';
+        salvarComentariosStorage(atual);
+    }
+    comentarioEmEdicaoId = null;
+    renderizarComentarios();
+}
+
+function excluirComentarioAluno(comentarioId) {
+    const atual = lerComentariosStorage();
+    const lista = atual[aulaAtualId] || [];
+    atual[aulaAtualId] = lista.filter(c => c.id !== comentarioId && c.replyToId !== comentarioId);
+    salvarComentariosStorage(atual);
+    if (comentarioEmEdicaoId === comentarioId) comentarioEmEdicaoId = null;
+    renderizarComentarios();
 }
 
 function adicionarComentario() {
@@ -1112,8 +1194,9 @@ function adicionarComentario() {
     const texto = txtInput.value.trim();
     if (!texto) return;
 
-    if (!comentariosPorAula[aulaAtualId]) {
-        comentariosPorAula[aulaAtualId] = [];
+    const atual = lerComentariosStorage();
+    if (!Array.isArray(atual[aulaAtualId])) {
+        atual[aulaAtualId] = [];
     }
 
     let nomeAutor = 'Você (Aluno)';
@@ -1126,11 +1209,12 @@ function adicionarComentario() {
                 nomeAutor = s.nome;
                 inicial = s.nome.charAt(0).toUpperCase();
             }
-            emailAutor = String(s.email || '').toLowerCase();
+            emailAutor = String(s.email || '').toLowerCase().trim();
         }
     } catch (_) {}
 
-    comentariosPorAula[aulaAtualId].unshift({
+    atual[aulaAtualId].unshift({
+        id: `msg-${aulaAtualId}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
         autor: nomeAutor,
         autorEmail: emailAutor,
         avatar: inicial,
@@ -1139,7 +1223,7 @@ function adicionarComentario() {
         texto
     });
 
-    salvarEstado();
+    salvarComentariosStorage(atual);
     txtInput.value = '';
     renderizarComentarios();
 }
@@ -1159,7 +1243,6 @@ function abrirModalReportarAula() {
     wrapper.innerHTML = `
         <div id="modal-reportar-card" style="background:#141414;border:1px solid #2a2a2a;border-radius:18px;max-width:460px;width:100%;padding:1.65rem;color:#f3f4f6;box-shadow:0 24px 60px rgba(0,0,0,0.75);">
             
-            <!-- ESTADO 1: FORMULÁRIO -->
             <div id="reportar-etapa-form">
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem;">
                     <h3 style="margin:0;font-size:1.05rem;font-weight:800;color:#fff;display:flex;align-items:center;gap:8px;">
@@ -1191,7 +1274,6 @@ function abrirModalReportarAula() {
                 </form>
             </div>
 
-            <!-- ESTADO 2: CONFIRMAÇÃO VISUAL NO PADRÃO NANKIM -->
             <div id="reportar-etapa-sucesso" style="display:none;flex-direction:column;align-items:center;text-align:center;padding:0.75rem 0.25rem;gap:0.85rem;">
                 <div style="width:60px;height:60px;border-radius:50%;background:rgba(243,156,18,0.16);border:1px solid rgba(243,156,18,0.4);color:#f39c12;display:flex;align-items:center;justify-content:center;font-size:1.65rem;">
                     <i class="fa-solid fa-check"></i>
@@ -1226,9 +1308,12 @@ function abrirModalReportarAula() {
         const relatos = JSON.parse(localStorage.getItem('nankim_reportes') || '[]');
         relatos.push({
             aula: aulaAtualId,
+            email: obterEmailUsuarioLogado(),
+            pagina: 'Sala de Aula',
+            status: 'pendente',
             tipo: document.getElementById('tipo-erro-sala')?.value || 'video',
             descricao: document.getElementById('desc-erro-sala')?.value || '',
-            data: new Date().toISOString()
+            data: new Date().toLocaleDateString('pt-BR')
         });
         localStorage.setItem('nankim_reportes', JSON.stringify(relatos));
 
@@ -1240,101 +1325,6 @@ function abrirModalReportarAula() {
 }
 
 function configurarEventosDOM() {
-    // Eventos do Player Blindado
-    const shield = document.getElementById('player-click-shield');
-    const btnPlayPause = document.getElementById('ctrl-play-pause');
-    const btnRewind = document.getElementById('ctrl-rewind');
-    const btnForward = document.getElementById('ctrl-forward');
-    const btnMute = document.getElementById('ctrl-mute');
-    const selectSpeed = document.getElementById('ctrl-speed');
-    const btnFullscreen = document.getElementById('ctrl-fullscreen');
-    const timelineBar = document.getElementById('player-timeline-bar');
-
-    if (shield) {
-        shield.addEventListener('click', alternarPlayPause);
-        shield.addEventListener('dblclick', () => {
-            const wrapper = document.getElementById('nankim-player-wrapper');
-            if (!wrapper) return;
-            if (!document.fullscreenElement) {
-                wrapper.requestFullscreen?.();
-            } else {
-                document.exitFullscreen?.();
-            }
-        });
-    }
-
-    if (btnPlayPause) btnPlayPause.addEventListener('click', alternarPlayPause);
-
-    if (btnRewind) {
-        btnRewind.addEventListener('click', () => {
-            if (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
-                ytPlayer.seekTo(Math.max(0, ytPlayer.getCurrentTime() - 10), true);
-            }
-        });
-    }
-
-    if (btnForward) {
-        btnForward.addEventListener('click', () => {
-            if (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
-                const dur = ytPlayer.getDuration() || 0;
-                ytPlayer.seekTo(Math.min(dur, ytPlayer.getCurrentTime() + 10), true);
-            }
-        });
-    }
-
-    if (btnMute) {
-        btnMute.addEventListener('click', () => {
-            if (!ytPlayer || typeof ytPlayer.isMuted !== 'function') return;
-            const icon = document.getElementById('ctrl-volume-icon');
-            if (ytPlayer.isMuted()) {
-                ytPlayer.unMute();
-                if (icon) icon.className = 'fa-solid fa-volume-high';
-            } else {
-                ytPlayer.mute();
-                if (icon) icon.className = 'fa-solid fa-volume-xmark text-red-400';
-            }
-        });
-    }
-
-    if (selectSpeed) {
-        selectSpeed.addEventListener('change', (e) => {
-            if (ytPlayer && typeof ytPlayer.setPlaybackRate === 'function') {
-                ytPlayer.setPlaybackRate(parseFloat(e.target.value));
-            }
-        });
-    }
-
-    if (btnFullscreen) {
-        btnFullscreen.addEventListener('click', () => {
-            const wrapper = document.getElementById('nankim-player-wrapper');
-            if (!wrapper) return;
-            if (!document.fullscreenElement) {
-                wrapper.requestFullscreen?.();
-            } else {
-                document.exitFullscreen?.();
-            }
-        });
-    }
-
-    if (timelineBar) {
-        timelineBar.addEventListener('click', (e) => {
-            if (!ytPlayer || typeof ytPlayer.getDuration !== 'function') return;
-            const rect = timelineBar.getBoundingClientRect();
-            const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-            ytPlayer.seekTo(ratio * (ytPlayer.getDuration() || 0), true);
-        });
-    }
-
-    // Atalho Barra de Espaço para Play/Pause
-    document.addEventListener('keydown', (e) => {
-        const tag = (e.target.tagName || '').toLowerCase();
-        if (e.code === 'Space' && tag !== 'input' && tag !== 'textarea' && tag !== 'select') {
-            e.preventDefault();
-            alternarPlayPause();
-        }
-    });
-
-    // Botões da Aula
     document.getElementById('btn-concluir')?.addEventListener('click', toggleAulaConcluida);
     document.getElementById('btn-anterior')?.addEventListener('click', () => navegarAula(-1));
     document.getElementById('btn-proxima')?.addEventListener('click', () => navegarAula(1));

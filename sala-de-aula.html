@@ -68,20 +68,20 @@
         <!-- COLUNA ESQUERDA: VIDEO PLAYER PROTEGIDO + CONTEÚDO DA AULA -->
         <section class="lg:col-span-8 flex flex-col gap-6">
 
-            <!-- PLAYER ESTILO SENAI PLAY (SEM CLIQUE DIRETO NO YOUTUBE) -->
+            <!-- PLAYER OFICIAL DO YOUTUBE (EMBED PADRÃO) -->
             <div class="bg-black rounded-2xl p-2 sm:p-3 border border-solid border-nankimBorder shadow-2xl">
-                <div id="nankim-player-wrapper" class="nankim-player-wrapper" oncontextmenu="return false;">
-                    <div class="video-container">
-                        <div id="yt-player-frame"></div>
-                        <!-- Camada de proteção que bloqueia clique no título/logo YouTube e controla Play/Pause -->
-                        <div id="player-click-shield" class="player-click-shield"
-                            title="Clique para reproduzir ou pausar">
-                            <button type="button" id="player-center-btn" class="player-center-btn"
-                                aria-label="Reproduzir aula">
-                                <i class="fa-solid fa-play ml-1"></i>
-                            </button>
-                        </div>
-                    </div>
+                <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-zinc-950">
+                    <iframe
+                        id="yt-iframe-padrao"
+                        class="w-full h-full border-0"
+                        src=""
+                        title="Player da aula"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
 
                     <!-- Barra de Controles Customizada Nankim -->
                     <div class="nankim-player-controls">

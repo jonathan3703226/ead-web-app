@@ -79,7 +79,7 @@
 
             <!-- ABA 1: VISÃO GERAL -->
             <section id="sec-visao-geral" class="admin-tab-section">
-                <div class="admin-kpi-grid">
+               <div class="admin-kpi-grid">
                     <article class="kpi-card">
                         <div class="kpi-icon"><i class="fa-solid fa-users"></i></div>
                         <div>
@@ -91,8 +91,16 @@
                     <article class="kpi-card">
                         <div class="kpi-icon destaque"><i class="fa-solid fa-crown"></i></div>
                         <div>
-                            <span class="kpi-label">Acesso Completo</span>
+                            <span class="kpi-label">Cursos Comprados</span>
                             <strong id="kpi-alunos-pagos" class="kpi-value">0</strong>
+                        </div>
+                    </article>
+
+                    <article class="kpi-card">
+                        <div class="kpi-icon alerta"><i class="fa-solid fa-comment-dots"></i></div>
+                        <div>
+                            <span class="kpi-label">Dúvidas Aguardando</span>
+                            <strong id="kpi-duvidas-pendentes" class="kpi-value">0</strong>
                         </div>
                     </article>
 
@@ -168,11 +176,18 @@
                     <div class="panel-box-header wrap">
                         <div>
                             <h2>Central de Dúvidas &amp; Fórum das Aulas</h2>
-                            <p class="panel-sub">Responda como Instrutor Oficial ou edite respostas já enviadas (atualiza na hora na Sala de Aula e notifica o aluno).</p>
+                            <p class="panel-sub">Responda como Instrutor Oficial, edite ou exclua respostas enviadas.</p>
                         </div>
-                        <select id="filtro-aula-duvidas" class="admin-select">
-                            <option value="todas">Todas as 12 aulas</option>
-                        </select>
+                        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+                            <select id="filtro-status-duvidas" class="admin-select">
+                                <option value="aguardando" selected>Aguardando resposta</option>
+                                <option value="respondidas">Respondidas</option>
+                                <option value="todas">Todas as dúvidas</option>
+                            </select>
+                            <select id="filtro-aula-duvidas" class="admin-select">
+                                <option value="todas">Todas as 12 aulas</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div id="lista-admin-duvidas" class="admin-stack-list"></div>
@@ -188,9 +203,9 @@
                             <p class="panel-sub">Relatos enviados pelos alunos através do botão "Reportar erro" na plataforma.</p>
                         </div>
                         <select id="filtro-status-reportes" class="admin-select">
-                            <option value="todos">Todos os relatos</option>
-                            <option value="pendente">Pendentes</option>
+                            <option value="pendente" selected>Pendentes</option>
                             <option value="resolvido">Resolvidos</option>
+                            <option value="todos">Todos os relatos</option>
                         </select>
                     </div>
 

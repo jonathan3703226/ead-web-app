@@ -164,7 +164,6 @@ function normalizarIdsComentarios() {
             const lista = comentariosObj[aulaId];
             if (!Array.isArray(lista)) return;
 
-            // Remove eventual comentário fictício legado
             const filtrado = lista.filter(
                 (c) => String(c.autor || '').trim().toLowerCase() !== 'marcos silva'
             );
@@ -260,6 +259,7 @@ function configurarEventosAdmin() {
     });
 
     document.getElementById('filtro-alunos')?.addEventListener('input', renderizarTabelaAlunos);
+    document.getElementById('filtro-status-duvidas')?.addEventListener('change', renderizarDuvidasAdmin);
     document.getElementById('filtro-aula-duvidas')?.addEventListener('change', renderizarDuvidasAdmin);
     document.getElementById('filtro-status-reportes')?.addEventListener('change', renderizarReportesAdmin);
 
@@ -277,7 +277,7 @@ function configurarEventosAdmin() {
 function selecionarAbaAdmin(tabId) {
     const titulos = {
         'visao-geral': ['Visão Geral da Escola', 'Acompanhe matrículas, progresso dos alunos e suporte técnico em tempo real.'],
-        'alunos': ['Alunos & Matrículas', 'Gerencie planos ativos, libere cursos completos e controle certificados.'],
+        'alunos': ['Alunos & Matrículas', 'Gerencie planos ativos e libere cursos comprados.'],
         'duvidas': ['Dúvidas & Fórum', 'Responda dúvidas públicas ou privadas diretamente como instrutor oficial.'],
         'reportes': ['Reportes de Erro', 'Monitore e resolva problemas técnicos reportados na sala de aula.'],
         'cursos': ['Cursos & Conteúdo', 'Simulador completo de criação e edição de cursos, módulos, vídeos e materiais.']
@@ -310,7 +310,7 @@ function atualizarPainelCompleto() {
 // ==========================================================================
 // DISPARO DE NOTIFICAÇÕES INTEGRADO AO MENU-ALUNO.JS
 // ==========================================================================
-function registrarNotificacaoParaAluno({ email, nome, id, titulo, mensagem, link = '', aulaId = '', acaoTexto = '' }) {
+function registrarNotificacaoParaAluno({ email, nome, id, titulo, mensagem, link = '', aulaId = '', abaDestino = '', acaoTexto = '' }) {
     const db = JSON.parse(localStorage.getItem('nankim_db')) || [];
     const aluno = db.find((u) =>
         (email && String(u.email || '').toLowerCase() === String(email).toLowerCase()) ||
@@ -337,6 +337,7 @@ function registrarNotificacaoParaAluno({ email, nome, id, titulo, mensagem, link
         mensagem,
         link,
         aulaId,
+        abaDestino,
         acaoTexto,
         data: new Date().toISOString(),
         lida: false
@@ -359,21 +360,32 @@ function renderizarKPIs() {
     const certificados = alunos.filter((a) => a.certificadoLiberado === true).length;
 
     const comentariosObj = JSON.parse(localStorage.getItem('nankim_comentarios')) || {};
-    const totalPerguntas = Object.values(comentariosObj).reduce(
-        (acc, lista) => acc + (Array.isArray(lista) ? lista.filter((c) => !c.oficial).length : 0),
-        0
-    );
+    let duvidasSemResposta = 0;
+
+    Object.values(comentariosObj).forEach((lista) => {
+        if (!Array.isArray(lista)) return;
+        const respostasIds = new Set(
+            lista.filter((c) => c.oficial && c.replyToId).map((c) => c.replyToId)
+        );
+        lista.forEach((c) => {
+            if (!c.oficial && !respostasIds.has(c.id)) {
+                duvidasSemResposta++;
+            }
+        });
+    });
 
     const reportes = JSON.parse(localStorage.getItem('nankim_reportes')) || [];
     const reportesAbertos = reportes.filter((r) => r.status !== 'resolvido').length;
 
     document.getElementById('kpi-alunos-total').textContent = alunos.length;
     document.getElementById('kpi-alunos-pagos').textContent = pagantes;
+    const elDuvPend = document.getElementById('kpi-duvidas-pendentes');
+    if (elDuvPend) elDuvPend.textContent = duvidasSemResposta;
     document.getElementById('kpi-certificados').textContent = certificados;
     document.getElementById('kpi-reportes-abertos').textContent = reportesAbertos;
 
     document.getElementById('badge-total-alunos').textContent = alunos.length;
-    document.getElementById('badge-total-duvidas').textContent = totalPerguntas;
+    document.getElementById('badge-total-duvidas').textContent = duvidasSemResposta;
     document.getElementById('badge-total-reportes').textContent = reportesAbertos;
 
     const boxDuvidas = document.getElementById('resumo-ultimas-duvidas');
@@ -417,11 +429,16 @@ function renderizarKPIs() {
 }
 
 // ==========================================================================
-// 2. GESTÃO DE ALUNOS (AO EXCLUIR ALUNO, REMOVE TAMBÉM SUAS DÚVIDAS)
+// 2. GESTÃO DE ALUNOS (LIBERAR/REVOGAR CURSO, BLOQUEAR ACESSO E EXCLUIR)
 // ==========================================================================
 function renderizarTabelaAlunos() {
     const tbody = document.getElementById('tabela-alunos-body');
     if (!tbody) return;
+
+    const ths = tbody.closest('table')?.querySelectorAll('thead th');
+    if (ths && ths[2]) {
+        ths[2].textContent = 'Acesso à Plataforma';
+    }
 
     const termo = (document.getElementById('filtro-alunos')?.value || '').toLowerCase().trim();
     const alunos = obterAlunosSomente().filter(
@@ -434,10 +451,10 @@ function renderizarTabelaAlunos() {
     }
 
     tbody.innerHTML = alunos.map((aluno) => {
-        const emailSafe = String(aluno.email || '').replace(/'/g, "\\'");
-        const nomeSafe = String(aluno.nome || 'Aluno').replace(/'/g, "\\'");
+        const emailSafe = String(aluno.email || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        const nomeSafe = String(aluno.nome || 'Aluno').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
         const pago = aluno.matriculado === true;
-        const cert = aluno.certificadoLiberado === true;
+        const bloqueado = aluno.acessoBloqueado === true;
 
         return `
             <tr>
@@ -447,21 +464,21 @@ function renderizarTabelaAlunos() {
                 </td>
                 <td>
                     <span class="status-pill ${pago ? 'pago' : 'gratis'}">
-                        ${pago ? '★ Curso Completo' : 'Módulo I Grátis'}
+                        ${pago ? '★ Curso Comprado' : 'Módulo I Grátis'}
                     </span>
                 </td>
                 <td>
-                    <span class="status-pill ${cert ? 'resolvido' : 'gratis'}">
-                        ${cert ? 'Liberado' : 'Em andamento'}
+                    <span class="status-pill ${bloqueado ? 'pendente' : 'resolvido'}">
+                        ${bloqueado ? '🔒 Acesso Bloqueado' : '✓ Acesso Liberado'}
                     </span>
                 </td>
                 <td>
                     <div class="acoes-cell">
                         <button type="button" class="btn-mini destaque" onclick="alternarMatriculaAluno('${emailSafe}')">
-                            ${pago ? 'Revogar Completo' : 'Liberar Completo'}
+                            ${pago ? 'Revogar Compra' : 'Liberar Curso'}
                         </button>
-                        <button type="button" class="btn-mini" onclick="alternarCertificadoAluno('${emailSafe}')">
-                            ${cert ? 'Remover Cert.' : 'Liberar Cert.'}
+                        <button type="button" class="btn-mini ${bloqueado ? 'destaque' : ''}" onclick="alternarBloqueioAluno('${emailSafe}')">
+                            ${bloqueado ? 'Desbloquear Acesso' : 'Bloquear Acesso'}
                         </button>
                         <button type="button" class="btn-mini perigo" onclick="excluirAlunoAdmin('${emailSafe}', '${nomeSafe}')">
                             Excluir
@@ -475,56 +492,79 @@ function renderizarTabelaAlunos() {
 
 function alternarMatriculaAluno(email) {
     const db = JSON.parse(localStorage.getItem('nankim_db')) || [];
-    const idx = db.findIndex((u) => String(u.email || '').toLowerCase() === email.toLowerCase());
+    const idx = db.findIndex((u) => String(u.email || '').toLowerCase().trim() === String(email || '').toLowerCase().trim());
     if (idx === -1) return;
 
     const liberado = !db[idx].matriculado;
     db[idx].matriculado = liberado;
     db[idx].modulo1_liberado = true;
+
+    if (!liberado) {
+        // Ao revogar a compra: reseta certificado, progresso e mantém apenas aulas gratuitas do Módulo I (aula-1 a aula-4)
+        db[idx].certificadoLiberado = false;
+        localStorage.removeItem('nankim_certificado_liberado');
+
+        const aulasGratuitas = new Set(['aula-1', 'aula-2', 'aula-3', 'aula-4']);
+        try {
+            const concluidasAtuais = JSON.parse(localStorage.getItem('nankim_aulas_concluidas')) || [];
+            const apenasGratuitas = concluidasAtuais.filter((id) => aulasGratuitas.has(id));
+            localStorage.setItem('nankim_aulas_concluidas', JSON.stringify(apenasGratuitas));
+
+            const ultimaAula = localStorage.getItem('nankim_ultima_aula');
+            if (ultimaAula && !aulasGratuitas.has(ultimaAula)) {
+                localStorage.setItem('nankim_ultima_aula', 'aula-1');
+            }
+        } catch (_) {}
+
+        if (Array.isArray(db[idx].cursos) && db[idx].cursos.length > 0) {
+            const concluidasUser = Array.isArray(db[idx].cursos[0].aulasConcluidas)
+                ? db[idx].cursos[0].aulasConcluidas.filter((id) => aulasGratuitas.has(id))
+                : [];
+            db[idx].cursos[0].aulasConcluidas = concluidasUser;
+            db[idx].cursos[0].progresso = Math.round((concluidasUser.length / 12) * 100);
+            db[idx].cursos[0].ultimaAula = 'aula-1';
+        }
+    }
+
     localStorage.setItem('nankim_db', JSON.stringify(db));
 
     registrarNotificacaoParaAluno({
         email: db[idx].email,
         id: 'status-matricula',
-        titulo: liberado ? 'Acesso Completo Liberado!' : 'Status da Matrícula Atualizado',
+        titulo: liberado ? 'Curso Comprado Liberado!' : 'Status da Matrícula Atualizado',
         mensagem: liberado
             ? 'Seu acesso aos Módulos II e III de Fundamentos do Desenho foi liberado pela administração.'
-            : 'Seu plano retornou para a degustação gratuita (Módulo I).',
+            : 'Seu plano retornou para a degustação gratuita (Módulo I) e o progresso pago foi resetado.',
         link: 'area-aluno.html',
         acaoTexto: liberado ? 'Acessar minhas aulas →' : 'Ver meus cursos →'
     });
 
-    exibirToastAdmin(liberado ? 'Curso Completo liberado para o aluno!' : 'Acesso revogado para Módulo I Grátis.');
+    exibirToastAdmin(
+        liberado
+            ? 'Curso Comprado liberado para o aluno!'
+            : 'Compra revogada: acesso voltou para Módulo I Grátis e certificado/progresso resetados.'
+    );
     atualizarPainelCompleto();
 }
 
-function alternarCertificadoAluno(email) {
+function alternarBloqueioAluno(email) {
     const db = JSON.parse(localStorage.getItem('nankim_db')) || [];
-    const idx = db.findIndex((u) => String(u.email || '').toLowerCase() === email.toLowerCase());
+    const idx = db.findIndex((u) => String(u.email || '').toLowerCase().trim() === String(email || '').toLowerCase().trim());
     if (idx === -1) return;
 
-    const novoEstado = !db[idx].certificadoLiberado;
-    db[idx].certificadoLiberado = novoEstado;
-    if (novoEstado) {
-        db[idx].matriculado = true;
-        localStorage.setItem('nankim_certificado_liberado', 'true');
-        const todas = Array.from({ length: 12 }, (_, i) => `aula-${i + 1}`);
-        localStorage.setItem('nankim_aulas_concluidas', JSON.stringify(todas));
-    }
+    const bloqueado = !db[idx].acessoBloqueado;
+    // Mantém todos os dados da conta (email, senha, nome, etc.) intactos e altera apenas a flag acessoBloqueado
+    db[idx] = {
+        ...db[idx],
+        acessoBloqueado: bloqueado
+    };
     localStorage.setItem('nankim_db', JSON.stringify(db));
 
-    registrarNotificacaoParaAluno({
-        email: db[idx].email,
-        id: 'status-certificado',
-        titulo: novoEstado ? 'Certificado Liberado!' : 'Certificado Revogado',
-        mensagem: novoEstado
-            ? 'Parabéns! Seu certificado oficial de conclusão (12h) já está disponível para emissão.'
-            : 'A emissão do seu certificado foi revogada pela administração.',
-        link: 'meu-perfil.html',
-        acaoTexto: novoEstado ? 'Emitir certificado agora →' : 'Ver meu perfil →'
-    });
-
-    exibirToastAdmin(novoEstado ? 'Certificado oficial liberado!' : 'Certificado revogado.');
+    exibirToastAdmin(
+        bloqueado
+            ? `Acesso de ${db[idx].nome || email} foi bloqueado.`
+            : `Acesso de ${db[idx].nome || email} foi desbloqueado.`
+    );
     atualizarPainelCompleto();
 }
 
@@ -537,18 +577,16 @@ function removerComentariosDoAlunoExcluido(email, nome) {
         const lista = comentariosObj[aulaId];
         if (!Array.isArray(lista)) return;
 
-        // Identifica IDs das perguntas do aluno excluído
         const idsPerguntasAluno = new Set();
         lista.forEach((item) => {
             if (item.oficial) return;
             const bateEmail = item.autorEmail && String(item.autorEmail).toLowerCase().trim() === emailNorm;
             const bateNome = !item.autorEmail && String(item.autor || '').toLowerCase().trim() === nomeNorm;
-            if (bateEmail || bateNome) {
-                if (item.id) idsPerguntasAluno.add(item.id);
+            if ((bateEmail || bateNome) && item.id) {
+                idsPerguntasAluno.add(item.id);
             }
         });
 
-        // Remove as perguntas do aluno e as respostas oficiais vinculadas a elas
         comentariosObj[aulaId] = lista.filter((item) => {
             if (item.oficial) {
                 return !(item.replyToId && idsPerguntasAluno.has(item.replyToId));
@@ -565,22 +603,37 @@ function removerComentariosDoAlunoExcluido(email, nome) {
 function excluirAlunoAdmin(email, nome) {
     solicitarConfirmacaoAdmin({
         titulo: 'Excluir conta do aluno?',
-        mensagem: `Tem certeza que deseja remover permanentemente a conta de ${nome} (${email}) e suas dúvidas no fórum? Os reportes técnicos serão mantidos para histórico.`,
+        mensagem: `Tem certeza que deseja remover permanentemente a conta de ${nome} (${email}) e suas dúvidas no fórum?`,
         textoBotao: 'Excluir Aluno',
         onConfirm: () => {
             const db = JSON.parse(localStorage.getItem('nankim_db')) || [];
-            const filtrado = db.filter((u) => String(u.email || '').toLowerCase() !== email.toLowerCase());
+            const emailNorm = String(email || '').toLowerCase().trim();
+            const filtrado = db.filter((u) => String(u.email || '').toLowerCase().trim() !== emailNorm);
             localStorage.setItem('nankim_db', JSON.stringify(filtrado));
-            localStorage.removeItem(`nankim_notificacoes_${email.toLowerCase().trim()}`);
+
+            // Remove notificações e progresso isolado por e-mail
+            localStorage.removeItem(`nankim_notificacoes_${emailNorm}`);
+            localStorage.removeItem(`nankim_progresso_${emailNorm}`);
+
+            // Limpa chaves globais de progresso da sessão local
+            localStorage.setItem('nankim_aulas_concluidas', JSON.stringify([]));
+            localStorage.removeItem('nankim_ultima_aula');
+            localStorage.removeItem('nankim_checklists_aulas');
+            localStorage.removeItem('nankim_certificado_liberado');
+
             removerComentariosDoAlunoExcluido(email, nome);
-            exibirToastAdmin(`Conta de ${nome} removida com sucesso.`);
+            exibirToastAdmin(`Conta de ${nome} e todo o progresso foram removidos.`);
             atualizarPainelCompleto();
         }
     });
 }
 
+window.alternarMatriculaAluno = alternarMatriculaAluno;
+window.alternarBloqueioAluno = alternarBloqueioAluno;
+window.excluirAlunoAdmin = excluirAlunoAdmin;
+
 // ==========================================================================
-// 3. CENTRAL DE DÚVIDAS & RESPOSTAS INDIVIDUAIS COM EDIÇÃO
+// 3. CENTRAL DE DÚVIDAS & RESPOSTAS INDIVIDUAIS COM EDIÇÃO E EXCLUSÃO
 // ==========================================================================
 let edicaoRespostaAtiva = null; // { aulaId, replyId }
 
@@ -589,6 +642,7 @@ function renderizarDuvidasAdmin() {
     if (!container) return;
 
     const filtroAula = document.getElementById('filtro-aula-duvidas')?.value || 'todas';
+    const filtroStatus = document.getElementById('filtro-status-duvidas')?.value || 'aguardando';
     const comentariosObj = JSON.parse(localStorage.getItem('nankim_comentarios')) || {};
 
     const perguntas = [];
@@ -606,8 +660,11 @@ function renderizarDuvidasAdmin() {
             const perguntaId = item.id;
             const prefixoAutor = `@${item.autor} — `;
 
-            // Vincula EXCLUSIVAMENTE pelo replyToId único desta pergunta
             const respostaObj = lista.find((r) => r.oficial && r.replyToId === perguntaId) || null;
+
+            if (filtroStatus === 'aguardando' && respostaObj) return;
+            if (filtroStatus === 'respondidas' && !respostaObj) return;
+
             const textoLimpoResposta = respostaObj
                 ? String(respostaObj.texto || '').replace(prefixoAutor, '')
                 : '';
@@ -631,6 +688,7 @@ function renderizarDuvidasAdmin() {
     container.innerHTML = perguntas.map((entry) => {
         const { aulaId, aulaTitulo, perguntaId, pergunta, respostaObj, textoLimpoResposta } = entry;
         const autorSafe = String(pergunta.autor || 'Aluno').replace(/'/g, "\\'");
+        const emailAlunoSafe = String(pergunta.autorEmail || '').replace(/'/g, "\\'");
         const editandoEsta =
             edicaoRespostaAtiva &&
             edicaoRespostaAtiva.aulaId === aulaId &&
@@ -646,9 +704,14 @@ function renderizarDuvidasAdmin() {
                         <span class="resposta-oficial-autor">
                             <i class="fa-solid fa-circle-check"></i> ${respostaObj.autor || 'Prof. Thiago Nankim'} · ${respostaObj.data || 'Respondido'}
                         </span>
-                        <button type="button" class="btn-mini" onclick="iniciarEdicaoResposta('${aulaId}', '${respostaObj.id}')">
-                            <i class="fa-solid fa-pen"></i> Editar resposta
-                        </button>
+                        <div style="display:flex;gap:0.4rem;">
+                            <button type="button" class="btn-mini" onclick="iniciarEdicaoResposta('${aulaId}', '${respostaObj.id}')">
+                                <i class="fa-solid fa-pen"></i> Editar
+                            </button>
+                            <button type="button" class="btn-mini perigo" onclick="excluirRespostaInstrutorAdmin('${aulaId}', '${respostaObj.id}')">
+                                <i class="fa-solid fa-trash"></i> Excluir resposta
+                            </button>
+                        </div>
                     </div>
                     <p class="resposta-oficial-texto">${textoLimpoResposta}</p>
                 </div>
@@ -658,7 +721,7 @@ function renderizarDuvidasAdmin() {
             blocoRespostaHtml = `
                 <div class="resposta-oficial-box">
                     <span class="resposta-oficial-autor"><i class="fa-solid fa-pen"></i> Editando resposta oficial</span>
-                    <form class="reply-form-admin" onsubmit="salvarEdicaoResposta(event, '${aulaId}', '${respostaObj.id}', '${autorSafe}')">
+                    <form class="reply-form-admin" onsubmit="salvarEdicaoResposta(event, '${aulaId}', '${respostaObj.id}', '${autorSafe}', '${emailAlunoSafe}')">
                         <input type="text" value="${valorEscapado}" required autofocus>
                         <button type="button" class="btn-mini" onclick="cancelarEdicaoResposta()">Cancelar</button>
                         <button type="submit" class="btn-mini destaque">Salvar Alteração</button>
@@ -667,7 +730,7 @@ function renderizarDuvidasAdmin() {
             `;
         } else {
             blocoRespostaHtml = `
-                <form class="reply-form-admin" onsubmit="responderDuvidaComoInstrutor(event, '${aulaId}', '${perguntaId}', '${autorSafe}', ${Boolean(pergunta.privado)})">
+                <form class="reply-form-admin" onsubmit="responderDuvidaComoInstrutor(event, '${aulaId}', '${perguntaId}', '${autorSafe}', '${emailAlunoSafe}', ${Boolean(pergunta.privado)})">
                     <input type="text" placeholder="Escreva sua resposta como Prof. Thiago Nankim..." required>
                     <button type="submit" class="btn-mini destaque">Responder</button>
                 </form>
@@ -689,7 +752,7 @@ function renderizarDuvidasAdmin() {
                             ${pergunta.privado ? '🔒 Privado (Instrutor)' : '🌐 Público'}
                         </span>
                         <button type="button" class="btn-mini perigo" onclick="excluirDuvidaCompletaAdmin('${aulaId}', '${perguntaId}')">
-                            Excluir
+                            Excluir Dúvida
                         </button>
                     </div>
                 </div>
@@ -702,7 +765,25 @@ function renderizarDuvidasAdmin() {
     }).join('');
 }
 
-function responderDuvidaComoInstrutor(event, aulaId, perguntaId, nomeAluno, eraPrivada) {
+function excluirRespostaInstrutorAdmin(aulaId, replyId) {
+    solicitarConfirmacaoAdmin({
+        titulo: 'Excluir resposta do professor?',
+        mensagem: 'A resposta oficial será removida da sala de aula e a dúvida voltará para "Aguardando resposta".',
+        textoBotao: 'Excluir Resposta',
+        onConfirm: () => {
+            const comentariosObj = JSON.parse(localStorage.getItem('nankim_comentarios')) || {};
+            if (!Array.isArray(comentariosObj[aulaId])) return;
+
+            comentariosObj[aulaId] = comentariosObj[aulaId].filter((item) => item.id !== replyId);
+            localStorage.setItem('nankim_comentarios', JSON.stringify(comentariosObj));
+            edicaoRespostaAtiva = null;
+            exibirToastAdmin('Resposta do professor removida.');
+            atualizarPainelCompleto();
+        }
+    });
+}
+
+function responderDuvidaComoInstrutor(event, aulaId, perguntaId, nomeAluno, emailAluno, eraPrivada) {
     event.preventDefault();
     const input = event.target.querySelector('input');
     const resposta = input?.value.trim();
@@ -713,8 +794,9 @@ function responderDuvidaComoInstrutor(event, aulaId, perguntaId, nomeAluno, eraP
         comentariosObj[aulaId] = [];
     }
 
+    const replyId = `resp-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
     comentariosObj[aulaId].unshift({
-        id: `resp-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+        id: replyId,
         replyToId: perguntaId,
         autor: 'Prof. Thiago Nankim',
         avatar: 'T',
@@ -728,11 +810,14 @@ function responderDuvidaComoInstrutor(event, aulaId, perguntaId, nomeAluno, eraP
 
     const aulaInfo = CATALOGO_AULAS_ADMIN.find((a) => a.id === aulaId);
     registrarNotificacaoParaAluno({
+        email: emailAluno,
         nome: nomeAluno,
+        id: `notif-resp-${perguntaId}`,
         titulo: 'Prof. Thiago respondeu sua dúvida',
         mensagem: `${aulaInfo ? aulaInfo.titulo : 'Na sala de aula'}: "${resposta}"`,
-        link: 'sala-de-aula.html',
+        link: `sala-de-aula.html?aula=${aulaId}&aba=comentarios`,
         aulaId: aulaId,
+        abaDestino: 'comentarios',
         acaoTexto: 'Abrir aula e ver resposta →'
     });
 
@@ -750,7 +835,7 @@ function cancelarEdicaoResposta() {
     renderizarDuvidasAdmin();
 }
 
-function salvarEdicaoResposta(event, aulaId, replyId, nomeAluno) {
+function salvarEdicaoResposta(event, aulaId, replyId, nomeAluno, emailAluno) {
     event.preventDefault();
     const input = event.target.querySelector('input');
     const novoTexto = input?.value.trim();
@@ -769,11 +854,14 @@ function salvarEdicaoResposta(event, aulaId, replyId, nomeAluno) {
 
     const aulaInfo = CATALOGO_AULAS_ADMIN.find((a) => a.id === aulaId);
     registrarNotificacaoParaAluno({
+        email: emailAluno,
         nome: nomeAluno,
+        id: `notif-edit-${replyId}-${Date.now()}`,
         titulo: 'Prof. Thiago atualizou a resposta',
         mensagem: `${aulaInfo ? aulaInfo.titulo : 'Na sala de aula'}: "${novoTexto}"`,
-        link: 'sala-de-aula.html',
+        link: `sala-de-aula.html?aula=${aulaId}&aba=comentarios`,
         aulaId: aulaId,
+        abaDestino: 'comentarios',
         acaoTexto: 'Ver resposta atualizada →'
     });
 
@@ -810,7 +898,7 @@ function renderizarReportesAdmin() {
     const container = document.getElementById('lista-admin-reportes');
     if (!container) return;
 
-    const filtro = document.getElementById('filtro-status-reportes')?.value || 'todos';
+    const filtro = document.getElementById('filtro-status-reportes')?.value || 'pendente';
     const reportes = JSON.parse(localStorage.getItem('nankim_reportes')) || [];
 
     const listaFiltrada = reportes
@@ -857,14 +945,49 @@ function alternarStatusReporte(index) {
     const novoStatus = reportes[index].status === 'resolvido' ? 'pendente' : 'resolvido';
     reportes[index].status = novoStatus;
     localStorage.setItem('nankim_reportes', JSON.stringify(reportes));
-    exibirToastAdmin(novoStatus === 'resolvido' ? 'Reporte marcado como resolvido!' : 'Reporte reaberto.');
+
+    if (novoStatus === 'resolvido' && reportes[index].email) {
+        const aulaReportada = reportes[index].aula || 'aula-1';
+        const aulaInfo = CATALOGO_AULAS_ADMIN.find((a) => a.id === aulaReportada);
+        registrarNotificacaoParaAluno({
+            email: reportes[index].email,
+            id: `notif-reporte-${index}-${Date.now()}`,
+            titulo: 'Reporte de erro corrigido!',
+            mensagem: `O problema reportado em ${aulaInfo ? aulaInfo.titulo : 'uma aula'} foi verificado e resolvido pela equipe.`,
+            link: `sala-de-aula.html?aula=${aulaReportada}`,
+            aulaId: aulaReportada,
+            acaoTexto: 'Abrir aula corrigida →'
+        });
+    }
+
+    exibirToastAdmin(novoStatus === 'resolvido' ? 'Reporte marcado como resolvido e aluno notificado!' : 'Reporte reaberto.');
     atualizarPainelCompleto();
 }
 
 // ==========================================================================
-// 5. SIMULADOR CMS: PERSISTÊNCIA DE RASCUNHO, VALIDAÇÃO, UPLOAD E CHECKLIST
+// 5. SIMULADOR CMS: RECOLHER/EXPANDIR, PERSISTÊNCIA DE RASCUNHO E VALIDAÇÃO
 // ==========================================================================
 let checklistEmEdicao = [];
+const cursosExpandidosCMS = new Set();
+const modulosExpandidosCMS = new Set();
+
+function toggleRecolherCursoCMS(cursoId) {
+    if (cursosExpandidosCMS.has(cursoId)) {
+        cursosExpandidosCMS.delete(cursoId);
+    } else {
+        cursosExpandidosCMS.add(cursoId);
+    }
+    renderizarCursosCMS();
+}
+
+function toggleRecolherModuloCMS(modId) {
+    if (modulosExpandidosCMS.has(modId)) {
+        modulosExpandidosCMS.delete(modId);
+    } else {
+        modulosExpandidosCMS.add(modId);
+    }
+    renderizarCursosCMS();
+}
 
 function definirFeedbackCampoCMS(inputEl, mensagemErro, opcionalVazio = false) {
     if (!inputEl) return false;
@@ -895,7 +1018,6 @@ function limparValidacaoFormCMS(form) {
     form.querySelectorAll('.admin-field-feedback').forEach((fb) => (fb.textContent = ''));
 }
 
-// Máscara automática para horas
 function aplicarMascaraHoras(input) {
     const digitos = input.value.replace(/\D/g, '').slice(0, 3);
     input.value = digitos ? `${digitos} ${Number(digitos) === 1 ? 'hora' : 'horas'}` : '';
@@ -955,9 +1077,8 @@ function validarCampoAula(id) {
     return true;
 }
 
-// --- Persistência de Rascunhos em sessionStorage ---
 function salvarRascunhoCurso() {
-    if (document.getElementById('cms-curso-id').value) return; // Só guarda rascunho de criação
+    if (document.getElementById('cms-curso-id').value) return;
     const dados = {
         titulo: document.getElementById('cms-curso-titulo').value,
         carga: document.getElementById('cms-curso-carga').value,
@@ -1032,14 +1153,12 @@ function removerEtapaChecklistModal(index) {
 }
 
 function configurarEventosCMS() {
-    // Fechar no X ou fora do modal MANTÉM o rascunho salvo
     document.querySelectorAll('[data-close-modal]').forEach((btn) => {
         btn.addEventListener('click', () => {
             fecharModalCMS(btn.getAttribute('data-close-modal'), false);
         });
     });
 
-    // Botão Cancelar DESCARTA o rascunho
     document.querySelectorAll('[data-cancel-modal]').forEach((btn) => {
         btn.addEventListener('click', () => {
             fecharModalCMS(btn.getAttribute('data-cancel-modal'), true);
@@ -1055,7 +1174,6 @@ function configurarEventosCMS() {
 
     document.getElementById('btn-novo-curso')?.addEventListener('click', () => abrirFormularioCurso());
 
-    // Upload de Capa do Curso
     document.getElementById('cms-curso-capa-file')?.addEventListener('change', (e) => {
         const file = e.target.files?.[0];
         if (!file) return;
@@ -1065,7 +1183,6 @@ function configurarEventosCMS() {
         salvarRascunhoCurso();
     });
 
-    // Upload de Material PDF/ZIP da Aula
     document.getElementById('cms-aula-pdf-file')?.addEventListener('change', (e) => {
         const file = e.target.files?.[0];
         if (!file) return;
@@ -1075,7 +1192,6 @@ function configurarEventosCMS() {
         salvarRascunhoAula();
     });
 
-    // Adicionar etapa ao Checklist da Aula
     const btnAddEtapa = document.getElementById('btn-add-checklist-item');
     const inputNovaEtapa = document.getElementById('cms-checklist-novo-item');
 
@@ -1096,7 +1212,6 @@ function configurarEventosCMS() {
         }
     });
 
-    // Listeners instantâneos (focus + input + rascunho) — Curso
     const inputCargaCurso = document.getElementById('cms-curso-carga');
     inputCargaCurso?.addEventListener('input', () => {
         aplicarMascaraHoras(inputCargaCurso);
@@ -1113,7 +1228,6 @@ function configurarEventosCMS() {
     });
     document.getElementById('cms-curso-status')?.addEventListener('change', salvarRascunhoCurso);
 
-    // Listeners instantâneos — Módulo
     const inputCargaMod = document.getElementById('cms-mod-carga');
     inputCargaMod?.addEventListener('input', () => {
         aplicarMascaraHoras(inputCargaMod);
@@ -1128,7 +1242,6 @@ function configurarEventosCMS() {
     });
     document.getElementById('cms-mod-acesso')?.addEventListener('change', salvarRascunhoModulo);
 
-    // Listeners instantâneos — Aula
     ['cms-aula-titulo', 'cms-aula-youtube', 'cms-aula-resumo'].forEach((id) => {
         const el = document.getElementById(id);
         el?.addEventListener('focus', () => validarCampoAula(id));
@@ -1139,7 +1252,6 @@ function configurarEventosCMS() {
     });
     document.getElementById('cms-aula-exercicio')?.addEventListener('input', salvarRascunhoAula);
 
-    // Submit Curso
     document.getElementById('form-cms-curso')?.addEventListener('submit', (e) => {
         e.preventDefault();
         const okTitulo = validarCampoCurso('cms-curso-titulo');
@@ -1178,7 +1290,6 @@ function configurarEventosCMS() {
         fecharModalCMS('modal-cms-curso', true);
     });
 
-    // Submit Módulo
     document.getElementById('form-cms-modulo')?.addEventListener('submit', (e) => {
         e.preventDefault();
         const okTit = validarCampoModulo('cms-mod-titulo');
@@ -1214,7 +1325,6 @@ function configurarEventosCMS() {
         fecharModalCMS('modal-cms-modulo', true);
     });
 
-    // Submit Aula
     document.getElementById('form-cms-aula')?.addEventListener('submit', (e) => {
         e.preventDefault();
         const okTit = validarCampoAula('cms-aula-titulo');
@@ -1440,12 +1550,16 @@ function renderizarCursosCMS() {
     container.innerHTML = cursos.map((curso) => {
         const disponivel = curso.status === 'disponivel';
         const totalAulas = curso.modulos.reduce((acc, m) => acc + (m.aulas?.length || 0), 0);
+        const cursoMinimizado = !cursosExpandidosCMS.has(curso.id);
 
         const modulosHtml = curso.modulos.length === 0
             ? '<p class="empty-state-admin" style="padding:0.75rem;">Nenhum módulo neste curso ainda. Clique em "+ Módulo".</p>'
             : curso.modulos.map((mod) => {
                 const ehGratis = mod.acesso === 'gratis';
-                const aulasHtml = (mod.aulas || []).length === 0
+                const modMinimizado = !modulosExpandidosCMS.has(mod.id);
+                const qtdAulasMod = (mod.aulas || []).length;
+
+                const aulasHtml = qtdAulasMod === 0
                     ? '<small style="color:#6b7280;font-size:0.76rem;">Nenhuma aula cadastrada neste módulo.</small>'
                     : mod.aulas.map((aula) => {
                         const qtdChecklist = Array.isArray(aula.checklist) ? aula.checklist.length : 0;
@@ -1470,12 +1584,19 @@ function renderizarCursosCMS() {
                 return `
                     <div class="cms-modulo-box">
                         <div class="cms-modulo-topo">
-                            <div>
-                                <strong style="color:#fff;font-size:0.88rem;">${mod.titulo}</strong>
-                                <span class="status-pill ${ehGratis ? 'resolvido' : 'pago'}" style="margin-left:0.5rem;">
-                                    ${ehGratis ? 'Grátis' : 'Completo'}
-                                </span>
-                                <small style="display:block;color:#9ca3af;font-size:0.74rem;margin-top:0.2rem;">${mod.carga || ''}</small>
+                            <div style="display:flex;align-items:flex-start;gap:0.55rem;">
+                                <button type="button" class="btn-mini" onclick="toggleRecolherModuloCMS('${mod.id}')" title="${modMinimizado ? 'Expandir módulo' : 'Minimizar módulo'}">
+                                    <i class="fa-solid fa-chevron-${modMinimizado ? 'right' : 'down'}"></i>
+                                </button>
+                                <div>
+                                    <strong style="color:#fff;font-size:0.88rem;">${mod.titulo}</strong>
+                                    <span class="status-pill ${ehGratis ? 'resolvido' : 'pago'}" style="margin-left:0.5rem;">
+                                        ${ehGratis ? 'Grátis' : 'Completo'}
+                                    </span>
+                                    <small style="display:block;color:#9ca3af;font-size:0.74rem;margin-top:0.2rem;">
+                                        ${mod.carga || ''} · ${qtdAulasMod} ${qtdAulasMod === 1 ? 'aula' : 'aulas'}
+                                    </small>
+                                </div>
                             </div>
                             <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
                                 <button type="button" class="btn-mini destaque" onclick="abrirFormularioAula('${curso.id}', '${mod.id}')">+ Aula</button>
@@ -1483,9 +1604,11 @@ function renderizarCursosCMS() {
                                 <button type="button" class="btn-mini perigo" onclick="excluirModuloCMS('${curso.id}', '${mod.id}')">Excluir</button>
                             </div>
                         </div>
-                        <div style="display:flex;flex-direction:column;gap:0.45rem;">
-                            ${aulasHtml}
-                        </div>
+                        ${modMinimizado ? '' : `
+                            <div style="display:flex;flex-direction:column;gap:0.45rem;">
+                                ${aulasHtml}
+                            </div>
+                        `}
                     </div>
                 `;
             }).join('');
@@ -1493,19 +1616,24 @@ function renderizarCursosCMS() {
         return `
             <article class="cms-curso-card">
                 <div class="cms-curso-header">
-                    <div style="max-width:720px;">
-                        <div style="display:flex;align-items:center;gap:0.55rem;flex-wrap:wrap;">
-                            <h3 style="color:#fff;font-size:1.05rem;font-weight:800;margin:0;">${curso.titulo}</h3>
-                            <span class="status-pill ${disponivel ? 'resolvido' : 'gratis'}">
-                                ${disponivel ? '● Disponível' : '🔒 Em Breve'}
-                            </span>
-                        </div>
-                        <p style="color:#cbd5e1;font-size:0.82rem;margin:0.4rem 0 0;line-height:1.45;">${curso.descricao}</p>
-                        <div class="cms-curso-meta">
-                            <span><i class="fa-regular fa-clock"></i> ${curso.cargaHoraria}</span>
-                            <span><i class="fa-solid fa-tag"></i> ${curso.preco}</span>
-                            <span><i class="fa-solid fa-layer-group"></i> ${curso.modulos.length} módulos · ${totalAulas} aulas</span>
-                            <span><i class="fa-regular fa-image"></i> ${curso.capa}</span>
+                    <div style="max-width:720px;display:flex;align-items:flex-start;gap:0.65rem;">
+                        <button type="button" class="btn-mini" onclick="toggleRecolherCursoCMS('${curso.id}')" title="${cursoMinimizado ? 'Expandir curso' : 'Minimizar curso'}">
+                            <i class="fa-solid fa-chevron-${cursoMinimizado ? 'right' : 'down'}"></i>
+                        </button>
+                        <div>
+                            <div style="display:flex;align-items:center;gap:0.55rem;flex-wrap:wrap;">
+                                <h3 style="color:#fff;font-size:1.05rem;font-weight:800;margin:0;">${curso.titulo}</h3>
+                                <span class="status-pill ${disponivel ? 'resolvido' : 'gratis'}">
+                                    ${disponivel ? '● Disponível' : '🔒 Em Breve'}
+                                </span>
+                            </div>
+                            ${cursoMinimizado ? '' : `<p style="color:#cbd5e1;font-size:0.82rem;margin:0.4rem 0 0;line-height:1.45;">${curso.descricao}</p>`}
+                            <div class="cms-curso-meta">
+                                <span><i class="fa-regular fa-clock"></i> ${curso.cargaHoraria}</span>
+                                <span><i class="fa-solid fa-tag"></i> ${curso.preco}</span>
+                                <span><i class="fa-solid fa-layer-group"></i> ${curso.modulos.length} módulos · ${totalAulas} aulas</span>
+                                <span><i class="fa-regular fa-image"></i> ${curso.capa}</span>
+                            </div>
                         </div>
                     </div>
 
@@ -1516,9 +1644,11 @@ function renderizarCursosCMS() {
                     </div>
                 </div>
 
-                <div class="cms-curso-body">
-                    ${modulosHtml}
-                </div>
+                ${cursoMinimizado ? '' : `
+                    <div class="cms-curso-body">
+                        ${modulosHtml}
+                    </div>
+                `}
             </article>
         `;
     }).join('');

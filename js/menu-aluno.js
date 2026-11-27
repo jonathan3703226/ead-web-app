@@ -27,6 +27,27 @@ function injetarMenuLogado() {
     );
     const usuarioAtual = idxUsuario !== -1 ? dbUsuarios[idxUsuario] : usuarioSessao;
 
+    // Bloqueia acesso silenciosamente sem alert() nativo e abre o modal estilizado na home
+    if (usuarioAtual.acessoBloqueado === true) {
+        sessionStorage.removeItem('nankim_sessao');
+        window.location.href = 'index.html?bloqueado=1';
+        return;
+    }
+
+    // Monitora em tempo real caso o admin bloqueie enquanto o aluno estiver com a página aberta
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'nankim_db') {
+            const listaAtualizada = JSON.parse(localStorage.getItem('nankim_db')) || [];
+            const conta = listaAtualizada.find(
+                (u) => String(u.email || '').toLowerCase() === String(usuarioAtual.email || '').toLowerCase()
+            );
+            if (conta && conta.acessoBloqueado === true) {
+                sessionStorage.removeItem('nankim_sessao');
+                window.location.href = 'index.html?bloqueado=1';
+            }
+        }
+    });
+
     const notificacoes = garantirNotificacaoPerfil(usuarioAtual);
     const naoLidas = notificacoes.filter((n) => !n.lida).length;
 
@@ -217,18 +238,24 @@ function formatarTempoNotificacao(isoDate) {
 }
 
 function renderizarItensNotificacao(lista) {
-    if (!lista.length) {
+    const naoLidas = lista.filter((item) => !item.lida);
+
+    if (!naoLidas.length) {
         return `<div class="item-notificacao"><p>Você não tem novas notificações no momento.</p></div>`;
     }
 
-    return lista.map((item) => {
+    return naoLidas.map((item) => {
         const tempo = formatarTempoNotificacao(item.data);
-        const attrsAcao = item.aulaId
-            ? `href="#${item.aulaId}" data-aula-id="${item.aulaId}"`
-            : `href="${item.link || '#'}"`;
+        const destinoUrl = item.aulaId
+            ? `sala-de-aula.html?aula=${encodeURIComponent(item.aulaId)}${item.abaDestino ? `&aba=${encodeURIComponent(item.abaDestino)}` : ''}`
+            : (item.link || '#');
 
         return `
-            <a ${attrsAcao} class="item-notificacao ${item.lida ? '' : 'nao-lida'}" data-notif-id="${item.id}">
+            <a href="${destinoUrl}"
+               class="item-notificacao nao-lida"
+               data-notif-id="${item.id}"
+               data-aula-id="${item.aulaId || ''}"
+               data-aba-destino="${item.abaDestino || ''}">
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
                     <strong>${item.titulo}</strong>
                     ${tempo ? `<small style="font-size:0.68rem;color:var(--texto-suave);flex-shrink:0;">${tempo}</small>` : ''}
@@ -247,21 +274,21 @@ function atualizarPainelNotificacoesUI(usuarioAtual) {
         lista = JSON.parse(localStorage.getItem(chaveNotif)) || [];
     } catch (_) {}
 
-    const naoLidas = lista.filter((n) => !n.lida).length;
+    const naoLidas = lista.filter((n) => !n.lida);
     const badge = document.getElementById('badge-notif');
     const containerLista = document.getElementById('lista-notificacoes');
 
     if (badge) {
-        badge.textContent = String(naoLidas);
-        badge.hidden = naoLidas === 0;
+        badge.textContent = String(naoLidas.length);
+        badge.hidden = naoLidas.length === 0;
     }
     if (containerLista) {
-        containerLista.innerHTML = renderizarItensNotificacao(lista);
+        containerLista.innerHTML = renderizarItensNotificacao(naoLidas);
     }
 }
 
 window.NankimNotificacoes = {
-    adicionar({ id, titulo, mensagem, link = '', aulaId = '', acaoTexto = '' }) {
+    adicionar({ id, titulo, mensagem, link = '', aulaId = '', abaDestino = '', acaoTexto = '' }) {
         const usuario = obterUsuarioLogadoAtual();
         if (!usuario) return;
 
@@ -276,11 +303,12 @@ window.NankimNotificacoes = {
         }
 
         lista.unshift({
-            id: id || `notif-${Date.now()}`,
+            id: id || `notif-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
             titulo,
             mensagem,
             link,
             aulaId,
+            abaDestino,
             acaoTexto,
             data: new Date().toISOString(),
             lida: false
@@ -298,9 +326,17 @@ function configurarEventosMenuLogado(usuarioAtual) {
     const listaNotifEl = document.getElementById('lista-notificacoes');
     const chaveNotif = obterChaveNotifUsuario(usuarioAtual);
 
+    // Sincroniza notificações em tempo real se o professor responder ou resolver algo
+    window.addEventListener('storage', (e) => {
+        if (e.key === chaveNotif) {
+            atualizarPainelNotificacoesUI(usuarioAtual);
+        }
+    });
+
     if (btnNotif && painelNotif) {
         btnNotif.addEventListener('click', (e) => {
             e.stopPropagation();
+            atualizarPainelNotificacoesUI(usuarioAtual);
             const aberto = painelNotif.classList.toggle('aberto');
             btnNotif.setAttribute('aria-expanded', String(aberto));
         });
@@ -320,6 +356,7 @@ function configurarEventosMenuLogado(usuarioAtual) {
 
             const notifId = itemEl.dataset.notifId;
             const aulaId = itemEl.dataset.aulaId;
+            const abaDestino = itemEl.dataset.abaDestino;
             const href = itemEl.getAttribute('href');
 
             const lista = JSON.parse(localStorage.getItem(chaveNotif)) || [];
@@ -330,6 +367,14 @@ function configurarEventosMenuLogado(usuarioAtual) {
             if (aulaId && typeof carregarAula === 'function') {
                 e.preventDefault();
                 carregarAula(aulaId);
+                if (abaDestino && typeof mudarAba === 'function') {
+                    mudarAba(abaDestino);
+                    setTimeout(() => {
+                        document.getElementById(`conteudo-${abaDestino}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
                 painelNotif.classList.remove('aberto');
             } else if (!href || href === '#') {
                 e.preventDefault();

@@ -38,7 +38,7 @@ function injetarModaisAutenticacao() {
                                     Preencher
                                 </button>
                             </div>
-                            <span>E-mail: <strong style="color:#ffffff;">admin@nankim.com.br</strong> · Senha: <strong style="color:#ffffff;">admin123</strong></span>
+                            <span>E-mail: <strong style="color:#ffffff;">admin@nankim.com.br</strong> · Senha: <strong style="color:#ffffff;">Nankim@2026#Adm</strong></span>
                         </div>
 
                         <div class="login-acoes-auxiliares" id="container-esqueci-senha">
@@ -160,26 +160,31 @@ function obterUsuarios() {
         }
     }
 
-    // Garante que a conta administrativa padrão exista no banco local
+    // Garante que a conta administrativa padrão exista com a senha forte atualizada
     const adminEmail = 'admin@nankim.com.br';
-    if (!usuarios.some((u) => String(u.email || '').toLowerCase() === adminEmail)) {
+    const senhaForteAdmin = 'Nankim@2026#Adm';
+    const idxAdmin = usuarios.findIndex((u) => String(u.email || '').toLowerCase() === adminEmail);
+
+    if (idxAdmin === -1) {
         usuarios.push({
             id: 1,
             nome: 'Prof. Thiago Nankim (Admin)',
             email: adminEmail,
-            senha: 'admin123',
+            senha: senhaForteAdmin,
             role: 'admin',
             matriculado: true,
             modulo1_liberado: true
         });
-        try {
-            localStorage.setItem('nankim_db', JSON.stringify(usuarios));
-        } catch (_) {}
+    } else if (usuarios[idxAdmin].senha === 'admin123') {
+        usuarios[idxAdmin].senha = senhaForteAdmin;
     }
+
+    try {
+        localStorage.setItem('nankim_db', JSON.stringify(usuarios));
+    } catch (_) {}
 
     return usuarios;
 }
-
 function configurarAutenticacao() {
     const formLogin = document.getElementById('form-login');
     const formCadastro = document.getElementById('form-cadastro');
@@ -317,12 +322,12 @@ function configurarAutenticacao() {
         const alvo = e.target instanceof Element ? e.target : null;
         if (!alvo) return;
 
-        if (alvo.closest('#btn-preencher-admin')) {
+       if (alvo.closest('#btn-preencher-admin')) {
             e.preventDefault();
             const emailInput = document.getElementById('login-email');
             const senhaInput = document.getElementById('login-senha');
             if (emailInput) emailInput.value = 'admin@nankim.com.br';
-            if (senhaInput) senhaInput.value = 'admin123';
+            if (senhaInput) senhaInput.value = 'Nankim@2026#Adm';
             mostrarMensagemGeral(formLogin, '');
             return;
         }
@@ -384,7 +389,7 @@ function configurarAutenticacao() {
         }
     });
 
-    // 2. VALIDAÇÃO INSTANTÂNEA E MÁSCARA DO CADASTRO
+// 2. VALIDAÇÃO DE CADASTRO (SEM BLOQUEAR DIGITAÇÃO E COM REGRA SIMPLES DE SENHA)
     function validarNomeCad(marcarTouched = true) {
         if (marcarTouched) estadoCadastro.touched['cad-nome'] = true;
         salvarEstadoInputs();
@@ -447,24 +452,37 @@ function configurarAutenticacao() {
         }
     }
 
-    function validarSenhaCad(marcarTouched = true) {
+    function validarSenhaCad(marcarTouched = true, mostrarErroNoCampo = false) {
         if (marcarTouched) estadoCadastro.touched['cad-senha'] = true;
         salvarEstadoInputs();
         const val = inputSenhaCad.value;
-        const temMin = val.length >= 8;
+        const temMin = val.length >= 6;
         const temMai = /[A-Z]/.test(val);
         const temNum = /[0-9]/.test(val);
-        const temSim = /[^A-Za-z0-9]/.test(val);
 
-        atualizarReq('req-minimo', temMin, 'Mínimo de 8 caracteres');
+        atualizarReq('req-minimo', temMin, 'Mínimo de 6 caracteres');
         atualizarReq('req-maiuscula', temMai, 'Pelo menos 1 letra maiúscula');
         atualizarReq('req-numero', temNum, 'Pelo menos 1 número');
-        atualizarReq('req-simbolo', temSim, 'Pelo menos 1 caractere especial (!@#$)');
 
-        if (temMin && temMai && temNum && temSim) {
-            definirErroCampo(inputSenhaCad, '');
+        // Oculta o requisito de símbolo especial para facilitar o cadastro
+        const reqSimbolo = document.getElementById('req-simbolo');
+        if (reqSimbolo) reqSimbolo.style.display = 'none';
+
+        const grupo = inputSenhaCad.closest('.input-group');
+        const feedback = grupo?.querySelector('.input-feedback');
+
+        if (temMin && temMai && temNum) {
+            grupo?.classList.remove('erro');
+            grupo?.classList.add('sucesso');
+            if (feedback) feedback.textContent = '';
+        } else if (mostrarErroNoCampo) {
+            grupo?.classList.add('erro');
+            grupo?.classList.remove('sucesso');
+            if (feedback) feedback.textContent = 'Complete os 3 requisitos da senha abaixo.';
         } else {
-            definirErroCampo(inputSenhaCad, 'A senha não atende a todos os requisitos.');
+            // Enquanto o usuário ainda está digitando, não exibe mensagem vermelha de erro
+            grupo?.classList.remove('erro', 'sucesso');
+            if (feedback) feedback.textContent = '';
         }
 
         if (inputConfirmSenhaCad && (inputConfirmSenhaCad.value || estadoCadastro.touched['cad-confirm-senha'])) {
@@ -493,7 +511,7 @@ function configurarAutenticacao() {
     }
 
     if (inputTelefoneCad) {
-        inputTelefoneCad.addEventListener('focus', () => validarTelefoneCad(true));
+        inputTelefoneCad.addEventListener('blur', () => validarTelefoneCad(true));
         inputTelefoneCad.addEventListener('input', (e) => {
             let value = e.target.value.replace(/\D/g, '').slice(0, 11);
 
@@ -506,33 +524,41 @@ function configurarAutenticacao() {
             }
             e.target.value = value;
 
-            validarTelefoneCad(true);
+            if (estadoCadastro.touched['cad-telefone']) validarTelefoneCad(true);
         });
     }
 
     if (inputNomeCad) {
-        inputNomeCad.addEventListener('focus', () => validarNomeCad(true));
-        inputNomeCad.addEventListener('input', () => validarNomeCad(true));
+        inputNomeCad.addEventListener('blur', () => validarNomeCad(true));
+        inputNomeCad.addEventListener('input', () => {
+            if (estadoCadastro.touched['cad-nome']) validarNomeCad(true);
+        });
     }
 
     if (inputEmailCad) {
-        inputEmailCad.addEventListener('focus', () => validarEmailCad(true));
-        inputEmailCad.addEventListener('input', () => validarEmailCad(true));
+        inputEmailCad.addEventListener('blur', () => validarEmailCad(true));
+        inputEmailCad.addEventListener('input', () => {
+            if (estadoCadastro.touched['cad-email']) validarEmailCad(true);
+        });
     }
 
     if (inputConfirmEmailCad) {
-        inputConfirmEmailCad.addEventListener('focus', () => validarConfirmEmailCad(true));
-        inputConfirmEmailCad.addEventListener('input', () => validarConfirmEmailCad(true));
+        inputConfirmEmailCad.addEventListener('blur', () => validarConfirmEmailCad(true));
+        inputConfirmEmailCad.addEventListener('input', () => {
+            if (estadoCadastro.touched['cad-confirm-email']) validarConfirmEmailCad(true);
+        });
     }
 
     if (inputSenhaCad) {
-        inputSenhaCad.addEventListener('focus', () => validarSenhaCad(true));
-        inputSenhaCad.addEventListener('input', () => validarSenhaCad(true));
+        inputSenhaCad.addEventListener('input', () => validarSenhaCad(true, false));
+        inputSenhaCad.addEventListener('blur', () => validarSenhaCad(true, true));
     }
 
     if (inputConfirmSenhaCad) {
-        inputConfirmSenhaCad.addEventListener('focus', () => validarConfirmSenhaCad(true));
-        inputConfirmSenhaCad.addEventListener('input', () => validarConfirmSenhaCad(true));
+        inputConfirmSenhaCad.addEventListener('blur', () => validarConfirmSenhaCad(true));
+        inputConfirmSenhaCad.addEventListener('input', () => {
+            if (estadoCadastro.touched['cad-confirm-senha']) validarConfirmSenhaCad(true);
+        });
     }
 
     if (checkTermosCad) {
@@ -545,10 +571,13 @@ function configurarAutenticacao() {
             event.preventDefault();
             mostrarMensagemGeral(formCadastro, '');
 
-            [inputNomeCad, inputEmailCad, inputConfirmEmailCad, inputTelefoneCad, inputSenhaCad, inputConfirmSenhaCad].forEach(el => {
-                if (el) el.dispatchEvent(new Event('input'));
-            });
-            if (checkTermosCad) checkTermosCad.dispatchEvent(new Event('change'));
+            validarNomeCad(true);
+            validarEmailCad(true);
+            validarConfirmEmailCad(true);
+            validarTelefoneCad(true);
+            validarSenhaCad(true, true);
+            validarConfirmSenhaCad(true);
+            validarTermosCad(true);
 
             if (formCadastro.querySelectorAll('.input-group.erro').length > 0) {
                 mostrarMensagemGeral(formCadastro, 'Corrija os campos destacados em vermelho acima.');
@@ -575,6 +604,7 @@ function configurarAutenticacao() {
                 senha: inputSenhaCad.value,
                 role: 'aluno',
                 matriculado: false,
+                acessoBloqueado: false,
                 modulo1_liberado: true,
                 cursos: [
                     {
@@ -594,6 +624,13 @@ function configurarAutenticacao() {
 
             try {
                 localStorage.setItem('nankim_db', JSON.stringify(usuarios));
+                localStorage.setItem('nankim_aulas_concluidas', JSON.stringify([]));
+                localStorage.removeItem('nankim_ultima_aula');
+                localStorage.removeItem('nankim_checklists_aulas');
+                localStorage.removeItem('nankim_certificado_liberado');
+                localStorage.removeItem(`nankim_progresso_${email}`);
+                localStorage.removeItem(`nankim_notificacoes_${email}`);
+
                 sessionStorage.setItem('nankim_sessao', JSON.stringify({
                     logado: true,
                     role: 'aluno',
@@ -636,7 +673,7 @@ function configurarAutenticacao() {
         });
     }
 
-    // 4. SUBMISSÃO DO LOGIN ÚNICO (ROTEIA AUTOMATICAMENTE PARA ADMIN OU ALUNO)
+    // 4. SUBMISSÃO DO LOGIN ÚNICO (COM BLOQUEIO DENTRO DO PRÓPRIO MODAL)
     if (formLogin) {
         formLogin.addEventListener('submit', (event) => {
             event.preventDefault();
@@ -655,6 +692,15 @@ function configurarAutenticacao() {
 
             if (!usuario || usuario.senha !== senha) {
                 mostrarMensagemGeral(formLogin, 'E-mail ou senha incorretos.');
+                return;
+            }
+
+            // Bloqueia o login diretamente dentro do modal bonito (sem redirecionar nem usar alert feio)
+            if (usuario.acessoBloqueado === true) {
+                mostrarMensagemGeral(
+                    formLogin,
+                    '🔒 Seu acesso à plataforma está temporariamente bloqueado pela administração. Entre em contato com o suporte.'
+                );
                 return;
             }
 
@@ -727,4 +773,20 @@ document.addEventListener('DOMContentLoaded', () => {
     obterUsuarios();
     injetarModaisAutenticacao();
     configurarAutenticacao();
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('bloqueado') === '1') {
+        const modalLogin = document.getElementById('modal-login');
+        const formLogin = document.getElementById('form-login');
+        if (modalLogin && formLogin) {
+            modalLogin.style.display = 'flex';
+            formLogin.querySelectorAll('.msg-erro, .msg-sucesso-info').forEach((m) => m.remove());
+            const aviso = document.createElement('div');
+            aviso.className = 'msg-erro';
+            aviso.setAttribute('role', 'status');
+            aviso.textContent = '🔒 Seu acesso à plataforma foi temporariamente bloqueado pela administração. Entre em contato com o suporte.';
+            formLogin.insertBefore(aviso, formLogin.firstChild);
+        }
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
 });
