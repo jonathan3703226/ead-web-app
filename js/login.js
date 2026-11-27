@@ -310,11 +310,20 @@ function configurarAutenticacao() {
         if (!form) return;
         form.querySelectorAll('.msg-erro, .msg-sucesso-info').forEach((m) => m.remove());
         if (!texto) return;
+
         const mensagem = document.createElement('div');
         mensagem.className = tipo;
         mensagem.setAttribute('role', 'status');
         mensagem.textContent = texto;
-        form.insertBefore(mensagem, form.firstChild);
+
+        const btnSubmit = form.querySelector('button[type="submit"]');
+        if (btnSubmit) {
+            form.insertBefore(mensagem, btnSubmit);
+        } else {
+            form.insertBefore(mensagem, form.firstChild);
+        }
+
+        mensagem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     // 1. OUVINTE GLOBAL DE CLIQUES

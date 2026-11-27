@@ -56,9 +56,16 @@ function injetarMenuLogado() {
     const isCursos = paginaAtual === 'area-aluno.html';
     const isPerfil = paginaAtual === 'meu-perfil.html';
 
-    // Calcula progresso inicial caso esteja na Sala de Aula
-    const concluidas = JSON.parse(localStorage.getItem('nankim_aulas_concluidas') || '[]');
-    const qtdConcluidas = Array.isArray(concluidas) ? concluidas.length : 0;
+    // Calcula progresso inicial isolado do aluno logado caso esteja na Sala de Aula
+    const emailLogadoNorm = String(usuarioAtual.email || '').toLowerCase().trim();
+    let concluidas = [];
+    try {
+        const progUser = JSON.parse(localStorage.getItem(`nankim_progresso_${emailLogadoNorm}`) || 'null');
+        if (progUser && Array.isArray(progUser.aulasConcluidas)) {
+            concluidas = progUser.aulasConcluidas;
+        }
+    } catch (_) {}
+    const qtdConcluidas = concluidas.length;
     const pctInicial = Math.min(Math.round((qtdConcluidas / 12) * 100), 100);
 
     const logoHtml = `
